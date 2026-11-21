@@ -1,4 +1,10 @@
 {
+  "crosstalk_coupled_ko_l2_error": 0.1120428064993292,
+  "crosstalk_coupled_false_attr_l2": 0.11204280649932884,
+  "crosstalk_local_ko_l2_error": 0.0,
+  "iso_expr_washout_diff": 2.7755575615628914e-17,
+  "iso_expr_memory_diff_at_washout": 0.036774846630348565,
+  "iso_expr_state_only_lower_bound": 0.05656280876612283,
   "max_swap_quadrature_error": 4.440892098500626e-16,
   "swap_singular_values_4to1": [
     0.3362042018474805,

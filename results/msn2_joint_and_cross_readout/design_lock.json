@@ -1,0 +1,39 @@
+{
+  "benchmark": "msn2_joint_cross_readout_and_promoter_transfer",
+  "train_schedules": 16,
+  "val_split": "4_single_pulses_stratified_duration_dose_holdout",
+  "held_single_pulse": [
+    30,
+    690
+  ],
+  "zero_shot_pulse_trains": [
+    "FM_2_5min_690nM",
+    "FM_3_5min_690nM",
+    "FM_4_5min_690nM",
+    "FM_5_5min_690nM",
+    "FM_6_5min_690nM",
+    "FM_8_5min_690nM",
+    "FM4_75minINT_690nM",
+    "FM4_10minINT_690nM",
+    "FM4_15minINT_690nM",
+    "FM4_20minINT_690nM"
+  ],
+  "models_joint": [
+    "local_const",
+    "memgrn",
+    "ltc_local",
+    "perturb_ode",
+    "latent_ode"
+  ],
+  "cross_readout_sources": [
+    "local_const",
+    "memgrn"
+  ],
+  "cross_readout_rate_modes": [
+    "constant",
+    "activity",
+    "memory",
+    "both"
+  ],
+  "raw_file_count": 77
+}

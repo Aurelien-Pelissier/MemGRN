@@ -28,7 +28,8 @@ else:
     require_matplotlib_panel_alignment = None
 
 ROOT = Path(__file__).resolve().parents[1]
-RES = ROOT / "results" / "stage3"
+RES_STAGE3 = ROOT / "results" / "stage3"
+RES_ROOT = ROOT / "results"
 OUT_FIG_REPO = ROOT / "figures"
 LATEX_DIR = Path("/usr/local/google/home/apelissier/memgrn-latex")
 OUT_FIG_LATEX = LATEX_DIR / "figures"
@@ -37,8 +38,6 @@ OUT_TAB_LATEX = LATEX_DIR / "tables"
 for folder in (OUT_FIG_REPO, OUT_FIG_LATEX, OUT_TAB_LATEX):
     folder.mkdir(parents=True, exist_ok=True)
 
-# Exact ICLR \textwidth = 5.50 true in (396.0 PDF pt).
-# Captions (\small) are 9.0 pt; figure labels are 7.8-8.5 pt at 1:1 scale.
 TEXTWIDTH_IN = 5.50
 
 PALETTE = {
@@ -71,7 +70,7 @@ plt.rcParams.update(
         "axes.labelsize": 8.3,
         "xtick.labelsize": 7.9,
         "ytick.labelsize": 7.9,
-        "legend.fontsize": 7.9,
+        "legend.fontsize": 7.8,
         "axes.linewidth": 0.85,
         "axes.spines.top": False,
         "axes.spines.right": False,
@@ -86,9 +85,16 @@ plt.rcParams.update(
 SOURCE_HASHES: dict[str, str] = {}
 
 
-def load_score(rel_dir: str, fname: str = "scores.json") -> dict:
-    path = RES / rel_dir / fname
+def load_stage3(rel_dir: str, fname: str = "scores.json") -> dict:
+    path = RES_STAGE3 / rel_dir / fname
     key = f"results/stage3/{rel_dir}/{fname}"
+    SOURCE_HASHES[key] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_new_result(suite: str, fname: str = "scores.json") -> dict:
+    path = RES_ROOT / suite / fname
+    key = f"results/{suite}/{fname}"
     SOURCE_HASHES[key] = hashlib.sha256(path.read_bytes()).hexdigest()
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -99,10 +105,7 @@ def add_panel_tag(
     x_pt: float = -24.0,
     y_pt: float = 6.0,
 ) -> None:
-    """Place bold lowercase panel label with fixed physical point offset."""
-    offset = ScaledTranslation(
-        x_pt / 72.0, y_pt / 72.0, ax.figure.dpi_scale_trans
-    )
+    offset = ScaledTranslation(x_pt / 72.0, y_pt / 72.0, ax.figure.dpi_scale_trans)
     ax.text(
         0.0,
         1.0,
@@ -123,7 +126,6 @@ def export_figure(
     exclude_axes: list[plt.Axes] | None = None,
     exemptions: list[dict] | None = None,
 ) -> None:
-    """Export figure at exact 5.50-in canvas width (zero bbox rescaling) to both repos."""
     fig.canvas.draw()
     if audit_alignment and require_matplotlib_panel_alignment is not None:
         qa_dir = ROOT / "output" / "qa"
@@ -146,7 +148,9 @@ def export_figure(
     plt.close(fig)
 
 
-def write_tex_table(fname: str, col_spec: str, header: list[str], rows: list[list[str]]) -> None:
+def write_tex_table(
+    fname: str, col_spec: str, header: list[str], rows: list[list[str]]
+) -> None:
     lines = [
         f"\\begin{{tabular}}{{{col_spec}}}",
         "\\toprule",
@@ -163,7 +167,7 @@ def write_tex_table(fname: str, col_spec: str, header: list[str], rows: list[lis
 
 
 def build_fig1_architecture() -> None:
-    """Figure 1: Modular architecture and three separable diagnostic protocols."""
+    """Figure 1: Source-isolated adaptive memory vs. coupled LTC and PerturbODE."""
     fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.52))
     ax = fig.add_axes([0.012, 0.02, 0.976, 0.96])
     ax.set_xlim(0.0, 11.0)
@@ -179,7 +183,6 @@ def build_fig1_architecture() -> None:
         fc: str,
         ec: str = PALETTE["border"],
         lw: float = 0.9,
-        weight: str = "normal",
     ) -> None:
         ax.add_patch(
             FancyBboxPatch(
@@ -199,7 +202,6 @@ def build_fig1_architecture() -> None:
             ha="center",
             va="center",
             fontsize=7.9,
-            fontweight=weight,
             color=PALETTE["ink"],
             linespacing=1.18,
         )
@@ -225,11 +227,10 @@ def build_fig1_architecture() -> None:
             },
         )
 
-    # Top row: Source-local MemGRN architecture
     ax.text(
         0.06,
         4.80,
-        "a   Source-local adaptive memory with explicit regulatory readout",
+        "a   Source-isolated adaptive memory with explicit enhancer readout",
         fontsize=8.5,
         fontweight="bold",
         color=PALETTE["ink"],
@@ -237,9 +238,9 @@ def build_fig1_architecture() -> None:
     )
 
     draw_box(
-        0.06,
+        0.04,
         2.66,
-        1.74,
+        1.64,
         1.02,
         "TF activity\naᵢ = tanh gᵢ",
         PALETTE["light_blue"],
@@ -247,57 +248,51 @@ def build_fig1_architecture() -> None:
         lw=1.0,
     )
     draw_box(
-        2.12,
+        1.96,
         2.66,
-        2.02,
+        1.96,
         1.02,
         "Upstream zᵢᵣ\nżᵢᵣ = λᵢᵣ(aᵢ−zᵢᵣ)",
         PALETTE["light_teal"],
         ec=PALETTE["teal"],
     )
     draw_box(
-        4.46,
+        4.20,
         2.66,
-        2.02,
+        1.96,
         1.02,
         "Delayed hᵢᵣ\nḣᵢᵣ = λᵢᵣ(zᵢᵣ−hᵢᵣ)",
         PALETTE["light_teal"],
         ec=PALETTE["teal"],
     )
     draw_box(
-        6.84,
+        6.44,
         2.66,
-        2.08,
+        2.54,
         1.02,
-        "Explicit drive\nDᵢⱼaᵢ + ∑ᵣBᵢᵣⱼhᵢᵣ",
+        "Enhancer drive\nDᵢⱼaᵢ + Bᵢᵣⱼhᵢᵣ + Γh̄ᵢh̄ₖ",
         PALETTE["light_violet"],
         ec=PALETTE["violet"],
     )
     draw_box(
-        9.22,
+        9.26,
         2.66,
-        1.72,
+        1.70,
         1.02,
         "Target ODE\nẏⱼ = pⱼ − δⱼyⱼ",
         PALETTE["light_gray"],
         ec=PALETTE["border"],
     )
 
-    draw_arrow((1.85, 3.17), (2.07, 3.17))
-    draw_arrow((4.19, 3.17), (4.41, 3.17))
-    draw_arrow((6.53, 3.17), (6.79, 3.17))
-    draw_arrow((8.97, 3.17), (9.17, 3.17))
+    draw_arrow((1.73, 3.17), (1.91, 3.17))
+    draw_arrow((3.97, 3.17), (4.15, 3.17))
+    draw_arrow((6.21, 3.17), (6.39, 3.17))
+    draw_arrow((9.03, 3.17), (9.21, 3.17))
 
-    # Direct bypass path a_i(t) * D_{ij}
-    ax.plot(
-        [0.93, 0.93, 7.88],
-        [3.73, 4.18, 4.18],
-        color=PALETTE["navy"],
-        lw=0.95,
-    )
-    draw_arrow((7.88, 4.18), (7.88, 3.74), color=PALETTE["navy"], lw=0.95)
+    ax.plot([0.86, 0.86, 7.71], [3.73, 4.18, 4.18], color=PALETTE["navy"], lw=0.95)
+    draw_arrow((7.71, 4.18), (7.71, 3.74), color=PALETTE["navy"], lw=0.95)
     ax.text(
-        4.40,
+        4.28,
         4.28,
         "Direct signed path  Dᵢⱼ aᵢ(t)",
         ha="center",
@@ -306,26 +301,26 @@ def build_fig1_architecture() -> None:
         color=PALETTE["navy"],
     )
 
-    # Bounded neural rate law below filters
     draw_box(
-        1.68,
+        1.38,
         1.52,
-        5.50,
+        6.44,
         0.72,
-        "Local rate  λᵢᵣ(aᵢ, zᵢᵣ, hᵢᵣ) ∈ [λₘᵢₙ, λₘₐₓ]",
+        "Isolated rate  λᵢᵣ(aᵢ, zᵢᵣ, hᵢᵣ) : ∂(zᵢᵣ, hᵢᵣ)/∂gₖ ≡ 0 (k ≠ i)",
         PALETTE["light_amber"],
         ec=PALETTE["amber"],
     )
-    draw_arrow((3.13, 2.30), (3.13, 2.60), color=PALETTE["amber"])
-    draw_arrow((5.47, 2.30), (5.47, 2.60), color=PALETTE["amber"])
-    ax.plot([0.93, 0.93, 1.61], [2.60, 1.88, 1.88], color=PALETTE["amber"], lw=0.85, ls="--")
-    draw_arrow((1.42, 1.88), (1.61, 1.88), color=PALETTE["amber"], lw=0.85)
+    draw_arrow((2.94, 2.30), (2.94, 2.60), color=PALETTE["amber"])
+    draw_arrow((5.18, 2.30), (5.18, 2.60), color=PALETTE["amber"])
+    ax.plot(
+        [0.86, 0.86, 1.31], [2.60, 1.88, 1.88], color=PALETTE["amber"], lw=0.85, ls="--"
+    )
+    draw_arrow((1.14, 1.88), (1.31, 1.88), color=PALETTE["amber"], lw=0.85)
 
-    # Bottom row: Three separable evaluations
     ax.text(
         0.06,
         1.16,
-        "b   Separable mechanistic and identifiability tests",
+        "b   Three structural guarantees tested across synthetic and live-cell systems",
         fontsize=8.5,
         fontweight="bold",
         color=PALETTE["ink"],
@@ -336,7 +331,7 @@ def build_fig1_architecture() -> None:
         0.08,
         3.42,
         0.82,
-        "1. Frozen readout\nFix (D, B, δ); vary ξᵢᵣ",
+        "1. Correlation shift\nZero cross-TF leakage",
         PALETTE["light_teal"],
         ec=PALETTE["teal"],
     )
@@ -345,7 +340,7 @@ def build_fig1_architecture() -> None:
         0.08,
         3.42,
         0.82,
-        "2. Splice accounting\nCarryover vs post-off",
+        "2. Non-Markovian memory\nResolves iso-y(T) pulses",
         PALETTE["light_violet"],
         ec=PALETTE["violet"],
     )
@@ -354,7 +349,7 @@ def build_fig1_architecture() -> None:
         0.08,
         3.42,
         0.82,
-        "3. 4:1 strength swap\nBreak pair symmetry",
+        "3. 4:1 strength swap\nBreaks pair cancellation",
         PALETTE["light_blue"],
         ec=PALETTE["navy"],
     )
@@ -362,246 +357,232 @@ def build_fig1_architecture() -> None:
     export_figure(fig, "fig1_memgrn_architecture", audit_alignment=False)
 
 
-def build_fig2_synthetic() -> None:
-    """Figure 2: Synthetic misspecified kinetics, buffer efficiency, and multiscale reversals."""
-    occ = load_score("neural_rate_pulse", "test_scores.json")
-    buf = load_score("neural_rate_buffer", "test_scores.json")
-    multi = load_score("multiscale_gw", "scores.json")
+def build_fig2_multitf_factorial() -> None:
+    """Figure 2: Locked 2x2 Multi-TF Correlation-Shift Benchmark + LTC & PerturbODE."""
+    mtf = load_new_result("multitf_factorial")
+    add_m = mtf["summary"]["additive"]["means"]
+    coop_m = mtf["summary"]["cooperative"]["means"]
 
-    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.38))
+    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.48))
     gs = fig.add_gridspec(
         1,
         3,
-        left=0.165,
-        right=0.982,
-        bottom=0.29,
+        left=0.105,
+        right=0.985,
+        bottom=0.31,
         top=0.85,
-        wspace=0.44,
+        wspace=0.38,
     )
     ax0 = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[0, 1])
     ax2 = fig.add_subplot(gs[0, 2])
 
-    # Panel a: Paired tail-MSE reduction (%) vs Two-rate gW with simultaneous 95% CIs
-    regimes = ["Occupancy\n(n = 8)", "Buffer\n(n = 12)", "Control\n(n = 12)"]
-    comps = [occ["comparisons"][1][1], buf["comparisons"][1][1], buf["comparisons"][0][1]]
-    colors_a = [PALETTE["royal"], PALETTE["navy"], PALETTE["slate"]]
-    y_pos = np.arange(3)
-    for idx, comp in enumerate(comps):
-        eff = 100.0 * (comp["effect"] - 1.0)
-        lo = 100.0 * (comp["ci"][0] - 1.0)
-        hi = 100.0 * (comp["ci"][1] - 1.0)
-        ax0.errorbar(
-            eff,
-            idx,
-            xerr=[[eff - lo], [hi - eff]],
-            fmt="o",
-            ms=4.8,
-            lw=1.3,
-            capsize=2.8,
-            color=colors_a[idx],
-        )
-    ax0.axvline(0.0, color=PALETTE["border"], ls=":", lw=0.9)
-    ax0.set_yticks(y_pos)
-    ax0.set_yticklabels(regimes)
-    ax0.set_ylim(2.45, -0.45)
-    ax0.set_xlim(-102.0, 24.0)
-    ax0.set_xticks([-80, -40, 0])
-    ax0.set_xlabel("Tail MSE change (%)")
-    ax0.set_title("Paired kinetic gain")
-    add_panel_tag(ax0, "a", x_pt=-48.0, y_pt=6.0)
-
-    # Panel b: Reversible buffer recovery MSE across model classes
-    buf_means = buf["means"][1]
-    m_labels = ["Const.", "2-rate", "Latent", "MemGRN"]
-    vals_b = [
-        1e6 * buf_means[0][1],
-        1e6 * buf_means[1][1],
-        1e6 * buf_means[3][1],
-        1e6 * buf_means[2][1],
+    keys = [
+        "ltc_coupled",
+        "perturb_ode",
+        "local_const",
+        "coupled_adaptive",
+        "ltc_local",
+        "memgrn",
+        "memgrn_int",
     ]
-    cols_b = [PALETTE["slate"], PALETTE["amber"], PALETTE["violet"], PALETTE["navy"]]
-    ax1.bar(
-        np.arange(4),
-        vals_b,
-        width=0.58,
-        color=cols_b,
-        edgecolor=PALETTE["ink"],
-        linewidth=0.65,
-    )
-    ax1.set_xticks(np.arange(4))
-    ax1.set_xticklabels(m_labels, rotation=90, ha="center", va="top")
-    ax1.tick_params(axis="x", pad=4.0)
-    ax1.set_xlim(-0.6, 3.6)
-    ax1.set_ylim(0.0, 195.0)
-    ax1.set_yticks([0, 50, 100, 150])
-    ax1.set_ylabel("Recovery MSE (×10⁻⁶)")
-    ax1.set_title("Out-of-class buffer")
-    ax1.text(
-        3.0,
-        vals_b[3] + 6.0,
-        f"{vals_b[3]:.1f}",
-        ha="center",
-        va="bottom",
-        fontsize=7.8,
-        fontweight="bold",
-        color=PALETTE["navy"],
-    )
+    labels = [
+        "LTC-Cpl",
+        "PertODE",
+        "Loc-Const",
+        "Cpl-Adapt",
+        "LTC-Loc",
+        "MemGRN",
+        "Mem-Int",
+    ]
+    cols = [
+        PALETTE["crimson"],
+        PALETTE["violet"],
+        PALETTE["slate"],
+        PALETTE["amber"],
+        PALETTE["teal"],
+        PALETTE["royal"],
+        PALETTE["navy"],
+    ]
+    x = np.arange(len(keys))
+
+    # Panel a: Additive buffering OOD intervention MSE
+    vals_a = [add_m[k]["test_mse"] for k in keys]
+    ax0.bar(x, vals_a, width=0.64, color=cols, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax0.set_xticks(x)
+    ax0.set_xticklabels(labels, rotation=90, ha="center", va="top")
+    ax0.tick_params(axis="x", pad=4.5)
+    ax0.set_xlim(-0.65, len(keys) - 0.35)
+    ax0.set_ylim(0.0, 0.50)
+    ax0.set_yticks([0.0, 0.2, 0.4])
+    ax0.set_ylabel("OOD intervention MSE")
+    ax0.set_title("Additive buffering")
+    add_panel_tag(ax0, "a", x_pt=-32.0, y_pt=6.0)
+
+    # Panel b: Cooperative enhancer OOD intervention MSE
+    vals_b = [coop_m[k]["test_mse"] for k in keys]
+    ax1.bar(x, vals_b, width=0.64, color=cols, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(labels, rotation=90, ha="center", va="top")
+    ax1.tick_params(axis="x", pad=4.5)
+    ax1.set_xlim(-0.65, len(keys) - 0.35)
+    ax1.set_ylim(0.0, 0.44)
+    ax1.set_yticks([0.0, 0.2, 0.4])
+    ax1.set_ylabel("OOD intervention MSE")
+    ax1.set_title("Cooperative enhancers")
     add_panel_tag(ax1, "b", x_pt=-30.0, y_pt=6.0)
 
-    # Panel c: Multiscale biphasic waveform relative error (%)
-    ms_keys = ["state_space", "current_hybrid", "history_basis", "learned_gw"]
-    ms_labels = ["SSM", "1-rate", "Basis", "MemGRN"]
-    vals_c = [100.0 * multi["classes"][k]["biphasic"]["error"] for k in ms_keys]
-    cols_c = [PALETTE["slate"], PALETTE["amber"], PALETTE["violet"], PALETTE["teal"]]
-    ax2.bar(
-        np.arange(4),
-        vals_c,
-        width=0.58,
-        color=cols_c,
-        edgecolor=PALETTE["ink"],
-        linewidth=0.65,
-    )
-    ax2.set_xticks(np.arange(4))
-    ax2.set_xticklabels(ms_labels, rotation=90, ha="center", va="top")
-    ax2.tick_params(axis="x", pad=4.0)
-    ax2.set_xlim(-0.6, 3.6)
-    ax2.set_ylim(0.0, 54.0)
-    ax2.set_yticks([0, 15, 30, 45])
-    ax2.set_ylabel("Biphasic error (%)")
-    ax2.set_title("Sign-reversing edges")
-    ax2.text(
-        3.0,
-        vals_c[3] + 2.0,
-        "2.4%",
-        ha="center",
-        va="bottom",
-        fontsize=7.8,
-        fontweight="bold",
-        color=PALETTE["teal"],
-    )
-    add_panel_tag(ax2, "c", x_pt=-28.0, y_pt=6.0)
+    # Panel c: Counterfactual source attribution RMSE (pooled across 24 worlds)
+    vals_c = [
+        0.5 * (add_m[k]["attribution_rmse"] + coop_m[k]["attribution_rmse"]) for k in keys
+    ]
+    ax2.bar(x, vals_c, width=0.64, color=cols, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(labels, rotation=90, ha="center", va="top")
+    ax2.tick_params(axis="x", pad=4.5)
+    ax2.set_xlim(-0.65, len(keys) - 0.35)
+    ax2.set_ylim(0.0, 0.32)
+    ax2.set_yticks([0.0, 0.1, 0.2, 0.3])
+    ax2.set_ylabel("Attribution RMSE")
+    ax2.set_title("Source attribution")
+    add_panel_tag(ax2, "c", x_pt=-30.0, y_pt=6.0)
 
-    export_figure(fig, "fig2_synthetic_dynamics")
+    export_figure(fig, "fig2_multitf_factorial")
 
 
-def build_fig3_msn2_transfer() -> None:
-    """Figure 3: Live-cell Msn2 repeated-pulse transfer and inter-pulse memory resets."""
-    rep = load_score("msn2_repeated_pulses")
-    reset = load_score("msn2_memory_reset")
+def build_fig3_msn2_joint_and_cross() -> None:
+    """Figure 3: Yeast Msn2 joint training, cross-readout 2x2, and filter resets."""
+    joint = load_new_result("msn2_joint_and_cross_readout")
+    reset = load_stage3("msn2_memory_reset")
 
-    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.46))
+    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.48))
     gs = fig.add_gridspec(
         1,
-        2,
-        width_ratios=[1.38, 1.0],
-        left=0.105,
-        right=0.980,
-        bottom=0.30,
+        3,
+        width_ratios=[1.06, 1.04, 1.02],
+        left=0.100,
+        right=0.985,
+        bottom=0.31,
         top=0.85,
-        wspace=0.34,
+        wspace=0.45,
     )
     ax0 = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[0, 1])
+    ax2 = fig.add_subplot(gs[0, 2])
 
-    sched_labels = [
-        "2/5",
-        "3/5",
-        "4/5",
-        "5/5",
-        "6/5",
-        "8/5",
-        "4/7.5",
-        "4/10",
-        "4/15",
-        "4/20",
+    # Panel a: Fair source-CV joint training on 10 unseen repeated-pulse trains
+    j_keys = ["local_const", "perturb_ode", "latent_ode", "ltc_local", "memgrn"]
+    j_lbls = ["Const gW", "PertODE", "Lat-ODE", "LTC-Loc", "MemGRN"]
+    j_cols = [
+        PALETTE["slate"],
+        PALETTE["violet"],
+        PALETTE["amber"],
+        PALETTE["teal"],
+        PALETTE["navy"],
     ]
-    x_idx = np.arange(10)
-    series = [
-        ("two_rate_gw", "Two-rate gW", PALETTE["amber"], "--", "s"),
-        ("latent_ode", "Latent ODE", PALETTE["violet"], "-.", "^"),
-        ("neural_rate_gw", "MemGRN (ours)", PALETTE["navy"], "-", "o"),
-    ]
-    for key, label, col, ls, marker in series:
-        vals = rep["models"][key]["all"]["by_schedule"]
-        ax0.plot(
-            x_idx,
-            vals,
-            linestyle=ls,
-            marker=marker,
-            ms=3.8,
-            lw=1.3,
-            color=col,
-            label=label,
-        )
-    ax0.set_yscale("log")
-    ax0.set_xlim(-0.55, 9.45)
-    ax0.set_ylim(1.2e-3, 38.0)
-    ax0.set_yticks([1e-2, 1e-1, 1.0])
-    ax0.set_yticklabels(["0.01", "0.1", "1.0"])
-    ax0.set_xticks(x_idx)
-    ax0.set_xticklabels(sched_labels, rotation=90, ha="center", va="top")
+    j_vals = [joint["joint_training"][k]["ten_trains_post_mse"] for k in j_keys]
+    jx = np.arange(len(j_keys))
+    ax0.bar(jx, j_vals, width=0.60, color=j_cols, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax0.set_xticks(jx)
+    ax0.set_xticklabels(j_lbls, rotation=90, ha="center", va="top")
     ax0.tick_params(axis="x", pad=4.5)
-    ax0.set_xlabel("Pulse count / gap (min)")
-    ax0.set_ylabel("Post-shutoff MSE")
-    ax0.set_title("Zero-shot transfer (10 trains)")
-    ax0.legend(loc="upper left", ncol=1, handlelength=1.7, labelspacing=0.20)
+    ax0.set_xlim(-0.6, 4.6)
+    ax0.set_ylim(0.0, 0.23)
+    ax0.set_yticks([0.0, 0.1, 0.2])
+    ax0.set_ylabel("10-train MSE")
+    ax0.set_title("Joint source-CV fits")
     add_panel_tag(ax0, "a", x_pt=-32.0, y_pt=6.0)
 
-    # Panel b: Inter-pulse memory reset interventions on 6- and 8-pulse trains
+    # Panel b: Symmetric Cross-Readout 2x2 (Constant-W vs MemGRN-W across 4 rate laws)
+    r_modes = ["constant", "activity", "memory", "both"]
+    r_lbls = ["Const", "Activity", "Memory", "Act+Mem"]
+    rx = np.arange(4)
+    bw = 0.34
+    const_w_vals = [joint["cross_readout_2x2"]["local_const"][m] for m in r_modes]
+    mem_w_vals = [joint["cross_readout_2x2"]["memgrn"][m] for m in r_modes]
+    ax1.bar(
+        rx - 0.5 * bw,
+        const_w_vals,
+        width=bw * 0.92,
+        color=PALETTE["amber"],
+        edgecolor=PALETTE["ink"],
+        linewidth=0.55,
+        label="Const-gW W",
+    )
+    ax1.bar(
+        rx + 0.5 * bw,
+        mem_w_vals,
+        width=bw * 0.92,
+        color=PALETTE["navy"],
+        edgecolor=PALETTE["ink"],
+        linewidth=0.55,
+        label="MemGRN W",
+    )
+    ax1.set_xticks(rx)
+    ax1.set_xticklabels(r_lbls, rotation=90, ha="center", va="top")
+    ax1.tick_params(axis="x", pad=4.5)
+    ax1.set_xlim(-0.65, 3.65)
+    ax1.set_ylim(0.0, 0.28)
+    ax1.set_yticks([0.0, 0.1, 0.2])
+    ax1.set_ylabel("10-train MSE")
+    ax1.set_title("Cross-readout swap")
+    ax1.legend(loc="upper right", ncol=1, handlelength=1.1, labelspacing=0.18)
+    add_panel_tag(ax1, "b", x_pt=-30.0, y_pt=6.0)
+
+    # Panel c: Inter-pulse memory resets on 6- and 8-pulse trains
     trains = ["FM_6_5min_690nM", "FM_8_5min_690nM"]
     modes = [
-        ("intact", "Intact MemGRN", PALETTE["navy"]),
+        ("intact", "Intact", PALETTE["navy"]),
         ("latent", "Latent ODE", PALETTE["violet"]),
-        ("last_only", "Reset pre-final", PALETTE["amber"]),
-        ("reset", "Reset each pulse", PALETTE["crimson"]),
+        ("last_only", "Pre-final", PALETTE["amber"]),
+        ("reset", "Full reset", PALETTE["crimson"]),
     ]
-    w = 0.18
+    w = 0.19
     gx = np.arange(2)
     y_floor = 1.8e-2
     for m_i, (m_key, m_lbl, m_col) in enumerate(modes):
         vals = np.array(
             [reset["results"][tr]["panels"]["all"]["mse"][m_key] for tr in trains]
         )
-        ax1.bar(
+        ax2.bar(
             gx + (m_i - 1.5) * w,
             vals - y_floor,
             bottom=y_floor,
             width=w * 0.90,
             color=m_col,
             edgecolor=PALETTE["ink"],
-            linewidth=0.6,
+            linewidth=0.55,
             label=m_lbl,
         )
-    ax1.set_yscale("log")
-    ax1.set_xlim(-0.55, 1.55)
-    ax1.set_ylim(y_floor, 16.0)
-    ax1.set_yticks([0.03, 0.1, 0.3, 1.0])
-    ax1.set_yticklabels(["0.03", "0.1", "0.3", "1.0"])
-    ax1.set_xticks(gx)
-    ax1.set_xticklabels(["6 pulses\n(5-min gap)", "8 pulses\n(5-min gap)"])
-    ax1.tick_params(axis="x", pad=4.5)
-    ax1.set_ylabel("Post-shutoff MSE")
-    ax1.set_title("Model-state memory resets")
-    ax1.legend(loc="upper left", ncol=1, handlelength=1.2, labelspacing=0.18)
-    add_panel_tag(ax1, "b", x_pt=-28.0, y_pt=6.0)
+    ax2.set_yscale("log")
+    ax2.set_xlim(-0.55, 1.55)
+    ax2.set_ylim(y_floor, 18.0)
+    ax2.set_yticks([0.03, 0.1, 0.3, 1.0])
+    ax2.set_yticklabels(["0.03", "0.1", "0.3", "1.0"])
+    ax2.set_xticks(gx)
+    ax2.set_xticklabels(["6 pulses", "8 pulses"], rotation=90, ha="center", va="top")
+    ax2.tick_params(axis="x", pad=4.5)
+    ax2.set_ylabel("Post-shutoff MSE")
+    ax2.set_title("Memory resets")
+    ax2.legend(loc="upper left", ncol=1, handlelength=1.1, labelspacing=0.16)
+    add_panel_tag(ax2, "c", x_pt=-30.0, y_pt=6.0)
 
     export_figure(
         fig,
         "fig3_msn2_transfer_and_reset",
         exemptions=[
             {
-                "panels": ["a", "b"],
+                "panels": ["a", "b", "c"],
                 "checks": ["panel-width"],
-                "reason": "10-schedule curve panel requires wider x-axis than 2-group bar panel",
+                "reason": "Three slight width ratios accommodate 5-bar, 4-pair, and 2-group panels",
             }
         ],
     )
 
 
 def build_fig4_frozen_readout() -> None:
-    """Figure 4: Frozen-readout four-way rate-input ablation across six yeast promoters."""
-    six = load_score("msn2_six_promoter_rates")
+    """Figure 4: Six-promoter frozen-readout rate-input ablation and LOPO shared filter."""
+    six = load_stage3("msn2_six_promoter_rates")
     genes = six["genes"]
     modes = ["constant", "activity", "memory", "both"]
     mode_labels = ["Constant", "Activity only", "Memory only", "Activity + memory"]
@@ -612,7 +593,7 @@ def build_fig4_frozen_readout() -> None:
         [[six["results"][g][m]["per_schedule"] for m in modes] for g in genes]
     )
 
-    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.52))
+    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.50))
     gs = fig.add_gridspec(
         1,
         3,
@@ -640,7 +621,7 @@ def build_fig4_frozen_readout() -> None:
         )
     ax0.set_yscale("log")
     ax0.set_xlim(-0.45, 5.45)
-    ax0.set_ylim(4e-3, 18.0)
+    ax0.set_ylim(4e-3, 85.0)
     ax0.set_yticks([0.01, 0.03, 0.1, 0.3, 1.0])
     ax0.set_yticklabels(["0.01", "0.03", "0.1", "0.3", "1.0"])
     ax0.set_xticks(gx)
@@ -651,15 +632,8 @@ def build_fig4_frozen_readout() -> None:
     ax0.legend(loc="upper left", ncol=1, handlelength=1.5, labelspacing=0.18)
     add_panel_tag(ax0, "a", x_pt=-32.0, y_pt=6.0)
 
-    # Panel b: log2(Activity MSE / Combined MSE) across 6 promoters x 10 schedules
     log_gain = np.log2(arr[:, 1] / arr[:, 3])
-    im = ax1.imshow(
-        log_gain,
-        vmin=-2.6,
-        vmax=2.6,
-        cmap="BrBG",
-        aspect="auto",
-    )
+    im = ax1.imshow(log_gain, vmin=-2.6, vmax=2.6, cmap="BrBG", aspect="auto")
     sched_labels = [
         "2/5",
         "3/5",
@@ -703,29 +677,82 @@ def build_fig4_frozen_readout() -> None:
     )
 
 
-def build_fig5_swap_and_nfkb() -> None:
-    """Figure 5: Counterbalanced 4:1 strength swap and mammalian NF-kB boundary."""
-    swap = load_score("strength_swap_replication")
-    nfkb_scores = {
-        lig: load_score(f"neural_rate_nfkb_washout/{lig}")
-        for lig in ("IL1", "TNF", "LPS")
-    }
+def build_fig5_macrophage_and_swap() -> None:
+    """Figure 5: 4-TF Macrophage innate-immune benchmark & 4:1 strength-swap ID."""
+    mac = load_new_result("macrophage_multitf")["summary"]
+    swap = load_stage3("strength_swap_replication")
 
-    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.34))
+    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.50))
     gs = fig.add_gridspec(
         1,
-        2,
-        width_ratios=[1.05, 1.15],
+        3,
+        width_ratios=[1.05, 1.05, 1.05],
         left=0.105,
-        right=0.980,
-        bottom=0.22,
-        top=0.84,
-        wspace=0.34,
+        right=0.985,
+        bottom=0.31,
+        top=0.85,
+        wspace=0.40,
     )
     ax0 = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[0, 1])
+    ax2 = fig.add_subplot(gs[0, 2])
 
-    # Panel a: Paired repeat vs 4:1 strength swap vs oracle swap across 16 networks
+    m_keys = [
+        "perturb_ode",
+        "ltc_coupled",
+        "coupled_adaptive",
+        "ltc_local",
+        "local_const",
+        "memgrn_int",
+    ]
+    m_lbls = ["PertODE", "LTC-Cpl", "Cpl-Adapt", "LTC-Loc", "Loc-Const", "Mem-Int"]
+    m_cols = [
+        PALETTE["violet"],
+        PALETTE["crimson"],
+        PALETTE["amber"],
+        PALETTE["teal"],
+        PALETTE["slate"],
+        PALETTE["navy"],
+    ]
+    mx = np.arange(len(m_keys))
+
+    # Panel a: 4-TF Macrophage regulator attribution AUROC across 477 GRS genes
+    auroc_vals = [mac[k]["regulator_attribution_auroc"] for k in m_keys]
+    ax0.bar(
+        mx,
+        np.array(auroc_vals) - 0.5,
+        bottom=0.5,
+        width=0.62,
+        color=m_cols,
+        edgecolor=PALETTE["ink"],
+        linewidth=0.55,
+    )
+    ax0.set_xticks(mx)
+    ax0.set_xticklabels(m_lbls, rotation=90, ha="center", va="top")
+    ax0.tick_params(axis="x", pad=4.5)
+    ax0.set_xlim(-0.6, len(m_keys) - 0.4)
+    ax0.set_ylim(0.5, 0.84)
+    ax0.set_yticks([0.5, 0.6, 0.7, 0.8])
+    ax0.set_ylabel("Regulator AUROC")
+    ax0.set_title("Macrophage attribution")
+    add_panel_tag(ax0, "a", x_pt=-32.0, y_pt=6.0)
+
+    # Panel b: Macrophage OOD MSE on selective de-correlated stimuli (TNF, IFNB, FLA, VSV)
+    sel_vals = [mac[k]["selective_decorrelated_mse"] for k in m_keys]
+    ax1.bar(
+        mx, sel_vals, width=0.62, color=m_cols, edgecolor=PALETTE["ink"], linewidth=0.55
+    )
+    ax1.set_xticks(mx)
+    ax1.set_xticklabels(m_lbls, rotation=90, ha="center", va="top")
+    ax1.tick_params(axis="x", pad=4.5)
+    ax1.set_xlim(-0.6, len(m_keys) - 0.4)
+    ax1.set_ylim(0.0, 0.54)
+    ax1.set_yticks([0.0, 0.25, 0.50])
+    ax1.set_ylabel("De-correlated MSE")
+    ax1.set_title("Selective stimuli")
+    add_panel_tag(ax1, "b", x_pt=-30.0, y_pt=6.0)
+
+    # Panel c: Counterbalanced 4:1 strength swap across 16 networks
     overall_rep = 100.0 * swap["overall"]["learned_gw"]["repeat"]
     overall_swp = 100.0 * swap["overall"]["learned_gw"]["swap"]
     overall_orc = 100.0 * swap["overall"]["oracle"]["swap"]
@@ -739,162 +766,301 @@ def build_fig5_swap_and_nfkb() -> None:
         100.0 * swap["subgroups"]["fast/fast opposing"]["means"]["oracle"]["swap"]
     )
 
-    cats = ["All 96 targets\n(16 networks)", "Fast opposing\nparents"]
-    rep_vals = [overall_rep, opp_fast_rep]
-    swp_vals = [overall_swp, opp_fast_swp]
-    orc_vals = [overall_orc, opp_fast_orc]
     gx = np.arange(2)
     w = 0.23
-    ax0.bar(
+    ax2.bar(
         gx - w,
-        rep_vals,
+        [overall_rep, opp_fast_rep],
         width=w * 0.90,
         color=PALETTE["amber"],
         edgecolor=PALETTE["ink"],
-        linewidth=0.6,
-        label="Repeated 4:1",
+        linewidth=0.55,
+        label="Repeat 4:1",
     )
-    ax0.bar(
+    ax2.bar(
         gx,
-        swp_vals,
+        [overall_swp, opp_fast_swp],
         width=w * 0.90,
         color=PALETTE["navy"],
         edgecolor=PALETTE["ink"],
-        linewidth=0.6,
-        label="Swapped 4:1",
+        linewidth=0.55,
+        label="Swap 4:1",
     )
-    ax0.bar(
+    ax2.bar(
         gx + w,
-        orc_vals,
+        [overall_orc, opp_fast_orc],
         width=w * 0.90,
         color=PALETTE["teal"],
         edgecolor=PALETTE["ink"],
-        linewidth=0.6,
-        label="Oracle swap",
+        linewidth=0.55,
+        label="Oracle",
     )
-    ax0.set_xlim(-0.55, 1.55)
-    ax0.set_xticks(gx)
-    ax0.set_xticklabels(cats)
-    ax0.tick_params(axis="x", pad=4.0)
-    ax0.set_ylim(0.0, 188.0)
-    ax0.set_yticks([0, 25, 50, 75, 100])
-    ax0.set_ylabel("Exact pair recovery (%)")
-    ax0.set_title("Counterbalanced parent ID")
-    ax0.text(
-        0.0,
-        max(overall_swp, overall_orc) + 4.0,
-        f"+{overall_swp - overall_rep:.1f} pp",
-        ha="center",
-        va="bottom",
-        fontsize=7.8,
-        fontweight="bold",
-        color=PALETTE["navy"],
-    )
-    ax0.text(
-        1.0,
-        max(opp_fast_swp, opp_fast_orc) + 4.0,
-        f"+{opp_fast_swp - opp_fast_rep:.1f} pp",
-        ha="center",
-        va="bottom",
-        fontsize=7.8,
-        fontweight="bold",
-        color=PALETTE["navy"],
-    )
-    ax0.legend(loc="upper left", ncol=1, handlelength=1.2, labelspacing=0.16)
-    add_panel_tag(ax0, "a", x_pt=-32.0, y_pt=6.0)
+    ax2.set_xlim(-0.55, 1.55)
+    ax2.set_xticks(gx)
+    ax2.set_xticklabels(["All 96", "Fast opp."], rotation=90, ha="center", va="top")
+    ax2.tick_params(axis="x", pad=4.5)
+    ax2.set_ylim(0.0, 185.0)
+    ax2.set_yticks([0, 50, 100])
+    ax2.set_ylabel("Pair recovery (%)")
+    ax2.set_title("4:1 strength swap")
+    ax2.legend(loc="upper left", ncol=1, handlelength=1.1, labelspacing=0.16)
+    add_panel_tag(ax2, "c", x_pt=-30.0, y_pt=6.0)
 
-    # Panel b: Mammalian NF-kB cross-ligand washout (2,400-step fixed vs Latent ODE)
-    followup = load_score("neural_rate_nfkb_washout", "followup_design.json")
-    _ = followup
-    nfkb_map = {
-        lig: {m["model"]: m["post_mse"] for m in nfkb_scores[lig]["models"]}
-        for lig in ("IL1", "TNF", "LPS")
-    }
-    lig_labels = ["IL-1 holdout", "TNF holdout", "LPS holdout"]
-    two_rate_2400 = [0.729, 0.522, 2.785]
-    memgrn_cv = [
-        nfkb_map["IL1"]["neural_rate_gw"],
-        nfkb_map["TNF"]["neural_rate_gw"],
-        nfkb_map["LPS"]["neural_rate_gw"],
-    ]
-    memgrn_2400 = [0.624, 0.411, 1.906]
-    latent_cv = [
-        nfkb_map["IL1"]["latent_ode"],
-        nfkb_map["TNF"]["latent_ode"],
-        nfkb_map["LPS"]["latent_ode"],
-    ]
-
-    lx = np.arange(3)
-    bw = 0.19
-    series_b = [
-        (two_rate_2400, "Two-rate (2.4k)", PALETTE["amber"]),
-        (memgrn_cv, "MemGRN (CV stop)", PALETTE["slate"]),
-        (memgrn_2400, "MemGRN (2.4k)", PALETTE["navy"]),
-        (latent_cv, "Latent ODE (CV)", PALETTE["violet"]),
-    ]
-    for s_i, (vals_s, lbl_s, col_s) in enumerate(series_b):
-        ax1.bar(
-            lx + (s_i - 1.5) * bw,
-            vals_s,
-            width=bw * 0.92,
-            color=col_s,
-            edgecolor=PALETTE["ink"],
-            linewidth=0.6,
-            label=lbl_s,
-        )
-    ax1.set_xticks(lx)
-    ax1.set_xticklabels(lig_labels)
-    ax1.set_ylim(0.0, 3.25)
-    ax1.set_yticks([0.0, 1.0, 2.0, 3.0])
-    ax1.set_ylabel("Post-washout RNA MSE")
-    ax1.set_title("Mammalian NF-κB boundary")
-    ax1.legend(loc="upper left", ncol=1, handlelength=1.3, labelspacing=0.20)
-    add_panel_tag(ax1, "b", x_pt=-28.0, y_pt=6.0)
-
-    export_figure(
-        fig,
-        "fig5_swap_identification_and_nfkb",
-        exemptions=[
-            {
-                "panels": ["a", "b"],
-                "checks": ["panel-width"],
-                "reason": "3-ligand 4-bar mammalian comparison uses slightly wider axis than 2-group swap summary",
-            }
-        ],
-    )
+    export_figure(fig, "fig5_macrophage_and_swap")
 
 
 def build_all_tables() -> None:
     """Generate clean LaTeX tables (each <= 6 columns) for uniform font sizing."""
-    occ = load_score("neural_rate_pulse", "test_scores.json")
-    buf = load_score("neural_rate_buffer", "test_scores.json")
-    single = load_score("neural_rate_msn2_transfer")
-    rep = load_score("msn2_repeated_pulses")
-    six = load_score("msn2_six_promoter_rates")
-    swap = load_score("strength_swap_replication")
-    cert = load_score("paired_time_certificate", "test_scores.json")
+    mtf = load_new_result("multitf_factorial")["summary"]
+    joint = load_new_result("msn2_joint_and_cross_readout")
+    mac = load_new_result("macrophage_multitf")["summary"]
+    occ = load_stage3("neural_rate_pulse", "test_scores.json")
+    buf = load_stage3("neural_rate_buffer", "test_scores.json")
+    six = load_stage3("msn2_six_promoter_rates")
+    swap = load_stage3("strength_swap_replication")
+    cert = load_stage3("paired_time_certificate", "test_scores.json")
+    cert_meta = load_stage3("paired_time_certificate", "certificate.json")
     nfkb = {
-        lig: load_score(f"neural_rate_nfkb_washout/{lig}")
+        lig: load_stage3(f"neural_rate_nfkb_washout/{lig}")
         for lig in ("IL1", "TNF", "LPS")
     }
 
-    # Table 1: Synthetic kinetics & out-of-class buffering
+    # Table 1: Centerpiece Locked 2x2 Multi-TF Correlation-Shift Benchmark (24 worlds)
     t1_rows: list[list[str]] = []
+    mtf_order = [
+        ("local_const", "Local Constant ($gW$)"),
+        ("coupled_const", "Coupled Constant (SSM)"),
+        ("coupled_adaptive", "Coupled Adaptive ($gW$)"),
+        ("ltc_coupled", "Coupled LTC"),
+        ("perturb_ode", "PerturbODE"),
+        ("ltc_local", "Source-Local LTC"),
+        ("memgrn", "\\textbf{MemGRN (ours)}"),
+        ("memgrn_int", "\\textbf{MemGRN-Int (ours)}"),
+    ]
+    for idx_r, (reg_key, reg_lbl) in enumerate(
+        [("additive", "Additive"), ("cooperative", "Cooperative")]
+    ):
+        if idx_r > 0:
+            t1_rows.append(["\\midrule"])
+        means = mtf[reg_key]["means"]
+        best_mse = min(means[k]["test_mse"] for k, _ in mtf_order)
+        best_attr = min(means[k]["attribution_rmse"] for k, _ in mtf_order)
+        best_ap = max(means[k]["edge_ap"] for k, _ in mtf_order)
+        for m_i, (k, lbl) in enumerate(mtf_order):
+            d = means[k]
+            c_mse = f"{d['test_mse']:.4f}"
+            c_att = f"{d['attribution_rmse']:.4f}"
+            c_ap = f"{d['edge_ap']:.3f}"
+            if np.isclose(d["test_mse"], best_mse):
+                c_mse = f"\\textbf{{{c_mse}}}"
+            if np.isclose(d["attribution_rmse"], best_attr):
+                c_att = f"\\textbf{{{c_att}}}"
+            if np.isclose(d["edge_ap"], best_ap):
+                c_ap = f"\\textbf{{{c_ap}}}"
+            t1_rows.append(
+                [reg_lbl if m_i == 0 else "", lbl, str(d["n_params"]), c_mse, c_att, c_ap]
+            )
+    write_tex_table(
+        "tab1_multitf_factorial.tex",
+        "llrrrr",
+        [
+            "Regime",
+            "Architecture",
+            "Params",
+            r"OOD MSE $\downarrow$",
+            r"Attr.\ RMSE $\downarrow$",
+            r"Edge AP $\uparrow$",
+        ],
+        t1_rows,
+    )
+
+    # Table 2: Yeast Msn2 Fair Source-CV Joint Training & Cross-Readout 2x2
+    jt = joint["joint_training"]
+    t2_rows: list[list[str]] = []
+    j_order = [
+        ("memgrn", "\\textbf{MemGRN (ours)}"),
+        ("ltc_local", "Source-Local LTC"),
+        ("latent_ode", "Latent Neural ODE"),
+        ("perturb_ode", "PerturbODE"),
+        ("local_const", "Constant $gW$"),
+    ]
+    best_30 = min(jt[k]["held_30min_post_mse"] for k, _ in j_order)
+    best_10 = min(jt[k]["ten_trains_post_mse"] for k, _ in j_order)
+    best_40 = min(jt[k]["ten_trains_first40_mse"] for k, _ in j_order)
+    best_ns = min(jt[k]["ten_trains_no_sip18_mse"] for k, _ in j_order)
+    for k, lbl in j_order:
+        d = jt[k]
+        s30 = f"{d['held_30min_post_mse']:.4f}"
+        s10 = f"{d['ten_trains_post_mse']:.4f}"
+        s40 = f"{d['ten_trains_first40_mse']:.4f}"
+        sns = f"{d['ten_trains_no_sip18_mse']:.4f}"
+        if np.isclose(d["held_30min_post_mse"], best_30):
+            s30 = f"\\textbf{{{s30}}}"
+        if np.isclose(d["ten_trains_post_mse"], best_10):
+            s10 = f"\\textbf{{{s10}}}"
+        if np.isclose(d["ten_trains_first40_mse"], best_40):
+            s40 = f"\\textbf{{{s40}}}"
+        if np.isclose(d["ten_trains_no_sip18_mse"], best_ns):
+            sns = f"\\textbf{{{sns}}}"
+        t2_rows.append([lbl, str(d["n_params"]), s30, s10, s40, sns])
+    write_tex_table(
+        "tab2_msn2_joint_transfer.tex",
+        "lrrrrr",
+        [
+            "Joint source-CV model",
+            "Params",
+            r"30-min $\downarrow$",
+            r"10 trains $\downarrow$",
+            r"First 40m $\downarrow$",
+            r"No \texttt{SIP18} $\downarrow$",
+        ],
+        t2_rows,
+    )
+
+    # Table 3: Symmetric Cross-Readout Sensitivity & Six-Promoter Frozen-Readout Ablation
+    modes = ["constant", "activity", "memory", "both"]
+    t3_rows: list[list[str]] = []
+    for r_orig, r_lbl in [
+        ("local_const", "Joint Constant-$gW$ readout (7 genes)"),
+        ("memgrn", "Joint MemGRN readout (7 genes)"),
+    ]:
+        vals = [joint["cross_readout_2x2"][r_orig][m] for m in modes]
+        b_i = int(np.argmin(vals))
+        cells = [
+            f"\\textbf{{{vals[i]:.4f}}}" if i == b_i else f"{vals[i]:.4f}" for i in range(4)
+        ]
+        t3_rows.append([r_lbl, *cells])
+    t3_rows.append(["\\midrule"])
+    genes = six["genes"]
+    arr = np.array([[six["results"][g][m]["mse"] for m in modes] for g in genes])
+    for g_i, g in enumerate(genes):
+        best_m = int(np.argmin(arr[g_i]))
+        cells = [
+            f"\\textbf{{{arr[g_i, m_i]:.4f}}}"
+            if m_i == best_m
+            else f"{arr[g_i, m_i]:.4f}"
+            for m_i in range(4)
+        ]
+        t3_rows.append([f"\\texttt{{{g}}} (archived single-pulse $W$)", *cells])
+    means = arr.mean(axis=0)
+    best_mean = int(np.argmin(means))
+    mean_cells = [
+        f"\\textbf{{{means[m_i]:.4f}}}" if m_i == best_mean else f"{means[m_i]:.4f}"
+        for m_i in range(4)
+    ]
+    t3_rows.append(["Six-promoter mean", *mean_cells])
+    write_tex_table(
+        "tab3_six_promoters.tex",
+        "lrrrr",
+        [
+            "Readout origin / promoter",
+            r"Constant $\downarrow$",
+            r"Activity only $\downarrow$",
+            r"Memory only $\downarrow$",
+            r"Activity + memory $\downarrow$",
+        ],
+        t3_rows,
+    )
+
+    # Table 4: Real 4-TF Mammalian Macrophage Benchmark (14 stimuli x 477 GRS genes)
+    t4_rows: list[list[str]] = []
+    mac_order = [
+        ("memgrn_int", "\\textbf{MemGRN-Int (ours)}"),
+        ("memgrn", "\\textbf{MemGRN (ours)}"),
+        ("local_const", "Local Constant ($gW$)"),
+        ("ltc_local", "Source-Local LTC"),
+        ("coupled_adaptive", "Coupled Adaptive ($gW$)"),
+        ("coupled_const", "Coupled Constant (SSM)"),
+        ("ltc_coupled", "Coupled LTC"),
+        ("perturb_ode", "PerturbODE"),
+    ]
+    best_auroc = max(mac[k]["regulator_attribution_auroc"] for k, _ in mac_order)
+    best_top1 = max(mac[k]["top1_regulator_accuracy"] for k, _ in mac_order)
+    best_sel = min(mac[k]["selective_decorrelated_mse"] for k, _ in mac_order)
+    best_all = min(mac[k]["all_14_stimuli_mse"] for k, _ in mac_order)
+    for k, lbl in mac_order:
+        d = mac[k]
+        s_au = f"{d['regulator_attribution_auroc']:.3f}"
+        s_t1 = f"{100.0 * d['top1_regulator_accuracy']:.1f}\\%"
+        s_se = f"{d['selective_decorrelated_mse']:.3f}"
+        s_al = f"{d['all_14_stimuli_mse']:.3f}"
+        if np.isclose(d["regulator_attribution_auroc"], best_auroc):
+            s_au = f"\\textbf{{{s_au}}}"
+        if np.isclose(d["top1_regulator_accuracy"], best_top1):
+            s_t1 = f"\\textbf{{{s_t1}}}"
+        if np.isclose(d["selective_decorrelated_mse"], best_sel):
+            s_se = f"\\textbf{{{s_se}}}"
+        if np.isclose(d["all_14_stimuli_mse"], best_all):
+            s_al = f"\\textbf{{{s_al}}}"
+        t4_rows.append([lbl, s_au, s_t1, s_se, s_al])
+    write_tex_table(
+        "tab4_macrophage_multitf.tex",
+        "lrrrr",
+        [
+            "Architecture (4 TFs, 477 genes)",
+            r"GRS AUROC $\uparrow$",
+            r"Top-1 TF $\uparrow$",
+            r"De-corr.\ MSE $\downarrow$",
+            r"14-stim.\ MSE $\downarrow$",
+        ],
+        t4_rows,
+    )
+
+    # Table 5: Counterbalanced 4:1 Strength Swap Across 16 Networks (96 Targets)
+    t5_rows: list[list[str]] = []
+    for k, lbl in [
+        ("learned_gw", "\\textbf{Learned-memory $gW$}"),
+        ("fixed_gw", "Fixed-rate $gW$"),
+        ("history_basis", "History time basis"),
+        ("oracle", "Oracle templates"),
+    ]:
+        one_v = 100.0 * swap["overall"][k]["single"]
+        rep_v = 100.0 * swap["overall"][k]["repeat"]
+        swp_v = 100.0 * swap["overall"][k]["swap"]
+        t5_rows.append(
+            [
+                lbl,
+                f"{one_v:.2f}\\%",
+                f"{rep_v:.2f}\\%",
+                f"{swp_v:.2f}\\%",
+                f"+{swp_v - rep_v:.2f}",
+            ]
+        )
+    write_tex_table(
+        "tab5_swap_identification.tex",
+        "lrrrr",
+        [
+            "Template library",
+            r"1 trace $\uparrow$",
+            r"Repeat 4:1 $\uparrow$",
+            r"Swap 4:1 $\uparrow$",
+            r"Swap $-$ Repeat (pp) $\uparrow$",
+        ],
+        t5_rows,
+    )
+
+    # Appendix Table A1: Occupancy & Out-of-Class Mass-Action Buffering + Multiscale
+    ta1_rows: list[list[str]] = []
     params_map = [168, 186, 274, 1158]
-    model_names = ["Constant $gW$", "Two-rate $gW$", "\\textbf{MemGRN (ours)}", "Latent Neural ODE"]
+    model_names = [
+        "Constant $gW$",
+        "Two-rate $gW$",
+        "\\textbf{MemGRN (ours)}",
+        "Latent Neural ODE",
+    ]
     for idx, tag, data, r_idx in [
         (0, "Occupancy-gated ($n=8$)", occ, 1),
         (1, "Mass-action buffer ($n=12$)", buf, 1),
         (2, "Constant control ($n=12$)", buf, 0),
     ]:
         if idx > 0:
-            t1_rows.append(["\\midrule"])
-        means = data["means"][r_idx]
-        best_full = int(np.argmin([m[0] for m in means[:4]]))
-        best_tail = int(np.argmin([m[1] for m in means[:4]]))
-        best_rec = int(np.argmax([m[3] for m in means[:4]]))
+            ta1_rows.append(["\\midrule"])
+        means_s = data["means"][r_idx]
+        best_full = int(np.argmin([m[0] for m in means_s[:4]]))
+        best_tail = int(np.argmin([m[1] for m in means_s[:4]]))
+        best_rec = int(np.argmax([m[3] for m in means_s[:4]]))
         for m_i in range(4):
-            vals = means[m_i]
+            vals = means_s[m_i]
             f_str = f"{1e6 * vals[0]:.2f}"
             t_str = f"{1e6 * vals[1]:.2f}"
             r_str = f"{100.0 * vals[3]:.2f}\\%"
@@ -904,11 +1070,18 @@ def build_all_tables() -> None:
                 t_str = f"\\textbf{{{t_str}}}"
             if m_i == best_rec:
                 r_str = f"\\textbf{{{r_str}}}"
-            reg_cell = tag if m_i == 0 else ""
-            t1_rows.append([reg_cell, model_names[m_i], str(params_map[m_i]), f_str, t_str, r_str])
-
+            ta1_rows.append(
+                [
+                    tag if m_i == 0 else "",
+                    model_names[m_i],
+                    str(params_map[m_i]),
+                    f_str,
+                    t_str,
+                    r_str,
+                ]
+            )
     write_tex_table(
-        "tab1_synthetic.tex",
+        "tab_a1_synthetic_buffering.tex",
         "llrrrr",
         [
             "Kinetic regime",
@@ -918,148 +1091,172 @@ def build_all_tables() -> None:
             r"Tail MSE $\downarrow$",
             r"Pair ID $\uparrow$",
         ],
-        t1_rows,
+        ta1_rows,
     )
 
-    # Table 2: Msn2 single-pulse and 10-schedule pulse-train zero-shot transfer
-    t2_rows: list[list[str]] = []
-    msn2_models = [
-        ("neural_rate_gw", "\\textbf{MemGRN (ours)}", "69"),
-        ("two_rate_gw", "Two-rate $gW$", "41"),
-        ("latent_ode", "Latent Neural ODE", "998"),
-        ("source_mean", "Pooled source mean", "--"),
-        ("dose_matched_mean", "Dose-matched mean", "--"),
-    ]
-    s_vals = [single["results"][k]["post"] for k, _, _ in msn2_models]
-    r_all = [rep["models"][k]["all"]["primary"] for k, _, _ in msn2_models]
-    r_nosip = [rep["models"][k]["without_SIP18"]["primary"] for k, _, _ in msn2_models]
-    r_f40 = [rep["models"][k]["all"]["first40"] for k, _, _ in msn2_models]
-    for i, (k, label, p_cnt) in enumerate(msn2_models):
-        c1 = f"{s_vals[i]:.4f}"
-        c2 = f"{r_all[i]:.4f}"
-        c3 = f"{r_f40[i]:.4f}"
-        c4 = f"{r_nosip[i]:.4f}"
-        if i == int(np.argmin(s_vals)):
-            c1 = f"\\textbf{{{c1}}}"
-        if i == int(np.argmin(r_all)):
-            c2 = f"\\textbf{{{c2}}}"
-        if i == int(np.argmin(r_f40)):
-            c3 = f"\\textbf{{{c3}}}"
-        if i == int(np.argmin(r_nosip)):
-            c4 = f"\\textbf{{{c4}}}"
-        t2_rows.append([label, p_cnt, c1, c2, c3, c4])
-
-    write_tex_table(
-        "tab2_msn2_transfer.tex",
-        "lrrrrr",
-        [
-            "Model",
-            "Params",
-            r"30-min pulse $\downarrow$",
-            r"10 trains (all 7) $\downarrow$",
-            r"First 40 min $\downarrow$",
-            r"No \texttt{SIP18} $\downarrow$",
-        ],
-        t2_rows,
-    )
-
-    # Table 3: Frozen-readout rate-input ablation across six native yeast promoters
-    modes = ["constant", "activity", "memory", "both"]
-    genes = six["genes"]
-    arr = np.array([[six["results"][g][m]["mse"] for m in modes] for g in genes])
-    t3_rows: list[list[str]] = []
-    for g_i, g in enumerate(genes):
-        best_m = int(np.argmin(arr[g_i]))
-        cells = [
-            f"\\textbf{{{arr[g_i, m_i]:.4f}}}"
-            if m_i == best_m
-            else f"{arr[g_i, m_i]:.4f}"
-            for m_i in range(4)
-        ]
-        t3_rows.append([f"\\texttt{{{g}}}", *cells])
-    t3_rows.append(["\\midrule"])
-    means = arr.mean(axis=0)
-    best_mean = int(np.argmin(means))
-    mean_cells = [
-        f"\\textbf{{{means[m_i]:.4f}}}" if m_i == best_mean else f"{means[m_i]:.4f}"
-        for m_i in range(4)
-    ]
-    t3_rows.append(["Pooled mean", *mean_cells])
-    t3_rows.append(["Rate parameters", "3", "23", "27", "31"])
-    write_tex_table(
-        "tab3_six_promoters.tex",
-        "lrrrr",
-        [
-            "Promoter",
-            r"Constant $\downarrow$",
-            r"Activity only $\downarrow$",
-            r"Memory only $\downarrow$",
-            r"Activity + memory $\downarrow$",
-        ],
-        t3_rows,
-    )
-
-    # Table 4: Counterbalanced 4:1 strength swap & correlated-noise schedule selection
-    t4_rows: list[list[str]] = []
-    sw_methods = [
-        ("learned_gw", "\\textbf{Learned-memory $gW$}"),
-        ("fixed_gw", "Fixed-rate $gW$"),
+    # Appendix Table A2: Multiscale & Autonomous Shared-Driver Disambiguation
+    multi = load_stage3("multiscale_gw")
+    mixed = load_stage3("mixed_directed_memory")
+    ta2_rows: list[list[str]] = []
+    for k, lbl in [
+        ("learned_gw", "\\textbf{Multiscale MemGRN}"),
         ("history_basis", "History time basis"),
-        ("oracle", "Oracle templates"),
-    ]
-    for k, lbl in sw_methods:
-        one_v = 100.0 * swap["overall"][k]["single"]
-        rep_v = 100.0 * swap["overall"][k]["repeat"]
-        swp_v = 100.0 * swap["overall"][k]["swap"]
-        gain_v = swp_v - rep_v
-        t4_rows.append(
+        ("current_hybrid", "Single-rate hybrid"),
+        ("state_space", "Linear state space"),
+    ]:
+        c_dat = multi["classes"][k]["biphasic"]
+        m_all = multi["means"][k]
+        ta2_rows.append(
             [
+                "Multiscale suite" if k == "learned_gw" else "",
                 lbl,
-                f"{one_v:.2f}\\%",
-                f"{rep_v:.2f}\\%",
-                f"{swp_v:.2f}\\%",
-                f"+{gain_v:.2f}",
+                f"{100.0 * c_dat['error']:.2f}\\%",
+                f"{100.0 * m_all['reversal']:.1f}\\%",
+                f"{m_all['delayed_ap']:.3f}",
+            ]
+        )
+    ta2_rows.append(["\\midrule"])
+    for k, lbl in [
+        ("memory_driver", "\\textbf{MemGRN + oscillator}"),
+        ("latent_ODE", "Latent Neural ODE"),
+        ("state_space", "Linear state space"),
+        ("directed_memory", "MemGRN (no oscillator)"),
+        ("instant_driver", "Memoryless + oscillator"),
+    ]:
+        m_dat = mixed["means"][k]
+        ta2_rows.append(
+            [
+                "Shared driver" if k == "memory_driver" else "",
+                lbl,
+                f"{100.0 * m_dat['tail_error_ratio']:.2f}\\%",
+                f"{100.0 * m_dat['tail_sign']:.1f}\\%",
+                f"{m_dat['delayed_ap']:.3f}",
             ]
         )
     write_tex_table(
-        "tab4_swap_identification.tex",
-        "lrrrr",
+        "tab_a2_multiscale_driver.tex",
+        "llrrr",
         [
-            "Template library",
-            r"1 trace $\uparrow$",
-            r"Repeat 4:1 $\uparrow$",
-            r"Swap 4:1 $\uparrow$",
-            r"Swap $-$ Repeat (pp) $\uparrow$",
+            "Benchmark",
+            "Model",
+            r"Tail error $\downarrow$",
+            r"Sign acc. $\uparrow$",
+            r"Edge AP $\uparrow$",
         ],
-        t4_rows,
+        ta2_rows,
     )
 
-    # Table 5: Mammalian NF-kB cross-ligand washout boundary
+    # Appendix Table A3: Leave-One-Promoter-Out Shared Filter Transfer & RTN2 RK4 Ablations
+    lopo = joint["shared_filter_lopo_transfer"]["by_promoter"]
+    ta3_rows: list[list[str]] = []
+    for g_name, g_vals in lopo.items():
+        m_v = g_vals["shared_memgrn_filter_mse"]
+        c_v = g_vals["shared_const_filter_mse"]
+        m_s = f"\\textbf{{{m_v:.4f}}}" if m_v < c_v else f"{m_v:.4f}"
+        c_s = f"\\textbf{{{c_v:.4f}}}" if c_v < m_v else f"{c_v:.4f}"
+        ta3_rows.append(
+            [f"\\texttt{{{g_name}}}", c_s, m_s, f"{100.0 * (1.0 - m_v / c_v):+.1f}\\%"]
+        )
+    ta3_rows.append(["\\midrule"])
+    m_mean = joint["shared_filter_lopo_transfer"]["mean_memgrn_shared"]
+    c_mean = joint["shared_filter_lopo_transfer"]["mean_const_shared"]
+    ta3_rows.append(
+        [
+            "7-promoter LOPO mean",
+            f"{c_mean:.4f}",
+            f"\\textbf{{{m_mean:.4f}}}",
+            f"{100.0 * (1.0 - m_mean / c_mean):+.1f}\\%",
+        ]
+    )
+    write_tex_table(
+        "tab_a3_lopo_shared_filter.tex",
+        "lrrr",
+        [
+            "Held-out promoter",
+            r"Shared Const.\ filter $\downarrow$",
+            r"Shared MemGRN filter $\downarrow$",
+            r"MSE reduction $\uparrow$",
+        ],
+        ta3_rows,
+    )
+
+    # Appendix Table A4: Msn2 Memory Resets & RTN2 Continuous-vs-Switch Ablations
+    rtn_sw = load_stage3("msn2_rtn2_switch_neural")
+    reset = load_stage3("msn2_memory_reset")
+    ta4_rows: list[list[str]] = []
+    for idx_r, (k, lbl) in enumerate(
+        [
+            ("constant", "Constant rates"),
+            ("switch_only", "Discrete switch only"),
+            ("neural_only", "Continuous neural rate"),
+            ("full", "Switch + neural rate"),
+        ]
+    ):
+        d_sw = rtn_sw["models"][k]
+        ta4_rows.append(
+            [
+                "\\texttt{RTN2} switch" if idx_r == 0 else "",
+                lbl,
+                f"{d_sw['primary']:.4f}",
+                f"{d_sw['half_step']:.4f}",
+                f"{d_sw['first40']:.4f}",
+            ]
+        )
+    ta4_rows.append(["\\midrule"])
+    for tr_id, tr_lbl in [
+        ("FM_6_5min_690nM", "6 pulses (intact / reset)"),
+        ("FM_8_5min_690nM", "8 pulses (intact / reset)"),
+    ]:
+        p_all = reset["results"][tr_id]["panels"]["all"]["mse"]
+        p_rtn = reset["results"][tr_id]["promoters"]["RTN2"]
+        ta4_rows.append(
+            [
+                "Filter reset" if tr_id == "FM_6_5min_690nM" else "",
+                tr_lbl,
+                f"{p_all['intact']:.4f} / {p_all['reset']:.4f}",
+                f"+{p_rtn['shift_attributable_to_reporter_at_off']:.3f}",
+                f"+{p_rtn['shift_attributable_to_production_after_off']:.3f}",
+            ]
+        )
+    write_tex_table(
+        "tab_a4_rtn2_and_reset.tex",
+        "llrrr",
+        [
+            "Study",
+            "Condition / model",
+            r"Primary MSE $\downarrow$",
+            r"Refined / Carryover",
+            r"First 40m / Post-off",
+        ],
+        ta4_rows,
+    )
+
+    # Appendix Table A5: Fibroblast Single-TF NF-kB Washout Boundary (177 genes)
     nfkb_map = {
         lig: {m["model"]: m["post_mse"] for m in nfkb[lig]["models"]}
         for lig in ("IL1", "TNF", "LPS")
     }
-    t5_rows = [
+    ta5_rows = [
         [
-            "Constant $gW$ (CV stop)",
+            "Constant $gW$ (2-ligand CV stop)",
             f"{nfkb_map['IL1']['current_gw']:.3f}",
             f"{nfkb_map['TNF']['current_gw']:.3f}",
             f"{nfkb_map['LPS']['current_gw']:.3f}",
         ],
         [
-            "Two-rate $gW$ (CV stop)",
+            "Two-rate $gW$ (2-ligand CV stop)",
             f"{nfkb_map['IL1']['two_rate_gw']:.3f}",
             f"{nfkb_map['TNF']['two_rate_gw']:.3f}",
             f"{nfkb_map['LPS']['two_rate_gw']:.3f}",
         ],
         [
-            "MemGRN (CV stop)",
+            "MemGRN (2-ligand CV stop)",
             f"{nfkb_map['IL1']['neural_rate_gw']:.3f}",
             f"{nfkb_map['TNF']['neural_rate_gw']:.3f}",
             f"{nfkb_map['LPS']['neural_rate_gw']:.3f}",
         ],
         [
-            "Latent Neural ODE (CV stop)",
+            "Latent Neural ODE (2-ligand CV stop)",
             f"\\textbf{{{nfkb_map['IL1']['latent_ode']:.3f}}}",
             f"{nfkb_map['TNF']['latent_ode']:.3f}",
             f"\\textbf{{{nfkb_map['LPS']['latent_ode']:.3f}}}",
@@ -1076,7 +1273,7 @@ def build_all_tables() -> None:
         ["Latent Neural ODE (2,400 steps)", "0.744", "\\textbf{0.346}", "0.880"],
     ]
     write_tex_table(
-        "tab5_nfkb_boundary.tex",
+        "tab_a5_nfkb_boundary.tex",
         "lrrr",
         [
             "Model / checkpoint rule",
@@ -1084,150 +1281,11 @@ def build_all_tables() -> None:
             r"TNF holdout $\downarrow$",
             r"LPS holdout $\downarrow$",
         ],
-        t5_rows,
+        ta5_rows,
     )
 
-    # Appendix Table A1: Multiscale waveform & autonomous shared-driver disambiguation
-    multi = load_score("multiscale_gw")
-    mixed = load_score("mixed_directed_memory")
-    ta1_rows: list[list[str]] = []
-    for k, lbl in [
-        ("learned_gw", "\\textbf{Multiscale MemGRN}"),
-        ("history_basis", "History time basis"),
-        ("current_hybrid", "Single-rate hybrid"),
-        ("state_space", "Linear state space"),
-    ]:
-        c_dat = multi["classes"][k]["biphasic"]
-        m_all = multi["means"][k]
-        ta1_rows.append(
-            [
-                "Multiscale suite" if k == "learned_gw" else "",
-                lbl,
-                f"{100.0 * c_dat['error']:.2f}\\%",
-                f"{100.0 * m_all['reversal']:.1f}\\%",
-                f"{m_all['delayed_ap']:.3f}",
-            ]
-        )
-    ta1_rows.append(["\\midrule"])
-    for k, lbl in [
-        ("memory_driver", "\\textbf{MemGRN + oscillator}"),
-        ("latent_ODE", "Latent Neural ODE"),
-        ("state_space", "Linear state space"),
-        ("directed_memory", "MemGRN (no oscillator)"),
-        ("instant_driver", "Memoryless + oscillator"),
-    ]:
-        m_dat = mixed["means"][k]
-        ta1_rows.append(
-            [
-                "Shared driver" if k == "memory_driver" else "",
-                lbl,
-                f"{100.0 * m_dat['tail_error_ratio']:.2f}\\%",
-                f"{100.0 * m_dat['tail_sign']:.1f}\\%",
-                f"{m_dat['delayed_ap']:.3f}",
-            ]
-        )
-    write_tex_table(
-        "tab_a1_multiscale_driver.tex",
-        "llrrr",
-        [
-            "Benchmark",
-            "Model",
-            r"Tail error $\downarrow$",
-            r"Sign acc. $\uparrow$",
-            r"Edge AP $\uparrow$",
-        ],
-        ta1_rows,
-    )
-
-    # Appendix Table A2: RTN2 continuous-vs-switch and rate-input RK4 ablations
-    rtn_sw = load_score("msn2_rtn2_switch_neural")
-    rtn_in = load_score("msn2_rtn2_rate_inputs")
-    ta2_rows: list[list[str]] = []
-    for idx_r, (k, lbl) in enumerate(
-        [
-            ("constant", "Constant rates"),
-            ("switch_only", "Discrete switch only"),
-            ("neural_only", "Continuous neural rate"),
-            ("full", "Switch + neural rate"),
-        ]
-    ):
-        d_sw = rtn_sw["models"][k]
-        ta2_rows.append(
-            [
-                "Switch vs. neural" if idx_r == 0 else "",
-                lbl,
-                f"{d_sw['primary']:.4f}",
-                f"{d_sw['half_step']:.4f}",
-                f"{d_sw['first40']:.4f}",
-            ]
-        )
-    ta2_rows.append(["\\midrule"])
-    for idx_r, (k, lbl) in enumerate(
-        [
-            ("constant", "Constant ($\\xi = \\varnothing$)"),
-            ("activity", "Activity only ($a_i$)"),
-            ("memory", "Memory only ($z_{ir}, h_{ir}$)"),
-            ("both", "\\textbf{Activity + memory}"),
-        ]
-    ):
-        d_in = rtn_in["models"][k]
-        ta2_rows.append(
-            [
-                "RK4 rate inputs" if idx_r == 0 else "",
-                lbl,
-                f"{d_in['primary']:.4f}",
-                f"{d_in['half_step']:.4f}",
-                f"{d_in['first40']:.4f}",
-            ]
-        )
-    write_tex_table(
-        "tab_a2_rtn2_ablations.tex",
-        "llrrr",
-        [
-            "Ablation",
-            "Rate parameterization",
-            r"Primary MSE $\downarrow$",
-            r"Refined RK4 $\downarrow$",
-            r"First 40 min $\downarrow$",
-        ],
-        ta2_rows,
-    )
-
-    # Appendix Table A3: Msn2 inter-pulse memory resets and Proposition 1 splice accounting
-    reset = load_score("msn2_memory_reset")
-    ta3_rows: list[list[str]] = []
-    for tr_id, tr_lbl in [
-        ("FM_6_5min_690nM", "6 pulses (5-min gap)"),
-        ("FM_8_5min_690nM", "8 pulses (5-min gap)"),
-    ]:
-        p_all = reset["results"][tr_id]["panels"]["all"]["mse"]
-        p_rtn = reset["results"][tr_id]["promoters"]["RTN2"]
-        ta3_rows.append(
-            [
-                tr_lbl,
-                f"\\textbf{{{p_all['intact']:.4f}}}",
-                f"{p_all['last_only']:.4f}",
-                f"{p_all['reset']:.4f}",
-                f"+{p_rtn['shift_attributable_to_reporter_at_off']:.3f}",
-                f"+{p_rtn['shift_attributable_to_production_after_off']:.3f}",
-            ]
-        )
-    write_tex_table(
-        "tab_a3_msn2_reset.tex",
-        "lrrrrr",
-        [
-            "Pulse train",
-            r"Intact $\downarrow$",
-            r"Pre-final reset $\downarrow$",
-            r"Full reset $\downarrow$",
-            r"\texttt{RTN2} carryover",
-            r"\texttt{RTN2} post-off",
-        ],
-        ta3_rows,
-    )
-
-    # Appendix Table A4: Strength-swap recovery across structural parent-pair subgroups
-    ta4_rows: list[list[str]] = []
+    # Appendix Table A6: Swap Subgroups & Correlated-Noise 5-Time Schedule Certificate
+    ta6_rows: list[list[str]] = []
     for sg_key, sg_lbl in [
         ("all", "All targets ($96$)"),
         ("aligned", "Aligned signs ($48$)"),
@@ -1236,82 +1294,64 @@ def build_all_tables() -> None:
         ("biphasic/biphasic", "Biphasic pairs ($16$)"),
     ]:
         sg_m = swap["subgroups"][sg_key]["means"]["learned_gw"]
-        s1 = 100.0 * sg_m["single"]
         sr = 100.0 * sg_m["repeat"]
         ss = 100.0 * sg_m["swap"]
         so = 100.0 * swap["subgroups"][sg_key]["means"]["oracle"]["swap"]
-        ta4_rows.append(
+        ta6_rows.append(
             [
                 sg_lbl,
-                f"{s1:.2f}\\%",
                 f"{sr:.2f}\\%",
                 f"\\textbf{{{ss:.2f}\\%}}",
                 f"+{ss - sr:.2f}",
                 f"{so:.2f}\\%",
             ]
         )
-    write_tex_table(
-        "tab_a4_swap_subgroups.tex",
-        "lrrrrr",
-        [
-            "Target subgroup",
-            r"1 trace $\uparrow$",
-            r"Repeat 4:1 $\uparrow$",
-            r"Swap 4:1 $\uparrow$",
-            r"Gain (pp) $\uparrow$",
-            r"Oracle swap $\uparrow$",
-        ],
-        ta4_rows,
-    )
-
-    # Appendix Table A5: AR(1) 5-time schedule selection and paired certificate
-    cert_meta = load_score("paired_time_certificate", "certificate.json")
-    ta5_rows: list[list[str]] = []
+    ta6_rows.append(["\\midrule"])
     name_map = {
-        "learned_gw": "\\textbf{Learned-memory $gW$}",
-        "fixed_gw": "Fixed-rate $gW$",
-        "history_basis": "History time basis",
+        "learned_gw": "5-pt AR(1): Learned $gW$",
+        "fixed_gw": "5-pt AR(1): Fixed $gW$",
+        "history_basis": "5-pt AR(1): History basis",
     }
     for idx_c, r_cert in enumerate(cert["rows"]):
         p_meta = cert_meta["panels"][idx_c]
         ci_lo = 100.0 * p_meta["ci"][0]
         ci_hi = 100.0 * p_meta["ci"][1]
-        ta5_rows.append(
+        ta6_rows.append(
             [
                 name_map[r_cert["model"]],
-                f"{100.0 * r_cert['progression']:.2f}\\%",
                 f"{100.0 * r_cert['full_window']:.2f}\\%",
+                f"\\textbf{{{100.0 * r_cert['progression']:.2f}\\%}}",
                 f"+{100.0 * r_cert['secondary_gap']:.2f}",
                 f"[{ci_lo:+.2f}, {ci_hi:+.2f}]",
             ]
         )
     write_tex_table(
-        "tab_a5_schedule_cert.tex",
+        "tab_a6_swap_and_cert.tex",
         "lrrrr",
         [
-            "Template library",
-            r"Selected 5-pt $\uparrow$",
-            r"Full-window 5-pt $\uparrow$",
-            r"Net gain (pp) $\uparrow$",
-            r"Certified 98.5\% CI",
+            "Subgroup / 5-point policy",
+            r"Baseline $\uparrow$",
+            r"Swap / Selected $\uparrow$",
+            r"Gain (pp) $\uparrow$",
+            r"Oracle / 98.5\% CI",
         ],
-        ta5_rows,
+        ta6_rows,
     )
 
 
 def main() -> None:
     build_fig1_architecture()
-    build_fig2_synthetic()
-    build_fig3_msn2_transfer()
+    build_fig2_multitf_factorial()
+    build_fig3_msn2_joint_and_cross()
     build_fig4_frozen_readout()
-    build_fig5_swap_and_nfkb()
+    build_fig5_macrophage_and_swap()
     build_all_tables()
     ledger_path = ROOT / "results" / "claim_ledger.json"
     ledger_path.write_text(
         json.dumps({"source_sha256": SOURCE_HASHES}, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(f"Built 5 figures and 10 tables from {len(SOURCE_HASHES)} verified artifacts.")
+    print(f"Built 5 figures and 11 tables from {len(SOURCE_HASHES)} verified artifacts.")
 
 
 if __name__ == "__main__":

@@ -210,6 +210,11 @@ def main() -> None:
     buf = load_archived_json(stage3, "neural_rate_buffer/test_scores.json")
     occ = load_archived_json(stage3, "neural_rate_pulse/test_scores.json")
     swap = load_archived_json(stage3, "strength_swap_replication/scores.json")
+    mtf = json.loads((ROOT / "results" / "multitf_factorial" / "scores.json").read_text())
+    msn2_joint = json.loads(
+        (ROOT / "results" / "msn2_joint_and_cross_readout" / "scores.json").read_text()
+    )
+    mac = json.loads((ROOT / "results" / "macrophage_multitf" / "scores.json").read_text())
 
     six_means = {
         m: float(
@@ -230,6 +235,24 @@ def main() -> None:
         "buffer_tail_mse_reduction_pct": 100.0
         * (1.0 - buf["comparisons"][1][1]["effect"]),
         "swap_vs_repeat_gain_pp": 100.0 * swap["primary"]["swap_vs_repeat"]["mean"],
+        "multitf_additive_memgrn_vs_coupled_mse_reduction_pct": mtf["summary"]["additive"][
+            "comparisons"
+        ]["memgrn_vs_coupled_adaptive_mse"]["pct_reduction_vs_b"],
+        "multitf_cooperative_memgrn_int_vs_ltc_mse_reduction_pct": mtf["summary"][
+            "cooperative"
+        ]["comparisons"]["memgrn_int_vs_ltc_coupled_mse"]["pct_reduction_vs_b"],
+        "msn2_joint_memgrn_10train_mse": msn2_joint["joint_training"]["memgrn"][
+            "ten_trains_post_mse"
+        ],
+        "msn2_const_readout_memory_reduction_pct": 100.0
+        * (
+            1.0
+            - msn2_joint["cross_readout_2x2"]["local_const"]["memory"]
+            / msn2_joint["cross_readout_2x2"]["local_const"]["constant"]
+        ),
+        "macrophage_memgrn_int_auroc": mac["summary"]["memgrn_int"][
+            "regulator_attribution_auroc"
+        ],
     }
     print(json.dumps(report, indent=2))
 

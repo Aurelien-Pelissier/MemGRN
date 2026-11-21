@@ -1,0 +1,61 @@
+{
+  "benchmark": "locked_2x2_multitf_correlation_shift",
+  "n_sources": 8,
+  "n_targets": 24,
+  "additive_seeds": [
+    5001,
+    5002,
+    5003,
+    5004,
+    5005,
+    5006,
+    5007,
+    5008,
+    5009,
+    5010,
+    5011,
+    5012
+  ],
+  "cooperative_seeds": [
+    6001,
+    6002,
+    6003,
+    6004,
+    6005,
+    6006,
+    6007,
+    6008,
+    6009,
+    6010,
+    6011,
+    6012
+  ],
+  "models": [
+    "local_const",
+    "memgrn",
+    "memgrn_int",
+    "coupled_const",
+    "coupled_adaptive",
+    "ltc_coupled",
+    "ltc_local",
+    "perturb_ode"
+  ],
+  "train_schedules": 28,
+  "val_schedules": 8,
+  "test_schedules": 24,
+  "test_categories": [
+    "single_ko_in_module",
+    "phase_lag_shift",
+    "cross_module_combo"
+  ],
+  "primary_outcomes": [
+    "test_mse",
+    "attribution_rmse"
+  ],
+  "secondary_outcomes": [
+    "spurious_crosstalk_rmse",
+    "edge_ap",
+    "edge_auroc"
+  ],
+  "decision_rule": "Source-local adaptive memory (memgrn / memgrn_int) must reduce counterfactual attribution_rmse relative to coupled_adaptive and ltc_coupled while improving or matching held-out OOD intervention test_mse."
+}

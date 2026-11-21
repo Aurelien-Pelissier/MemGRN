@@ -1,21 +1,20 @@
 {
   "source_sha256": {
-    "results/stage3/neural_rate_pulse/test_scores.json": "cd327da5ad64b89f471b9b4917f9b347ef0ccbc18ffd543b1fa33ab9754f2382",
-    "results/stage3/neural_rate_buffer/test_scores.json": "d985808065db994c558780f18a79a1e1a0e695d51f2ac208704c71f41b361c3c",
-    "results/stage3/multiscale_gw/scores.json": "2190459bb321728af4d550c710efd0f577ab412751ee9da6c109eed41d7b33eb",
-    "results/stage3/msn2_repeated_pulses/scores.json": "e69a3e899273b465e512a006dc239372ce16d597d74f35def28ec9b1078ae7be",
+    "results/multitf_factorial/scores.json": "af0e9180102acf4d643e5b180a812a6c7f3ae98c15dd794470c643b764b47fed",
+    "results/msn2_joint_and_cross_readout/scores.json": "f686fa99671265b1eeda66da5b98fec21f9a4ed8d3195ed375c38e410a25c792",
     "results/stage3/msn2_memory_reset/scores.json": "5720a049e694d9b4b3e4fb37355bf1ebbf0e5b0203cacb72ec13193fdfbdcbdb",
     "results/stage3/msn2_six_promoter_rates/scores.json": "168f4a737b8ce7be655a301159f08c38b734f99582a725dafa8d3f5aabaff440",
+    "results/macrophage_multitf/scores.json": "16f1be1f0181bde7e649b026c8790c80a34755b54ed2604e763c8420e126d675",
     "results/stage3/strength_swap_replication/scores.json": "93c962b64de44d1b2890387dc44f02b10e9cab3803d0091d459fc645000cc3c6",
+    "results/stage3/neural_rate_pulse/test_scores.json": "cd327da5ad64b89f471b9b4917f9b347ef0ccbc18ffd543b1fa33ab9754f2382",
+    "results/stage3/neural_rate_buffer/test_scores.json": "d985808065db994c558780f18a79a1e1a0e695d51f2ac208704c71f41b361c3c",
+    "results/stage3/paired_time_certificate/test_scores.json": "15f4700eb4fdf837307537f8db70d96a9962ec6fe3f5757e0712c9f33da8f7dd",
+    "results/stage3/paired_time_certificate/certificate.json": "70dbcddc1ca3e76ecf8bbfb501ff33d4d4178bfbe6b6b4e3615237ac5a869d06",
     "results/stage3/neural_rate_nfkb_washout/IL1/scores.json": "a82aa59643004ffc7065d0bda40aab2261cb01d5387d9974432cea5f78e28b94",
     "results/stage3/neural_rate_nfkb_washout/TNF/scores.json": "06a6ae6f682699d03c9bad3da2faa36e3d3ae96b5431da19848ac17eb6a89f4f",
     "results/stage3/neural_rate_nfkb_washout/LPS/scores.json": "fd06b0e8419e9700b347b6a1ba7ad954131432919aace9a7ec279f511561ae5a",
-    "results/stage3/neural_rate_nfkb_washout/followup_design.json": "9221038a0843341cfa6a4d37f76012d9d605fa28ae9ea7437076d467c30833d8",
-    "results/stage3/neural_rate_msn2_transfer/scores.json": "6c1b93909f340125c3709376c6a5d5f0db4f310b61f17c3aff68451a30b2821a",
-    "results/stage3/paired_time_certificate/test_scores.json": "15f4700eb4fdf837307537f8db70d96a9962ec6fe3f5757e0712c9f33da8f7dd",
+    "results/stage3/multiscale_gw/scores.json": "2190459bb321728af4d550c710efd0f577ab412751ee9da6c109eed41d7b33eb",
     "results/stage3/mixed_directed_memory/scores.json": "cf7a826ddff746fcb6ce5dd7448697bfd94b7ba5d047a4bfa920fff2770ae161",
-    "results/stage3/msn2_rtn2_switch_neural/scores.json": "62dc3bdf8eb7c37dc4960396b7bf4174b339aa40a26207b6afd28f90167f560b",
-    "results/stage3/msn2_rtn2_rate_inputs/scores.json": "de240546405c900d8282dec88784a627c362a8312b29a652148dd775c45e57bd",
-    "results/stage3/paired_time_certificate/certificate.json": "70dbcddc1ca3e76ecf8bbfb501ff33d4d4178bfbe6b6b4e3615237ac5a869d06"
+    "results/stage3/msn2_rtn2_switch_neural/scores.json": "62dc3bdf8eb7c37dc4960396b7bf4174b339aa40a26207b6afd28f90167f560b"
   }
 }

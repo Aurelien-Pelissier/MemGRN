@@ -1,0 +1,76 @@
+{
+  "benchmark": "macrophage_4tf_14stimuli_477genes",
+  "repo": "signalingsystemslab/ResponseSpecificity",
+  "commit": "5336be7e3fe121a29bee1c8e4f39fe3ecf667a85",
+  "regulators": [
+    "NFkB",
+    "IRF",
+    "AP1",
+    "p38"
+  ],
+  "stimuli": [
+    "PAM",
+    "PIC",
+    "LPS",
+    "FLA",
+    "FSL",
+    "R848",
+    "CPG",
+    "TNF",
+    "IFNB",
+    "MCMV",
+    "VSV",
+    "STREP",
+    "LM",
+    "tPIC"
+  ],
+  "n_genes": 477,
+  "folds": [
+    [
+      "TNF",
+      "IFNB"
+    ],
+    [
+      "FLA",
+      "VSV"
+    ],
+    [
+      "LPS",
+      "MCMV"
+    ],
+    [
+      "PAM",
+      "PIC"
+    ],
+    [
+      "FSL",
+      "tPIC"
+    ],
+    [
+      "R848",
+      "LM"
+    ],
+    [
+      "CPG",
+      "STREP"
+    ]
+  ],
+  "models": [
+    "local_const",
+    "memgrn",
+    "memgrn_int",
+    "coupled_const",
+    "coupled_adaptive",
+    "ltc_coupled",
+    "ltc_local",
+    "perturb_ode"
+  ],
+  "file_sha256": {
+    "TableS2_NFkBactivationBMDM.txt": "fea6bec48ee18a46eea3d4e726b0dc9874e8313b269c613f822cde479753628f",
+    "TableS2_IRFactivationBMDM.txt": "ade91df440c57af703187bbbe3fd2ad3d930c4bc6dcf6f48c0bdd9357593122f",
+    "TableS2_AP1activationBMDM.txt": "56ebabd1667c5e8862024015ad5da0f79197573de6677bcce937b62ba327a82e",
+    "Table_p38activationBMDM.txt": "8e62ae7153846d6d96934bfa7d9f8480fcb0dbbca901ccf5c7d907339cbba05d",
+    "Cheng2017_induced.txt": "47c7e3516ae255c193cdcb431257f58f669bfe247b1792e187354c8de3690b9a",
+    "TableS3_genes2GRS.xlsx": "e8a121c2bda36dd59600a7fda3c97b95593d27f3aff12f2506f20c0506f658ff"
+  }
+}

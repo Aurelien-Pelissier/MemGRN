@@ -22,6 +22,10 @@ from memgrn.identification import (
     swap_singular_values,
     template_margin_lower_bound,
 )
+from memgrn.theory import (
+    verify_coupled_crosstalk_theorem,
+    verify_iso_expression_proposition,
+)
 
 
 def verify_all_theory(output_json: Path | None = None) -> dict:
@@ -206,7 +210,27 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
     if sched_res.exhaustive_optimum > sched_res.dual_upper_bound + 1e-9:
         raise AssertionError("Minimax dual upper bound violated exhaustive optimum")
 
+    # 6. Theorem 1 (new): Coupled adaptive cross-talk vs. Source-Local MemGRN invariance
+    ct_res = verify_coupled_crosstalk_theorem(w_star=2.4, rho=0.85)
+    if ct_res.coupled_ko_trajectory_l2_error <= 0.01:
+        raise AssertionError("Expected strictly positive coupled cross-talk error")
+    if ct_res.local_ko_trajectory_l2_error >= 1e-13 or ct_res.local_false_source2_attribution_l2 >= 1e-13:
+        raise AssertionError("Source-local MemGRN violated counterfactual invariance")
+
+    # 7. Proposition 2 (new): Iso-expression non-Markovian lower bound over PerturbODE
+    iso_res = verify_iso_expression_proposition()
+    if iso_res.washout_value_diff >= 1e-11:
+        raise AssertionError(f"Iso-expression washout mismatch: {iso_res.washout_value_diff}")
+    if iso_res.best_state_only_post_washout_error_l2 + 1e-12 < iso_res.state_only_universal_lower_bound:
+        raise AssertionError("State-only lower bound violated")
+
     summary = {
+        "crosstalk_coupled_ko_l2_error": ct_res.coupled_ko_trajectory_l2_error,
+        "crosstalk_coupled_false_attr_l2": ct_res.coupled_false_source2_attribution_l2,
+        "crosstalk_local_ko_l2_error": ct_res.local_ko_trajectory_l2_error,
+        "iso_expr_washout_diff": iso_res.washout_value_diff,
+        "iso_expr_memory_diff_at_washout": iso_res.memory_state_diff_at_washout,
+        "iso_expr_state_only_lower_bound": iso_res.state_only_universal_lower_bound,
         "max_swap_quadrature_error": max_swap_err,
         "swap_singular_values_4to1": [sv_sum, sv_diff],
         "swap_waveform_inversion_error": inversion_err,

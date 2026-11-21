@@ -31,6 +31,7 @@ class MemGRNConfig:
     rate_mode: RateInputMode = RateInputMode.BOTH
     use_activity_switch: bool = False
     switch_threshold: float = 0.1
+    use_pairwise_interactions: bool = False
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -50,6 +51,8 @@ class MemGRNParams:
         hidden_bias: Hidden bias b of shape (hidden_width,), or None for constant rates.
         output_proj: Channel-specific output weights v of shape
             (n_sources, n_channels, hidden_width), or None for constant rates.
+        interaction_weights: Optional pairwise source-memory interaction weights Gamma of shape
+            (n_sources * (n_sources - 1) // 2, n_targets) for MemGRN-Int enhancer cooperativity.
     """
 
     direct_weights: np.ndarray
@@ -60,6 +63,7 @@ class MemGRNParams:
     input_proj: np.ndarray | None = None
     hidden_bias: np.ndarray | None = None
     output_proj: np.ndarray | None = None
+    interaction_weights: np.ndarray | None = None
 
 
 def initialize_memgrn_params(
@@ -91,6 +95,13 @@ def initialize_memgrn_params(
         else None
     )
 
+    n_pairs = config.n_sources * (config.n_sources - 1) // 2
+    inter_w = (
+        np.zeros((n_pairs, config.n_targets), dtype=np.float64)
+        if config.use_pairwise_interactions and n_pairs > 0
+        else None
+    )
+
     n_inputs = _active_input_indices(config.rate_mode)
     if not n_inputs:
         return MemGRNParams(
@@ -99,6 +110,7 @@ def initialize_memgrn_params(
             relaxation=relaxation,
             rate_logits=rate_logits,
             switch_offsets=switch_offsets,
+            interaction_weights=inter_w,
         )
 
     input_proj = rng.normal(0.0, 0.85, size=(len(n_inputs), config.hidden_width))
@@ -115,6 +127,7 @@ def initialize_memgrn_params(
         input_proj=input_proj,
         hidden_bias=hidden_bias,
         output_proj=output_proj,
+        interaction_weights=inter_w,
     )
 
 
@@ -193,6 +206,15 @@ def memgrn_vector_field(
         config.n_sources * config.n_channels, config.n_targets
     )
     production = activity @ params.direct_weights + flat_h @ flat_b
+    if (
+        config.use_pairwise_interactions
+        and params.interaction_weights is not None
+        and config.n_sources >= 2
+    ):
+        mean_h = np.mean(h_state, axis=-1)
+        idx_i, idx_k = np.triu_indices(config.n_sources, k=1)
+        pair_feats = mean_h[..., idx_i] * mean_h[..., idx_k]
+        production = production + pair_feats @ params.interaction_weights
     dy = production - params.relaxation * y_state
     return dz, dh, dy
 

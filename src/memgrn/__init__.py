@@ -1,13 +1,21 @@
 """MemGRN: Learning Regulatory Dynamics with Explicit Weights and Adaptive Memory."""
 
+from memgrn.baselines import (
+    DynamicalModelFamily,
+    ModelSpec,
+    TrainedModel,
+    build_jax_rollout,
+    counterfactual_source_attribution,
+    fit_dynamical_model,
+)
 from memgrn.dynamics import (
     MemGRNConfig,
     MemGRNParams,
     RateInputMode,
     adaptive_rate_law,
     compute_exact_contributions,
+    initialize_memgrn_params,
     memory_reset_splice_decomposition,
-    rollout_latent_ode,
     rollout_memgrn_midpoint,
     rollout_memgrn_rk4,
 )
@@ -21,23 +29,43 @@ from memgrn.identification import (
     swap_singular_values,
     template_margin_lower_bound,
 )
+from memgrn.theory import (
+    CrossTalkAuditResult,
+    IsoExpressionAuditResult,
+    minimum_norm_collinear_gate_weights,
+    state_only_iso_expression_lower_bound,
+    verify_coupled_crosstalk_theorem,
+    verify_iso_expression_proposition,
+)
 
 __all__ = [
+    "CrossTalkAuditResult",
+    "DynamicalModelFamily",
+    "IsoExpressionAuditResult",
     "MemGRNConfig",
     "MemGRNParams",
+    "ModelSpec",
     "RateInputMode",
     "ScheduleBoundResult",
+    "TrainedModel",
     "adaptive_rate_law",
     "ar1_innovation_schedule_bound",
+    "build_jax_rollout",
     "compute_exact_contributions",
+    "counterfactual_source_attribution",
     "decode_swapped_pairs",
     "exact_swap_cancellation_accuracy",
+    "fit_dynamical_model",
+    "initialize_memgrn_params",
     "invert_swap_waveforms",
     "memory_reset_splice_decomposition",
+    "minimum_norm_collinear_gate_weights",
     "paired_schedule_certificate",
-    "rollout_latent_ode",
     "rollout_memgrn_midpoint",
     "rollout_memgrn_rk4",
+    "state_only_iso_expression_lower_bound",
     "swap_singular_values",
     "template_margin_lower_bound",
+    "verify_coupled_crosstalk_theorem",
+    "verify_iso_expression_proposition",
 ]
