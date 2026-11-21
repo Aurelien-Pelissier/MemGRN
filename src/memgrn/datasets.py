@@ -681,3 +681,175 @@ def fetch_and_prepare_nfkb_washout(raw_dir: Path) -> NfkbWashoutData:
         rna_responses=rna_resp,
         file_sha256=hashes,
     )
+
+
+# =============================================================================
+# Cook & Vanderhyden (2020) Human EMT Multi-Ligand Induction & Withdrawal scRNA-seq
+# Accession: GSE147405 (Nature Communications 11, 2142, doi:10.1038/s41467-020-16066-2)
+# =============================================================================
+
+EMT_GEO_BASE = "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE147nnn/GSE147405/suppl"
+EMT_CELL_LINES: tuple[str, ...] = ("A549", "DU145", "MCF7", "OVCA420")
+EMT_LIGANDS: tuple[str, ...] = ("TGFB1", "EGF", "TNF")
+EMT_TIME_LABELS: tuple[str, ...] = ("0d", "8h", "1d", "3d", "7d", "8h_rm", "1d_rm", "3d_rm")
+EMT_TIME_DAYS: tuple[float, ...] = (0.0, 1.0 / 3.0, 1.0, 3.0, 7.0, 7.0 + 1.0 / 3.0, 8.0, 10.0)
+
+EMT_TFS: tuple[str, ...] = (
+    "SMAD3", "SMAD4", "SMAD7", "SNAI1", "JUN", "JUNB", "JUND", "FOS", "FOSL1",
+    "ATF3", "EGR1", "ETS2", "RELA", "RELB", "NFKB1", "NFKB2", "STAT1", "STAT3",
+    "IRF1", "MYC", "KLF4", "KLF6", "HIF1A", "SOX4", "ID1", "ID2", "ID3", "CEBPB",
+    "BHLHE40", "MAFF", "MAFK", "NFIL3", "ZFP36", "CSRNP1", "NR4A1", "HES1",
+)
+EMT_TARGETS: tuple[str, ...] = (
+    "VIM", "FN1", "CDH1", "SERPINE1", "PMEPA1", "TGFBI", "ITGB1", "MMP9", "COL1A1",
+    "EPCAM", "KRT8", "KRT18", "KRT19", "LAMC2", "LAMB3", "CXCL8", "CXCL1", "CXCL2",
+    "CCL2", "ICAM1", "TNFAIP3", "NFKBIA", "BIRC3", "SOD2", "CTGF", "CYR61", "TPM1",
+    "TAGLN", "MYL9", "PLAU", "PLAUR", "THBS1", "TIMP1", "CD44", "S100A4", "S100A6",
+    "ANXA1", "ANXA2", "GADD45B", "IER3", "DUSP1", "DUSP4", "DUSP5", "DUSP6", "ERRFI1",
+    "AREG", "HBEGF", "PHLDA1", "ETV4", "ETV5", "LIF", "IL32", "OAS1", "ISG15", "IFIT1",
+    "LGALS1", "LOXL2", "CLDN4", "OCLN", "DSP", "MUC1", "KRT7", "S100A2", "ITGA2",
+    "ITGA5", "ITGAV", "TGM2", "FST", "NDRG1", "VEGFA", "LDHA", "SLC2A1", "CDKN1A",
+    "CCND1", "MKI67", "TOP2A",
+)
+EMT_PINNED_SHA256: dict[str, str] = {
+    "GSE147405_A549_EGF_TimeCourse_UMI_matrix.csv.gz": "5a31be01fa8f856b35bc46c70e757f10be039c32075db2501282a1a357552e60",
+    "GSE147405_A549_EGF_TimeCourse_metadata.csv.gz": "a376240d132b9330aefb82ad0361f61f965b1315b690437dddb7315475394c36",
+    "GSE147405_A549_TGFB1_TimeCourse_UMI_matrix.csv.gz": "8c8d8bc4480b6e12b8e7982bf71e43ff7cb0b1158f48dfe6932af84f9aab9a31",
+    "GSE147405_A549_TGFB1_TimeCourse_metadata.csv.gz": "e253a4fd1ee5b6479a719419b22f156638a633eb2992f9ba0290c6a3163e3100",
+    "GSE147405_A549_TNF_TimeCourse_UMI_matrix.csv.gz": "b1466e9271b956ce0bdf0a2f8c72adbf79de018106c97052c36c7f3699e6b88c",
+    "GSE147405_A549_TNF_TimeCourse_metadata.csv.gz": "f3424dc76e386e929cf4cd8413a45319be90ed4f09b83aa0befc0a0694ef319f",
+    "GSE147405_DU145_EGF_TimeCourse_UMI_matrix.csv.gz": "d1a98372b02e77dd864ca5b61b1aea026278d13b9475b838c91de15075c07576",
+    "GSE147405_DU145_EGF_TimeCourse_metadata.csv.gz": "513db590e0d4dcb70956f6657bd7b4297091f56ab46b3784122c6ceb0182be2b",
+    "GSE147405_DU145_TGFB1_TimeCourse_UMI_matrix.csv.gz": "a8d9c18319616bf04a48648de9e0cbcee86e6579919bf625132a9cd12e88719e",
+    "GSE147405_DU145_TGFB1_TimeCourse_metadata.csv.gz": "79434ebea01b1d8b46587ea16106e44e813bfb127de5ddb4e265cd29aa19a2be",
+    "GSE147405_DU145_TNF_TimeCourse_UMI_matrix.csv.gz": "e2282c40e03177342dce38897a4c18757bff3c18f2dcbc1d0722394c385939f2",
+    "GSE147405_DU145_TNF_TimeCourse_metadata.csv.gz": "ba0a2bd247abf1aa5c5e05c30cb9f548a3ef4abd5c421fd09f2440d3fc4d602e",
+    "GSE147405_MCF7_EGF_TimeCourse_UMI_matrix.csv.gz": "0f78930fb1b8e7c9409114bcbfcb3dc9e040eb77041a8a0d32a12cb11e8ee1fb",
+    "GSE147405_MCF7_EGF_TimeCourse_metadata.csv.gz": "29cc6d2bc5f7b8daa26ea7283aa77fa78e8dc33ef000d8c90e029d21ffc8a0b3",
+    "GSE147405_MCF7_TGFB1_TimeCourse_UMI_matrix.csv.gz": "e48bd278c2eb0eb8efcbf1858fe4f91e392b9881f2d6a35baef7adb46c24c910",
+    "GSE147405_MCF7_TGFB1_TimeCourse_metadata.csv.gz": "bedc881a7ad9ebaed0c00f05c0524b85cf63fc6c58c35acb7b4f86bc2474ba58",
+    "GSE147405_MCF7_TNF_TimeCourse_UMI_matrix.csv.gz": "a485a6d3d86bba8ff26038b08e659d21b27da66ea5de9c8407a7f20acd0ff0d0",
+    "GSE147405_MCF7_TNF_TimeCourse_metadata.csv.gz": "086bb76700d0354bc1a18c99e30db4b457a4bb4fc9606d9f0505af9587a9b91a",
+    "GSE147405_OVCA420_EGF_TimeCourse_UMI_matrix.csv.gz": "6da0febf3820456cc9afdce381dc7a87f8c2a2aaa2e8296831df64213ec987a9",
+    "GSE147405_OVCA420_EGF_TimeCourse_metadata.csv.gz": "6be1e9fdc5aeea24b19c94ddd5ad82c74ef34384b988e3cfa33bb31e16e03b6e",
+    "GSE147405_OVCA420_TGFB1_TimeCourse_UMI_matrix.csv.gz": "51c22a51691b618110c80c51e039171f34e9464fdef7a0d3c3e44c58cfb0511e",
+    "GSE147405_OVCA420_TGFB1_TimeCourse_metadata.csv.gz": "9026a5d52d5a6ec92de98a9c80d234daa7ccf74b62d702fa4f4e7f2e0f6ae5a5",
+    "GSE147405_OVCA420_TNF_TimeCourse_UMI_matrix.csv.gz": "48ab105e8d53b7d52622161507e28a4c2cf5aac155269b1f9f26d3f041b20330",
+    "GSE147405_OVCA420_TNF_TimeCourse_metadata.csv.gz": "0595779b67a285f76300680723fc88498b17accc99cc6044e346452e1a85a57c",
+}
+
+
+@dataclass(frozen=True, kw_only=True)
+class EMTWithdrawalData:
+    """Cook & Vanderhyden (2020) GSE147405 multi-ligand EMT induction + withdrawal scRNA-seq."""
+
+    cell_lines: tuple[str, ...]
+    ligands: tuple[str, ...]
+    conditions: tuple[tuple[str, str], ...]
+    genes: tuple[str, ...]
+    tf_indices: np.ndarray
+    time_labels: tuple[str, ...]
+    obs_days: np.ndarray
+    delta_trajectories: np.ndarray  # (12, 8, 112) baseline-subtracted log1p(CP10k)
+    basal_expression: np.ndarray  # (12, 112) 0d expression per condition
+    ligand_one_hot: np.ndarray  # (12, 3) binary indicator of TGFB1/EGF/TNF
+    cell_counts: np.ndarray  # (12, 8) QC singlet counts per (condition, timepoint)
+    total_singlet_cells: int
+    file_sha256: dict[str, str]
+
+
+def fetch_and_prepare_emt_withdrawal(raw_dir: Path) -> EMTWithdrawalData:
+    """Fetch, SHA-256 verify, and pseudobulk GSE147405 (53,290 human singlets, 112 EMT/TF genes)."""
+    import gzip
+
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    hashes: dict[str, str] = {}
+    for fname, expected in EMT_PINNED_SHA256.items():
+        dest = raw_dir / fname
+        if not dest.exists():
+            resp = requests.get(f"{EMT_GEO_BASE}/{fname}", timeout=180)
+            resp.raise_for_status()
+            dest.write_bytes(resp.content)
+        digest = sha256_file(dest)
+        if digest != expected:
+            raise ValueError(f"SHA-256 mismatch on {fname}: {digest} != {expected}")
+        hashes[fname] = digest
+
+    all_genes = EMT_TFS + EMT_TARGETS
+    tf_idx = np.arange(len(EMT_TFS), dtype=np.int64)
+    conditions = tuple((cl, lig) for cl in EMT_CELL_LINES for lig in EMT_LIGANDS)
+    cache_npz = raw_dir / "emt_gse147405_112genes_cache.npz"
+
+    if cache_npz.exists():
+        z = np.load(cache_npz)
+        delta_arr = np.asarray(z["delta_trajectories"], dtype=np.float64)
+        basal_arr = np.asarray(z["basal_expression"], dtype=np.float64)
+        counts_arr = np.asarray(z["cell_counts"], dtype=np.int64)
+    else:
+        sel = set(all_genes)
+        delta_list = []
+        basal_list = []
+        counts_list = []
+        for cl, lig in conditions:
+            meta = pd.read_csv(
+                raw_dir / f"GSE147405_{cl}_{lig}_TimeCourse_metadata.csv.gz", index_col=0
+            )
+            if "Doublet" in meta.columns:
+                meta = meta[meta["Doublet"] == "Singlet"]
+            umi_p = raw_dir / f"GSE147405_{cl}_{lig}_TimeCourse_UMI_matrix.csv.gz"
+            with gzip.open(umi_p, "rt") as f:
+                cols = [c.strip('"') for c in f.readline().strip().split(",")]
+                if cols[0] == "":
+                    cols = cols[1:]
+                col_to_idx = {c: i for i, c in enumerate(cols)}
+                keep_cells = [c for c in meta.index if c in col_to_idx]
+                keep_idx = np.array([col_to_idx[c] for c in keep_cells], dtype=np.int64)
+                lib_size = meta.loc[keep_cells, "nCount_RNA"].to_numpy(dtype=np.float64)
+                times = meta.loc[keep_cells, "Time"].to_numpy()
+                t_masks = [times == t for t in EMT_TIME_LABELS]
+                t_cnts = [int(np.sum(m)) for m in t_masks]
+                if min(t_cnts) <= 0:
+                    raise ValueError(f"Zero cells for {cl}/{lig}: {t_cnts}")
+                counts_list.append(t_cnts)
+                gene_rows: dict[str, list[float]] = {}
+                for line in f:
+                    gname, rest = line.split(",", 1)
+                    gname = gname.strip('"')
+                    if gname in sel:
+                        vals = np.fromstring(rest, sep=",", dtype=np.float64)[keep_idx]
+                        log_cp10k = np.log1p(vals / np.maximum(1.0, lib_size) * 1e4)
+                        gene_rows[gname] = [float(np.mean(log_cp10k[m])) for m in t_masks]
+            mat = np.array([gene_rows[g] for g in all_genes], dtype=np.float64).T  # (8, 112)
+            if not np.all(np.isfinite(mat)):
+                raise ValueError(f"Non-finite pseudobulk in {cl}/{lig}")
+            basal_list.append(mat[0])
+            delta_list.append(mat - mat[0:1])
+        delta_arr = np.stack(delta_list, axis=0)
+        basal_arr = np.stack(basal_list, axis=0)
+        counts_arr = np.asarray(counts_list, dtype=np.int64)
+        np.savez(
+            cache_npz,
+            delta_trajectories=delta_arr,
+            basal_expression=basal_arr,
+            cell_counts=counts_arr,
+        )
+
+    lig_oh = np.zeros((len(conditions), len(EMT_LIGANDS)), dtype=np.float64)
+    for c_i, (_cl, lig) in enumerate(conditions):
+        lig_oh[c_i, EMT_LIGANDS.index(lig)] = 1.0
+
+    return EMTWithdrawalData(
+        cell_lines=EMT_CELL_LINES,
+        ligands=EMT_LIGANDS,
+        conditions=conditions,
+        genes=all_genes,
+        tf_indices=tf_idx,
+        time_labels=EMT_TIME_LABELS,
+        obs_days=np.asarray(EMT_TIME_DAYS, dtype=np.float64),
+        delta_trajectories=delta_arr,
+        basal_expression=basal_arr,
+        ligand_one_hot=lig_oh,
+        cell_counts=counts_arr,
+        total_singlet_cells=int(np.sum(counts_arr)),
+        file_sha256=hashes,
+    )

@@ -1,0 +1,834 @@
+{
+  "design_sha256": "27ece0d8f1c4acfca1f2f2428cea8ba05ff459206345b6a0833c136d0ecf1c84",
+  "elapsed_seconds": 293.68993616104126,
+  "n_post_withdrawal_peaking_gene_conditions": 51,
+  "top_post_withdrawal_peaking_examples": [
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "VIM",
+      "y_7d": 0.6838410768390206,
+      "y_8h_rm": 0.833745151014381,
+      "y_1d_rm": 0.7864721070838816,
+      "y_3d_rm": 0.27708605205905723
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "ITGB1",
+      "y_7d": 0.2631794634230127,
+      "y_8h_rm": 0.2912892476752087,
+      "y_1d_rm": 0.4055988630935625,
+      "y_3d_rm": 0.1262168724534558
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "KRT8",
+      "y_7d": -0.28320089516581426,
+      "y_8h_rm": -0.14225598373815762,
+      "y_1d_rm": -0.46290062644175123,
+      "y_3d_rm": -0.1421930660020232
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "KRT18",
+      "y_7d": -0.31850171734789523,
+      "y_8h_rm": -0.1295096526679793,
+      "y_1d_rm": -0.4611683424752506,
+      "y_3d_rm": -0.06048558615619193
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "LAMC2",
+      "y_7d": 0.9175091097773032,
+      "y_8h_rm": 0.9196494633057668,
+      "y_1d_rm": 1.0878734380352977,
+      "y_3d_rm": 0.15302842356047905
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "CXCL8",
+      "y_7d": 0.4840370294460754,
+      "y_8h_rm": 0.4436718617918455,
+      "y_1d_rm": 0.6035671463521162,
+      "y_3d_rm": 0.2886345690802899
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "CTGF",
+      "y_7d": 0.4365879252412934,
+      "y_8h_rm": 0.5745952416871069,
+      "y_1d_rm": 0.4240421052329091,
+      "y_3d_rm": 0.3411711088395606
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "TPM1",
+      "y_7d": 1.1269992222133591,
+      "y_8h_rm": 1.255733367630859,
+      "y_1d_rm": 1.1822741664884722,
+      "y_3d_rm": 0.6786574680619799
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "TAGLN",
+      "y_7d": 1.1383308999865147,
+      "y_8h_rm": 1.24748944097183,
+      "y_1d_rm": 1.062297196436614,
+      "y_3d_rm": 0.7051244455437519
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "PLAUR",
+      "y_7d": 0.41370148233238624,
+      "y_8h_rm": 0.5634081603347078,
+      "y_1d_rm": 0.4968735046168713,
+      "y_3d_rm": 0.08793972902183184
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "TIMP1",
+      "y_7d": 0.2580332234974032,
+      "y_8h_rm": 0.40297502969711463,
+      "y_1d_rm": 0.2635716615628323,
+      "y_3d_rm": 0.3325721072078982
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "CD44",
+      "y_7d": 0.36334631462658484,
+      "y_8h_rm": 0.4966961368784729,
+      "y_1d_rm": 0.5039861187550009,
+      "y_3d_rm": 0.5187255528515925
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "S100A4",
+      "y_7d": -0.8781972661192881,
+      "y_8h_rm": -1.2308211476053943,
+      "y_1d_rm": -1.3615029858695578,
+      "y_3d_rm": -0.6962334498890721
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "S100A6",
+      "y_7d": -0.5634402638383129,
+      "y_8h_rm": -0.6778194203107986,
+      "y_1d_rm": -0.6145530279579399,
+      "y_3d_rm": -0.6807336381863327
+    },
+    {
+      "cell_line": "A549",
+      "ligand": "TGFB1",
+      "gene": "LGALS1",
+      "y_7d": 0.2898987437464089,
+      "y_8h_rm": 0.2624765882444531,
+      "y_1d_rm": 0.4000112206826749,
+      "y_3d_rm": -0.5188459097435718
+    }
+  ],
+  "summary": {
+    "cl_memgrn": {
+      "n_params": 7804,
+      "withdrawal_mse": 0.4570996894995967,
+      "withdrawal_top40_mse": 0.31198459764092445,
+      "hysteresis_mse": 0.9913039596793785,
+      "withdrawal_pearson_r": 0.7564602056664919,
+      "full_10d_mse": 1.4573970340879039,
+      "induction_mse": 1.4196708815431962,
+      "full_withdrawal_mse": 1.5076985708141812,
+      "full_top40_mse": 1.3916777938376916,
+      "full_pearson_r": 0.21370089863668496
+    },
+    "cl_memgrn_add": {
+      "n_params": 6964,
+      "withdrawal_mse": 0.4571210796608701,
+      "withdrawal_top40_mse": 0.31192630721338127,
+      "hysteresis_mse": 0.990662963377267,
+      "withdrawal_pearson_r": 0.7564244962001466,
+      "full_10d_mse": 1.456765956954622,
+      "induction_mse": 1.4166851597766132,
+      "full_withdrawal_mse": 1.5102070198586333,
+      "full_top40_mse": 1.390076749086836,
+      "full_pearson_r": 0.22523681383147098
+    },
+    "cl_local_const": {
+      "n_params": 6482,
+      "withdrawal_mse": 0.45659213972000673,
+      "withdrawal_top40_mse": 0.31190914627395505,
+      "hysteresis_mse": 0.9908264116396726,
+      "withdrawal_pearson_r": 0.7566933570893661,
+      "full_10d_mse": 1.456591288964094,
+      "induction_mse": 1.4169463046796373,
+      "full_withdrawal_mse": 1.5094512680100363,
+      "full_top40_mse": 1.3897684223641864,
+      "full_pearson_r": 0.24903170100486116
+    },
+    "cl_ltc_local": {
+      "n_params": 6734,
+      "withdrawal_mse": 0.4532685066104827,
+      "withdrawal_top40_mse": 0.31603118409303,
+      "hysteresis_mse": 0.9600537318054616,
+      "withdrawal_pearson_r": 0.7497727597628927,
+      "full_10d_mse": 1.4540999382665478,
+      "induction_mse": 1.4174742219682752,
+      "full_withdrawal_mse": 1.5029342266642445,
+      "full_top40_mse": 1.3869220964085276,
+      "full_pearson_r": 0.2446322559206639
+    },
+    "cl_coupled_adaptive": {
+      "n_params": 7775,
+      "withdrawal_mse": 0.4408250957001102,
+      "withdrawal_top40_mse": 0.3049073286929983,
+      "hysteresis_mse": 0.9350115613216394,
+      "withdrawal_pearson_r": 0.7558096431678429,
+      "full_10d_mse": 1.458636346586398,
+      "induction_mse": 1.417380175705287,
+      "full_withdrawal_mse": 1.5136445744278793,
+      "full_top40_mse": 1.392166555085467,
+      "full_pearson_r": 0.20901091222831056
+    },
+    "cl_ltc_coupled": {
+      "n_params": 4716,
+      "withdrawal_mse": 0.45044258113035485,
+      "withdrawal_top40_mse": 0.31741587154736506,
+      "hysteresis_mse": 0.9529172703030061,
+      "withdrawal_pearson_r": 0.7503782973177414,
+      "full_10d_mse": 1.4570781701920605,
+      "induction_mse": 1.4210118235390508,
+      "full_withdrawal_mse": 1.5051666323960742,
+      "full_top40_mse": 1.388915293702515,
+      "full_pearson_r": 0.24550576108333771
+    },
+    "cl_perturb_ode": {
+      "n_params": 4276,
+      "withdrawal_mse": 0.4405826121896046,
+      "withdrawal_top40_mse": 0.3083078301625412,
+      "hysteresis_mse": 0.9391782364581096,
+      "withdrawal_pearson_r": 0.754851518713314,
+      "full_10d_mse": 1.4464471177667506,
+      "induction_mse": 1.4081677701926008,
+      "full_withdrawal_mse": 1.4974862478656168,
+      "full_top40_mse": 1.3798523616950114,
+      "full_pearson_r": 0.23746512550936577
+    },
+    "cl_latent_ode": {
+      "n_params": 3528,
+      "withdrawal_mse": 0.5011068703881881,
+      "withdrawal_top40_mse": 0.32511766089186755,
+      "hysteresis_mse": 1.1393778576701306,
+      "withdrawal_pearson_r": 0.7442117557241317,
+      "full_10d_mse": 1.470411854801986,
+      "induction_mse": 1.4466424626743994,
+      "full_withdrawal_mse": 1.502104377638768,
+      "full_top40_mse": 1.4134811017592768,
+      "full_pearson_r": 0.20049962791336506
+    }
+  },
+  "per_fold": {
+    "cl_memgrn": {
+      "withdrawal": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 7804,
+          "withdrawal_mse": 0.48687973064613954,
+          "withdrawal_top40_mse": 0.26429003987226457,
+          "hysteresis_mse": 1.064704869147011,
+          "withdrawal_pearson_r": 0.7753179487965293
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 7804,
+          "withdrawal_mse": 0.1277476745355583,
+          "withdrawal_top40_mse": 0.10365805536692496,
+          "hysteresis_mse": 0.2827010340018627,
+          "withdrawal_pearson_r": 0.8439172807504586
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 7804,
+          "withdrawal_mse": 0.36644120865564783,
+          "withdrawal_top40_mse": 0.23465935899011825,
+          "hysteresis_mse": 0.67300305737006,
+          "withdrawal_pearson_r": 0.6264880987642533
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 7804,
+          "withdrawal_mse": 0.8473301441610409,
+          "withdrawal_top40_mse": 0.64533093633439,
+          "hysteresis_mse": 1.9448068781985801,
+          "withdrawal_pearson_r": 0.7801174943547262
+        }
+      ],
+      "full_10d": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 7804,
+          "full_10d_mse": 1.3018417582144814,
+          "induction_mse": 1.2211312236110805,
+          "full_withdrawal_mse": 1.4094558043523493,
+          "full_top40_mse": 0.6634487099489921,
+          "full_pearson_r": 0.2791020390612383
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 7804,
+          "full_10d_mse": 0.6044966699813007,
+          "induction_mse": 0.663769125078112,
+          "full_withdrawal_mse": 0.5254667298522191,
+          "full_top40_mse": 0.6762593440406793,
+          "full_pearson_r": -0.03454278995112314
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 7804,
+          "full_10d_mse": 0.697779831278162,
+          "induction_mse": 0.6634527295785325,
+          "full_withdrawal_mse": 0.7435493002110014,
+          "full_top40_mse": 0.7436835776308577,
+          "full_pearson_r": 0.19810814848079553
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 7804,
+          "full_10d_mse": 3.2254698768776717,
+          "induction_mse": 3.13033044790506,
+          "full_withdrawal_mse": 3.352322448841155,
+          "full_top40_mse": 3.4833195437302376,
+          "full_pearson_r": 0.4121361969558292
+        }
+      ]
+    },
+    "cl_memgrn_add": {
+      "withdrawal": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 6964,
+          "withdrawal_mse": 0.4860127563585793,
+          "withdrawal_top40_mse": 0.26393644462796706,
+          "hysteresis_mse": 1.0620717631666037,
+          "withdrawal_pearson_r": 0.7757073262826699
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 6964,
+          "withdrawal_mse": 0.12766208495360895,
+          "withdrawal_top40_mse": 0.10341434627667155,
+          "hysteresis_mse": 0.28254154236907786,
+          "withdrawal_pearson_r": 0.8439462340595517
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 6964,
+          "withdrawal_mse": 0.3675563109167301,
+          "withdrawal_top40_mse": 0.2348909803606796,
+          "hysteresis_mse": 0.6735224388428313,
+          "withdrawal_pearson_r": 0.6259632774189472
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 6964,
+          "withdrawal_mse": 0.8472531664145622,
+          "withdrawal_top40_mse": 0.6454634575882069,
+          "hysteresis_mse": 1.9445161091305554,
+          "withdrawal_pearson_r": 0.7800811470394177
+        }
+      ],
+      "full_10d": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 6964,
+          "full_10d_mse": 1.3031266315046253,
+          "induction_mse": 1.216829291275275,
+          "full_withdrawal_mse": 1.4181897518104256,
+          "full_top40_mse": 0.6639159767310955,
+          "full_pearson_r": 0.2841850990317593
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 6964,
+          "full_10d_mse": 0.6038834862480066,
+          "induction_mse": 0.663437434015785,
+          "full_withdrawal_mse": 0.5244782225576353,
+          "full_top40_mse": 0.6751608712730601,
+          "full_pearson_r": 0.006759729907935708
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 6964,
+          "full_10d_mse": 0.6988122282327139,
+          "induction_mse": 0.6648477829613585,
+          "full_withdrawal_mse": 0.7440981552611879,
+          "full_top40_mse": 0.7432350939374475,
+          "full_pearson_r": 0.1978239630697324
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 6964,
+          "full_10d_mse": 3.2212414818331423,
+          "induction_mse": 3.1216261308540347,
+          "full_withdrawal_mse": 3.3540619498052844,
+          "full_top40_mse": 3.4779950544057407,
+          "full_pearson_r": 0.4121784633164565
+        }
+      ]
+    },
+    "cl_local_const": {
+      "withdrawal": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 6482,
+          "withdrawal_mse": 0.4865659680426928,
+          "withdrawal_top40_mse": 0.2644241605643869,
+          "hysteresis_mse": 1.0634516092385047,
+          "withdrawal_pearson_r": 0.7751804680442755
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 6482,
+          "withdrawal_mse": 0.12778185793593055,
+          "withdrawal_top40_mse": 0.10367609082824042,
+          "hysteresis_mse": 0.282900546633105,
+          "withdrawal_pearson_r": 0.8438579777150252
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 6482,
+          "withdrawal_mse": 0.364431468383841,
+          "withdrawal_top40_mse": 0.23408437762110543,
+          "hysteresis_mse": 0.6714342691639751,
+          "withdrawal_pearson_r": 0.6277780166467646
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 6482,
+          "withdrawal_mse": 0.8475892645175626,
+          "withdrawal_top40_mse": 0.6454519560820876,
+          "hysteresis_mse": 1.9455192215231054,
+          "withdrawal_pearson_r": 0.7799569659513992
+        }
+      ],
+      "full_10d": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 6482,
+          "full_10d_mse": 1.3022276561303978,
+          "induction_mse": 1.2197281953688077,
+          "full_withdrawal_mse": 1.4122269371458507,
+          "full_top40_mse": 0.6566030297646677,
+          "full_pearson_r": 0.2858073705136425
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 6482,
+          "full_10d_mse": 0.6038531740166099,
+          "induction_mse": 0.6634139572103946,
+          "full_withdrawal_mse": 0.5244387964248969,
+          "full_top40_mse": 0.6751057425844816,
+          "full_pearson_r": 0.09636147458744089
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 6482,
+          "full_10d_mse": 0.6960366992545315,
+          "induction_mse": 0.6598692939779734,
+          "full_withdrawal_mse": 0.7442599062899422,
+          "full_top40_mse": 0.7419816071440409,
+          "full_pearson_r": 0.2015278043204974
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 6482,
+          "full_10d_mse": 3.2242476264548365,
+          "induction_mse": 3.1247737721613733,
+          "full_withdrawal_mse": 3.3568794321794555,
+          "full_top40_mse": 3.4853833099635554,
+          "full_pearson_r": 0.41243015459786375
+        }
+      ]
+    },
+    "cl_ltc_local": {
+      "withdrawal": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 6734,
+          "withdrawal_mse": 0.488228168437371,
+          "withdrawal_top40_mse": 0.2827345502347664,
+          "hysteresis_mse": 1.053687617933755,
+          "withdrawal_pearson_r": 0.7662183922730289
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 6734,
+          "withdrawal_mse": 0.1271988826440851,
+          "withdrawal_top40_mse": 0.10242143890106302,
+          "hysteresis_mse": 0.2812231327155205,
+          "withdrawal_pearson_r": 0.8446661552303859
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 6734,
+          "withdrawal_mse": 0.40127047129549914,
+          "withdrawal_top40_mse": 0.26853428433751186,
+          "hysteresis_mse": 0.7166650309460184,
+          "withdrawal_pearson_r": 0.595788005836991
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 6734,
+          "withdrawal_mse": 0.7963765040649754,
+          "withdrawal_top40_mse": 0.6104344628987786,
+          "hysteresis_mse": 1.7886391456265525,
+          "withdrawal_pearson_r": 0.7924184857111651
+        }
+      ],
+      "full_10d": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 6734,
+          "full_10d_mse": 1.2974776989846084,
+          "induction_mse": 1.2123239172306284,
+          "full_withdrawal_mse": 1.4110160746565816,
+          "full_top40_mse": 0.6512760132003049,
+          "full_pearson_r": 0.2940857800868321
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 6734,
+          "full_10d_mse": 0.6015611121568049,
+          "induction_mse": 0.6605905081961593,
+          "full_withdrawal_mse": 0.522855250770999,
+          "full_top40_mse": 0.6726448072554857,
+          "full_pearson_r": 0.07465535967908982
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 6734,
+          "full_10d_mse": 0.6856699783105165,
+          "induction_mse": 0.6464995355983582,
+          "full_withdrawal_mse": 0.7378972352600608,
+          "full_top40_mse": 0.7257159700222449,
+          "full_pearson_r": 0.20210404595161222
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 6734,
+          "full_10d_mse": 3.2316909636142612,
+          "induction_mse": 3.1504829268479546,
+          "full_withdrawal_mse": 3.3399683459693366,
+          "full_top40_mse": 3.498051595156075,
+          "full_pearson_r": 0.4076838379651215
+        }
+      ]
+    },
+    "cl_coupled_adaptive": {
+      "withdrawal": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 7775,
+          "withdrawal_mse": 0.4848249549168209,
+          "withdrawal_top40_mse": 0.2797571082286007,
+          "hysteresis_mse": 1.020536834888506,
+          "withdrawal_pearson_r": 0.757835483646629
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 7775,
+          "withdrawal_mse": 0.12527476735676404,
+          "withdrawal_top40_mse": 0.09960405147281923,
+          "hysteresis_mse": 0.274779814973282,
+          "withdrawal_pearson_r": 0.845719576345779
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 7775,
+          "withdrawal_mse": 0.37490981174299826,
+          "withdrawal_top40_mse": 0.22737021419342238,
+          "hysteresis_mse": 0.7187608836765947,
+          "withdrawal_pearson_r": 0.6234702291936932
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 7775,
+          "withdrawal_mse": 0.7782908487838577,
+          "withdrawal_top40_mse": 0.6128979408771509,
+          "hysteresis_mse": 1.7259687117481752,
+          "withdrawal_pearson_r": 0.7962132834852705
+        }
+      ],
+      "full_10d": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 7775,
+          "full_10d_mse": 1.2967670851788873,
+          "induction_mse": 1.205534197360446,
+          "full_withdrawal_mse": 1.4184109356034753,
+          "full_top40_mse": 0.6509666507140477,
+          "full_pearson_r": 0.29464185529511977
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 7775,
+          "full_10d_mse": 0.6064825185649263,
+          "induction_mse": 0.6654226953045453,
+          "full_withdrawal_mse": 0.5278956162454338,
+          "full_top40_mse": 0.6788818623433147,
+          "full_pearson_r": -0.0699329885255233
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 7775,
+          "full_10d_mse": 0.7129305638992346,
+          "induction_mse": 0.6818548040761975,
+          "full_withdrawal_mse": 0.754364910329951,
+          "full_top40_mse": 0.7689735426324288,
+          "full_pearson_r": 0.1916025628533348
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 7775,
+          "full_10d_mse": 3.2183652187025444,
+          "induction_mse": 3.1167090060799594,
+          "full_withdrawal_mse": 3.3539068355326562,
+          "full_top40_mse": 3.4698441646520766,
+          "full_pearson_r": 0.419732219290311
+        }
+      ]
+    },
+    "cl_ltc_coupled": {
+      "withdrawal": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 4716,
+          "withdrawal_mse": 0.48258006037642515,
+          "withdrawal_top40_mse": 0.28135912844028105,
+          "hysteresis_mse": 1.040078940228884,
+          "withdrawal_pearson_r": 0.7692067149813439
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 4716,
+          "withdrawal_mse": 0.12865838903877727,
+          "withdrawal_top40_mse": 0.10516706881282151,
+          "hysteresis_mse": 0.28530473927064726,
+          "withdrawal_pearson_r": 0.8427353711687725
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 4716,
+          "withdrawal_mse": 0.39473102621061545,
+          "withdrawal_top40_mse": 0.27104583748857175,
+          "hysteresis_mse": 0.6990050699927182,
+          "withdrawal_pearson_r": 0.5968186616778519
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 4716,
+          "withdrawal_mse": 0.7958008488956015,
+          "withdrawal_top40_mse": 0.6120914514477859,
+          "hysteresis_mse": 1.7872803317197747,
+          "withdrawal_pearson_r": 0.7927524414429974
+        }
+      ],
+      "full_10d": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 4716,
+          "full_10d_mse": 1.3094737515881152,
+          "induction_mse": 1.2497859564581741,
+          "full_withdrawal_mse": 1.3890574784280372,
+          "full_top40_mse": 0.663277544877644,
+          "full_pearson_r": 0.26986206575552596
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 4716,
+          "full_10d_mse": 0.6038784938420766,
+          "induction_mse": 0.6634152130081474,
+          "full_withdrawal_mse": 0.5244962016206489,
+          "full_top40_mse": 0.6751893785035661,
+          "full_pearson_r": 0.10356964107997392
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 4716,
+          "full_10d_mse": 0.6859912349965247,
+          "induction_mse": 0.6452880155586608,
+          "full_withdrawal_mse": 0.74026219424701,
+          "full_top40_mse": 0.7245875921769471,
+          "full_pearson_r": 0.19876187090414107
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 4716,
+          "full_10d_mse": 3.2289692003415262,
+          "induction_mse": 3.125558109131221,
+          "full_withdrawal_mse": 3.366850655288601,
+          "full_top40_mse": 3.4926066592519027,
+          "full_pearson_r": 0.40982946659370995
+        }
+      ]
+    },
+    "cl_perturb_ode": {
+      "withdrawal": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 4276,
+          "withdrawal_mse": 0.4838758997130713,
+          "withdrawal_top40_mse": 0.2882349328492205,
+          "hysteresis_mse": 1.0170808354760676,
+          "withdrawal_pearson_r": 0.7547443746221485
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 4276,
+          "withdrawal_mse": 0.12815935175342566,
+          "withdrawal_top40_mse": 0.10427127213065636,
+          "hysteresis_mse": 0.283975587828672,
+          "withdrawal_pearson_r": 0.8434400978666386
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 4276,
+          "withdrawal_mse": 0.3691951910704753,
+          "withdrawal_top40_mse": 0.2258484234013583,
+          "hysteresis_mse": 0.7183331509256186,
+          "withdrawal_pearson_r": 0.62405520789126
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 4276,
+          "withdrawal_mse": 0.7811000062214463,
+          "withdrawal_top40_mse": 0.6148766922689297,
+          "hysteresis_mse": 1.7373233716020802,
+          "withdrawal_pearson_r": 0.7971663944732089
+        }
+      ],
+      "full_10d": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 4276,
+          "full_10d_mse": 1.2816904235570097,
+          "induction_mse": 1.2091521967426826,
+          "full_withdrawal_mse": 1.3784080593094459,
+          "full_top40_mse": 0.6464489149146356,
+          "full_pearson_r": 0.283783338666114
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 4276,
+          "full_10d_mse": 0.6033210620102748,
+          "induction_mse": 0.6628081968448305,
+          "full_withdrawal_mse": 0.5240048822308674,
+          "full_top40_mse": 0.6742322932945561,
+          "full_pearson_r": 0.033387215875381605
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 4276,
+          "full_10d_mse": 0.7089792817199507,
+          "induction_mse": 0.684331084533959,
+          "full_withdrawal_mse": 0.7418435446346063,
+          "full_top40_mse": 0.7657714181412162,
+          "full_pearson_r": 0.20321818335472655
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 4276,
+          "full_10d_mse": 3.1917977037797667,
+          "induction_mse": 3.076379602648931,
+          "full_withdrawal_mse": 3.3456885052875474,
+          "full_top40_mse": 3.432956820429637,
+          "full_pearson_r": 0.42947176414124083
+        }
+      ]
+    },
+    "cl_latent_ode": {
+      "withdrawal": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 3528,
+          "withdrawal_mse": 0.596887269700033,
+          "withdrawal_top40_mse": 0.273010601378036,
+          "hysteresis_mse": 1.4071140664091313,
+          "withdrawal_pearson_r": 0.7422180529522576
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 3528,
+          "withdrawal_mse": 0.12878214411506855,
+          "withdrawal_top40_mse": 0.10520052237596096,
+          "hysteresis_mse": 0.2856860575121845,
+          "withdrawal_pearson_r": 0.8426656349419437
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 3528,
+          "withdrawal_mse": 0.36663710686316703,
+          "withdrawal_top40_mse": 0.2050965738129322,
+          "hysteresis_mse": 0.745416026573806,
+          "withdrawal_pearson_r": 0.6244232053462065
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 3528,
+          "withdrawal_mse": 0.9121209608744838,
+          "withdrawal_top40_mse": 0.717162946000541,
+          "hysteresis_mse": 2.1192952801854,
+          "withdrawal_pearson_r": 0.767540129656119
+        }
+      ],
+      "full_10d": [
+        {
+          "test_cell_line": "A549",
+          "n_params": 3528,
+          "full_10d_mse": 1.3286942786986176,
+          "induction_mse": 1.284306685240685,
+          "full_withdrawal_mse": 1.3878777366425274,
+          "full_top40_mse": 0.7046435454185985,
+          "full_pearson_r": 0.2407023874653953
+        },
+        {
+          "test_cell_line": "DU145",
+          "n_params": 3528,
+          "full_10d_mse": 0.6039249666703986,
+          "induction_mse": 0.6634964219474431,
+          "full_withdrawal_mse": 0.5244963596343393,
+          "full_top40_mse": 0.6750692590308629,
+          "full_pearson_r": -0.010385039295299561
+        },
+        {
+          "test_cell_line": "MCF7",
+          "n_params": 3528,
+          "full_10d_mse": 0.7027207768524256,
+          "induction_mse": 0.6660905004487203,
+          "full_withdrawal_mse": 0.7515611453906995,
+          "full_top40_mse": 0.7462695415898807,
+          "full_pearson_r": 0.17875300505682867
+        },
+        {
+          "test_cell_line": "OVCA420",
+          "n_params": 3528,
+          "full_10d_mse": 3.2463073969865017,
+          "induction_mse": 3.1726762430607494,
+          "full_withdrawal_mse": 3.3444822688875058,
+          "full_top40_mse": 3.527942060997765,
+          "full_pearson_r": 0.39292815842653583
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,724 @@
+{
+  "design_sha256": "f49d3c4f3fb5f079a8ba93844f55f90cacb6fc706310041ec5c2a3726865e289",
+  "elapsed_seconds": 1250.801679611206,
+  "part_a_partial_obs_6of8_summary": {
+    "local_const": {
+      "n_params": 618,
+      "test_mse": 0.39051631887316846,
+      "gt_obs_attr_rmse": 0.218235683180694,
+      "gt_obs_edge_auroc": 0.8565781076114164,
+      "gt_obs_edge_ap": 0.6518625525495412,
+      "obs_attr_drift_vs_memgrn": 0.3244419180314642
+    },
+    "memgrn": {
+      "n_params": 1196,
+      "test_mse": 0.34345944804333844,
+      "gt_obs_attr_rmse": 0.19670564283155131,
+      "gt_obs_edge_auroc": 0.8768451536261557,
+      "gt_obs_edge_ap": 0.694053149336526,
+      "obs_attr_drift_vs_memgrn": 0.0
+    },
+    "memgrn_unproj": {
+      "n_params": 2204,
+      "test_mse": 0.34356796105747045,
+      "gt_obs_attr_rmse": 0.19685151967283218,
+      "gt_obs_edge_auroc": 0.8743350682775929,
+      "gt_obs_edge_ap": 0.6955098924760126,
+      "obs_attr_drift_vs_memgrn": 0.11148911119398248
+    },
+    "memgrn_ortho": {
+      "n_params": 2204,
+      "test_mse": 0.2878919022247575,
+      "gt_obs_attr_rmse": 0.19670564283155131,
+      "gt_obs_edge_auroc": 0.8768451536261557,
+      "gt_obs_edge_ap": 0.694053149336526,
+      "obs_attr_drift_vs_memgrn": 0.0
+    },
+    "perturb_ode": {
+      "n_params": 854,
+      "test_mse": 0.5207437179581363,
+      "gt_obs_attr_rmse": 0.26718905943640864,
+      "gt_obs_edge_auroc": 0.7935213878767823,
+      "gt_obs_edge_ap": 0.5393527878200643,
+      "obs_attr_drift_vs_memgrn": 0.6976339913381923
+    },
+    "latent_ode": {
+      "n_params": 1008,
+      "test_mse": 0.4601482085312543,
+      "gt_obs_attr_rmse": 0.24553654402966055,
+      "gt_obs_edge_auroc": 0.79947922379947,
+      "gt_obs_edge_ap": 0.5531658550126125,
+      "obs_attr_drift_vs_memgrn": 0.5873668971783789
+    }
+  },
+  "part_a_per_world": [
+    {
+      "seed": 100,
+      "regime": "additive",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 0.3896612434463061,
+          "gt_obs_attr_rmse": 0.2442438017726621,
+          "gt_obs_edge_auroc": 0.885324576913362,
+          "gt_obs_edge_ap": 0.6894344031156446,
+          "obs_attr_drift_vs_memgrn": 0.2235820828472225
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 0.3633873324672391,
+          "gt_obs_attr_rmse": 0.22831196142929783,
+          "gt_obs_edge_auroc": 0.9151300833543824,
+          "gt_obs_edge_ap": 0.7763808590727689,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 0.34607428178179617,
+          "gt_obs_attr_rmse": 0.21743158610346547,
+          "gt_obs_edge_auroc": 0.9204344531447335,
+          "gt_obs_edge_ap": 0.8023704944755874,
+          "obs_attr_drift_vs_memgrn": 0.135430819111463
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 0.3307011166043178,
+          "gt_obs_attr_rmse": 0.22831196142929783,
+          "gt_obs_edge_auroc": 0.9151300833543824,
+          "gt_obs_edge_ap": 0.7763808590727689,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 0.45642781143405536,
+          "gt_obs_attr_rmse": 0.27478038268039595,
+          "gt_obs_edge_auroc": 0.8368274816872948,
+          "gt_obs_edge_ap": 0.6076127286828236,
+          "obs_attr_drift_vs_memgrn": 0.4361679243813041
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 0.44695877802051676,
+          "gt_obs_attr_rmse": 0.26607462706902857,
+          "gt_obs_edge_auroc": 0.8269765092195,
+          "gt_obs_edge_ap": 0.5868207619087276,
+          "obs_attr_drift_vs_memgrn": 0.3462467440829528
+        }
+      }
+    },
+    {
+      "seed": 101,
+      "regime": "additive",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 0.18308290571291896,
+          "gt_obs_attr_rmse": 0.15891569978065898,
+          "gt_obs_edge_auroc": 0.8410493827160495,
+          "gt_obs_edge_ap": 0.6282087730309278,
+          "obs_attr_drift_vs_memgrn": 0.4489187789290192
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 0.2129453721692325,
+          "gt_obs_attr_rmse": 0.14075525762118676,
+          "gt_obs_edge_auroc": 0.9148662551440331,
+          "gt_obs_edge_ap": 0.7159805729583781,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 0.2541045130697675,
+          "gt_obs_attr_rmse": 0.15415409372124964,
+          "gt_obs_edge_auroc": 0.9066358024691357,
+          "gt_obs_edge_ap": 0.707558111291473,
+          "obs_attr_drift_vs_memgrn": 0.22125510816754604
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 0.19651949036507294,
+          "gt_obs_attr_rmse": 0.14075525762118676,
+          "gt_obs_edge_auroc": 0.9148662551440331,
+          "gt_obs_edge_ap": 0.7159805729583781,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 0.21851920819157275,
+          "gt_obs_attr_rmse": 0.18649578185661206,
+          "gt_obs_edge_auroc": 0.7893518518518517,
+          "gt_obs_edge_ap": 0.5332391180050601,
+          "obs_attr_drift_vs_memgrn": 0.70644825940436
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 0.21201969806747767,
+          "gt_obs_attr_rmse": 0.1760592766501159,
+          "gt_obs_edge_auroc": 0.8034979423868313,
+          "gt_obs_edge_ap": 0.5449626553215127,
+          "obs_attr_drift_vs_memgrn": 0.6802984261415619
+        }
+      }
+    },
+    {
+      "seed": 102,
+      "regime": "additive",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 0.2677989168908129,
+          "gt_obs_attr_rmse": 0.20163844973562053,
+          "gt_obs_edge_auroc": 0.9025006314725941,
+          "gt_obs_edge_ap": 0.7393762176756019,
+          "obs_attr_drift_vs_memgrn": 0.3663512422176035
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 0.19076575235101081,
+          "gt_obs_attr_rmse": 0.16472164290331356,
+          "gt_obs_edge_auroc": 0.8719373579186662,
+          "gt_obs_edge_ap": 0.727073510218538,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 0.19168116957899545,
+          "gt_obs_attr_rmse": 0.16555166491602344,
+          "gt_obs_edge_auroc": 0.8759787825208386,
+          "gt_obs_edge_ap": 0.721653797963747,
+          "obs_attr_drift_vs_memgrn": 0.06396141143933491
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 0.1367206721889464,
+          "gt_obs_attr_rmse": 0.16472164290331356,
+          "gt_obs_edge_auroc": 0.8719373579186662,
+          "gt_obs_edge_ap": 0.727073510218538,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 0.46537618950968934,
+          "gt_obs_attr_rmse": 0.27830958689959073,
+          "gt_obs_edge_auroc": 0.802980550644102,
+          "gt_obs_edge_ap": 0.5928487343511212,
+          "obs_attr_drift_vs_memgrn": 0.7916615368016977
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 0.39517996773096903,
+          "gt_obs_attr_rmse": 0.254456867430482,
+          "gt_obs_edge_auroc": 0.7938873452892143,
+          "gt_obs_edge_ap": 0.5800797028351415,
+          "obs_attr_drift_vs_memgrn": 0.7643415214270484
+        }
+      }
+    },
+    {
+      "seed": 103,
+      "regime": "additive",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 0.17003274581436148,
+          "gt_obs_attr_rmse": 0.1531453265426168,
+          "gt_obs_edge_auroc": 0.8700854700854702,
+          "gt_obs_edge_ap": 0.7316890840261406,
+          "obs_attr_drift_vs_memgrn": 0.2752927457661317
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 0.14598549716241205,
+          "gt_obs_attr_rmse": 0.13976456987949124,
+          "gt_obs_edge_auroc": 0.9159951159951161,
+          "gt_obs_edge_ap": 0.8035761745587848,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 0.146513953552252,
+          "gt_obs_attr_rmse": 0.1412264592169612,
+          "gt_obs_edge_auroc": 0.9118437118437119,
+          "gt_obs_edge_ap": 0.7945619424839121,
+          "obs_attr_drift_vs_memgrn": 0.02959822604087577
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 0.12168599771569918,
+          "gt_obs_attr_rmse": 0.13976456987949124,
+          "gt_obs_edge_auroc": 0.9159951159951161,
+          "gt_obs_edge_ap": 0.8035761745587848,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 0.2450883029227512,
+          "gt_obs_attr_rmse": 0.20449802574282502,
+          "gt_obs_edge_auroc": 0.8185592185592185,
+          "gt_obs_edge_ap": 0.6075479804163877,
+          "obs_attr_drift_vs_memgrn": 0.5675935855817427
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 0.21560489615889097,
+          "gt_obs_attr_rmse": 0.18813020090654167,
+          "gt_obs_edge_auroc": 0.8442002442002442,
+          "gt_obs_edge_ap": 0.6070170924440211,
+          "obs_attr_drift_vs_memgrn": 0.4826294004003963
+        }
+      }
+    },
+    {
+      "seed": 104,
+      "regime": "additive",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 0.6800155541804481,
+          "gt_obs_attr_rmse": 0.3445067291543655,
+          "gt_obs_edge_auroc": 0.8542561252841626,
+          "gt_obs_edge_ap": 0.6108276511381429,
+          "obs_attr_drift_vs_memgrn": 0.4379087076921771
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 0.556920795942417,
+          "gt_obs_attr_rmse": 0.30888563272160063,
+          "gt_obs_edge_auroc": 0.8646122758272291,
+          "gt_obs_edge_ap": 0.639547332336513,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 0.5599545143126777,
+          "gt_obs_attr_rmse": 0.31036642609383114,
+          "gt_obs_edge_auroc": 0.8661278100530438,
+          "gt_obs_edge_ap": 0.6403372890374847,
+          "obs_attr_drift_vs_memgrn": 0.037306559879939104
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 0.43951909068536,
+          "gt_obs_attr_rmse": 0.30888563272160063,
+          "gt_obs_edge_auroc": 0.8646122758272291,
+          "gt_obs_edge_ap": 0.639547332336513,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 0.8253431512208925,
+          "gt_obs_attr_rmse": 0.38509748488221485,
+          "gt_obs_edge_auroc": 0.7969184137408437,
+          "gt_obs_edge_ap": 0.522037343938895,
+          "obs_attr_drift_vs_memgrn": 0.6526159565984231
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 0.7562821896894898,
+          "gt_obs_attr_rmse": 0.36713857039033726,
+          "gt_obs_edge_auroc": 0.814852235412983,
+          "gt_obs_edge_ap": 0.5474022231895176,
+          "obs_attr_drift_vs_memgrn": 0.6516332733383967
+        }
+      }
+    },
+    {
+      "seed": 105,
+      "regime": "additive",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 0.2757279527640514,
+          "gt_obs_attr_rmse": 0.1626933979306833,
+          "gt_obs_edge_auroc": 0.8459206870421824,
+          "gt_obs_edge_ap": 0.6193904703150713,
+          "obs_attr_drift_vs_memgrn": 0.30641971241948046
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 0.2873660058530231,
+          "gt_obs_attr_rmse": 0.16730068464234552,
+          "gt_obs_edge_auroc": 0.847436221267997,
+          "gt_obs_edge_ap": 0.6021457191284377,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 0.28129656552594456,
+          "gt_obs_attr_rmse": 0.16735196448161693,
+          "gt_obs_edge_auroc": 0.8479413993432685,
+          "gt_obs_edge_ap": 0.6063783281252708,
+          "obs_attr_drift_vs_memgrn": 0.14187923261708615
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 0.2618901448984874,
+          "gt_obs_attr_rmse": 0.16730068464234552,
+          "gt_obs_edge_auroc": 0.847436221267997,
+          "gt_obs_edge_ap": 0.6021457191284377,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 0.3876207677412256,
+          "gt_obs_attr_rmse": 0.22429405110567727,
+          "gt_obs_edge_auroc": 0.7969184137408437,
+          "gt_obs_edge_ap": 0.5183039303744831,
+          "obs_attr_drift_vs_memgrn": 0.8180698773854916
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 0.30632165503114,
+          "gt_obs_attr_rmse": 0.186447472894615,
+          "gt_obs_edge_auroc": 0.845162919929275,
+          "gt_obs_edge_ap": 0.5857966335034256,
+          "obs_attr_drift_vs_memgrn": 0.5404976267024721
+        }
+      }
+    },
+    {
+      "seed": 200,
+      "regime": "cooperative",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 1.0992574232282721,
+          "gt_obs_attr_rmse": 0.251680595373298,
+          "gt_obs_edge_auroc": 0.7597597597597598,
+          "gt_obs_edge_ap": 0.4405346653356615,
+          "obs_attr_drift_vs_memgrn": 0.3062102383719686
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 1.0889576568864061,
+          "gt_obs_attr_rmse": 0.23718901415434537,
+          "gt_obs_edge_auroc": 0.8053508053508053,
+          "gt_obs_edge_ap": 0.4946777243065772,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 1.0766713170122528,
+          "gt_obs_attr_rmse": 0.23780234122679128,
+          "gt_obs_edge_auroc": 0.8018018018018019,
+          "gt_obs_edge_ap": 0.4919696047408329,
+          "obs_attr_drift_vs_memgrn": 0.11886373448773993
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 1.0160493903408947,
+          "gt_obs_attr_rmse": 0.23718901415434537,
+          "gt_obs_edge_auroc": 0.8053508053508053,
+          "gt_obs_edge_ap": 0.4946777243065772,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 1.2431917053300579,
+          "gt_obs_attr_rmse": 0.25945528414630364,
+          "gt_obs_edge_auroc": 0.7938847938847939,
+          "gt_obs_edge_ap": 0.4778224049058009,
+          "obs_attr_drift_vs_memgrn": 0.6902246823688363
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 1.226755233874262,
+          "gt_obs_attr_rmse": 0.266169648726689,
+          "gt_obs_edge_auroc": 0.7633087633087632,
+          "gt_obs_edge_ap": 0.41970326828178056,
+          "obs_attr_drift_vs_memgrn": 0.5598186378526677
+        }
+      }
+    },
+    {
+      "seed": 201,
+      "regime": "cooperative",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 0.25815507431780604,
+          "gt_obs_attr_rmse": 0.20245062556445892,
+          "gt_obs_edge_auroc": 0.8192651439920556,
+          "gt_obs_edge_ap": 0.5414579609326974,
+          "obs_attr_drift_vs_memgrn": 0.3602658234783089
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 0.20483435080128687,
+          "gt_obs_attr_rmse": 0.17449618430387584,
+          "gt_obs_edge_auroc": 0.8644488579940418,
+          "gt_obs_edge_ap": 0.6817525831469596,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 0.1934340209047295,
+          "gt_obs_attr_rmse": 0.16861971064650302,
+          "gt_obs_edge_auroc": 0.8599801390268125,
+          "gt_obs_edge_ap": 0.6821213434189584,
+          "obs_attr_drift_vs_memgrn": 0.15906246909168856
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 0.1807271908302662,
+          "gt_obs_attr_rmse": 0.17449618430387584,
+          "gt_obs_edge_auroc": 0.8644488579940418,
+          "gt_obs_edge_ap": 0.6817525831469596,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 0.37632342727091295,
+          "gt_obs_attr_rmse": 0.255326252343408,
+          "gt_obs_edge_auroc": 0.7795431976166832,
+          "gt_obs_edge_ap": 0.4388611041628464,
+          "obs_attr_drift_vs_memgrn": 0.6227463255643536
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 0.3668928159814719,
+          "gt_obs_attr_rmse": 0.24793823344989435,
+          "gt_obs_edge_auroc": 0.7365938430983118,
+          "gt_obs_edge_ap": 0.48387915506275236,
+          "obs_attr_drift_vs_memgrn": 0.6429146694302981
+        }
+      }
+    },
+    {
+      "seed": 202,
+      "regime": "cooperative",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 0.5631206323454967,
+          "gt_obs_attr_rmse": 0.3180865098444508,
+          "gt_obs_edge_auroc": 0.8454155089669108,
+          "gt_obs_edge_ap": 0.6587179706316776,
+          "obs_attr_drift_vs_memgrn": 0.3500922380531599
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 0.3875367773537039,
+          "gt_obs_attr_rmse": 0.2597837806787182,
+          "gt_obs_edge_auroc": 0.8593079060368781,
+          "gt_obs_edge_ap": 0.6629645398078376,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 0.369205506931006,
+          "gt_obs_attr_rmse": 0.2491138255272338,
+          "gt_obs_edge_auroc": 0.8625915635261429,
+          "gt_obs_edge_ap": 0.6994274691724716,
+          "obs_attr_drift_vs_memgrn": 0.16452972619407308
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 0.2781509499746121,
+          "gt_obs_attr_rmse": 0.2597837806787182,
+          "gt_obs_edge_auroc": 0.8593079060368781,
+          "gt_obs_edge_ap": 0.6629645398078376,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 0.6783291228190935,
+          "gt_obs_attr_rmse": 0.3293566719493775,
+          "gt_obs_edge_auroc": 0.7587774690578428,
+          "gt_obs_edge_ap": 0.5922778629976125,
+          "obs_attr_drift_vs_memgrn": 0.7494096219671555
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 0.4777215870414714,
+          "gt_obs_attr_rmse": 0.27537658812439,
+          "gt_obs_edge_auroc": 0.7729224551654458,
+          "gt_obs_edge_ap": 0.5715541087119761,
+          "obs_attr_drift_vs_memgrn": 0.6094818344833896
+        }
+      }
+    },
+    {
+      "seed": 203,
+      "regime": "cooperative",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 0.2519122365330428,
+          "gt_obs_attr_rmse": 0.16462313573311785,
+          "gt_obs_edge_auroc": 0.8760288065843622,
+          "gt_obs_edge_ap": 0.6894074370809217,
+          "obs_attr_drift_vs_memgrn": 0.21589256300306534
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 0.22165501841879892,
+          "gt_obs_attr_rmse": 0.1528619335969214,
+          "gt_obs_edge_auroc": 0.8917181069958846,
+          "gt_obs_edge_ap": 0.7928240325350076,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 0.22700880673369717,
+          "gt_obs_attr_rmse": 0.15587921212737132,
+          "gt_obs_edge_auroc": 0.8899176954732511,
+          "gt_obs_edge_ap": 0.7832103074000413,
+          "obs_attr_drift_vs_memgrn": 0.0503943946984571
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 0.1706402778555167,
+          "gt_obs_attr_rmse": 0.1528619335969214,
+          "gt_obs_edge_auroc": 0.8917181069958846,
+          "gt_obs_edge_ap": 0.7928240325350076,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 0.44892310419299947,
+          "gt_obs_attr_rmse": 0.24966237944571745,
+          "gt_obs_edge_auroc": 0.8379629629629629,
+          "gt_obs_edge_ap": 0.6184406812253762,
+          "obs_attr_drift_vs_memgrn": 0.6785755694046802
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 0.3470182032014249,
+          "gt_obs_attr_rmse": 0.21082894467112676,
+          "gt_obs_edge_auroc": 0.8256172839506173,
+          "gt_obs_edge_ap": 0.6048608236827674,
+          "obs_attr_drift_vs_memgrn": 0.46530582964752537
+        }
+      }
+    },
+    {
+      "seed": 204,
+      "regime": "cooperative",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 0.3048286413759205,
+          "gt_obs_attr_rmse": 0.22054098030661487,
+          "gt_obs_edge_auroc": 0.9156352614296541,
+          "gt_obs_edge_ap": 0.8147564566938841,
+          "obs_attr_drift_vs_memgrn": 0.28016915183644087
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 0.2650772006774877,
+          "gt_obs_attr_rmse": 0.20688177387616885,
+          "gt_obs_edge_auroc": 0.912099014902753,
+          "gt_obs_edge_ap": 0.7995930098335347,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 0.26787667006589355,
+          "gt_obs_attr_rmse": 0.20817046223137028,
+          "gt_obs_edge_auroc": 0.9128567820156603,
+          "gt_obs_edge_ap": 0.7987318979623769,
+          "obs_attr_drift_vs_memgrn": 0.04522441093997992
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 0.16101508558517091,
+          "gt_obs_attr_rmse": 0.20688177387616885,
+          "gt_obs_edge_auroc": 0.912099014902753,
+          "gt_obs_edge_ap": 0.7995930098335347,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 0.48559689619367624,
+          "gt_obs_attr_rmse": 0.28475882961354587,
+          "gt_obs_edge_auroc": 0.7799949482192473,
+          "gt_obs_edge_ap": 0.5335365814971439,
+          "obs_attr_drift_vs_memgrn": 0.8710781949871151
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 0.4528326304075167,
+          "gt_obs_attr_rmse": 0.27567996177535,
+          "gt_obs_edge_auroc": 0.8188936600151554,
+          "gt_obs_edge_ap": 0.5911699127753066,
+          "obs_attr_drift_vs_memgrn": 0.7358757658010616
+        }
+      }
+    },
+    {
+      "seed": 205,
+      "regime": "cooperative",
+      "models": {
+        "local_const": {
+          "n_params": 618,
+          "test_mse": 0.24260249986858323,
+          "gt_obs_attr_rmse": 0.1963029464297807,
+          "gt_obs_edge_auroc": 0.8636959370904325,
+          "gt_obs_edge_ap": 0.6585495406181233,
+          "obs_attr_drift_vs_memgrn": 0.32219973176299277
+        },
+        "memgrn": {
+          "n_params": 1196,
+          "test_mse": 0.1960816164370433,
+          "gt_obs_attr_rmse": 0.17951527817135046,
+          "gt_obs_edge_auroc": 0.8592398427260813,
+          "gt_obs_edge_ap": 0.6321217341349747,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "memgrn_unproj": {
+          "n_params": 2204,
+          "test_mse": 0.2089942132206323,
+          "gt_obs_attr_rmse": 0.18655048978156868,
+          "gt_obs_edge_auroc": 0.8359108781127129,
+          "gt_obs_edge_ap": 0.6177981236399959,
+          "obs_attr_drift_vs_memgrn": 0.17036324165960648
+        },
+        "memgrn_ortho": {
+          "n_params": 2204,
+          "test_mse": 0.16108341965274586,
+          "gt_obs_attr_rmse": 0.17951527817135046,
+          "gt_obs_edge_auroc": 0.8592398427260813,
+          "gt_obs_edge_ap": 0.6321217341349747,
+          "obs_attr_drift_vs_memgrn": 0.0
+        },
+        "perturb_ode": {
+          "n_params": 854,
+          "test_mse": 0.4181849286707105,
+          "gt_obs_attr_rmse": 0.27423398257123466,
+          "gt_obs_edge_auroc": 0.7305373525557012,
+          "gt_obs_edge_ap": 0.42970498328322215,
+          "obs_attr_drift_vs_memgrn": 0.7870163616131474
+        },
+        "latent_ode": {
+          "n_params": 1008,
+          "test_mse": 0.31819084717042095,
+          "gt_obs_attr_rmse": 0.23213813626735624,
+          "gt_obs_edge_auroc": 0.7478374836173002,
+          "gt_obs_edge_ap": 0.5147439224344197,
+          "obs_attr_drift_vs_memgrn": 0.5693590368327748
+        }
+      }
+    }
+  ],
+  "part_b_ltc_separation": {
+    "memgrn_matched": {
+      "n_params": 252,
+      "delayed_peak_post_mse": 1.7065513173804042e-05,
+      "steady_state_amp_invariance_error": 0.0006612241046661944,
+      "steady_state_weight_rel_error": 0.06429025962140603
+    },
+    "ltc_local_matched": {
+      "n_params": 288,
+      "delayed_peak_post_mse": 4.774166790766126e-05,
+      "steady_state_amp_invariance_error": 0.09166471829913,
+      "steady_state_weight_rel_error": 0.046940574261376114
+    },
+    "local_const_matched": {
+      "n_params": 216,
+      "delayed_peak_post_mse": 1.897193434460779e-05,
+      "steady_state_amp_invariance_error": 1.3513171100780163e-07,
+      "steady_state_weight_rel_error": 0.08005519789208869
+    }
+  }
+}

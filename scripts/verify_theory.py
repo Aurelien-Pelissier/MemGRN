@@ -28,6 +28,7 @@ from memgrn.theory import (
     verify_general_s_covariance_crosstalk_theorem,
     verify_iso_expression_proposition,
     verify_orthogonal_cofactor_invariance_proposition,
+    verify_unit_dc_gain_and_second_order_vs_local_ltc,
 )
 
 
@@ -258,6 +259,27 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
     if ortho_res.mse_memgrn_ortho >= 0.2 * ortho_res.mse_observed_only:
         raise AssertionError("Expected substantial residual MSE drop from orthogonal cofactor")
 
+    # 9. Theorem 1(iii): Unit-DC-gain identifiability & 2nd-order delay separation vs. Source-Local LTC
+    ltc_sep = verify_unit_dc_gain_and_second_order_vs_local_ltc()
+    if ltc_sep.ltc_scale_gauge_trajectory_max_diff >= 1e-12:
+        raise AssertionError("Source-Local LTC scale gauge equivalence failed")
+    if ltc_sep.ltc_scale_gauge_weight_disagreement <= 0.5:
+        raise AssertionError("Expected large Source-Local LTC weight non-identifiability")
+    if ltc_sep.ltc_amplitude_gain_distortion_ratio <= 1.15:
+        raise AssertionError("Expected nonlinear amplitude distortion in Source-Local LTC")
+    if (
+        ltc_sep.memgrn_amplitude_gain_max_error >= 1e-10
+        or ltc_sep.memgrn_kinetic_change_steady_state_diff >= 1e-10
+    ):
+        raise AssertionError("MemGRN unit-DC-gain steady-state invariance failed")
+    if ltc_sep.first_order_post_shutoff_max_slope > 1e-12:
+        raise AssertionError("First-order LTC violated post-shutoff monotonicity")
+    if (
+        ltc_sep.memgrn_post_shutoff_peak_gain <= 0.05
+        or ltc_sep.best_monotone_first_order_l2_floor <= 0.02
+    ):
+        raise AssertionError("Expected strict 2nd-order post-shutoff peak separation")
+
     summary = {
         "crosstalk_coupled_ko_l2_error": ct_res.coupled_ko_trajectory_l2_error,
         "crosstalk_coupled_false_attr_l2": ct_res.coupled_false_source2_attribution_l2,
@@ -275,6 +297,15 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
         "closed_loop_coupled_gauge_attr_disagreement": cl_res.coupled_gauge_attribution_disagreement,
         "closed_loop_memgrn_direct_id_error": cl_res.memgrn_direct_weight_recovery_max_error,
         "closed_loop_memgrn_total_id_error": cl_res.memgrn_total_weight_recovery_max_error,
+        "vs_local_ltc_scale_gauge_traj_diff": ltc_sep.ltc_scale_gauge_trajectory_max_diff,
+        "vs_local_ltc_scale_gauge_weight_disagreement": ltc_sep.ltc_scale_gauge_weight_disagreement,
+        "vs_local_ltc_amp_gain_distortion_ratio": ltc_sep.ltc_amplitude_gain_distortion_ratio,
+        "vs_local_ltc_memgrn_dc_gain_max_error": ltc_sep.memgrn_amplitude_gain_max_error,
+        "vs_local_ltc_memgrn_kinetic_invariance_diff": ltc_sep.memgrn_kinetic_change_steady_state_diff,
+        "vs_local_ltc_first_order_max_post_slope": ltc_sep.first_order_post_shutoff_max_slope,
+        "vs_local_ltc_memgrn_post_peak_gain": ltc_sep.memgrn_post_shutoff_peak_gain,
+        "vs_local_ltc_memgrn_post_peak_time": ltc_sep.memgrn_post_shutoff_peak_time,
+        "vs_local_ltc_monotone_first_order_l2_floor": ltc_sep.best_monotone_first_order_l2_floor,
         "iso_expr_washout_diff": iso_res.washout_value_diff,
         "iso_expr_memory_diff_at_washout": iso_res.memory_state_diff_at_washout,
         "iso_expr_state_only_lower_bound": iso_res.state_only_universal_lower_bound,

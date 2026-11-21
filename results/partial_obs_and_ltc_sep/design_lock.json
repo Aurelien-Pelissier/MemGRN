@@ -1,0 +1,29 @@
+{
+  "benchmark": "partial_obs_6of8_ortho_and_local_ltc_separation",
+  "part_a_worlds": 12,
+  "observed_tfs": [
+    0,
+    1,
+    3,
+    4,
+    6,
+    7
+  ],
+  "hidden_tfs": [
+    2,
+    5
+  ],
+  "part_a_models": [
+    "local_const",
+    "memgrn",
+    "memgrn_unproj",
+    "memgrn_ortho",
+    "perturb_ode",
+    "latent_ode"
+  ],
+  "part_b_models": [
+    "memgrn_matched",
+    "ltc_local_matched",
+    "local_const_matched"
+  ]
+}

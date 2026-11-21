@@ -1,0 +1,21 @@
+{
+  "benchmark": "yeast_rate_portraits_and_genome_scaling",
+  "promoters": [
+    "DCS2",
+    "HXK1",
+    "RTN2",
+    "DDR2",
+    "TKL2",
+    "ALD3",
+    "SIP18"
+  ],
+  "scaling_s_values": [
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512
+  ]
+}

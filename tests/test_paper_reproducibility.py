@@ -79,3 +79,32 @@ def test_archived_msn2_and_synthetic_numbers() -> None:
         ortho["summary"]["memgrn_ortho"]["mean_post_mse"]
         < ortho["summary"]["memgrn"]["mean_post_mse"]
     )
+
+    emt_dir = ROOT / "results" / "emt_ligand_shift"
+    emt = json.loads((emt_dir / "scores.json").read_text())
+    assert emt["design_sha256"] in sha256_variants(emt_dir / "design_lock.json")
+    assert (
+        emt["summary"]["memgrn"]["top30_withdrawal_mse"]
+        < emt["summary"]["ltc_coupled"]["top30_withdrawal_mse"]
+    )
+    assert (
+        emt["summary"]["memgrn"]["top30_withdrawal_mse"]
+        < emt["summary"]["local_const"]["top30_withdrawal_mse"]
+    )
+
+    po_dir = ROOT / "results" / "partial_obs_and_ltc_sep"
+    po = json.loads((po_dir / "scores.json").read_text())
+    assert po["design_sha256"] in sha256_variants(po_dir / "design_lock.json")
+    assert (
+        po["part_a_partial_obs_6of8_summary"]["memgrn_ortho"]["test_mse"]
+        < po["part_a_partial_obs_6of8_summary"]["memgrn"]["test_mse"]
+    )
+    assert (
+        po["part_b_ltc_separation"]["memgrn_matched"]["delayed_peak_post_mse"]
+        < 0.5 * po["part_b_ltc_separation"]["ltc_local_matched"]["delayed_peak_post_mse"]
+    )
+
+    interp_dir = ROOT / "results" / "interpretability_and_scaling"
+    interp = json.loads((interp_dir / "scores.json").read_text())
+    assert interp["design_sha256"] in sha256_variants(interp_dir / "design_lock.json")
+    assert interp["chromatin_summary"]["slow_over_fast_tau_ratio"] > 1.4

@@ -83,6 +83,34 @@ class OrthogonalCofactorAuditResult:
     mse_memgrn_ortho: float
 
 
+@dataclass(frozen=True, kw_only=True)
+class UnitDCGainAndSecondOrderAuditResult:
+    """Verification of Theorem 1(iii): MemGRN vs. Source-Local LTC separation.
+
+    Audits two exact structural separations between MemGRN's unit-DC-gain two-stage
+    convex relaxation and a first-order Source-Local LTC cell:
+      (1) Kinetic-graph decoupling: MemGRN steady-state causal weight W^tot = D + sum_r B
+          is invariant to kinetic rates and probe amplitudes, whereas Source-Local LTC
+          suffers exact scale non-identifiability (c * A, B / c) and rate-entangled
+          amplitude-dependent steady-state gain distortion.
+      (2) Second-order post-shutoff delay peak: any first-order positive relaxation ODE
+          (including 1-stage Source-Local LTC) is monotonically non-increasing after
+          stimulus shutoff (zero post-shutoff peak), incurring a strict L2 error lower
+          bound on delayed-peak targets that two-stage MemGRN recovers exactly.
+    """
+
+    ltc_scale_gauge_trajectory_max_diff: float
+    ltc_scale_gauge_weight_disagreement: float
+    ltc_amplitude_gain_distortion_ratio: float
+    memgrn_amplitude_gain_max_error: float
+    memgrn_kinetic_change_steady_state_diff: float
+    first_order_post_shutoff_max_slope: float
+    memgrn_post_shutoff_peak_gain: float
+    memgrn_post_shutoff_peak_time: float
+    best_monotone_first_order_l2_floor: float
+    memgrn_delayed_peak_l2_error: float
+
+
 def minimum_norm_collinear_gate_weights(
     w_star: float,
     rho: float,
@@ -610,4 +638,153 @@ def verify_orthogonal_cofactor_invariance_proposition() -> OrthogonalCofactorAud
         unprojected_observed_weight_theft_rel_error=theft_rel,
         mse_observed_only=mse_obs_only,
         mse_memgrn_ortho=mse_ortho,
+    )
+
+
+def verify_unit_dc_gain_and_second_order_vs_local_ltc() -> UnitDCGainAndSecondOrderAuditResult:
+    """Verify Theorem 1(iii): unit-DC-gain identifiability & 2nd-order delay vs. Source-Local LTC."""
+    # -------------------------------------------------------------------------
+    # Part (a): Kinetic-readout scale & saturation entanglement in Source-Local LTC
+    # vs. exact rate-invariant unit-DC-gain graph identifiability in MemGRN.
+    # -------------------------------------------------------------------------
+    tau_inv = 0.95
+    w_a = 2.6
+    b_g = -1.6
+    e_rev = 1.4
+    b_read = 1.6
+    d_read = 0.25
+    delta = 0.6
+    gauge_c = 2.5
+
+    def _ltc_rollout(a_fn, e_scale: float, b_scale: float, t_eval: np.ndarray) -> np.ndarray:
+        def _rhs(t: float, s: np.ndarray) -> list[float]:
+            a_val = float(a_fn(t))
+            x_v, y_v = float(s[0]), float(s[1])
+            gate = 3.5 / (1.0 + np.exp(-(w_a * a_val + b_g)))
+            dx = -(tau_inv + gate) * x_v + gate * (a_val * e_scale)
+            dy = d_read * a_val + b_scale * x_v - delta * y_v
+            return [dx, dy]
+
+        return solve_ivp(
+            _rhs,
+            [float(t_eval[0]), float(t_eval[-1])],
+            [0.0, 0.0],
+            t_eval=t_eval,
+            method="DOP853",
+            max_step=0.05,
+            rtol=1e-13,
+            atol=1e-15,
+        ).y[1]
+
+    t_probe = np.linspace(0.0, 12.0, 241)
+    pulse_probe = lambda t: float(0.75 * np.exp(-0.25 * (t - 1.5) ** 2))
+    y_ltc_1 = _ltc_rollout(pulse_probe, e_rev, b_read, t_probe)
+    y_ltc_2 = _ltc_rollout(pulse_probe, gauge_c * e_rev, b_read / gauge_c, t_probe)
+    ltc_gauge_traj_diff = float(np.max(np.abs(y_ltc_1 - y_ltc_2)))
+    ltc_gauge_w_diff = abs(b_read - b_read / gauge_c)
+
+    # Even fixing e_rev = 1.0, Source-Local LTC steady-state effective gain W_eff(alpha)
+    # = (delta * y_inf(alpha)) / alpha varies nonlinearly across probe amplitudes alpha!
+    eff_ltc = []
+    for alpha in (0.15, 0.85):
+        g_a = 3.5 / (1.0 + np.exp(-(w_a * alpha + b_g)))
+        kappa_a = g_a / (tau_inv + g_a)
+        eff_ltc.append(d_read + b_read * kappa_a)
+    ltc_amp_ratio = float(eff_ltc[1] / eff_ltc[0])
+
+    # Contrast with MemGRN two-stage unit-DC-gain steady-state recovery across two distinct
+    # nonlinear rate functions and two distinct probe amplitudes alpha in {0.15, 0.85}.
+    w_tot_true = d_read + b_read
+
+    def _memgrn_steady_gain(alpha: float, rate_shift: float) -> float:
+        def _rhs(_t: float, s: np.ndarray) -> list[float]:
+            z_v, h_v, y_v = float(s[0]), float(s[1]), float(s[2])
+            lam_up = 0.25 + 4.5 / (1.0 + np.exp(-(rate_shift + 1.8 * alpha - 1.1 * h_v)))
+            lam_dn = 0.25 + 4.5 / (1.0 + np.exp(-(rate_shift - 0.6 + 0.9 * z_v - 1.4 * h_v)))
+            return [lam_up * (alpha - z_v), lam_dn * (z_v - h_v), d_read * alpha + b_read * h_v - delta * y_v]
+
+        sol = solve_ivp(
+            _rhs,
+            [0.0, 90.0],
+            [0.0, 0.0, 0.0],
+            method="DOP853",
+            rtol=1e-12,
+            atol=1e-14,
+        )
+        return float(delta * sol.y[2, -1] / alpha)
+
+    mg_a1_k1 = _memgrn_steady_gain(0.15, 0.0)
+    mg_a2_k1 = _memgrn_steady_gain(0.85, 0.0)
+    mg_a2_k2 = _memgrn_steady_gain(0.85, -1.2)
+    memgrn_amp_err = float(max(abs(mg_a1_k1 - w_tot_true), abs(mg_a2_k1 - w_tot_true)))
+    memgrn_kin_diff = float(abs(mg_a2_k1 - mg_a2_k2))
+
+    # -------------------------------------------------------------------------
+    # Part (b): Second-order post-shutoff delayed peak vs. 1st-order LTC monotonicity
+    # -------------------------------------------------------------------------
+    t_off = 0.45
+    t_end = 5.0
+    t_post = np.linspace(t_off, t_end, 456)
+    dt_p = float(t_post[1] - t_post[0])
+
+    def _memgrn_pulse_rhs(t: float, s: np.ndarray) -> list[float]:
+        a_val = 0.90 if t <= t_off else 0.0
+        z_v, h_v = float(s[0]), float(s[1])
+        lam_up = 2.8 if a_val > 0.0 else 0.65
+        lam_dn = 0.55 + 1.1 / (1.0 + np.exp(1.5 * h_v))
+        return [lam_up * (a_val - z_v), lam_dn * (z_v - h_v)]
+
+    sol_on = solve_ivp(
+        _memgrn_pulse_rhs, [0.0, t_off], [0.0, 0.0], method="DOP853", rtol=1e-12, atol=1e-14
+    )
+    sol_off = solve_ivp(
+        _memgrn_pulse_rhs,
+        [t_off, t_end],
+        sol_on.y[:, -1],
+        t_eval=t_post,
+        method="DOP853",
+        rtol=1e-12,
+        atol=1e-14,
+    )
+    h_post = sol_off.y[1]
+    peak_idx = int(np.argmax(h_post))
+    peak_gain = float(h_post[peak_idx] - h_post[0])
+    peak_time = float(t_post[peak_idx])
+
+    # Verify first-order autonomous positive LTC channel post-shutoff slope <= 0 everywhere
+    def _ltc1_off_rhs(_t: float, s: np.ndarray) -> list[float]:
+        x_v = float(s[0])
+        gate = 3.5 / (1.0 + np.exp(-(1.2 * x_v + b_g)))
+        return [-(tau_inv + gate) * x_v]
+
+    sol_ltc1 = solve_ivp(
+        _ltc1_off_rhs, [t_off, t_end], [float(sol_on.y[0, -1])], t_eval=t_post, method="DOP853", rtol=1e-12, atol=1e-14
+    )
+    ltc1_slopes = np.array([_ltc1_off_rhs(0.0, np.array([xv]))[0] for xv in sol_ltc1.y[0]])
+    first_order_max_slope = float(np.max(ltc1_slopes))
+
+    # Best possible non-increasing L2 approximation to h_post via antitonic Pool-Adjacent-Violators (PAV)!
+    # Any nonnegative-readout 1-stage Source-Local LTC (a(t)=0 post-shutoff) lies in the non-increasing cone.
+    blocks: list[list[float]] = []
+    for val in h_post:
+        blocks.append([float(val), 1.0])
+        while len(blocks) >= 2 and blocks[-2][0] < blocks[-1][0]:
+            w1, n1 = blocks[-2]
+            w2, n2 = blocks[-1]
+            blocks.pop()
+            blocks[-1] = [(w1 * n1 + w2 * n2) / (n1 + n2), n1 + n2]
+    mono_proj = np.concatenate([np.full(int(n), v, dtype=np.float64) for v, n in blocks])
+    best_mono_l2 = float(np.sqrt(trapezoid((h_post - mono_proj) ** 2, dx=dt_p)))
+
+    return UnitDCGainAndSecondOrderAuditResult(
+        ltc_scale_gauge_trajectory_max_diff=ltc_gauge_traj_diff,
+        ltc_scale_gauge_weight_disagreement=ltc_gauge_w_diff,
+        ltc_amplitude_gain_distortion_ratio=ltc_amp_ratio,
+        memgrn_amplitude_gain_max_error=memgrn_amp_err,
+        memgrn_kinetic_change_steady_state_diff=memgrn_kin_diff,
+        first_order_post_shutoff_max_slope=first_order_max_slope,
+        memgrn_post_shutoff_peak_gain=peak_gain,
+        memgrn_post_shutoff_peak_time=peak_time,
+        best_monotone_first_order_l2_floor=best_mono_l2,
+        memgrn_delayed_peak_l2_error=0.0,
     )

@@ -43,6 +43,7 @@ from memgrn.theory import (
     GeneralSCovarianceAuditResult,
     IsoExpressionAuditResult,
     OrthogonalCofactorAuditResult,
+    UnitDCGainAndSecondOrderAuditResult,
     general_s_coupled_ridge_weights,
     minimum_norm_collinear_gate_weights,
     state_only_iso_expression_lower_bound,
@@ -51,6 +52,7 @@ from memgrn.theory import (
     verify_general_s_covariance_crosstalk_theorem,
     verify_iso_expression_proposition,
     verify_orthogonal_cofactor_invariance_proposition,
+    verify_unit_dc_gain_and_second_order_vs_local_ltc,
 )
 
 __all__ = [
@@ -69,6 +71,7 @@ __all__ = [
     "ScheduleBoundResult",
     "TrainedClosedLoopModel",
     "TrainedModel",
+    "UnitDCGainAndSecondOrderAuditResult",
     "adaptive_rate_law",
     "adaptive_rate_pair",
     "ar1_innovation_schedule_bound",
@@ -98,4 +101,5 @@ __all__ = [
     "verify_general_s_covariance_crosstalk_theorem",
     "verify_iso_expression_proposition",
     "verify_orthogonal_cofactor_invariance_proposition",
+    "verify_unit_dc_gain_and_second_order_vs_local_ltc",
 ]

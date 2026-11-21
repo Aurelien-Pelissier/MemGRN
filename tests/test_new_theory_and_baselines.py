@@ -26,6 +26,7 @@ from memgrn.theory import (
     verify_general_s_covariance_crosstalk_theorem,
     verify_iso_expression_proposition,
     verify_orthogonal_cofactor_invariance_proposition,
+    verify_unit_dc_gain_and_second_order_vs_local_ltc,
 )
 
 
@@ -68,6 +69,16 @@ def test_closed_loop_identifiability_and_orthogonal_cofactor_theorems() -> None:
     assert ortho.observed_weight_invariance_error < 1e-12
     assert ortho.unprojected_observed_weight_theft_rel_error > 0.15
     assert ortho.mse_memgrn_ortho < 0.1 * ortho.mse_observed_only
+
+    ltc_sep = verify_unit_dc_gain_and_second_order_vs_local_ltc()
+    assert ltc_sep.ltc_scale_gauge_trajectory_max_diff < 1e-12
+    assert ltc_sep.ltc_scale_gauge_weight_disagreement > 0.5
+    assert ltc_sep.ltc_amplitude_gain_distortion_ratio > 1.2
+    assert ltc_sep.memgrn_amplitude_gain_max_error < 1e-10
+    assert ltc_sep.memgrn_kinetic_change_steady_state_diff < 1e-10
+    assert ltc_sep.first_order_post_shutoff_max_slope <= 0.0
+    assert ltc_sep.memgrn_post_shutoff_peak_gain > 0.1
+    assert ltc_sep.best_monotone_first_order_l2_floor > 0.03
 
 
 def test_asymmetric_source_isolation_and_closed_loop_numpy_rollout() -> None:
@@ -157,3 +168,35 @@ def test_all_closed_loop_jax_families_wildtype_equilibrium(
     out_wt = np.asarray(fwd(th0, wt_ko, wt_y0))
     assert out_wt.shape == (2, 4, 6)
     np.testing.assert_allclose(out_wt, 0.0, atol=1e-6)
+
+
+def test_closed_loop_external_pulse_and_cooperativity_zero_equilibrium() -> None:
+    spec = ClosedLoopSpec(
+        family=ClosedLoopModelFamily.MEMGRN,
+        n_genes=6,
+        regulator_indices=(0, 1, 2),
+        n_ext_inputs=3,
+        use_cooperativity=True,
+        coop_rank=4,
+        n_channels=2,
+        hidden_width=4,
+    )
+    fwd, _, th0 = build_closed_loop_jax_rollout(
+        spec,
+        basal_levels=np.ones(6, dtype=np.float32),
+        dt=0.25,
+        n_steps=12,
+        obs_step_indices=(0, 4, 8, 12),
+    )
+    wt_ko = np.zeros((2, 6), dtype=np.float32)
+    wt_y0 = np.zeros((2, 6), dtype=np.float32)
+    zero_u = np.zeros((12, 2, 3), dtype=np.float32)
+    out_zero = np.asarray(fwd(th0, wt_ko, wt_y0, zero_u, None))
+    np.testing.assert_allclose(out_zero, 0.0, atol=1e-6)
+
+    pulse_u = np.zeros((12, 2, 3), dtype=np.float32)
+    pulse_u[:6, 0, 0] = 1.0
+    out_pulse = np.asarray(fwd(th0, wt_ko, wt_y0, pulse_u, None))
+    assert out_pulse.shape == (2, 4, 6)
+    assert np.all(np.isfinite(out_pulse))
+    assert float(np.max(np.abs(out_pulse[0]))) > 1e-4

@@ -216,6 +216,11 @@ def main() -> None:
     )
     mac = json.loads((ROOT / "results" / "macrophage_multitf" / "scores.json").read_text())
     hipsc = json.loads((ROOT / "results" / "hipsc_closed_loop" / "scores.json").read_text())
+    emt = json.loads((ROOT / "results" / "emt_ligand_shift" / "scores.json").read_text())
+    po = json.loads((ROOT / "results" / "partial_obs_and_ltc_sep" / "scores.json").read_text())
+    interp = json.loads(
+        (ROOT / "results" / "interpretability_and_scaling" / "scores.json").read_text()
+    )
     nfkb_ortho = json.loads((ROOT / "results" / "nfkb_ortho" / "scores.json").read_text())
 
     six_means = {
@@ -260,6 +265,19 @@ def main() -> None:
         ],
         "hipsc_closed_loop_memgrn_chip_psc_auroc": hipsc["summary"]["cl_memgrn"][
             "chip_psc_pooled_auroc"
+        ],
+        "emt_cross_ligand_memgrn_top30_withdrawal_mse": emt["summary"]["memgrn"][
+            "top30_withdrawal_mse"
+        ],
+        "partial_obs_6of8_memgrn_ortho_ood_mse": po["part_a_partial_obs_6of8_summary"][
+            "memgrn_ortho"
+        ]["test_mse"],
+        "vs_local_ltc_peak_mse_ratio": (
+            po["part_b_ltc_separation"]["ltc_local_matched"]["delayed_peak_post_mse"]
+            / po["part_b_ltc_separation"]["memgrn_matched"]["delayed_peak_post_mse"]
+        ),
+        "yeast_slow_over_fast_chromatin_tau_ratio": interp["chromatin_summary"][
+            "slow_over_fast_tau_ratio"
         ],
         "nfkb_memgrn_ortho_mean_mse": nfkb_ortho["summary"]["memgrn_ortho"][
             "mean_post_mse"

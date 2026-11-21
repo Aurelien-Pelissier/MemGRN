@@ -158,13 +158,31 @@ def _run_unseen_ko_fold(job: tuple[int, str, list[list[int]]]) -> tuple[int, str
         true_d = te_y[:, 2:, :]
         mask_d = te_w[:, 2:, :]
         mse = float(np.sum(((pred_te - true_d) ** 2) * mask_d) / np.sum(mask_d))
-        return fold_i, fam_val, {"mse": mse, "pearson_r": 0.0, "n_params": len(reg_tuple) * n_genes + 12}
+        tr_rms = np.sqrt(np.mean(tr_raw[:, 1:, :] ** 2, axis=(0, 1)))
+        top25_idx = np.argsort(-tr_rms)[:25]
+        top25_mask = np.zeros_like(mask_d)
+        top25_mask[:, :, top25_idx] = mask_d[:, :, top25_idx]
+        mse_top25 = float(
+            np.sum(((pred_te - true_d) ** 2) * top25_mask) / max(1.0, np.sum(top25_mask))
+        )
+        return (
+            fold_i,
+            fam_val,
+            {
+                "mse": mse,
+                "top25_mse": mse_top25,
+                "pearson_r": 0.0,
+                "n_params": len(reg_tuple) * n_genes + 12,
+            },
+        )
 
     fam = ClosedLoopModelFamily(fam_val)
     spec = ClosedLoopSpec(
         family=fam,
         n_genes=n_genes,
         regulator_indices=reg_tuple,
+        use_cooperativity=(fam == ClosedLoopModelFamily.MEMGRN),
+        coop_rank=6,
         n_channels=3,
         hidden_width=6,
         module_dim=20,
@@ -198,6 +216,13 @@ def _run_unseen_ko_fold(job: tuple[int, str, list[list[int]]]) -> tuple[int, str
     mask_d = te_w[:, 2:, :]
     mse = float(np.sum(((pred_d - true_d) ** 2) * mask_d) / np.sum(mask_d))
 
+    # Top-25 most responsive target genes (identified strictly on training split)
+    tr_rms = np.sqrt(np.mean(tr_raw[:, 1:, :] ** 2, axis=(0, 1)))
+    top25_idx = np.argsort(-tr_rms)[:25]
+    top25_mask = np.zeros_like(mask_d)
+    top25_mask[:, :, top25_idx] = mask_d[:, :, top25_idx]
+    mse_top25 = float(np.sum(((pred_d - true_d) ** 2) * top25_mask) / max(1.0, np.sum(top25_mask)))
+
     corrs = []
     for b_i in range(len(test_idx)):
         valid = mask_d[b_i, 0, :] > 0.5
@@ -210,6 +235,7 @@ def _run_unseen_ko_fold(job: tuple[int, str, list[list[int]]]) -> tuple[int, str
         fam_val,
         {
             "mse": mse,
+            "top25_mse": mse_top25,
             "pearson_r": float(np.mean(corrs)),
             "n_params": fitted.n_params,
         },
@@ -255,6 +281,8 @@ def _run_day5_and_chip_model(fam_val: str) -> tuple[str, dict]:
             family=fam,
             n_genes=n_genes,
             regulator_indices=reg_tuple,
+            use_cooperativity=(fam == ClosedLoopModelFamily.MEMGRN),
+            coop_rank=6,
             n_channels=3,
             hidden_width=6,
             module_dim=20,
@@ -403,6 +431,7 @@ def main() -> None:
         summary[m_key] = {
             "n_params": extra["n_params"],
             "unseen_ko_mse": float(np.mean([x["mse"] for x in ko_list])),
+            "unseen_ko_top25_mse": float(np.mean([x["top25_mse"] for x in ko_list])),
             "unseen_ko_pearson_r": float(np.mean([x["pearson_r"] for x in ko_list])),
             "day5_extrapolation_mse": extra["day5_extrapolation_mse"],
             "chip_psc_pooled_auroc": extra["chip_psc_pooled_auroc"],

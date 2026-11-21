@@ -77,6 +77,10 @@ class ClosedLoopSpec:
     family: ClosedLoopModelFamily
     n_genes: int
     regulator_indices: tuple[int, ...] | None = None
+    n_ext_inputs: int = 0
+    hollow: bool = True
+    use_cooperativity: bool = False
+    coop_rank: int = 8
     n_channels: int = 3
     hidden_width: int = 6
     module_dim: int = 20
@@ -923,6 +927,13 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
     base_logits = np.log((base_rates - spec.rate_min) / (spec.rate_max - base_rates))
     fam = spec.family
 
+    def _with_ext(tree: dict[str, np.ndarray]) -> dict[str, np.ndarray]:
+        if spec.n_ext_inputs > 0:
+            tree["ext_in"] = rng.normal(
+                0.0, 0.35 / np.sqrt(spec.n_ext_inputs), size=(spec.n_ext_inputs, s_reg)
+            ).astype(np.float32)
+        return tree
+
     if fam in (ClosedLoopModelFamily.LOCAL_CONST, ClosedLoopModelFamily.MEMGRN):
         tree: dict[str, np.ndarray] = {
             "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
@@ -937,75 +948,102 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
             tree["bias"] = rng.normal(0.0, 0.2, size=(h_dim,)).astype(np.float32)
             tree["out_proj"] = np.zeros((s_reg, r_dim, h_dim), dtype=np.float32)
             tree["out_proj_dn"] = np.zeros((s_reg, r_dim, h_dim), dtype=np.float32)
-        return tree
+            if spec.use_cooperativity:
+                k_c = spec.coop_rank
+                tree["coop_u"] = rng.normal(0.0, 0.25 / np.sqrt(s_reg), size=(s_reg, k_c)).astype(
+                    np.float32
+                )
+                tree["coop_v"] = rng.normal(0.0, 0.25 / np.sqrt(s_reg), size=(s_reg, k_c)).astype(
+                    np.float32
+                )
+                tree["coop_w"] = np.zeros((k_c, n_g), dtype=np.float32)
+        return _with_ext(tree)
 
     if fam == ClosedLoopModelFamily.COUPLED_ADAPTIVE:
         m_dim = s_reg * r_dim
         eye_mix = np.repeat(np.eye(s_reg, dtype=np.float32), r_dim, axis=1)
-        return {
-            "mix_in": eye_mix + rng.normal(0.0, 0.05, size=(s_reg, m_dim)).astype(np.float32),
-            "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
-            "delayed": rng.normal(0.0, 0.015, size=(m_dim, n_g)).astype(np.float32),
-            "decay": np.zeros((n_g,), dtype=np.float32),
-            "in_gain": np.zeros((s_reg,), dtype=np.float32),
-            "rate": np.tile(base_logits, s_reg).astype(np.float32),
-            "in_a": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, h_dim)).astype(np.float32),
-            "in_zh": rng.normal(0.0, 0.4 / np.sqrt(m_dim), size=(2 * m_dim, h_dim)).astype(
-                np.float32
-            ),
-            "bias": rng.normal(0.0, 0.2, size=(h_dim,)).astype(np.float32),
-            "out_proj": np.zeros((h_dim, m_dim), dtype=np.float32),
-        }
+        return _with_ext(
+            {
+                "mix_in": eye_mix + rng.normal(0.0, 0.05, size=(s_reg, m_dim)).astype(np.float32),
+                "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
+                "delayed": rng.normal(0.0, 0.015, size=(m_dim, n_g)).astype(np.float32),
+                "decay": np.zeros((n_g,), dtype=np.float32),
+                "in_gain": np.zeros((s_reg,), dtype=np.float32),
+                "rate": np.tile(base_logits, s_reg).astype(np.float32),
+                "in_a": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, h_dim)).astype(
+                    np.float32
+                ),
+                "in_zh": rng.normal(0.0, 0.4 / np.sqrt(m_dim), size=(2 * m_dim, h_dim)).astype(
+                    np.float32
+                ),
+                "bias": rng.normal(0.0, 0.2, size=(h_dim,)).astype(np.float32),
+                "out_proj": np.zeros((h_dim, m_dim), dtype=np.float32),
+            }
+        )
 
     if fam == ClosedLoopModelFamily.LTC_COUPLED:
         m_dim = spec.latent_dim
-        return {
-            "tau_log": np.zeros((m_dim,), dtype=np.float32),
-            "w_x": rng.normal(0.0, 0.3 / np.sqrt(m_dim), size=(m_dim, m_dim)).astype(np.float32),
-            "w_a": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, m_dim)).astype(np.float32),
-            "b_gate": rng.normal(0.0, 0.15, size=(m_dim,)).astype(np.float32),
-            "e_rev": rng.normal(0.0, 0.5, size=(m_dim,)).astype(np.float32),
-            "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
-            "readout": rng.normal(0.0, 0.02, size=(m_dim, n_g)).astype(np.float32),
-            "decay": np.zeros((n_g,), dtype=np.float32),
-            "in_gain": np.zeros((s_reg,), dtype=np.float32),
-        }
+        return _with_ext(
+            {
+                "tau_log": np.zeros((m_dim,), dtype=np.float32),
+                "w_x": rng.normal(0.0, 0.3 / np.sqrt(m_dim), size=(m_dim, m_dim)).astype(
+                    np.float32
+                ),
+                "w_a": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, m_dim)).astype(
+                    np.float32
+                ),
+                "b_gate": rng.normal(0.0, 0.15, size=(m_dim,)).astype(np.float32),
+                "e_rev": rng.normal(0.0, 0.5, size=(m_dim,)).astype(np.float32),
+                "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
+                "readout": rng.normal(0.0, 0.02, size=(m_dim, n_g)).astype(np.float32),
+                "decay": np.zeros((n_g,), dtype=np.float32),
+                "in_gain": np.zeros((s_reg,), dtype=np.float32),
+            }
+        )
 
     if fam == ClosedLoopModelFamily.LTC_LOCAL:
-        return {
-            "tau_log": np.broadcast_to(base_logits, (s_reg, r_dim)).copy(),
-            "w_x": rng.normal(0.0, 0.3, size=(s_reg, r_dim, r_dim)).astype(np.float32),
-            "w_a": rng.normal(0.0, 0.6, size=(s_reg, r_dim)).astype(np.float32),
-            "b_gate": rng.normal(0.0, 0.15, size=(s_reg, r_dim)).astype(np.float32),
-            "e_rev": np.ones((s_reg, r_dim), dtype=np.float32),
-            "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
-            "delayed": rng.normal(0.0, 0.015, size=(s_reg, r_dim, n_g)).astype(np.float32),
-            "decay": np.zeros((n_g,), dtype=np.float32),
-            "in_gain": np.zeros((s_reg,), dtype=np.float32),
-        }
+        return _with_ext(
+            {
+                "tau_log": np.broadcast_to(base_logits, (s_reg, r_dim)).copy(),
+                "w_x": rng.normal(0.0, 0.3, size=(s_reg, r_dim, r_dim)).astype(np.float32),
+                "w_a": rng.normal(0.0, 0.6, size=(s_reg, r_dim)).astype(np.float32),
+                "b_gate": rng.normal(0.0, 0.15, size=(s_reg, r_dim)).astype(np.float32),
+                "e_rev": np.ones((s_reg, r_dim), dtype=np.float32),
+                "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
+                "delayed": rng.normal(0.0, 0.015, size=(s_reg, r_dim, n_g)).astype(np.float32),
+                "decay": np.zeros((n_g,), dtype=np.float32),
+                "in_gain": np.zeros((s_reg,), dtype=np.float32),
+            }
+        )
 
     if fam == ClosedLoopModelFamily.PERTURB_ODE:
         mod_d = spec.module_dim
-        return {
-            "w_enc": rng.normal(0.0, 0.15 / np.sqrt(s_reg), size=(s_reg, mod_d)).astype(np.float32),
-            "b_mod": rng.normal(0.0, 0.1, size=(mod_d,)).astype(np.float32),
-            "w_dec": np.zeros((mod_d, n_g), dtype=np.float32),
-            "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
+        return _with_ext(
+            {
+                "w_enc": rng.normal(0.0, 0.15 / np.sqrt(s_reg), size=(s_reg, mod_d)).astype(
+                    np.float32
+                ),
+                "b_mod": rng.normal(0.0, 0.1, size=(mod_d,)).astype(np.float32),
+                "w_dec": np.zeros((mod_d, n_g), dtype=np.float32),
+                "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
+                "decay": np.zeros((n_g,), dtype=np.float32),
+                "in_gain": np.zeros((s_reg,), dtype=np.float32),
+            }
+        )
+
+    lat_d = spec.latent_dim
+    return _with_ext(
+        {
+            "rate": np.zeros((lat_d,), dtype=np.float32),
+            "w_s": rng.normal(0.0, 0.25 / np.sqrt(lat_d), size=(lat_d, lat_d)).astype(np.float32),
+            "w_a": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, lat_d)).astype(np.float32),
+            "bias": rng.normal(0.0, 0.15, size=(lat_d,)).astype(np.float32),
+            "w_dyn": rng.normal(0.0, 0.15 / np.sqrt(lat_d), size=(lat_d, lat_d)).astype(np.float32),
+            "readout": rng.normal(0.0, 0.03, size=(lat_d, n_g)).astype(np.float32),
             "decay": np.zeros((n_g,), dtype=np.float32),
             "in_gain": np.zeros((s_reg,), dtype=np.float32),
         }
-
-    lat_d = spec.latent_dim
-    return {
-        "rate": np.zeros((lat_d,), dtype=np.float32),
-        "w_s": rng.normal(0.0, 0.25 / np.sqrt(lat_d), size=(lat_d, lat_d)).astype(np.float32),
-        "w_a": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, lat_d)).astype(np.float32),
-        "bias": rng.normal(0.0, 0.15, size=(lat_d,)).astype(np.float32),
-        "w_dyn": rng.normal(0.0, 0.15 / np.sqrt(lat_d), size=(lat_d, lat_d)).astype(np.float32),
-        "readout": rng.normal(0.0, 0.03, size=(lat_d, n_g)).astype(np.float32),
-        "decay": np.zeros((n_g,), dtype=np.float32),
-        "in_gain": np.zeros((s_reg,), dtype=np.float32),
-    }
+    )
 
 
 def build_closed_loop_jax_rollout(
@@ -1016,11 +1054,13 @@ def build_closed_loop_jax_rollout(
     obs_step_indices: tuple[int, ...],
     clamp_steps: int = 0,
 ):
-    """Build JIT-compiled autonomous closed-loop CRISPR knockout network rollout.
+    """Build JIT-compiled autonomous closed-loop network rollout (with optional external pulses).
 
-    If clamp_steps > 0 and y0 is provided, steps 0..clamp_steps-1 linearly warm-start
-    intracellular memory along the ramp 0 -> y0 before releasing y(t) at step clamp_steps
-    from y0 for fully autonomous closed-loop integration over the remaining horizon.
+    Supports both permanent CRISPR knockout perturbations (`ko_mask`) and time-varying
+    external ligand pulse/withdrawal inputs (`u_ext_seq` of shape `(n_steps, batch, n_ext_inputs)`).
+    If `clamp_steps > 0`, steps `0..clamp_steps-1` teacher-force `y(t)` along either an
+    explicit trajectory `y_clamp_seq` or a linear ramp `0 -> y0` to load intracellular
+    memory before autonomous closed-loop rollout over the remaining horizon.
     """
     template = _init_closed_loop_tree(spec, seed=0)
     template_j = {k: jnp.asarray(v) for k, v in template.items()}
@@ -1035,24 +1075,36 @@ def build_closed_loop_jax_rollout(
     reg_idx_j = jnp.asarray(reg_idx_np, dtype=jnp.int32)
 
     hollow_np = np.ones((s_reg, n_g), dtype=np.float32)
-    for r_pos, g_pos in enumerate(reg_idx_np):
-        hollow_np[r_pos, g_pos] = 0.0
+    if spec.hollow:
+        for r_pos, g_pos in enumerate(reg_idx_np):
+            hollow_np[r_pos, g_pos] = 0.0
     off_diag = jnp.asarray(hollow_np)
 
     basal_reg_j = jnp.asarray(basal_levels[reg_idx_np], dtype=jnp.float32)
     obs_idx_j = jnp.asarray(obs_step_indices, dtype=jnp.int32)
     fam = spec.family
+    has_ext = spec.n_ext_inputs > 0
 
-    def forward(theta: jnp.ndarray, ko_mask: jnp.ndarray, y0: jnp.ndarray) -> jnp.ndarray:
+    def forward(
+        theta: jnp.ndarray,
+        ko_mask: jnp.ndarray,
+        y0: jnp.ndarray,
+        u_ext_seq: jnp.ndarray | None = None,
+        y_clamp_seq: jnp.ndarray | None = None,
+    ) -> jnp.ndarray:
         p = unpack(theta)
         decay = 0.15 + jnp.logaddexp(0.0, p["decay"])
         gain = 0.35 + jax.nn.softplus(p["in_gain"])
         batch = ko_mask.shape[0]
         ko_reg = ko_mask[:, reg_idx_j]
 
-        def _gene_activity(y_state: jnp.ndarray) -> jnp.ndarray:
+        def _gene_activity(y_state: jnp.ndarray, u_step: jnp.ndarray | None) -> jnp.ndarray:
             y_reg = y_state[:, reg_idx_j]
-            raw_g = (1.0 - ko_reg) * (gain[None] * y_reg) - ko_reg * (gain[None] * basal_reg_j[None])
+            raw_g = (1.0 - ko_reg) * (gain[None] * y_reg) - ko_reg * (
+                gain[None] * basal_reg_j[None]
+            )
+            if has_ext and u_step is not None:
+                raw_g = raw_g + (1.0 - ko_reg) * (u_step @ p["ext_in"])
             return jnp.tanh(raw_g)
 
         y_start = jnp.zeros_like(y0) if clamp_steps > 0 else y0
@@ -1066,9 +1118,9 @@ def build_closed_loop_jax_rollout(
                 y_start,
             )
 
-            def rhs(state):
+            def rhs(state, u_step):
                 z, h, y = state
-                act = _gene_activity(y)
+                act = _gene_activity(y, u_step)
                 if fam == ClosedLoopModelFamily.LOCAL_CONST:
                     lam_up = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
                         p["rate"][None]
@@ -1094,6 +1146,10 @@ def build_closed_loop_jax_rollout(
                 prod = act @ d_hol + h.reshape(batch, s_reg * r_dim) @ b_hol.reshape(
                     s_reg * r_dim, n_g
                 )
+                if fam == ClosedLoopModelFamily.MEMGRN and spec.use_cooperativity:
+                    h_bar = jnp.mean(h, axis=-1)  # (batch, s_reg)
+                    coop_feat = (h_bar @ p["coop_u"]) * (h_bar @ p["coop_v"])
+                    prod = prod + coop_feat @ p["coop_w"]
                 return dz, dh, prod - decay[None] * y
 
         elif fam == ClosedLoopModelFamily.COUPLED_ADAPTIVE:
@@ -1105,9 +1161,9 @@ def build_closed_loop_jax_rollout(
                 y_start,
             )
 
-            def rhs(state):
+            def rhs(state, u_step):
                 z, h, y = state
-                act = _gene_activity(y)
+                act = _gene_activity(y, u_step)
                 drive = act @ p["mix_in"]
                 zh = jnp.concatenate([z, h], axis=-1)
                 hid = jnp.tanh(act @ p["in_a"] + zh @ p["in_zh"] + p["bias"])
@@ -1124,9 +1180,9 @@ def build_closed_loop_jax_rollout(
             init_state = (jnp.zeros((batch, m_dim), dtype=theta.dtype), y_start)
             rest_gate = jax.nn.sigmoid(p["b_gate"])
 
-            def rhs(state):
+            def rhs(state, u_step):
                 x, y = state
-                act = _gene_activity(y)
+                act = _gene_activity(y, u_step)
                 base_tau = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
                     p["tau_log"]
                 )
@@ -1142,9 +1198,9 @@ def build_closed_loop_jax_rollout(
             b_hol = p["delayed"] * off_diag[:, None, :]
             init_state = (jnp.zeros((batch, s_reg, r_dim), dtype=theta.dtype), y_start)
 
-            def rhs(state):
+            def rhs(state, u_step):
                 x, y = state
-                act = _gene_activity(y)
+                act = _gene_activity(y, u_step)
                 base_tau = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
                     p["tau_log"]
                 )
@@ -1165,9 +1221,9 @@ def build_closed_loop_jax_rollout(
             init_state = (y_start,)
             rest_mod = jnp.tanh(p["b_mod"])
 
-            def rhs(state):
+            def rhs(state, u_step):
                 (y,) = state
-                act = _gene_activity(y)
+                act = _gene_activity(y, u_step)
                 mod = jnp.tanh(act @ p["w_enc"] + p["b_mod"]) - rest_mod
                 dy = mod @ p["w_dec"] + act @ d_hol - decay[None] * y
                 return (dy,)
@@ -1177,19 +1233,28 @@ def build_closed_loop_jax_rollout(
             init_state = (jnp.zeros((batch, lat_d), dtype=theta.dtype), y_start)
             rest_hid = jnp.tanh(p["bias"])
 
-            def rhs(state):
+            def rhs(state, u_step):
                 z, y = state
-                act = _gene_activity(y)
+                act = _gene_activity(y, u_step)
                 lat_dec = 0.15 + jnp.logaddexp(0.0, p["rate"])
                 hid = jnp.tanh(z @ p["w_s"] + act @ p["w_a"] + p["bias"]) - rest_hid
                 dz = -lat_dec[None] * z + hid @ p["w_dyn"]
                 return dz, z @ p["readout"] - decay[None] * y
 
-        def step_fn(carry, step_idx):
-            k1 = rhs(carry)
-            k2 = rhs(jax.tree.map(lambda c, d: c + 0.5 * dt * d, carry, k1))
-            k3 = rhs(jax.tree.map(lambda c, d: c + 0.5 * dt * d, carry, k2))
-            k4 = rhs(jax.tree.map(lambda c, d: c + dt * d, carry, k3))
+        scan_xs = (
+            jnp.arange(n_steps),
+            u_ext_seq if u_ext_seq is not None else jnp.zeros((n_steps, batch, 1), dtype=theta.dtype),
+            y_clamp_seq if y_clamp_seq is not None else jnp.zeros((n_steps, batch, n_g), dtype=theta.dtype),
+        )
+        use_explicit_clamp = y_clamp_seq is not None
+
+        def step_fn(carry, x_step):
+            step_idx, u_s, y_cl = x_step
+            u_in = u_s if has_ext else None
+            k1 = rhs(carry, u_in)
+            k2 = rhs(jax.tree.map(lambda c, d: c + 0.5 * dt * d, carry, k1), u_in)
+            k3 = rhs(jax.tree.map(lambda c, d: c + 0.5 * dt * d, carry, k2), u_in)
+            k4 = rhs(jax.tree.map(lambda c, d: c + dt * d, carry, k3), u_in)
             nxt = jax.tree.map(
                 lambda c, d1, d2, d3, d4: c + (dt / 6.0) * (d1 + 2 * d2 + 2 * d3 + d4),
                 carry,
@@ -1199,13 +1264,16 @@ def build_closed_loop_jax_rollout(
                 k4,
             )
             if clamp_steps > 0:
-                frac = (step_idx + 1).astype(theta.dtype) / float(clamp_steps)
-                y_ramp = frac * y0
-                y_next = jnp.where(step_idx < clamp_steps, y_ramp, nxt[-1])
+                if use_explicit_clamp:
+                    y_target_clamp = y_cl
+                else:
+                    frac = (step_idx + 1).astype(theta.dtype) / float(clamp_steps)
+                    y_target_clamp = frac * y0
+                y_next = jnp.where(step_idx < clamp_steps, y_target_clamp, nxt[-1])
                 nxt = (*nxt[:-1], y_next)
             return nxt, nxt[-1]
 
-        _, ys = jax.lax.scan(step_fn, init_state, jnp.arange(n_steps))
+        _, ys = jax.lax.scan(step_fn, init_state, scan_xs)
         with_init = jnp.concatenate([y_start[None], ys], axis=0)
         sampled = with_init[obs_idx_j]
         return jnp.transpose(sampled, (1, 0, 2))
@@ -1227,12 +1295,17 @@ def fit_closed_loop_network(
     obs_step_indices: tuple[int, ...],
     train_y0: np.ndarray | None = None,
     val_y0: np.ndarray | None = None,
+    train_u_ext: np.ndarray | None = None,
+    val_u_ext: np.ndarray | None = None,
+    train_y_clamp: np.ndarray | None = None,
+    val_y_clamp: np.ndarray | None = None,
     clamp_steps: int = 0,
     seeds: tuple[int, ...] = (101, 202),
     reg_grid: tuple[float, ...] = (1e-3, 5e-3, 2e-2),
     l1_graph_ratio: float = 0.25,
     total_updates: int = 900,
     lr_max: float = 0.006,
+    gate_shrinkage: float = 3.0,
 ) -> TrainedClosedLoopModel:
     """Fit a closed-loop N-gene network with validation regularization selection."""
     forward, unpack, flat_template = build_closed_loop_jax_rollout(
@@ -1251,6 +1324,8 @@ def fit_closed_loop_network(
         if train_y0 is None
         else jnp.asarray(train_y0, dtype=jnp.float32)
     )
+    tr_u_ext = None if train_u_ext is None else jnp.asarray(train_u_ext, dtype=jnp.float32)
+    tr_ycl = None if train_y_clamp is None else jnp.asarray(train_y_clamp, dtype=jnp.float32)
     tr_w = jnp.asarray(train_weights, dtype=jnp.float32)
     tr_den = jnp.maximum(1.0, jnp.sum(tr_w))
 
@@ -1261,11 +1336,13 @@ def fit_closed_loop_network(
         if val_y0 is None
         else jnp.asarray(val_y0, dtype=jnp.float32)
     )
+    va_u_ext = None if val_u_ext is None else jnp.asarray(val_u_ext, dtype=jnp.float32)
+    va_ycl = None if val_y_clamp is None else jnp.asarray(val_y_clamp, dtype=jnp.float32)
     va_w = jnp.asarray(val_weights, dtype=jnp.float32)
     va_den = jnp.maximum(1.0, jnp.sum(va_w))
 
-    def data_loss(theta, ko_b, y_b, y0_b, w_b, den_b):
-        pred = forward(theta, ko_b, y0_b)
+    def data_loss(theta, ko_b, y_b, y0_b, u_b, ycl_b, w_b, den_b):
+        pred = forward(theta, ko_b, y0_b, u_b, ycl_b)
         return jnp.sum(((pred - y_b) ** 2) * w_b) / den_b
 
     def reg_penalty(theta):
@@ -1277,16 +1354,18 @@ def fit_closed_loop_network(
             l1 = l1 + jnp.sum(jnp.abs(p["direct"]))
         if "delayed" in p:
             l1 = l1 + jnp.sum(jnp.abs(p["delayed"])) / float(spec.n_channels)
+        if "coop_w" in p:
+            l1 = l1 + jnp.sum(jnp.abs(p["coop_w"]))
         if "out_proj" in p:
-            l2 = l2 + 3.0 * jnp.sum(p["out_proj"] ** 2)
+            l2 = l2 + gate_shrinkage * jnp.sum(p["out_proj"] ** 2)
         if "out_proj_dn" in p:
-            l2 = l2 + 3.0 * jnp.sum(p["out_proj_dn"] ** 2)
+            l2 = l2 + gate_shrinkage * jnp.sum(p["out_proj_dn"] ** 2)
         return (1.0 - l1_graph_ratio) * l2 + l1_graph_ratio * 0.2 * l1
 
     @jax.jit
     def run_single(theta0: jnp.ndarray, reg_val: jnp.ndarray):
         def obj(th):
-            return data_loss(th, tr_ko, tr_y, tr_y0, tr_w, tr_den) + reg_val * reg_penalty(th)
+            return data_loss(th, tr_ko, tr_y, tr_y0, tr_u_ext, tr_ycl, tr_w, tr_den) + reg_val * reg_penalty(th)
 
         val_every = max(1, total_updates // 12)
         n_chunks = total_updates // val_every
@@ -1310,7 +1389,7 @@ def fit_closed_loop_network(
                 return th_i, m_i, v_i
 
             th, m, v = jax.lax.fori_loop(0, val_every, inner, (th, m, v))
-            v_l = data_loss(th, va_ko, va_y, va_y0, va_w, va_den)
+            v_l = data_loss(th, va_ko, va_y, va_y0, va_u_ext, va_ycl, va_w, va_den)
             better = v_l < best_val
             return (
                 th,
@@ -1320,7 +1399,7 @@ def fit_closed_loop_network(
                 jnp.where(better, v_l, best_val),
             ), v_l
 
-        init_v = data_loss(theta0, va_ko, va_y, va_y0, va_w, va_den)
+        init_v = data_loss(theta0, va_ko, va_y, va_y0, va_u_ext, va_ycl, va_w, va_den)
         (_, _, _, best_th, best_val), _ = jax.lax.scan(
             chunk_step,
             (theta0, jnp.zeros_like(theta0), jnp.zeros_like(theta0), theta0, init_v),
@@ -1347,7 +1426,12 @@ def fit_closed_loop_network(
 
     th_j = jnp.asarray(best_th_np, dtype=jnp.float32)
 
-    def predict_ko_fn(ko_np: np.ndarray, y0_np: np.ndarray | None = None) -> np.ndarray:
+    def predict_ko_fn(
+        ko_np: np.ndarray,
+        y0_np: np.ndarray | None = None,
+        u_ext_np: np.ndarray | None = None,
+        y_clamp_np: np.ndarray | None = None,
+    ) -> np.ndarray:
         ko_arr = np.asarray(ko_np, dtype=np.float32)
         unbatched = ko_arr.ndim == 1
         if unbatched:
@@ -1357,7 +1441,12 @@ def fit_closed_loop_network(
             if y0_np is None
             else np.asarray(y0_np, dtype=np.float32)
         )
-        pred = np.asarray(forward(th_j, jnp.asarray(ko_arr), jnp.asarray(y0_arr)), dtype=np.float64)
+        u_arr = None if u_ext_np is None else jnp.asarray(u_ext_np, dtype=jnp.float32)
+        yc_arr = None if y_clamp_np is None else jnp.asarray(y_clamp_np, dtype=jnp.float32)
+        pred = np.asarray(
+            forward(th_j, jnp.asarray(ko_arr), jnp.asarray(y0_arr), u_arr, yc_arr),
+            dtype=np.float64,
+        )
         return pred[0] if unbatched else pred
 
     # Common early-time counterfactual single-TF knockout sensitivity across all architectures
@@ -1366,11 +1455,12 @@ def fit_closed_loop_network(
         if spec.regulator_indices is None
         else np.asarray(spec.regulator_indices, dtype=np.int64)
     )
+    early_steps = max(4, n_steps // 4)
     early_fwd, _, _ = build_closed_loop_jax_rollout(
         spec,
         basal_levels=basal_levels,
         dt=dt,
-        n_steps=max(4, n_steps // 4),
+        n_steps=early_steps,
         obs_step_indices=(1, 2, 4),
         clamp_steps=0,
     )
@@ -1378,11 +1468,29 @@ def fit_closed_loop_network(
     for r_pos, g_pos in enumerate(reg_idx_np):
         ko_probe[r_pos, g_pos] = 1.0
     zero_y0_p = jnp.zeros((len(reg_idx_np), spec.n_genes), dtype=jnp.float32)
+    u_wt_p = (
+        jnp.zeros((early_steps, 1, spec.n_ext_inputs), dtype=jnp.float32)
+        if spec.n_ext_inputs > 0
+        else None
+    )
+    u_ko_p = (
+        jnp.zeros((early_steps, len(reg_idx_np), spec.n_ext_inputs), dtype=jnp.float32)
+        if spec.n_ext_inputs > 0
+        else None
+    )
     wt_early = np.asarray(
-        early_fwd(th_j, jnp.zeros((1, spec.n_genes), dtype=jnp.float32), jnp.zeros((1, spec.n_genes), dtype=jnp.float32)),
+        early_fwd(
+            th_j,
+            jnp.zeros((1, spec.n_genes), dtype=jnp.float32),
+            jnp.zeros((1, spec.n_genes), dtype=jnp.float32),
+            u_wt_p,
+            None,
+        ),
         dtype=np.float64,
     )[0]
-    ko_early = np.asarray(early_fwd(th_j, jnp.asarray(ko_probe), zero_y0_p), dtype=np.float64)
+    ko_early = np.asarray(
+        early_fwd(th_j, jnp.asarray(ko_probe), zero_y0_p, u_ko_p, None), dtype=np.float64
+    )
     sens = np.sqrt(np.mean((ko_early - wt_early[None]) ** 2, axis=1))
     graph_mat = np.zeros((spec.n_genes, spec.n_genes), dtype=np.float64)
     for r_pos, g_pos in enumerate(reg_idx_np):
