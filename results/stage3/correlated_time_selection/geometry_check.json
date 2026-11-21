@@ -1,0 +1,73 @@
+{
+  "posthoc": true,
+  "definition": "Fitted nearest wrong unordered-pair distance for each planted pair, averaged across training-rho mixture, target and history per test graph. Network direction agreement between this diagnostic and observed policy accuracy.",
+  "mean_critical_distance": [
+    [
+      0.4053287890129293,
+      0.39880849348889513,
+      0.38169949774570733
+    ],
+    [
+      0.4452873305800439,
+      0.4282340544111515,
+      0.40045795195917555
+    ],
+    [
+      0.485075880136597,
+      0.469988710871852,
+      0.4383467195972133
+    ]
+  ],
+  "checks": [
+    {
+      "model": "learned_gw",
+      "comparison": "even",
+      "mean_distance_gain": 0.07974709112366771,
+      "mean_accuracy_gain": 0.020798259311252162,
+      "direction_agreement": 16,
+      "n": 16
+    },
+    {
+      "model": "fixed_gw",
+      "comparison": "even",
+      "mean_distance_gain": 0.07118021738295686,
+      "mean_accuracy_gain": 0.0245940950181749,
+      "direction_agreement": 16,
+      "n": 16
+    },
+    {
+      "model": "history_basis",
+      "comparison": "even",
+      "mean_distance_gain": 0.056647221851505954,
+      "mean_accuracy_gain": 0.019401126437717003,
+      "direction_agreement": 16,
+      "n": 16
+    },
+    {
+      "model": "learned_gw",
+      "comparison": "iid",
+      "mean_distance_gain": 0.039788549556553185,
+      "mean_accuracy_gain": 0.0041296217176649205,
+      "direction_agreement": 16,
+      "n": 16
+    },
+    {
+      "model": "fixed_gw",
+      "comparison": "iid",
+      "mean_distance_gain": 0.04175465646070059,
+      "mean_accuracy_gain": 0.0021510654025607666,
+      "direction_agreement": 13,
+      "n": 16
+    },
+    {
+      "model": "history_basis",
+      "comparison": "iid",
+      "mean_distance_gain": 0.03788876763803767,
+      "mean_accuracy_gain": 0.005415386623806428,
+      "direction_agreement": 16,
+      "n": 16
+    }
+  ],
+  "max_identity_error": 1.7763568394002505e-15,
+  "scores_sha256": "027bbac6395e823dc13e5037865d96b47c8ed635e1e7cb6e7580b26aa394ddc2"
+}

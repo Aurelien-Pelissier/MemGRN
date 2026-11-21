@@ -1,0 +1,78 @@
+{
+  "status": "Post-score numerical sensitivity; frozen parameters, no training or model selection",
+  "dt": 0.05,
+  "worlds": [
+    {
+      "world": "markov_1101",
+      "case": "markov",
+      "mse": 0.0025045244068934796,
+      "edge_AP": 1.0
+    },
+    {
+      "world": "hidden_mediators_1101",
+      "case": "hidden_mediators",
+      "mse": 0.0022358548470845915,
+      "edge_AP": 1.0
+    },
+    {
+      "world": "measurement_filter_1101",
+      "case": "measurement_filter",
+      "mse": 0.0024571069613250353,
+      "edge_AP": 1.0
+    },
+    {
+      "world": "hidden_common_cause_1101",
+      "case": "hidden_common_cause",
+      "mse": 0.05581912907990834,
+      "edge_AP": 0.5880833185657747
+    },
+    {
+      "world": "markov_1102",
+      "case": "markov",
+      "mse": 0.0017960319696179118,
+      "edge_AP": 1.0
+    },
+    {
+      "world": "hidden_mediators_1102",
+      "case": "hidden_mediators",
+      "mse": 0.0022098192932593066,
+      "edge_AP": 1.0
+    },
+    {
+      "world": "measurement_filter_1102",
+      "case": "measurement_filter",
+      "mse": 0.0024478599069383583,
+      "edge_AP": 1.0
+    },
+    {
+      "world": "hidden_common_cause_1102",
+      "case": "hidden_common_cause",
+      "mse": 0.05482489892504088,
+      "edge_AP": 0.591710758377425
+    },
+    {
+      "world": "markov_1103",
+      "case": "markov",
+      "mse": 0.0016883112593344231,
+      "edge_AP": 1.0
+    },
+    {
+      "world": "hidden_mediators_1103",
+      "case": "hidden_mediators",
+      "mse": 0.0020799082080022162,
+      "edge_AP": 1.0
+    },
+    {
+      "world": "measurement_filter_1103",
+      "case": "measurement_filter",
+      "mse": 0.0023875964364728796,
+      "edge_AP": 1.0
+    },
+    {
+      "world": "hidden_common_cause_1103",
+      "case": "hidden_common_cause",
+      "mse": 0.06982872647519571,
+      "edge_AP": 0.5885591595736522
+    }
+  ]
+}

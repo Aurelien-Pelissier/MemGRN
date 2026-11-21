@@ -1,0 +1,68 @@
+[
+  {
+    "seed": 3601,
+    "learned_gw": {
+      "half_step_mse": 0.0005553828604257041,
+      "training_step_mse": 0.0005553735813534158
+    },
+    "fixed_gw": {
+      "half_step_mse": 0.0014079001159395248,
+      "training_step_mse": 0.0014078881539853702
+    }
+  },
+  {
+    "seed": 3602,
+    "learned_gw": {
+      "half_step_mse": 0.0007049651109177789,
+      "training_step_mse": 0.000704957267622721
+    },
+    "fixed_gw": {
+      "half_step_mse": 0.0013599971828664244,
+      "training_step_mse": 0.0013599883070168502
+    }
+  },
+  {
+    "seed": 3603,
+    "learned_gw": {
+      "half_step_mse": 0.0005331344777955222,
+      "training_step_mse": 0.0005331254486924876
+    },
+    "fixed_gw": {
+      "half_step_mse": 0.0014036927361681026,
+      "training_step_mse": 0.001403679654805752
+    }
+  },
+  {
+    "seed": 3604,
+    "learned_gw": {
+      "half_step_mse": 0.0005161833739117875,
+      "training_step_mse": 0.0005161748165846364
+    },
+    "fixed_gw": {
+      "half_step_mse": 0.0013167100117906277,
+      "training_step_mse": 0.001316699585963348
+    }
+  },
+  {
+    "seed": 3605,
+    "learned_gw": {
+      "half_step_mse": 0.0007081432663188264,
+      "training_step_mse": 0.0007081317596815632
+    },
+    "fixed_gw": {
+      "half_step_mse": 0.001165885369652482,
+      "training_step_mse": 0.0011658734115930853
+    }
+  },
+  {
+    "seed": 3606,
+    "learned_gw": {
+      "half_step_mse": 0.0004951522383476201,
+      "training_step_mse": 0.0004951509690207998
+    },
+    "fixed_gw": {
+      "half_step_mse": 0.0007438659508141508,
+      "training_step_mse": 0.0007438608252016059
+    }
+  }
+]

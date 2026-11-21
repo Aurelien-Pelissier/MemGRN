@@ -1,0 +1,23 @@
+{
+  "issued_utc": "2026-11-11T01:17:01.679536+00:00",
+  "schedule": "b92c5ee2197a02a6bd8d3107c7995d0e5144a38eff89816079a2fbfdb3e27011",
+  "control_data": "a8d8277c02a55d64a29d5facf1041e3859ad9e5660b0fe2ab6b73c056fdd55b4",
+  "indices": [
+    2,
+    6,
+    10,
+    14,
+    18
+  ],
+  "interval": [
+    0.0,
+    0.0
+  ],
+  "models": [
+    "learned_gw",
+    "fixed_gw",
+    "history_basis"
+  ],
+  "reason": "Same times in each record, same fitted-library readout, covariance and tie rule. Every shared observation gives the same pair and credit for both policies.",
+  "secondary_protocol": "f00e695259024375f1c3dbb4cdb430f29fbe79b34efd5daa848c4b3f295c591c"
+}

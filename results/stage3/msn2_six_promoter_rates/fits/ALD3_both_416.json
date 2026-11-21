@@ -1,0 +1,21 @@
+{
+  "utc": "2026-11-11T04:45:05.366185+00:00",
+  "fit": "af90261becdd4ab59a6dc01e06829727c175552d48396065178925596b2f7796",
+  "lock": "fe54d769149ab2389cebe54e39b454ad594b768602a3d167e324dfc2806e9dfb",
+  "gene": "ALD3",
+  "model": "both",
+  "seed": 416,
+  "updates": 2400,
+  "starts": [
+    "archived",
+    "original_init",
+    "dispersed"
+  ],
+  "losses": [
+    0.0043136547319591045,
+    0.005743830464780331,
+    0.003301771357655525
+  ],
+  "chosen": 2,
+  "parameters": 31
+}

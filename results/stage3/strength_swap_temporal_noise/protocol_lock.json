@@ -1,0 +1,14 @@
+{
+  "locked_utc": "2026-11-10T23:35:13.755232+00:00",
+  "design": "0e71618edafdd3627927a8eaa384cf105f894a7167a4760e7c5456278e9715cd",
+  "scorer": "83b545bfa26c189a056d3926536fe6215e7da0e3fddf263836807916036b7edc",
+  "parent": {
+    "protocol_lock.json": "0eb7495f077d7fe4091454930777614ebc0ab5dd43427e7bce0ff27397a4cbb2",
+    "schedule_freeze.json": "3452d282d512e45a41422bddbf661960645aed5c99677e5a70d2009416271bce",
+    "fit_freeze.json": "72745267eb289d2830cd8247bf68f0005781bc78753487d07801079f191cf8be",
+    "data_freeze.json": "91abbc0cdc7b3f0c30feb5467b604e23d70782b77e188ba5d26a3845596aee61",
+    "prediction_freeze.json": "8408cc3013c0da7c13b92c4babfab6a89a90bed745f36f2e2f4b529b35b9c208",
+    "scores.json": "ea21e01c781b88e292bce94c134af116eb8de230b2782ac6e25869be8ba4d21e",
+    "audit.json": "fe76e7dc337728bdcc23b5ec949061981b655a94e126e0a7d92aa01c95444173"
+  }
+}

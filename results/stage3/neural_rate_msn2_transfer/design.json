@@ -1,0 +1,45 @@
+{
+  "study": "Hansen & O'Shea yeast pulse experiments, released with Hansen & Zechner 2020 (Zenodo 2755026)",
+  "git_revision": "9d22cc6f5d06f85543be2cfbdbb13fb7e57c1c70",
+  "promoters": [
+    "ALD3",
+    "DCS2",
+    "DDR2",
+    "HXK1",
+    "RTN2",
+    "SIP18",
+    "TKL2"
+  ],
+  "train_minutes": [
+    10,
+    20,
+    40,
+    50
+  ],
+  "train_nM": [
+    100,
+    275,
+    690,
+    3000
+  ],
+  "held": {
+    "minutes": 30,
+    "nM": 690
+  },
+  "exclusions": "All other 30 min programs, frequency-modulated programs and engineered promoters are out of scope. No re-use of a held cell or response in fitting. Chosen intermediate duration by design.",
+  "measurements": "Use raw _size.mat, directly measured MSN2_RFP, YFP_molecules and time. No simulated TFInputParams, outcome-dependent cell filtering, maturation shift or inferred transcription. Population mean over available finite cells at each time. Baseline for each trace is its own mean of observations before zero. Starting TF at zero minutes is measured; fitted response starts at zero baseline. Equal-weight promoter-specific measured TF traces are pooled by schedule to give one common measured input. Normalize by maximum absolute source activity. Use linear TF interpolation, time in hours, 2.5 min integration step.",
+  "target": "Mean YFP copies per cell minus pre-pulse baseline. Divide each promoter by RMS population response across 16 source conditions and 5,10,...120 min; clamp denominator to at least 1 molecule. No held post-onset expression before predictions are sealed.",
+  "models": [
+    "neural_rate_gw",
+    "two_rate_gw",
+    "latent_ode"
+  ],
+  "updates": 2400,
+  "seeds": [
+    416,
+    819
+  ],
+  "optimizer": "Unchanged fit_real_washout.py initialization, field, full-batch 100-step Adam chunk, regularization, clipping, cosine schedule. Exactly 24 chunks per fit. Mean two final predictions. No early stopping, hyperparameter search or cross-study weight transfer.",
+  "comparators": "Primary source mean is the equally weighted mean of all 16 source-response trajectories at matched elapsed times. Report the mean of the four source trajectories at 690 nM as a prespecified dose-matched control.",
+  "endpoint": "Primary equal-promoter, equal-time MSE on population responses strictly after shutoff, 35,40,...120 min. Supporting results 35..60 and 65..120 min, all promoter scores, individual seeds and half-step solver agreement. All models use the same outcome scale. Learned models receive measured test TF including after shutoff. One held condition; no significance claims from genes, time points or cells."
+}

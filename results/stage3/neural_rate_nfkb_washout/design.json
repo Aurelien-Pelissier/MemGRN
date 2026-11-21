@@ -1,0 +1,52 @@
+{
+  "study": "Sen et al., Cell Systems 2020, doi:10.1016/j.cels.2019.12.004 (see article and pinned data manifest). Mouse fibroblasts stimulated for 30 min then washed; six mature-RNA samples after onset plus baseline, two genotypes and two biological replicates. EMSA measures nuclear NF-kB DNA-binding activity on a separate condition-matched time course.",
+  "study_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7047529/",
+  "data_url": "https://github.com/biomystery/duration_decode_manuscript/tree/37be90e56f6e4a9c726990c09e0adc114dcc8efc",
+  "ligands": [
+    "IL1",
+    "TNF",
+    "LPS"
+  ],
+  "genotypes": [
+    "ifnr",
+    "ifnrikba"
+  ],
+  "replicates": [
+    1,
+    2
+  ],
+  "times_h": [
+    0,
+    0.5,
+    1,
+    2,
+    3,
+    5,
+    8
+  ],
+  "washout_h": 0.5,
+  "primary_times_h": [
+    1,
+    2,
+    3,
+    5,
+    8
+  ],
+  "late_times_h": [
+    5,
+    8
+  ],
+  "models": [
+    "current_gw",
+    "two_rate_gw",
+    "neural_rate_gw",
+    "latent_ode"
+  ],
+  "primary": "Hold out all IL1 RNA trajectories for model and checkpoint fitting. Train on LPS and TNF. Freeze IL1 changes before accessing any IL1 RNA in this run. Then rotate holding out TNF or LPS, always using only the other two ligands in that fold. These reciprocal results are descriptive. Earlier GRN experiments studied this same dataset and IL1. All 177 author-panel genes in file order, no filtering by current outcomes. No new-cohort or genome-wide claim.",
+  "observations": "Zero-origin response log2(1+RPKM(t)) minus log2(1+RPKM(0)) in each biological replicate and genotype. Shared signed gene-wise readouts across both genotypes, no RNA or genotype labels fed to the models. Test time course is conditional on the measured EMSA trajectory, linearly interpolated on the observed [0,8] hours. Subtract condition-specific basal EMSA, floor at zero, divide by max basal-subtracted activation among fit ligands only, apply tanh as in the synthetic benchmark. Separate clock for ligand washout and measured TF activity. Two-rate and neural-rate use a common above-10%-of-fit-peak indicator to distinguish high vs low activity. No forced zero after washout.",
+  "architecture": "Single observed input, three source memory channels with two serial stages, all target states initialized to 0. Current gW learns one positive rate/channel. Two-rate uses one rate on either side of the input threshold. Neural-rate adds a four-unit local correction using activity and both channel states. All three learn direct and delayed signed output coefficients, with individual positive target relaxation. Latent neural ODE uses the same input to drive a dense unconstrained field over all target changes and 12 hidden coordinates, width 24; zero-origin equilibrium. Ordinary differential equations model log-expression changes.",
+  "fitting": "Each outer fold uses two inner folds: train on one source ligand (both genotypes, both replicates), validate on the other then reverse. Two full-batch Adam starts (seed 416, 819), equal budget 2400 updates, batch=all available source traces, checkpoint every 100 steps including 0, squared error on six positive RNA times, same 1e-5 mean-square parameter penalty. Choose one checkpoint per outer fold and architecture by lowest mean post-washout validation MSE pooled across the two directions and starts; earliest tie. Reinitialize both starts, refit on both source ligands up to chosen step, average two predictions. No ensemble weighting or test tuning. Midpoint RK2 at 0.1 hour with interpolated activity at start and midpoint; check predictions at 0.05 hour.",
+  "controls": "No response (baseline stays constant); source genotype-matched time mean across both training stimuli and their replicates. Neither uses test RNA. Compare simple time mean to gauge benefit of measuring activity. No test-time washout/late RNA reinitialization.",
+  "scoring": "Primary equal-weight MSE on five strictly post-washout observations, across genes, genotypes and RNA replicates; primary contrast neural-rate vs two-rate plus all other requested models. Show per-genotype, biological replicate and time, late 5/8h MSE, equal-weight per-target wins, and whole-ligand holdout results separately. Two biological replicates and one study preclude a population claim from gene-level pseudo-replication. As a noise diagnostic, report mean squared replicate difference / 2 (exchangeable independent replicate noise assumption).",
+  "information_boundary": "Pin raw-file hashes and scripts before fitting; use explicit-column loader for source RNA. For the primary fold, freeze predicted changes for all architectures prior to running reciprocal fits or reading IL1 responses. Within every outer fold verify source-only read ledger, input scale, pre-RNA forecast hashes and numerical convergence. Never use author-provided fitted weights."
+}

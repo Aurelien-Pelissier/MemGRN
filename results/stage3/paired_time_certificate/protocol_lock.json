@@ -1,0 +1,12 @@
+{
+  "locked_utc": "2026-11-11T01:13:06.966655+00:00",
+  "design": "6cde442b58968bfeecec09a901aac8616cb239e0511abf8db1e6efb9548c338c",
+  "prior": "4ec77903868763b8d11faffe4ab43d320bd0c5cc90f5a0965d878803de4d8337",
+  "source": {
+    "select_paired_time_policies.py": "362135fc4656b0212e1edc5dc01ebc25caa8d2fd926f36fbf1485336fc21229e",
+    "select_correlated_times.py": "34bc73f6a2aeddb6f22e1255d8f437fee1d6811c491bf53446015b82bcb5e520",
+    "select_strength_swap_times.py": "5d650893136003bc734cb014530a7a6f40a7b104e11ac5f51b170efa87d73e01",
+    "fit_strength_swap_time_networks.py": "380116bc29721a6cbfe8758f4cf25c9d806e834861c069f2fdd94798a4d5ad59",
+    "swap_replication_fit.py": "e3c057d60cffdc8d3451f2f6d0206e195f42d75a61e633ae8c147773770c2dae"
+  }
+}

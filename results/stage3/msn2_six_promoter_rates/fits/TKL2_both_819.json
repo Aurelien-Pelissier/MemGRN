@@ -1,0 +1,21 @@
+{
+  "utc": "2026-11-11T04:48:41.121215+00:00",
+  "fit": "de29b9243051df4cc142329a0aa540a1e77f04870757aeb4bbe14ea700502259",
+  "lock": "fe54d769149ab2389cebe54e39b454ad594b768602a3d167e324dfc2806e9dfb",
+  "gene": "TKL2",
+  "model": "both",
+  "seed": 819,
+  "updates": 2400,
+  "starts": [
+    "archived",
+    "original_init",
+    "dispersed"
+  ],
+  "losses": [
+    0.009125234559178352,
+    0.01360979676246643,
+    0.005198302678763866
+  ],
+  "chosen": 2,
+  "parameters": 31
+}

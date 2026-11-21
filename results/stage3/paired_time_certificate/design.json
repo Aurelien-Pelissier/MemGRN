@@ -1,0 +1,74 @@
+{
+  "question": "Can five free reading times outperform the best five-time arithmetic progression on fresh networks, and can a certificate issued from independent controls and single-source calibration interventions predict the direction before combined-pulse outcomes are used?",
+  "design_seeds": [
+    57001,
+    57002,
+    57003,
+    57004,
+    57005,
+    57006,
+    57007,
+    57008,
+    57009,
+    57010,
+    57011,
+    57012,
+    57013,
+    57014,
+    57015,
+    57016
+  ],
+  "seeds": [
+    91501,
+    91502,
+    91503,
+    91504,
+    91505,
+    91506,
+    91507,
+    91508,
+    91509,
+    91510,
+    91511,
+    91512,
+    91513,
+    91514,
+    91515,
+    91516
+  ],
+  "models": [
+    "learned_gw",
+    "fixed_gw",
+    "history_basis"
+  ],
+  "rho": [
+    0.5,
+    0.75,
+    0.9
+  ],
+  "sd_per_arm": 0.06,
+  "selection_noise_seed": 273117,
+  "selection_draws": 128,
+  "controls": {
+    "pairs_per_regime": 128,
+    "seed": 638101,
+    "estimator": "Per regime difference two independent null-arm records. Subtract across-replicate time means. Pool lag-zero variance across times and estimate lag-one correlation by pooling adjacent products divided by mean of adjacent variances. Fit stationary AR(1), clip rho to [0,0.995]. Use estimated contrast SD and rho for all whitening in selection and inference. Same control bank transferred across networks. True covariance used only by blinded simulated observation generators and noise diagnostics."
+  },
+  "selection": "All settings share the previous simultaneous 4:1 swap of width 2.4; 4× observation SD. One common schedule per policy for all models, targets, regimes, records. Select to maximize mean exact pair recovery across three models, mixture of regimes, 16 design networks, six targets, four histories, both assignments and 128 shared design noise draws. Progression searches every integer start and positive spacing with five distinct times in [0.2,6.0] in steps 0.2 (98 choices). Free selector starts with the best of the previous five-step greedy algorithm rerun using estimated covariance and the best progression, then makes one best single-time exchange among all 125 replacements retaining the starting choice in case of a tie. Lexicographic ties except exact training ties retain progression/start first. No test labels for selection. Free is a local search over unrestricted grids.",
+  "certificate": {
+    "screen_replicates": 2048,
+    "screen_seed": 638103,
+    "query_seed": 638107,
+    "queries": 524288,
+    "alpha_screen": 0.005,
+    "alpha_rates": 0.045,
+    "screen": "Obtain independent single-source treated-control traces for each source at c per test target in the first regime; use two-sided simultaneous per-time Student t intervals across 16*6*5*30 coordinates. Exactly two delayed parents can have nonzero post-shutoff effects. If a target does not resolve exactly two parents, use no truth labels for it, bound its entire gap by [-1,1].",
+    "theorem": "With separable clamps, effective input tanh, matched fixed contexts, iid records with centered equal-covariance Gaussian errors independent of source, choose tanh(c)^2=tanh(a)^2+tanh(b)^2. Weight independent single-source traces by tanh(a)/tanh(c),tanh(b)/tanh(c). Two independent synthesized records with strengths swapped have exactly the two-record law for any common temporal covariance. The same synthesized full-grid noisy data are subsampled for both policies. Certificate uses independent singleton outcomes, no combined test means or parent labels. Hash the certificate before opening the test benchmark. Tie-break uniformly via a shared random permutation across policies. For each independent uniform draw of evaluable target, history, orientation and regime, count plus/minus paired discordances. Exact binomial confidence sets for P(discordant) and P(free wins | discordant), simultaneous over three models. Combine with missing-target worst case and screen error by union bound. At identical schedules certify exact 0 for every model deterministically. Primary target is expected advantage on the fixed 16 fresh networks, conditional on frozen fits and control-based scorer; no population or unconditional biological guarantee."
+  },
+  "test": {
+    "draws": 4096,
+    "noise_seed": 638109,
+    "endpoint": "Independently score true combined-pulse response templates on all 96 targets at three regimes, four histories, both roles and 4096 paired draws per stratum; report expected panel estimate and simultaneous paired network t intervals across 3 model mixture comparisons. Regime-specific results descriptive. Network intervals and certificate intervals have different sampling units."
+  },
+  "audits": "Hash protocol, null controls, schedules, weights, libraries, calibration-output files and certificate; check independent full nonlinear simulator single-source means and superposition for all candidates after certificate freeze; direct joint quadratic distances, score aggregation and disjoint random seeds. Report computational calibration budget and simulator assumptions."
+}

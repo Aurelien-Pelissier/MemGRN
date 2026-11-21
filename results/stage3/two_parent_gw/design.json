@@ -1,0 +1,22 @@
+{
+  "seeds": [
+    4601,
+    4602,
+    4603,
+    4604,
+    4605,
+    4606
+  ],
+  "models": [
+    "learned_gw",
+    "fixed_gw",
+    "history_basis"
+  ],
+  "worlds": "Fresh six-node graphs with two distinct non-self delayed parents per target, two outgoing delayed edges per source, and three additional instantaneous edges. Each world has one target of each kinetic pairing FF, SS, BB, FS, FB, SB, randomly assigned. Half of target pairs have opposing edge-weight signs. Same third-order fast/slow filters, biphasic shape, hidden van der Pol driver, noise .015 and four-phase history protocol as prior pilot.",
+  "training": "Only overlapping two-source interventions and their phase-matched unperturbed controls are used in fitting. Graph-independent random perfect matching holds three of fifteen source pair identities out of training and validation. On the other twelve pairs use two training schedules with different order, amplitudes and signs; one separate validation schedule per pair. Test each of fifteen pairs with two new schedules (staggered long, synchronous repeated). Four independently offset quarter-cycle phases per schedule, prehistory four time units and test horizon 18. Use reused architectures/optimizer, two starts x 800 steps each, same inputs, loss, initialization and noisy unforced-effect validation criterion as last pilot. The learned vs fixed rate comparison holds memory bank architecture constant. Measure input design rank, exposure and overlap on unique training schedules.",
+  "primary_effect": "Equal-network mean clean paired effect MSE on never-actuated nodes, normalized by training RMS. Also report independently noisy version, both-parent-exposed target subset, never-trained-pair subset, full effect, by schedule family, and absolute clean forecast. No paired control outcomes at inference.",
+  "shutoff": "For each target clamp all observed nodes during source pulses; release only target at t=2.4 with all sources at zero. Common baseline plus single and joint arms. Two patterns: synchronized from 0 to 2.4, and staggered starts 0 and 0.8 with a common shutoff at 2.4, both role assignments. Fixed same positive amplitude .2. Record six units after release. All five possible non-self sources and ten unordered candidate pairs per target, with ordering minimized over both candidates for staggered pulses. Matched prehistory in every arm. Primary: blind unordered exact pair recovery from paired joint target waveform vs ten model templates, pooled four phases; count orientation-specific staggered queries but average within target and network. Also exact top-two from single-source probes, member recall, per-parent shape from four-arm equal-split (two-source Shapley) attribution, joint waveform error, signed waveforms and biphasic early/late reversal. Report fast/slow/biphasic errors and same-kinetics/opposing-sign cases; class sign transfer only for oracle responses actually reversing in prespecified early 0.2–0.8 and late 3–5 windows.",
+  "noise": "Repeat blind matching on each target, phase and timing with 200 independent single paired noisy traces, using treatment-control noise sd sqrt(2)*.015 and identical draws for models and oracle. Noise resampling units do not increase the network sample size. Report chance 1/10. Rank ties without using true source identities.",
+  "oracle": "Use the exact matrix-exponential differential response for the clamped probe. All non-target nodes have identical known clamped values across each arm apart from the pulses, and post-release sources are zero. In the generator, target relaxation is linear with no self-edge, so contributions superpose and its common drive cancels. Verify against the nonlinear full simulator at nonzero phase. Compare true component curves with independently queried frozen model arms rather than assuming additive model predictions.",
+  "limits": "Training and test evaluate separate fits per network; test pair identities partly familiar but all timing schedules held out. Exactly two parents and a library of known pulse shapes for blind retrieval; matched controls, driver phase histories and paired interventions available."
+}

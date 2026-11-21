@@ -1,0 +1,19 @@
+{
+  "utc": "2026-11-11T04:13:45.103290+00:00",
+  "lock": "7312b9627811b6a870a3fa379dda1ef65520962c3439e7eb92b0871dd6d27a30",
+  "fit": "ff91df36c2085880907e612c9f7df2106a942b2ac28bdd51ecc98c0395741981",
+  "seed": 819,
+  "starts": [
+    "archived",
+    "original_init",
+    "dispersed"
+  ],
+  "steps": 2400,
+  "source_losses": [
+    0.009245965629816055,
+    0.008665990084409714,
+    0.0024848133325576782
+  ],
+  "chosen": 2,
+  "parameters": 31
+}

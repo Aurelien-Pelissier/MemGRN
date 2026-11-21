@@ -1,0 +1,55 @@
+{
+  "controls": [
+    {
+      "sd": 0.08596308423960103,
+      "rho": 0.49035775004949833
+    },
+    {
+      "sd": 0.09074977743089904,
+      "rho": 0.7831063008731178
+    },
+    {
+      "sd": 0.08856079112394441,
+      "rho": 0.9050990282812792
+    }
+  ],
+  "selection": {
+    "score": 0.4047625506365741,
+    "by_regime_model": [
+      [
+        0.4212137858072917,
+        0.421844482421875,
+        0.4175618489583333
+      ],
+      [
+        0.4028422037760417,
+        0.4019877115885417,
+        0.4000345865885417
+      ],
+      [
+        0.3925577799479167,
+        0.3910624186197917,
+        0.3937581380208333
+      ]
+    ],
+    "best_competing_progression": 0.4044585051359954,
+    "best_single_exchange": 0.40436017071759256
+  },
+  "assay": {
+    "singleton_max_error": 1.114721348560721e-08,
+    "synthesized_vs_exact_max_error": 1.2919450471243765e-08,
+    "exact_vs_full_nonlinear_swap_max_error": 1.2919450469509042e-08,
+    "singleton_sources": 480,
+    "ordered_swaps": 1920
+  },
+  "primary_pair_id_disagreements": [
+    0,
+    0,
+    0
+  ],
+  "checked_distance_decisions": 864,
+  "screen_labels_agree": 96,
+  "scores": "263cf33dd73f857fd5d67e72401fe4b5bd34e3c85550ab1188b6fee493fe1a3c",
+  "certificate": "4a88da182f36a9efc26672071e8a1e36384fc4af39378781753bf7d4a0a37ea6",
+  "source": "80860be7c227b4f1a58a51854d18648038bc35e5c1a3c1999c40616fac163f19"
+}

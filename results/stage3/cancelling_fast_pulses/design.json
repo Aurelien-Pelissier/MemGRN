@@ -1,0 +1,46 @@
+{
+  "cases": [
+    {
+      "seed": 4601,
+      "target": 4,
+      "parents": [
+        2,
+        3
+      ]
+    },
+    {
+      "seed": 4602,
+      "target": 3,
+      "parents": [
+        1,
+        4
+      ]
+    }
+  ],
+  "indexing": "zero-based node indices in files. Both targets selected by the previous clean mistakes; no population generalization.",
+  "models": [
+    "learned_gw",
+    "fixed_gw",
+    "history_basis"
+  ],
+  "spacing": [
+    0,
+    0.4,
+    0.8,
+    1.6,
+    2.4,
+    3.2
+  ],
+  "ratio": [
+    0.25,
+    0.5,
+    1,
+    2,
+    4
+  ],
+  "dose": "Each rectangular pulse lasts 2.4. The second onset follows the first by spacing. a^2+b^2=2*.2^2, b/a=ratio, so total squared input across both source coordinates is held fixed. Target remains clamped until later shutoff; early-source memory can fade. Use all 30 post-shutoff observations at dt=.2. No during-pulse observations for decoding.",
+  "freeze": "Verify prior model, input array and implementation digests before predictions. No retraining, recalibration, reselecting starts or tuning thresholds. Original four test histories; matching null arm in every contrast. Sweep all ten pairs among five possible parents at each setting, both role assignments and both true orders. Exact oracle from linear controlled-filter response, checked against full simulator. Anchor at equal synchronous .2 pulses reproduces original templates.",
+  "primary": "Uniform average exact unordered pair recovery from ONE noisy treatment-minus-control trace at a single phase, conditional on the two selected true pairs, equally over 30 settings, two targets, both orders and four histories. Noise per arm .015 per time point, independent Gaussian, hence difference SD sqrt(2)*.015. Four thousand ninety-six independent draw indices repeated across methods and grid as common random numbers. Pair comparison uses nearest waveform over role assignments; uniform fractional credit for exact ties. Report each target, baseline differences with paired Monte Carlo-only intervals, grids and simulator templates. Simulations do not add independent networks.",
+  "targeted_selector": "Before scoring against oracle truth or new noise, choose one common setting for these two previously nominated pairs with learned gW alone. Maximize average of the minimum standardized distance to any wrong pair template across nominated true roles, phases and targets (average of the per-stratum minima). Competing models evaluated at same setting. Treat schedule selection as hypothesis-targeted; this is not global discovery. Report equal simultaneous reference and retrospective grid maxima labeled.",
+  "math": "Prove Gaussian pair-recovery lower bound conditional on fixed templates and history using mismatch-aware halfspace margins; handle unknown role, exact competing duplicates and ties conservatively. Compute using simulator means, compare with measured accuracy, quantify useful/vacuous settings. Prove collision impossibility for equal priors, and a two-measurement counterbalanced-strength conditioning result for additive clamped responses with known tanh excitation. An optional equal-record-count comparison stacks independent swap vs repeat at zero spacing, r=4, blind pair and role, fresh noise for second trace. Never mix these rates into single-trace primary results."
+}

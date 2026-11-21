@@ -1,0 +1,13 @@
+{
+  "networks": 16,
+  "targets": 96,
+  "reference_error": 0.0,
+  "independent_reference_scores": 576,
+  "joint_distance_checks": 110592,
+  "intervals_verified": 51,
+  "independent_noise_draws": 60000,
+  "largest_empirical_covariance_error": 0.01582392112369191,
+  "largest_cross_record_covariance": 0.014938619076222081,
+  "scores_sha256": "3a3143290862e2b92df08b5554447aade6e7139dbc83b882aa45c59e32c8eb8c",
+  "audit_sha256": "2d16af3cd9226be825582b6d4dcdc72c0ef033b69392c30e219fcd03ba284aef"
+}

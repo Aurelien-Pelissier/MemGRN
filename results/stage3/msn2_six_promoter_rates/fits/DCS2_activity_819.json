@@ -1,0 +1,21 @@
+{
+  "utc": "2026-11-11T04:45:03.172865+00:00",
+  "fit": "56498b3f270588461acff4ce8c92a59b72215019325ae979252b007da48e1339",
+  "lock": "fe54d769149ab2389cebe54e39b454ad594b768602a3d167e324dfc2806e9dfb",
+  "gene": "DCS2",
+  "model": "activity",
+  "seed": 819,
+  "updates": 2400,
+  "starts": [
+    "archived",
+    "original_init",
+    "dispersed"
+  ],
+  "losses": [
+    0.010930359363555908,
+    0.011034232564270496,
+    0.010794506408274174
+  ],
+  "chosen": 2,
+  "parameters": 23
+}

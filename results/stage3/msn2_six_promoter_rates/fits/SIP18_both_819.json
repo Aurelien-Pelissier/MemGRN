@@ -1,0 +1,21 @@
+{
+  "utc": "2026-11-11T04:47:59.964530+00:00",
+  "fit": "1911fd27317b0d0fe5b6070f81f350ca23d35bf714bf863af32c338005293b52",
+  "lock": "fe54d769149ab2389cebe54e39b454ad594b768602a3d167e324dfc2806e9dfb",
+  "gene": "SIP18",
+  "model": "both",
+  "seed": 819,
+  "updates": 2400,
+  "starts": [
+    "archived",
+    "original_init",
+    "dispersed"
+  ],
+  "losses": [
+    0.025261452421545982,
+    0.0240402240306139,
+    0.022914115339517593
+  ],
+  "chosen": 2,
+  "parameters": 31
+}

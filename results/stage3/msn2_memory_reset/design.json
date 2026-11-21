@@ -1,0 +1,12 @@
+{
+  "status": "Retrospective follow-up. Six and eight pulses were nominated from the already scored ten-schedule benchmark.",
+  "schedules": [
+    "FM_6_5min_690nM",
+    "FM_8_5min_690nM"
+  ],
+  "parent_prediction_sha256": "2423c2b0454d463f1f61958d928685c08518dbdbcad58883add82d03dae1abd0",
+  "primary": "Replay each of the two original single-pulse fits, zeroing all six z/h filter coordinates immediately before the second and each later pulse. Keep reporter states continuous; keep the measured TF trajectory, every parameter, original normalization and integration unchanged. No reset during or after the last pulse. Compare the ensemble with the frozen intact neural-rate gW and intact latent ODE.",
+  "controls": "Replay intact per-seed trajectories against the sealed originals. Repeat reset at the start of each intervening gap (earlier pulse offset), and repeat resetting only at the final inter-pulse boundary (last pulse onset). Repeat primary with half integration step. Treat variations as sensitivity checks.",
+  "score": "Original 5-minute reporter grid strictly after final removal through 120 minutes. Report both panels, all target-level errors and signed contributions MSE(latent) minus MSE(intact). Positive favors neural-rate. Per-target share of net gain uses the signed sum over seven promoters. Equal promoter weighting; equal schedule weighting when pooled. Inspect average signed reporter residual to describe over- or under-prediction. Report both seeds.",
+  "mechanism": "At frozen readouts, decompose intact-minus-reset reporter predictions after shutoff into the decayed difference already present at shutoff plus the contribution from differences in ongoing memory-dependent production. The direct TF term cancels. Summaries of mean signed prediction shifts are descriptive."
+}

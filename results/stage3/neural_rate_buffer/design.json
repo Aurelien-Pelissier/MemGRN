@@ -1,0 +1,34 @@
+{
+  "reference": "../neural_rate_pulse/design.json",
+  "reference_sha256": "007509b8677f139951492200e759673e89a884ed4e1acd47bfb8381b61528ebe",
+  "question": "Does the neural-rate gW advantage replicate when a finite reversible buffer stores a mediator and releases it after shutoff?",
+  "seeds": [
+    127431,
+    127432,
+    127433,
+    127434,
+    127435,
+    127436,
+    127437,
+    127438,
+    127439,
+    127440,
+    127441,
+    127442
+  ],
+  "regimes": [
+    "constant",
+    "buffered"
+  ],
+  "primary_updates": 2400,
+  "sensitivity_updates": 600,
+  "starts": 2,
+  "checkpoint_every": 100,
+  "batch": 12,
+  "noise_seed": 850273,
+  "kinetics": "For each source and each of its three channels, z is the free mediator, b is bound, and h is the downstream filter. Flux J=kon*z*(B-b)-koff*b. dz/dt=k*(a-z)-J, db/dt=J, dh/dt=k*(z-h). The target retains the previous direct and delayed signed readouts. Independent of the original occupancy-gated speed law. Capacity B in [0.45,1.0], kon in [2.5,5.5], koff in [0.22,0.6] sampled per source/channel independently of wiring. At constant activity z=h=a. Neither bound mediator nor kinetic constants are observed by the models. Constant control uses previous constant generator on the very same new graphs.",
+  "holdouts": "Inherit all train/validation/test pulses, sampling indices, observed control covariance, five-time distance and metrics from hashed reference. New evaluation innovations shared across regimes, budgets and models; fresh topology/parameter/noise seeds. Test the whole directly simulated 4:1 swap.",
+  "budgets": "Both budgets trained from scratch on byte-identical data, same two initializations and minibatch prefix per network/regime. Each budget uses its own complete cosine decay. 2400 is primary; same-data 600 comparison is descriptive. Freeze both weights and forecasts before either budget sees a test outcome.",
+  "decision": "Same as pilot: two-sided 95% network-level paired t intervals Bonferroni-adjusted across six contrasts (two regimes by three primary endpoints). Neural vs two-rate requires upper log-MSE ratio confidence limits below 1 on ratio scale (full and five-time tail), and lower recovery difference limit above -1 percentage point in buffered regime. Dense tail, pulse family comparisons and 600-step results descriptive. More recovery is claimed only when the primary lower limit exceeds 0.",
+  "audit": "Validate buffered dynamics with independent total-mediator formulation and DOP853, check mass balance, steady state and zero-capacity limit, split disjointness, frozen hashes and test metrics. Report late checkpoint frequency. No hyperparameter or simulator parameter selection on test outcomes."
+}

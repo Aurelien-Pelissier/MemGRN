@@ -1,0 +1,9 @@
+{
+  "templates/fixed_gw_4601.npz": "9ca434f76031cd111b8b0f7cd636280f2d7a16641922919d29059d634f8734f8",
+  "templates/fixed_gw_4602.npz": "010cf36ba1ce616d0ec94df38b50b9d1bee27ca1b9ce6115cec2d8f35199106b",
+  "templates/history_basis_4601.npz": "565b87cc0e9c502dc9861ee468fc69669e69f3ee6ebf3ee8d301501323aa8612",
+  "templates/history_basis_4602.npz": "9335d82e40c19184088b9368d9c895107597440ae70c4ee0f313b2c4286733cc",
+  "templates/learned_gw_4601.npz": "36a6687ab51ca377ec0d7ac9b6e71402f82c44a328095f9dba51bb2dd8aff181",
+  "templates/learned_gw_4602.npz": "745e65af2644115b8fc982b8b2d0a6af50400d9b49b5291d3087e176a5f639fa",
+  "design.json": "628a6387e3bb0ac7c4f945b7078bc717417c5868c37e5826a772ca7ef8ef1ee3"
+}

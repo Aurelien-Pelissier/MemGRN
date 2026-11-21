@@ -1,0 +1,3340 @@
+{
+  "means": {
+    "learned_gw": {
+      "delayed_ap": 1.0,
+      "top1": 1.0,
+      "waveform_id": 1.0,
+      "tail_error": 0.014378172558798167,
+      "reversal": 1.0,
+      "unforced_effect_mse": 0.000585485640492604,
+      "effect_mse": 0.0006911826508162251,
+      "forecast_mse": 0.004291129861110827,
+      "noisy_forecast_mse": 0.023008261945341047,
+      "noisy_unforced_effect_mse": 0.03833969390265463
+    },
+    "current_hybrid": {
+      "delayed_ap": 1.0,
+      "top1": 1.0,
+      "waveform_id": 1.0,
+      "tail_error": 0.10684019320226967,
+      "reversal": 0.16666666666666666,
+      "unforced_effect_mse": 0.0019070191779271498,
+      "effect_mse": 0.002041563840111739,
+      "forecast_mse": 0.013204412524289279,
+      "noisy_forecast_mse": 0.03189555883771796,
+      "noisy_unforced_effect_mse": 0.03965413836440063
+    },
+    "history_basis": {
+      "delayed_ap": 1.0,
+      "top1": 1.0,
+      "waveform_id": 1.0,
+      "tail_error": 0.08051040613960148,
+      "reversal": 0.4166666666666667,
+      "unforced_effect_mse": 0.001394879262012656,
+      "effect_mse": 0.0014701615617679178,
+      "forecast_mse": 0.004018859462229653,
+      "noisy_forecast_mse": 0.022731882408544648,
+      "noisy_unforced_effect_mse": 0.039152080501685
+    },
+    "state_space": {
+      "delayed_ap": 0.9726190476190476,
+      "top1": 0.9722222222222223,
+      "waveform_id": 0.9166666666666666,
+      "tail_error": 0.28767563062663337,
+      "reversal": 0.08333333333333333,
+      "unforced_effect_mse": 0.010304876617338116,
+      "effect_mse": 0.009626667840227995,
+      "forecast_mse": 0.013843046462220421,
+      "noisy_forecast_mse": 0.03254543849626671,
+      "noisy_unforced_effect_mse": 0.04811653858203963
+    },
+    "fixed_gw": {
+      "delayed_ap": 1.0,
+      "top1": 1.0,
+      "waveform_id": 1.0,
+      "tail_error": 0.024802705858169138,
+      "reversal": 1.0,
+      "unforced_effect_mse": 0.0012329983230943353,
+      "effect_mse": 0.0012662721909365833,
+      "forecast_mse": 0.004549288577626178,
+      "noisy_forecast_mse": 0.023266161777511864,
+      "noisy_unforced_effect_mse": 0.038988927146942035
+    }
+  },
+  "classes": {
+    "learned_gw": {
+      "fast": {
+        "error": 0.019863306063419083,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      },
+      "slow": {
+        "error": 0.0034092818560133038,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      },
+      "biphasic": {
+        "error": 0.024251047443767434,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      }
+    },
+    "current_hybrid": {
+      "fast": {
+        "error": 0.14189716461395263,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      },
+      "slow": {
+        "error": 0.017290171802502464,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      },
+      "biphasic": {
+        "error": 0.19537172296211447,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      }
+    },
+    "history_basis": {
+      "fast": {
+        "error": 0.10626150395638405,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      },
+      "slow": {
+        "error": 0.012969711222980117,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      },
+      "biphasic": {
+        "error": 0.14554141294275258,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      }
+    },
+    "state_space": {
+      "fast": {
+        "error": 0.2536958769863315,
+        "top1": 1.0,
+        "waveform_id": 0.9166666666666666
+      },
+      "slow": {
+        "error": 0.1478449164049899,
+        "top1": 1.0,
+        "waveform_id": 0.9166666666666666
+      },
+      "biphasic": {
+        "error": 0.46541904444554066,
+        "top1": 0.9166666666666666,
+        "waveform_id": 0.9166666666666666
+      }
+    },
+    "fixed_gw": {
+      "fast": {
+        "error": 0.021158194166516205,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      },
+      "slow": {
+        "error": 0.008977164174312153,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      },
+      "biphasic": {
+        "error": 0.04459112946522056,
+        "top1": 1.0,
+        "waveform_id": 1.0
+      }
+    }
+  },
+  "worlds": [
+    {
+      "seed": 3601,
+      "refinement": 9.523284695452106e-07,
+      "models": {
+        "learned_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.01716811703598507,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.0005553735813534158,
+            "effect_mse": 0.0007645728764907899,
+            "forecast_mse": 0.003932138543884651,
+            "noisy_forecast_mse": 0.023357335499793276,
+            "noisy_unforced_effect_mse": 0.038890831704231715
+          },
+          "classes": {
+            "fast": {
+              "error": 0.02394495112965786,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.0023014277742680876,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.027286948809595778,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 0,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 0,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 4,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 4,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0007904171835856138,
+            "new_pair": 0.000735753099302082,
+            "pulse_then_clamp": 7.351622173794732e-05,
+            "repeated": 0.0004891068517494854
+          }
+        },
+        "current_hybrid": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.1130737213857899,
+            "reversal": 0.0,
+            "unforced_effect_mse": 0.0018551647619583223,
+            "effect_mse": 0.0020573108585440277,
+            "forecast_mse": 0.013758683618239752,
+            "noisy_forecast_mse": 0.03319278069074811,
+            "noisy_unforced_effect_mse": 0.04016286166484415
+          },
+          "classes": {
+            "fast": {
+              "error": 0.19132506493530396,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.009968088790286813,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.17180970527304815,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 0,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 0,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 4,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 5,
+              "source": 4,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            }
+          ],
+          "families": {
+            "long": 0.001860127555006356,
+            "new_pair": 0.0031560884843861306,
+            "pulse_then_clamp": 0.00043106834826250976,
+            "repeated": 0.0020418806867870723
+          }
+        },
+        "history_basis": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.08263644495827514,
+            "reversal": 0.5,
+            "unforced_effect_mse": 0.0014314990676370244,
+            "effect_mse": 0.0016222589514264304,
+            "forecast_mse": 0.003957554791150666,
+            "noisy_forecast_mse": 0.02337552584296686,
+            "noisy_unforced_effect_mse": 0.03979050144434597
+          },
+          "classes": {
+            "fast": {
+              "error": 0.12319123887467764,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.008028517189287014,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.13102103698313425,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 0,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 0,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 4,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 4,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            }
+          ],
+          "families": {
+            "long": 0.0016874948632316156,
+            "new_pair": 0.002202146592334371,
+            "pulse_then_clamp": 0.0003167664477675476,
+            "repeated": 0.0014246105720982325
+          }
+        },
+        "state_space": {
+          "metrics": {
+            "delayed_ap": 0.9444444444444444,
+            "top1": 1.0,
+            "waveform_id": 0.8333333333333334,
+            "tail_error": 0.29352389136365736,
+            "reversal": 0.0,
+            "unforced_effect_mse": 0.013615019095510949,
+            "effect_mse": 0.01242486013201844,
+            "forecast_mse": 0.016953019590921273,
+            "noisy_forecast_mse": 0.03624523395812832,
+            "noisy_unforced_effect_mse": 0.05185388931336184
+          },
+          "classes": {
+            "fast": {
+              "error": 0.248381413590081,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.04847300120434071,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.5177382441544953,
+              "top1": 1.0,
+              "waveform_id": 0.5
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 0,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 0,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 4,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 0.0,
+              "fitted_source": 1,
+              "closest_source": 0,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 5,
+              "source": 4,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            }
+          ],
+          "families": {
+            "long": 0.0242277553831378,
+            "new_pair": 0.011455650304724794,
+            "pulse_then_clamp": 0.0008813415667336003,
+            "repeated": 0.010232869088587242
+          }
+        },
+        "fixed_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.029384487362453877,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.0014078881539853702,
+            "effect_mse": 0.0015083961394681791,
+            "forecast_mse": 0.00436870930242526,
+            "noisy_forecast_mse": 0.023738295050007515,
+            "noisy_unforced_effect_mse": 0.03969429060040347
+          },
+          "classes": {
+            "fast": {
+              "error": 0.019929363988421586,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.007539891715363209,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.05135999909425643,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 0,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 0,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 4,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 4,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0021702479325938595,
+            "new_pair": 0.0017785796517181614,
+            "pulse_then_clamp": 0.0001387146986067861,
+            "repeated": 0.0011318385039730565
+          }
+        }
+      }
+    },
+    {
+      "seed": 3602,
+      "refinement": 8.338641797681068e-07,
+      "models": {
+        "learned_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.009420670925237231,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.000704957267622721,
+            "effect_mse": 0.0008009561137657229,
+            "forecast_mse": 0.005034715560261028,
+            "noisy_forecast_mse": 0.022937828546327806,
+            "noisy_unforced_effect_mse": 0.037059231440698934
+          },
+          "classes": {
+            "fast": {
+              "error": 0.011834130817024224,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.004265123781739809,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.012588759723498225,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 3,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 3,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 2,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0010422075603276257,
+            "new_pair": 0.000837623054296494,
+            "pulse_then_clamp": 8.068535158545982e-05,
+            "repeated": 0.0006267766182669371
+          }
+        },
+        "current_hybrid": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.08889934961826151,
+            "reversal": 0.5,
+            "unforced_effect_mse": 0.0024463539657942125,
+            "effect_mse": 0.002628311028616565,
+            "forecast_mse": 0.013235797953915955,
+            "noisy_forecast_mse": 0.03105143661828482,
+            "noisy_unforced_effect_mse": 0.0388278049405285
+          },
+          "classes": {
+            "fast": {
+              "error": 0.10848136041130946,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.05216837330865045,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.11065975654846456,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 1,
+              "source": 3,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 3,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 2,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0025197988463141552,
+            "new_pair": 0.004048101112157825,
+            "pulse_then_clamp": 0.00030362321968196033,
+            "repeated": 0.002803575599784951
+          }
+        },
+        "history_basis": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.06900146433089618,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.0018520765134004595,
+            "effect_mse": 0.0020573337860467287,
+            "forecast_mse": 0.004436705248027892,
+            "noisy_forecast_mse": 0.022359632517054508,
+            "noisy_unforced_effect_mse": 0.038174231881118306
+          },
+          "classes": {
+            "fast": {
+              "error": 0.09556726157466802,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.036266567403593776,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.08529883110368355,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 3,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 3,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 2,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.002004756419272812,
+            "new_pair": 0.002875402009043847,
+            "pulse_then_clamp": 0.00021986749139557657,
+            "repeated": 0.002106170920273193
+          }
+        },
+        "state_space": {
+          "metrics": {
+            "delayed_ap": 0.9150793650793649,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.3314321305832502,
+            "reversal": 0.0,
+            "unforced_effect_mse": 0.013689901805066238,
+            "effect_mse": 0.01471021170583941,
+            "forecast_mse": 0.019202635739778946,
+            "noisy_forecast_mse": 0.03724998433800454,
+            "noisy_unforced_effect_mse": 0.05009597653118793
+          },
+          "classes": {
+            "fast": {
+              "error": 0.14504766325507376,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.12162794873338997,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.5570221785027936,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 1,
+              "source": 3,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 2,
+              "source": 3,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 2,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.020968106514426613,
+            "new_pair": 0.01578343525258916,
+            "pulse_then_clamp": 0.0006417916265659083,
+            "repeated": 0.012098338805946863
+          }
+        },
+        "fixed_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.016914766833331308,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.0013599883070168502,
+            "effect_mse": 0.0014024118209146385,
+            "forecast_mse": 0.004706390140394656,
+            "noisy_forecast_mse": 0.022564547493545962,
+            "noisy_unforced_effect_mse": 0.03767736680556939
+          },
+          "classes": {
+            "fast": {
+              "error": 0.012645721024702994,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.0103127465140684,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.023471438647522998,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 3,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 3,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 2,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.002086047290571594,
+            "new_pair": 0.0015374314330811884,
+            "pulse_then_clamp": 0.00011245254514452975,
+            "repeated": 0.0011867199539725313
+          }
+        }
+      }
+    },
+    {
+      "seed": 3603,
+      "refinement": 1.1531183455454341e-06,
+      "models": {
+        "learned_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.014757644961382925,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.0005331254486924876,
+            "effect_mse": 0.000601200206620671,
+            "forecast_mse": 0.003403524599000256,
+            "noisy_forecast_mse": 0.019792883717752365,
+            "noisy_unforced_effect_mse": 0.034040691141319857
+          },
+          "classes": {
+            "fast": {
+              "error": 0.021610732944045925,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.0026172179366583514,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.028589925825954238,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 5,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 0,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 5,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 0,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0007630583531090861,
+            "new_pair": 0.0005704579686840956,
+            "pulse_then_clamp": 5.141424144317338e-05,
+            "repeated": 0.0005291151399039032
+          }
+        },
+        "current_hybrid": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.12243709594654922,
+            "reversal": 0.0,
+            "unforced_effect_mse": 0.0015486897439023943,
+            "effect_mse": 0.001570284544910762,
+            "forecast_mse": 0.011971857297615596,
+            "noisy_forecast_mse": 0.028267820744682048,
+            "noisy_unforced_effect_mse": 0.0350036329541184
+          },
+          "classes": {
+            "fast": {
+              "error": 0.12801350923404803,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.009538187191927195,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.27679277612388503,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 5,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 0,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 3,
+              "source": 5,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 4,
+              "source": 0,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0017513463230596096,
+            "new_pair": 0.0023101243216194474,
+            "pulse_then_clamp": 3.55954498702022e-05,
+            "repeated": 0.0017980064806744534
+          }
+        },
+        "history_basis": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.06658986333422141,
+            "reversal": 0.5,
+            "unforced_effect_mse": 0.0010780549728345722,
+            "effect_mse": 0.0010767438128456573,
+            "forecast_mse": 0.0035661996323951024,
+            "noisy_forecast_mse": 0.019960378780245425,
+            "noisy_unforced_effect_mse": 0.034576222952730495
+          },
+          "classes": {
+            "fast": {
+              "error": 0.11249078560693915,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.007774385614368815,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.12798376970242797,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 5,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 0,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 5,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 4,
+              "source": 0,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0011714704771233118,
+            "new_pair": 0.0016851919408790255,
+            "pulse_then_clamp": 3.861606793066273e-05,
+            "repeated": 0.0012615041337800071
+          }
+        },
+        "state_space": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 0.8333333333333334,
+            "tail_error": 0.22764133002877499,
+            "reversal": 0.5,
+            "unforced_effect_mse": 0.00708881188674534,
+            "effect_mse": 0.006219568485563324,
+            "forecast_mse": 0.010542119458059178,
+            "noisy_forecast_mse": 0.026940194431033227,
+            "noisy_unforced_effect_mse": 0.040927807211961265
+          },
+          "classes": {
+            "fast": {
+              "error": 0.5044604945351712,
+              "top1": 1.0,
+              "waveform_id": 0.5
+            },
+            "slow": {
+              "error": 0.07090605859248983,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.3229065488220412,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 5,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 0.0,
+              "fitted_source": 5,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 0,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 3,
+              "source": 5,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 0,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.01152163765605909,
+            "new_pair": 0.009456328399558078,
+            "pulse_then_clamp": 4.972841614919742e-05,
+            "repeated": 0.0052285212476045635
+          }
+        },
+        "fixed_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.025140463080920536,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.001403679654805752,
+            "effect_mse": 0.0013700672111457474,
+            "forecast_mse": 0.004245984434911598,
+            "noisy_forecast_mse": 0.02068467728957064,
+            "noisy_unforced_effect_mse": 0.034960045666066364
+          },
+          "classes": {
+            "fast": {
+              "error": 0.024720393877552906,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.008586426827712691,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.04832067787567562,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 5,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 0,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 5,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 0,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.002017587518263365,
+            "new_pair": 0.0016310579976333746,
+            "pulse_then_clamp": 5.265597267348864e-05,
+            "repeated": 0.0013743322952832226
+          }
+        }
+      }
+    },
+    {
+      "seed": 3604,
+      "refinement": 9.670004007047983e-07,
+      "models": {
+        "learned_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.013021734724438872,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.0005161748165846364,
+            "effect_mse": 0.0005445130709069544,
+            "forecast_mse": 0.0041916894065884116,
+            "noisy_forecast_mse": 0.021410627411351933,
+            "noisy_unforced_effect_mse": 0.03519644157710138
+          },
+          "classes": {
+            "fast": {
+              "error": 0.03769511798718604,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.002204838581150291,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.015589512971520869,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 4,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 2,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 4,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0006354903532450096,
+            "new_pair": 0.0006975338844060695,
+            "pulse_then_clamp": 0.00021725924248707887,
+            "repeated": 0.00047377343984446855
+          }
+        },
+        "current_hybrid": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.08917956654521884,
+            "reversal": 0.0,
+            "unforced_effect_mse": 0.0020174393517499102,
+            "effect_mse": 0.002148787394511631,
+            "forecast_mse": 0.015366134232473351,
+            "noisy_forecast_mse": 0.032613215341036006,
+            "noisy_unforced_effect_mse": 0.036623695358175244
+          },
+          "classes": {
+            "fast": {
+              "error": 0.2661298845161459,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.008549051290565365,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.11290908568578456,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 1,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 4,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 3,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 2,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 4,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0021934498058148147,
+            "new_pair": 0.0027810991379743125,
+            "pulse_then_clamp": 0.0011810995070161271,
+            "repeated": 0.0019541349055621367
+          }
+        },
+        "history_basis": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.060225660539857784,
+            "reversal": 0.0,
+            "unforced_effect_mse": 0.001279448332144619,
+            "effect_mse": 0.0012852701406455148,
+            "forecast_mse": 0.003660138186124824,
+            "noisy_forecast_mse": 0.020799077320533318,
+            "noisy_unforced_effect_mse": 0.035894968687899695
+          },
+          "classes": {
+            "fast": {
+              "error": 0.17152687150193835,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.00809706859234494,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.07760813923539889,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 1,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 4,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 3,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 2,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 4,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0012197639022356785,
+            "new_pair": 0.0019738475542035263,
+            "pulse_then_clamp": 0.0009336467402445445,
+            "repeated": 0.0012342738691800336
+          }
+        },
+        "state_space": {
+          "metrics": {
+            "delayed_ap": 0.976190476190476,
+            "top1": 0.8333333333333334,
+            "waveform_id": 1.0,
+            "tail_error": 0.2497747941354531,
+            "reversal": 0.0,
+            "unforced_effect_mse": 0.011760779286826681,
+            "effect_mse": 0.011138510880625046,
+            "forecast_mse": 0.015238008596199564,
+            "noisy_forecast_mse": 0.032405084817635474,
+            "noisy_unforced_effect_mse": 0.04644648779137513
+          },
+          "classes": {
+            "fast": {
+              "error": 0.332882010430374,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.09552211249469668,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.463375739607346,
+              "top1": 0.5,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 0.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 1,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 4,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 3,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 2,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 4,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.018344362950153698,
+            "new_pair": 0.011810175557754743,
+            "pulse_then_clamp": 0.003420503467913753,
+            "repeated": 0.00932757502458491
+          }
+        },
+        "fixed_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.02428136716309248,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.001316699585963348,
+            "effect_mse": 0.0012577585974938128,
+            "forecast_mse": 0.004539177247897311,
+            "noisy_forecast_mse": 0.021790494788511815,
+            "noisy_unforced_effect_mse": 0.03604805794809906
+          },
+          "classes": {
+            "fast": {
+              "error": 0.041836463043413,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.00998969341885389,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.03758154236853247,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 4,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 2,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 4,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 4,
+              "closest_source": 4,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0016189074709354939,
+            "new_pair": 0.002138137188994658,
+            "pulse_then_clamp": 0.000504644205982204,
+            "repeated": 0.0010919443497692503
+          }
+        }
+      }
+    },
+    {
+      "seed": 3605,
+      "refinement": 9.232698192545089e-07,
+      "models": {
+        "learned_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.01822236534294768,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.0007081317596815632,
+            "effect_mse": 0.0007504062248534233,
+            "forecast_mse": 0.004944694573358254,
+            "noisy_forecast_mse": 0.024078225951627556,
+            "noisy_unforced_effect_mse": 0.040001617103111904
+          },
+          "classes": {
+            "fast": {
+              "error": 0.018660905791284602,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.0048283535392488084,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.030660615005971056,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 5,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 0,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 5,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 2,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 0,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0009055377898977415,
+            "new_pair": 0.000915637316672433,
+            "pulse_then_clamp": 0.00011876248014205541,
+            "repeated": 0.000722408146438791
+          }
+        },
+        "current_hybrid": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.0812236200126025,
+            "reversal": 0.5,
+            "unforced_effect_mse": 0.0018242309260614003,
+            "effect_mse": 0.0017464071927388177,
+            "forecast_mse": 0.012443478388827289,
+            "noisy_forecast_mse": 0.03149204882698355,
+            "noisy_unforced_effect_mse": 0.04113248028937648
+          },
+          "classes": {
+            "fast": {
+              "error": 0.1009347525998952,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.014170655924298269,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.13336888128744623,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 5,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 0,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 5,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 2,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 5,
+              "source": 0,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0019993744300667747,
+            "new_pair": 0.002753719455605268,
+            "pulse_then_clamp": 0.0004038259511118273,
+            "repeated": 0.001987494497713266
+          }
+        },
+        "history_basis": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.08544447201679595,
+            "reversal": 0.5,
+            "unforced_effect_mse": 0.001459837378412345,
+            "effect_mse": 0.0013236629739447193,
+            "forecast_mse": 0.004524774545874301,
+            "noisy_forecast_mse": 0.023682003753503468,
+            "noisy_unforced_effect_mse": 0.040743291001240245
+          },
+          "classes": {
+            "fast": {
+              "error": 0.08195448753521951,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.008240389931123825,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.16061735714988268,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 5,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 0,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 5,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 2,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 5,
+              "source": 0,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.001668360909528147,
+            "new_pair": 0.001855895456841904,
+            "pulse_then_clamp": 0.0004207234763646563,
+            "repeated": 0.0016124475669485644
+          }
+        },
+        "state_space": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 0.8333333333333334,
+            "tail_error": 0.45107596886466944,
+            "reversal": 0.0,
+            "unforced_effect_mse": 0.01235998677337091,
+            "effect_mse": 0.010225998076257617,
+            "forecast_mse": 0.01411787167385336,
+            "noisy_forecast_mse": 0.03337036171809367,
+            "noisy_unforced_effect_mse": 0.05174008150893323
+          },
+          "classes": {
+            "fast": {
+              "error": 0.23532193349078195,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.48141277396692916,
+              "top1": 1.0,
+              "waveform_id": 0.5
+            },
+            "biphasic": {
+              "error": 0.5470220603149974,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 5,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 0,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 5,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 0.0,
+              "fitted_source": 2,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 4,
+              "source": 2,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 5,
+              "source": 0,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            }
+          ],
+          "families": {
+            "long": 0.022449634137527638,
+            "new_pair": 0.007301493524425495,
+            "pulse_then_clamp": 0.0013023625914370884,
+            "repeated": 0.009822548799759249
+          }
+        },
+        "fixed_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.028809115133705557,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.0011658734115930853,
+            "effect_mse": 0.0011442353699179719,
+            "forecast_mse": 0.0048494188464603865,
+            "noisy_forecast_mse": 0.023984798078491652,
+            "noisy_unforced_effect_mse": 0.040409046449159915
+          },
+          "classes": {
+            "fast": {
+              "error": 0.016074251433212637,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.010092689446258678,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.05390409311192578,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 5,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 0,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 5,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 2,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 2,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 2,
+              "closest_source": 2,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 0,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 0,
+              "closest_source": 0,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0016466250946195174,
+            "new_pair": 0.00123509131684744,
+            "pulse_then_clamp": 0.00017188015603178405,
+            "repeated": 0.0011544311942455622
+          }
+        }
+      }
+    },
+    {
+      "seed": 3606,
+      "refinement": 8.482352474212772e-07,
+      "models": {
+        "learned_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.01367850236279723,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.0004951509690207998,
+            "effect_mse": 0.0006854474122597891,
+            "forecast_mse": 0.004240016483572362,
+            "noisy_forecast_mse": 0.026472670545193335,
+            "noisy_unforced_effect_mse": 0.04484935044946402
+          },
+          "classes": {
+            "fast": {
+              "error": 0.005433997711315855,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.0042387295230144765,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.030790522326064447,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 5,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 5,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 3,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 3,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0006568671963239933,
+            "new_pair": 0.000648514523801177,
+            "pulse_then_clamp": 8.896502040179196e-05,
+            "repeated": 0.0004751822941149593
+          }
+        },
+        "current_hybrid": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.14622780570519597,
+            "reversal": 0.0,
+            "unforced_effect_mse": 0.0017502363180966595,
+            "effect_mse": 0.002098282021348632,
+            "forecast_mse": 0.01245052365466374,
+            "noisy_forecast_mse": 0.034756050804573224,
+            "noisy_unforced_effect_mse": 0.04617435497936101
+          },
+          "classes": {
+            "fast": {
+              "error": 0.05649841598701324,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.009346674309286682,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.3666901328540582,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 5,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 1,
+              "source": 5,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 3,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 5,
+              "source": 3,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0021514555919903266,
+            "new_pair": 0.0024327577435557207,
+            "pulse_then_clamp": 0.00010924752007371163,
+            "repeated": 0.0018965028730308418
+          }
+        },
+        "history_basis": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.11916453165756244,
+            "reversal": 0.0,
+            "unforced_effect_mse": 0.0012683593076469153,
+            "effect_mse": 0.0014556997056984552,
+            "forecast_mse": 0.003967784369805134,
+            "noisy_forecast_mse": 0.026214676236964295,
+            "noisy_unforced_effect_mse": 0.045733267042775284
+          },
+          "classes": {
+            "fast": {
+              "error": 0.05283837864486166,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.009411338607162326,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.2907193434819881,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 5,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 1,
+              "source": 5,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 3,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 5,
+              "source": 3,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0015596611755351027,
+            "new_pair": 0.001660524519939567,
+            "pulse_then_clamp": 7.022688833268783e-05,
+            "repeated": 0.0014192575644987806
+          }
+        },
+        "state_space": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.1726056687839951,
+            "reversal": 0.0,
+            "unforced_effect_mse": 0.003314760856508581,
+            "effect_mse": 0.0030408577610641393,
+            "forecast_mse": 0.007004623714510206,
+            "noisy_forecast_mse": 0.029061771714705018,
+            "noisy_unforced_effect_mse": 0.047634989135418415
+          },
+          "classes": {
+            "fast": {
+              "error": 0.056081746616507,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.06912760343809295,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.38444949527157046,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 5,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 1,
+              "source": 5,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 3,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 0.0
+            },
+            {
+              "target": 5,
+              "source": 3,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.005705155264135809,
+            "new_pair": 0.003066672471836421,
+            "pulse_then_clamp": 9.594089178524227e-05,
+            "repeated": 0.002633011785111886
+          }
+        },
+        "fixed_gw": {
+          "metrics": {
+            "delayed_ap": 1.0,
+            "top1": 1.0,
+            "waveform_id": 1.0,
+            "tail_error": 0.024286035575511067,
+            "reversal": 1.0,
+            "unforced_effect_mse": 0.0007438608252016059,
+            "effect_mse": 0.0009147640066791518,
+            "forecast_mse": 0.004586051493667858,
+            "noisy_forecast_mse": 0.0268341579649436,
+            "noisy_unforced_effect_mse": 0.045144755412354014
+          },
+          "classes": {
+            "fast": {
+              "error": 0.011742971631794118,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "slow": {
+              "error": 0.007341537123616042,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            },
+            "biphasic": {
+              "error": 0.05290902569341004,
+              "top1": 1.0,
+              "waveform_id": 1.0
+            }
+          },
+          "sources": [
+            {
+              "target": 0,
+              "source": 5,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 1,
+              "source": 5,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 5,
+              "closest_source": 5,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 2,
+              "source": 3,
+              "kind": "slow",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 3,
+              "source": 1,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 4,
+              "source": 1,
+              "kind": "biphasic",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 1,
+              "closest_source": 1,
+              "truth_reversal": 1.0,
+              "both_window_signs": 1.0
+            },
+            {
+              "target": 5,
+              "source": 3,
+              "kind": "fast",
+              "top1": 1.0,
+              "waveform_id": 1.0,
+              "fitted_source": 3,
+              "closest_source": 3,
+              "truth_reversal": 0.0,
+              "both_window_signs": 1.0
+            }
+          ],
+          "families": {
+            "long": 0.0010417235803360252,
+            "new_pair": 0.000956938721357569,
+            "pulse_then_clamp": 8.73708611174352e-05,
+            "repeated": 0.000689011893646887
+          }
+        }
+      }
+    }
+  ],
+  "scorer": "bb4c7b758f761602e559fca0dcd382c5f0e9e295ae767d3cd2967178b25280e8"
+}

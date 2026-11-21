@@ -1,0 +1,17 @@
+{
+  "max_swap_quadrature_error": 4.440892098500626e-16,
+  "swap_singular_values_4to1": [
+    0.3362042018474805,
+    0.19922014330586918
+  ],
+  "swap_waveform_inversion_error": 1.1102230246251565e-16,
+  "contribution_accounting_error": 1.1277090372630028e-11,
+  "memory_reset_splice_error": 6.938893903907228e-18,
+  "rk4_vs_dop853_error": 1.8518830913194506e-08,
+  "max_filter_abs_within_bound": true,
+  "margin_lower_bound": 0.40190920398125596,
+  "margin_empirical_accuracy": 0.5196,
+  "ar1_dp_worst_distance_sq": 46.535226439419105,
+  "ar1_exhaustive_optimum": 46.535226439419105,
+  "ar1_dual_upper_bound": 48.43789490693263
+}

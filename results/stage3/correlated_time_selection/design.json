@@ -1,0 +1,81 @@
+{
+  "question": "Does one common five-measurement schedule selected under correlated errors on training networks transfer to fresh networks, versus the original independent-noise-selected times and evenly spaced readings?",
+  "design_seeds": [
+    57001,
+    57002,
+    57003,
+    57004,
+    57005,
+    57006,
+    57007,
+    57008,
+    57009,
+    57010,
+    57011,
+    57012,
+    57013,
+    57014,
+    57015,
+    57016
+  ],
+  "seeds": [
+    79301,
+    79302,
+    79303,
+    79304,
+    79305,
+    79306,
+    79307,
+    79308,
+    79309,
+    79310,
+    79311,
+    79312,
+    79313,
+    79314,
+    79315,
+    79316
+  ],
+  "models": [
+    "learned_gw",
+    "fixed_gw",
+    "history_basis"
+  ],
+  "even": [
+    0,
+    7,
+    14,
+    22,
+    29
+  ],
+  "iid": [
+    3,
+    10,
+    11,
+    12,
+    14
+  ],
+  "training_rho": [
+    0.5,
+    0.75,
+    0.9
+  ],
+  "test_rho": [
+    0,
+    0.25,
+    0.5,
+    0.75,
+    0.9,
+    0.97
+  ],
+  "selection_draws": 128,
+  "test_draws": 4096,
+  "selection_noise_seed": 273117,
+  "test_noise_seed": 847221,
+  "sd_per_arm": 0.06,
+  "protocol": "Reuse the 4:1 simultaneous strength swap of duration 2.4 with two independent treated-minus-control records. Five distinct times from 0.2 to 6.0 on the 0.2 grid on each record; choose one common schedule. Within-record Gaussian correlation is rho^|i-j| on the full grid of 30 times. Per-arm SD 0.06, contrast SD sqrt(2)*0.06. Reuse common full-grid noise paths for all three schedules and models, independent records, shared underlying innovations across rho.",
+  "selection": "Greedily add one time at each step to maximize mean exact source-pair recovery with the true-covariance nearest-template scoring rule. Weight each of rho 0.5, 0.75, 0.9 equally, then average equally over the three models, all 16 training networks, their six targets, four histories and both assignments. Use training-network labels and noiseless responses with 128 paired Gaussian draws. Earliest time breaks ties within 1e-12. Keep hyperparameters, search budget, training networks and noise seed of the prior independence selector. Freeze before generating test data; no test tuning.",
+  "test": "Fresh test seeds distinct from the original 57001–57016 training and 68101–68116 previous test cohorts; retain every target. Refit the same three architectures per network on its own training interventions using the original validation rule, two starts and 800 updates. Then freeze and simulate blind recovery of both parents against ten unordered pairs, minimizing whitened joint squared distance over a consistent assignment. Fractional ties within 1e-10. Average over 4096 noise draw pairs per target, history and orientation.",
+  "inference": "For covariance-aware scoring contrast the new schedule with the prior frozen schedule and even times separately for each model. Main estimand is the equal mean over the three training correlation levels within each test network. Also register each of these three levels separately. Use one family of 24 paired contrasts (3 models × 2 comparators × 4 endpoints), paired Student t simultaneous Bonferroni 95% intervals, df=15. A win requires positive lower endpoint. Report counts of network wins, conditional MC SE and both rule-level absolute accuracies. At rho 0, 0.25 and 0.97 and for the original Euclidean rule, comparisons are descriptive.",
+  "checks": "Verify the old selector and its model libraries, lock schedule before generating new graphs, freeze fresh fits before scoring, reproduce the training policy accuracy by direct evaluation, audit likelihood on independent stationary path generation plus direct block covariance solves, and recompute all paired intervals from individual target scores."
+}

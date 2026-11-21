@@ -1,0 +1,30 @@
+{
+  "question": "Can a shared autonomous latent driver separate source-mediated delay from common drive in the same partly observed network?",
+  "seeds": [
+    2501,
+    2502,
+    2503,
+    2504,
+    2505,
+    2506
+  ],
+  "nodes": 6,
+  "edges": "For all 30 ordered pairs run the same controlled source step vs zero. Hold other observed nodes at zero, leave target free. Score RMS target contrast divided by step size. Report AP, false calls among top nine overall and top-nine hits of the two absent shared-driver links, their magnitudes, and seed-level results. Fixed budget nine uses known graph density only at scoring time.",
+  "delayed": 5,
+  "models": [
+    "directed_memory",
+    "memory_driver",
+    "instant_driver",
+    "instant",
+    "state_space",
+    "latent_ODE",
+    "neural_delay"
+  ],
+  "worlds": "Fresh graph seeds. Combine the previous two-stage hidden mediator with the previous autonomous damped oscillator. Randomly permute observed node labels per world and randomize driver phase, loading signs and magnitudes. One pair directly receives the driver and has neither planted edge. Driver phase and amplitude are shared across schedules within a world. No network, oscillator loadings, parameters or true state are provided to fitted models.",
+  "architecture": "Shared autonomous 2D damped oscillator. Learn frequency, damping and dense readout into all six nodes. Its initial phase is absorbed into two free loadings per node. Refitted factorial controls include source memory only, oscillator only with instantaneous directed interactions, and instantaneous interactions only. Compare the prior linear latent state-space, latent ODE and neural fixed-delay baselines.",
+  "training": "18 training schedules with two independent measurement-noise replicates and six validation schedules as in previous pilot. For each world and model use two starts with the same minibatch order across architectures, 600 Adam updates per start, fixed .01 to .001 cosine learning rate, batch 6, gradient clip 5, 1e-4 mean parameter-square penalty. Select checkpoint and start by normalized validation observation MSE at step 0 and every 100 updates. No fitted individual trajectory initial states. First two seeds also report predictions from the alternative initialization as sensitivity.",
+  "evaluation": "12 held-out intervention schedules/world through time 18 as in the previous pilot. Primary clean mean squared forecast error normalized by training node scale. Report noisy, unforced-node and per-family errors. Summarize by network and use paired counts, no timepoint-level inference.",
+  "memory_test": "For all ordered pairs hold the target and other observed nodes at zero for the first two time units while clamping source at 0.2 (paired reference zero). At time 2 clamp the source to zero and release only the target. For six further time units measure paired target response. This isolates stored history after both physical source and target are zero. On the five planted delayed edges report error energy / true energy, waveform sign agreement and gain (predicted contrast projected onto truth / truth energy). Rank all pairs by tail RMS to score delayed-edge AP and false positives among top five. Post-release interval only. Isolated memory test is separate from 12 forecast schedules.",
+  "criteria": "Compare driver+memory with memory-only on clean forecasts, false links and delayed waveform fidelity. Compare against instant+driver for benefit of source memory and the strongest latent baseline for predictive gain. No decision threshold or graph penalty tuned on test cases. Show oracle probes and validate oscillator integration and the absence of memory tails for the instantaneous driver control.",
+  "limitations": "Generator and hybrid share the damped oscillator and two-stage chain family. Matched phase across schedules means a fitted elapsed-time forcing is observationally equivalent to the autonomous driver. This pilot cannot identify the latent state physically or guarantee zero inferred weights. All interventions are synthetic."
+}

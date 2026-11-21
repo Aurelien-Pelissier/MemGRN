@@ -1,0 +1,12 @@
+{
+  "time": 1794341931.7737262,
+  "files": {
+    "scripts/directed_memory_models.py": "84b7c13ab1c84bf0b2773b1e8463b98e8e9e6525ac0ae2825bf1656f89183b6f",
+    "scripts/directed_memory_data.py": "d883f6aace48a8535075319ccb7684bb8c87aaa97cb71d51f3576e5ee75c88a4",
+    "scripts/directed_memory_pilot.py": "73820f0a869ec08d03a0975388651863b8b8dda37756acf5692649ef08f863d6"
+  },
+  "twin": {
+    "C:\\Users\\googo\\Documents\\GitHub\\non-markovian-diffrax\\src\\nonmarkov\\phase_type.py": "e4b6d126a89b44000a82c357756f850031a03498586bd6113476017fea99c25d",
+    "C:\\Users\\googo\\Documents\\GitHub\\non-markovian-diffrax\\src\\nonmarkov\\memory.py": "cd4234f727dd7d6abde6104ab1240444220b412a096733b8da22dba6437d65a4"
+  }
+}

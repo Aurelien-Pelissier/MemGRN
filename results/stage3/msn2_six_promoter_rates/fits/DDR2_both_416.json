@@ -1,0 +1,21 @@
+{
+  "utc": "2026-11-11T04:46:29.559969+00:00",
+  "fit": "a4b7893d841d9d3b84912b3eb7d8f71e6167edbed6d5a0d1026bb73a2e70622e",
+  "lock": "fe54d769149ab2389cebe54e39b454ad594b768602a3d167e324dfc2806e9dfb",
+  "gene": "DDR2",
+  "model": "both",
+  "seed": 416,
+  "updates": 2400,
+  "starts": [
+    "archived",
+    "original_init",
+    "dispersed"
+  ],
+  "losses": [
+    0.003813521470874548,
+    0.0075249625369906425,
+    0.007793780416250229
+  ],
+  "chosen": 0,
+  "parameters": 31
+}

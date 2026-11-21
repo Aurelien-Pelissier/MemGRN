@@ -1,0 +1,6191 @@
+{
+  "protocol": "f3965fa3ee58075db661b2e4c0d8751483ed46d50af546c8dfefa097f3355d61",
+  "scorer": "abe68aa1d9ab0e6b104ed61fd8f0e4d9a79b4c35b86c9b86992759c9e7940c40",
+  "overall": {
+    "learned_gw": {
+      "single": 0.6931444803873698,
+      "repeat": 0.7887585957845051,
+      "swap": 0.9742987950642901
+    },
+    "fixed_gw": {
+      "single": 0.6854540506998699,
+      "repeat": 0.7781397501627605,
+      "swap": 0.9726896286010743
+    },
+    "history_basis": {
+      "single": 0.6820259094238281,
+      "repeat": 0.7652069727579753,
+      "swap": 0.9701805114746094
+    },
+    "oracle": {
+      "single": 0.7018823623657227,
+      "repeat": 0.8015356063842773,
+      "swap": 0.9777552286783855
+    }
+  },
+  "primary": {
+    "swap_vs_repeat": {
+      "mean": 0.18554019927978505,
+      "simultaneous_95": [
+        0.170939238485029,
+        0.20014116007454108
+      ],
+      "wins": 16,
+      "ties": 0,
+      "sign_p": 1.52587890625e-05,
+      "by_network": [
+        0.1400756835937499,
+        0.1913197835286457,
+        0.1821797688802082,
+        0.17269388834635407,
+        0.23818969726562494,
+        0.1756591796874999,
+        0.19967142740885405,
+        0.19742838541666657,
+        0.16550699869791657,
+        0.20048014322916655,
+        0.1897277832031249,
+        0.18119303385416657,
+        0.1631164550781249,
+        0.17618815104166657,
+        0.19433593749999992,
+        0.20087687174479157
+      ],
+      "conditional_mc_95_halfwidth": 0.00042546766133408305,
+      "holm_sign_p": 4.57763671875e-05
+    },
+    "learned_vs_fixed": {
+      "mean": 0.0016091664632161438,
+      "simultaneous_95": [
+        0.00039418626317726767,
+        0.00282414666325502
+      ],
+      "wins": 14,
+      "ties": 0,
+      "sign_p": 0.0020904541015625,
+      "by_network": [
+        0.0014139811197916652,
+        0.0011901855468749926,
+        0.0016377766927083352,
+        0.0021514892578124974,
+        -0.0008748372395833334,
+        0.0005544026692708321,
+        -0.00013224283854166565,
+        0.004648844401041654,
+        0.0057576497395833304,
+        0.0018310546874999991,
+        0.0006154378255208368,
+        0.0016377766927083324,
+        0.00024922688802083456,
+        0.0004933675130208326,
+        0.0004831949869791663,
+        0.004089355468749993
+      ],
+      "conditional_mc_95_halfwidth": 7.107707633997899e-05,
+      "holm_sign_p": 0.004180908203125
+    },
+    "learned_vs_basis": {
+      "mean": 0.004118283589680985,
+      "simultaneous_95": [
+        0.001041905740450163,
+        0.007194661438911807
+      ],
+      "wins": 14,
+      "ties": 0,
+      "sign_p": 0.0020904541015625,
+      "by_network": [
+        0.004837036132812497,
+        -0.007792154947916683,
+        -0.0005391438802083337,
+        0.007476806640624998,
+        0.002436319986979155,
+        0.0028686523437499987,
+        0.008834838867187503,
+        0.01229858398437498,
+        0.004887898763020836,
+        0.006713867187499997,
+        0.005655924479166671,
+        0.001378377278645828,
+        8.64664713541682e-05,
+        0.0059254964192708235,
+        0.003987630208333329,
+        0.006835937499999991
+      ],
+      "conditional_mc_95_halfwidth": 0.00012351823119485032,
+      "holm_sign_p": 0.004180908203125
+    }
+  },
+  "subgroups": {
+    "all": {
+      "networks": 16,
+      "targets": 96,
+      "means": {
+        "learned_gw": {
+          "single": 0.6931444803873699,
+          "repeat": 0.7887585957845051,
+          "swap": 0.9742987950642903
+        },
+        "fixed_gw": {
+          "single": 0.6854540506998699,
+          "repeat": 0.7781397501627604,
+          "swap": 0.9726896286010742
+        },
+        "history_basis": {
+          "single": 0.6820259094238281,
+          "repeat": 0.7652069727579753,
+          "swap": 0.9701805114746094
+        },
+        "oracle": {
+          "single": 0.7018823623657227,
+          "repeat": 0.8015356063842773,
+          "swap": 0.9777552286783855
+        }
+      }
+    },
+    "opposing": {
+      "networks": 16,
+      "targets": 48,
+      "means": {
+        "learned_gw": {
+          "single": 0.6435031890869141,
+          "repeat": 0.756161371866862,
+          "swap": 0.9690361022949219
+        },
+        "fixed_gw": {
+          "single": 0.6320889790852864,
+          "repeat": 0.7411594390869141,
+          "swap": 0.9680849711100261
+        },
+        "history_basis": {
+          "single": 0.6092662811279297,
+          "repeat": 0.7029577891031902,
+          "swap": 0.9633871714274088
+        },
+        "oracle": {
+          "single": 0.668365478515625,
+          "repeat": 0.786206563313802,
+          "swap": 0.9734891255696615
+        }
+      }
+    },
+    "aligned": {
+      "networks": 16,
+      "targets": 48,
+      "means": {
+        "learned_gw": {
+          "single": 0.7427857716878254,
+          "repeat": 0.8213558197021484,
+          "swap": 0.9795614878336588
+        },
+        "fixed_gw": {
+          "single": 0.7388191223144531,
+          "repeat": 0.8151200612386068,
+          "swap": 0.9772942860921223
+        },
+        "history_basis": {
+          "single": 0.7547855377197266,
+          "repeat": 0.8274561564127605,
+          "swap": 0.9769738515218098
+        },
+        "oracle": {
+          "single": 0.7353992462158203,
+          "repeat": 0.8168646494547526,
+          "swap": 0.9820213317871094
+        }
+      }
+    },
+    "fast/fast opposing": {
+      "networks": 11,
+      "targets": 11,
+      "means": {
+        "learned_gw": {
+          "single": 0.44975142045454547,
+          "repeat": 0.5860124067826704,
+          "swap": 0.9061140580610796
+        },
+        "fixed_gw": {
+          "single": 0.4464388760653409,
+          "repeat": 0.5883400656960227,
+          "swap": 0.9036365855823864
+        },
+        "history_basis": {
+          "single": 0.3971946022727273,
+          "repeat": 0.5206493030894886,
+          "swap": 0.88958740234375
+        },
+        "oracle": {
+          "single": 0.494873046875,
+          "repeat": 0.6381059126420454,
+          "swap": 0.9207708185369318
+        }
+      }
+    },
+    "biphasic/biphasic": {
+      "networks": 16,
+      "targets": 16,
+      "means": {
+        "learned_gw": {
+          "single": 0.7104263305664062,
+          "repeat": 0.8036346435546875,
+          "swap": 0.9958724975585938
+        },
+        "fixed_gw": {
+          "single": 0.6920223236083984,
+          "repeat": 0.7712287902832031,
+          "swap": 0.9959125518798828
+        },
+        "history_basis": {
+          "single": 0.6759014129638672,
+          "repeat": 0.7361392974853516,
+          "swap": 0.9953346252441406
+        },
+        "oracle": {
+          "single": 0.7227840423583984,
+          "repeat": 0.8281764984130859,
+          "swap": 0.9954471588134766
+        }
+      }
+    },
+    "fast/biphasic": {
+      "networks": 16,
+      "targets": 16,
+      "means": {
+        "learned_gw": {
+          "single": 0.7269515991210938,
+          "repeat": 0.8131923675537109,
+          "swap": 0.9751529693603516
+        },
+        "fixed_gw": {
+          "single": 0.7166500091552734,
+          "repeat": 0.8005027770996094,
+          "swap": 0.9716148376464844
+        },
+        "history_basis": {
+          "single": 0.7042827606201172,
+          "repeat": 0.7731552124023438,
+          "swap": 0.9661331176757812
+        },
+        "oracle": {
+          "single": 0.725250244140625,
+          "repeat": 0.8160781860351562,
+          "swap": 0.9775791168212891
+        }
+      }
+    },
+    "fast/fast": {
+      "networks": 16,
+      "targets": 16,
+      "means": {
+        "learned_gw": {
+          "single": 0.5039005279541016,
+          "repeat": 0.6093997955322266,
+          "swap": 0.9159488677978516
+        },
+        "fixed_gw": {
+          "single": 0.5021419525146484,
+          "repeat": 0.6144886016845703,
+          "swap": 0.9129581451416016
+        },
+        "history_basis": {
+          "single": 0.4794445037841797,
+          "repeat": 0.5792121887207031,
+          "swap": 0.9027175903320312
+        },
+        "oracle": {
+          "single": 0.5466766357421875,
+          "repeat": 0.6589679718017578,
+          "swap": 0.9286346435546875
+        }
+      }
+    },
+    "fast/slow": {
+      "networks": 16,
+      "targets": 16,
+      "means": {
+        "learned_gw": {
+          "single": 0.7121067047119141,
+          "repeat": 0.8140182495117188,
+          "swap": 0.9637928009033203
+        },
+        "fixed_gw": {
+          "single": 0.7009849548339844,
+          "repeat": 0.8029041290283203,
+          "swap": 0.9601688385009766
+        },
+        "history_basis": {
+          "single": 0.7305793762207031,
+          "repeat": 0.8266868591308594,
+          "swap": 0.9621410369873047
+        },
+        "oracle": {
+          "single": 0.7089576721191406,
+          "repeat": 0.8090190887451172,
+          "swap": 0.9699726104736328
+        }
+      }
+    },
+    "slow/biphasic": {
+      "networks": 16,
+      "targets": 16,
+      "means": {
+        "learned_gw": {
+          "single": 0.7711830139160156,
+          "repeat": 0.8706817626953125,
+          "swap": 0.9979667663574219
+        },
+        "fixed_gw": {
+          "single": 0.7582263946533203,
+          "repeat": 0.8502922058105469,
+          "swap": 0.9982223510742188
+        },
+        "history_basis": {
+          "single": 0.7762336730957031,
+          "repeat": 0.8671169281005859,
+          "swap": 0.998260498046875
+        },
+        "oracle": {
+          "single": 0.77276611328125,
+          "repeat": 0.8741378784179688,
+          "swap": 0.9978122711181641
+        }
+      }
+    },
+    "slow/slow": {
+      "networks": 16,
+      "targets": 16,
+      "means": {
+        "learned_gw": {
+          "single": 0.7342987060546875,
+          "repeat": 0.821624755859375,
+          "swap": 0.9970588684082031
+        },
+        "fixed_gw": {
+          "single": 0.7426986694335938,
+          "repeat": 0.8294219970703125,
+          "swap": 0.9972610473632812
+        },
+        "history_basis": {
+          "single": 0.7257137298583984,
+          "repeat": 0.8089313507080078,
+          "swap": 0.9964962005615234
+        },
+        "oracle": {
+          "single": 0.7348594665527344,
+          "repeat": 0.8228340148925781,
+          "swap": 0.9970855712890625
+        }
+      }
+    }
+  },
+  "forecasts": {
+    "learned_gw": {
+      "unforced_mse": 0.0003830484110776052,
+      "noisy_unforced_mse": 0.01634966942673632,
+      "absolute_mse": 0.002510767221381581
+    },
+    "fixed_gw": {
+      "unforced_mse": 0.0012285764444709868,
+      "noisy_unforced_mse": 0.017191302901022942,
+      "absolute_mse": 0.0034385634194969514
+    },
+    "history_basis": {
+      "unforced_mse": 0.0013522541418119899,
+      "noisy_unforced_mse": 0.017320343966625674,
+      "absolute_mse": 0.002977817665303537
+    }
+  },
+  "worlds": [
+    {
+      "seed": 57001,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            4,
+            5
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.823822021484375,
+              "repeat": 0.912078857421875,
+              "swap": 0.997955322265625
+            },
+            "fixed_gw": {
+              "single": 0.842987060546875,
+              "repeat": 0.9249267578125,
+              "swap": 0.998291015625
+            },
+            "history_basis": {
+              "single": 0.865570068359375,
+              "repeat": 0.942108154296875,
+              "swap": 0.9986572265625
+            },
+            "oracle": {
+              "single": 0.779083251953125,
+              "repeat": 0.872528076171875,
+              "swap": 0.9974365234375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            2,
+            4
+          ],
+          "kinetics": "fast/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.800445556640625,
+              "repeat": 0.888763427734375,
+              "swap": 0.995086669921875
+            },
+            "fixed_gw": {
+              "single": 0.79766845703125,
+              "repeat": 0.886810302734375,
+              "swap": 0.9947509765625
+            },
+            "history_basis": {
+              "single": 0.77996826171875,
+              "repeat": 0.86053466796875,
+              "swap": 0.993499755859375
+            },
+            "oracle": {
+              "single": 0.788543701171875,
+              "repeat": 0.86956787109375,
+              "swap": 0.993408203125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            0,
+            1
+          ],
+          "kinetics": "fast/fast",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.3975830078125,
+              "repeat": 0.5135498046875,
+              "swap": 0.878387451171875
+            },
+            "fixed_gw": {
+              "single": 0.390594482421875,
+              "repeat": 0.51885986328125,
+              "swap": 0.87152099609375
+            },
+            "history_basis": {
+              "single": 0.339263916015625,
+              "repeat": 0.427764892578125,
+              "swap": 0.8524169921875
+            },
+            "oracle": {
+              "single": 0.4586181640625,
+              "repeat": 0.5919189453125,
+              "swap": 0.891876220703125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            5,
+            0
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.923736572265625,
+              "repeat": 0.971527099609375,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 0.959564208984375,
+              "repeat": 0.990631103515625,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.93878173828125,
+              "repeat": 0.97930908203125,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 0.809112548828125,
+              "repeat": 0.876495361328125,
+              "swap": 0.999969482421875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            1,
+            3
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.8040771484375,
+              "repeat": 0.90289306640625,
+              "swap": 0.981964111328125
+            },
+            "fixed_gw": {
+              "single": 0.804718017578125,
+              "repeat": 0.90460205078125,
+              "swap": 0.981201171875
+            },
+            "history_basis": {
+              "single": 0.84478759765625,
+              "repeat": 0.93426513671875,
+              "swap": 0.980133056640625
+            },
+            "oracle": {
+              "single": 0.736114501953125,
+              "repeat": 0.83514404296875,
+              "swap": 0.98065185546875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            3,
+            2
+          ],
+          "kinetics": "slow/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.6715087890625,
+              "repeat": 0.818572998046875,
+              "swap": 0.99444580078125
+            },
+            "fixed_gw": {
+              "single": 0.680419921875,
+              "repeat": 0.82940673828125,
+              "swap": 0.99359130859375
+            },
+            "history_basis": {
+              "single": 0.68267822265625,
+              "repeat": 0.829132080078125,
+              "swap": 0.994110107421875
+            },
+            "oracle": {
+              "single": 0.679718017578125,
+              "repeat": 0.8133544921875,
+              "swap": 0.99420166015625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.0004394707348969713,
+          "noisy_unforced_mse": 0.014666104945007618,
+          "absolute_mse": 0.0026429512586309896
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.001386144141276565,
+          "noisy_unforced_mse": 0.015608925545832462,
+          "absolute_mse": 0.004107150508416592
+        },
+        "history_basis": {
+          "unforced_mse": 0.0014847757515093654,
+          "noisy_unforced_mse": 0.015712408502320193,
+          "absolute_mse": 0.003251704799449972
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.7368621826171875,
+          "repeat": 0.834564208984375,
+          "swap": 0.9746398925781248
+        },
+        "fixed_gw": {
+          "single": 0.7459920247395834,
+          "repeat": 0.8425394694010416,
+          "swap": 0.9732259114583333
+        },
+        "history_basis": {
+          "single": 0.7418416341145834,
+          "repeat": 0.8288523356119791,
+          "swap": 0.9698028564453124
+        },
+        "oracle": {
+          "single": 0.7085316975911458,
+          "repeat": 0.8098347981770833,
+          "swap": 0.9762573242187498
+        }
+      }
+    },
+    {
+      "seed": 57002,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            5,
+            2
+          ],
+          "kinetics": "fast/fast",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.598785400390625,
+              "repeat": 0.61260986328125,
+              "swap": 0.917755126953125
+            },
+            "fixed_gw": {
+              "single": 0.7052001953125,
+              "repeat": 0.780914306640625,
+              "swap": 0.925506591796875
+            },
+            "history_basis": {
+              "single": 0.7161865234375,
+              "repeat": 0.74078369140625,
+              "swap": 0.970428466796875
+            },
+            "oracle": {
+              "single": 0.643463134765625,
+              "repeat": 0.680908203125,
+              "swap": 0.92236328125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            3,
+            4
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.63330078125,
+              "repeat": 0.746551513671875,
+              "swap": 0.9979248046875
+            },
+            "fixed_gw": {
+              "single": 0.576812744140625,
+              "repeat": 0.6728515625,
+              "swap": 0.99755859375
+            },
+            "history_basis": {
+              "single": 0.490447998046875,
+              "repeat": 0.540374755859375,
+              "swap": 0.997955322265625
+            },
+            "oracle": {
+              "single": 0.71746826171875,
+              "repeat": 0.84796142578125,
+              "swap": 0.997772216796875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            4,
+            1
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.762939453125,
+              "repeat": 0.8663330078125,
+              "swap": 0.9991455078125
+            },
+            "fixed_gw": {
+              "single": 0.721160888671875,
+              "repeat": 0.820831298828125,
+              "swap": 0.998870849609375
+            },
+            "history_basis": {
+              "single": 0.745635986328125,
+              "repeat": 0.844207763671875,
+              "swap": 0.999267578125
+            },
+            "oracle": {
+              "single": 0.78131103515625,
+              "repeat": 0.887908935546875,
+              "swap": 0.99920654296875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            1,
+            5
+          ],
+          "kinetics": "fast/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.77191162109375,
+              "repeat": 0.89105224609375,
+              "swap": 0.98260498046875
+            },
+            "fixed_gw": {
+              "single": 0.754913330078125,
+              "repeat": 0.87225341796875,
+              "swap": 0.9755859375
+            },
+            "history_basis": {
+              "single": 0.80670166015625,
+              "repeat": 0.913299560546875,
+              "swap": 0.96942138671875
+            },
+            "oracle": {
+              "single": 0.705963134765625,
+              "repeat": 0.815277099609375,
+              "swap": 0.981170654296875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            0,
+            3
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.668365478515625,
+              "repeat": 0.743927001953125,
+              "swap": 0.9541015625
+            },
+            "fixed_gw": {
+              "single": 0.650970458984375,
+              "repeat": 0.72222900390625,
+              "swap": 0.94683837890625
+            },
+            "history_basis": {
+              "single": 0.644500732421875,
+              "repeat": 0.698211669921875,
+              "swap": 0.961181640625
+            },
+            "oracle": {
+              "single": 0.71453857421875,
+              "repeat": 0.793243408203125,
+              "swap": 0.96319580078125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            2,
+            0
+          ],
+          "kinetics": "slow/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.783294677734375,
+              "repeat": 0.8427734375,
+              "swap": 0.9996337890625
+            },
+            "fixed_gw": {
+              "single": 0.829437255859375,
+              "repeat": 0.889556884765625,
+              "swap": 0.999664306640625
+            },
+            "history_basis": {
+              "single": 0.809539794921875,
+              "repeat": 0.871246337890625,
+              "swap": 0.999664306640625
+            },
+            "oracle": {
+              "single": 0.7821044921875,
+              "repeat": 0.842254638671875,
+              "swap": 0.9996337890625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.00034381463969361043,
+          "noisy_unforced_mse": 0.015403005646505468,
+          "absolute_mse": 0.002307129488618405
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.0012959496665694665,
+          "noisy_unforced_mse": 0.016330891928124765,
+          "absolute_mse": 0.003928354488439827
+        },
+        "history_basis": {
+          "unforced_mse": 0.0012593929962565417,
+          "noisy_unforced_mse": 0.016278453315508753,
+          "absolute_mse": 0.0030359706431573232
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.7030995686848959,
+          "repeat": 0.78387451171875,
+          "swap": 0.9751942952473958
+        },
+        "fixed_gw": {
+          "single": 0.7064158121744791,
+          "repeat": 0.7931060791015625,
+          "swap": 0.9740041097005208
+        },
+        "history_basis": {
+          "single": 0.7021687825520834,
+          "repeat": 0.7680206298828125,
+          "swap": 0.9829864501953125
+        },
+        "oracle": {
+          "single": 0.7241414388020833,
+          "repeat": 0.8112589518229167,
+          "swap": 0.9772237141927083
+        }
+      }
+    },
+    {
+      "seed": 57003,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            2,
+            1
+          ],
+          "kinetics": "fast/fast",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.42413330078125,
+              "repeat": 0.561859130859375,
+              "swap": 0.881927490234375
+            },
+            "fixed_gw": {
+              "single": 0.407684326171875,
+              "repeat": 0.5457763671875,
+              "swap": 0.8704833984375
+            },
+            "history_basis": {
+              "single": 0.390594482421875,
+              "repeat": 0.53131103515625,
+              "swap": 0.8826904296875
+            },
+            "oracle": {
+              "single": 0.456390380859375,
+              "repeat": 0.597137451171875,
+              "swap": 0.89306640625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            0,
+            3
+          ],
+          "kinetics": "slow/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.81939697265625,
+              "repeat": 0.88836669921875,
+              "swap": 0.999755859375
+            },
+            "fixed_gw": {
+              "single": 0.853607177734375,
+              "repeat": 0.925018310546875,
+              "swap": 0.999847412109375
+            },
+            "history_basis": {
+              "single": 0.826873779296875,
+              "repeat": 0.89837646484375,
+              "swap": 0.999755859375
+            },
+            "oracle": {
+              "single": 0.77978515625,
+              "repeat": 0.850921630859375,
+              "swap": 0.999725341796875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            3,
+            0
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.793975830078125,
+              "repeat": 0.893402099609375,
+              "swap": 0.99981689453125
+            },
+            "fixed_gw": {
+              "single": 0.7406005859375,
+              "repeat": 0.837127685546875,
+              "swap": 0.99981689453125
+            },
+            "history_basis": {
+              "single": 0.777984619140625,
+              "repeat": 0.872650146484375,
+              "swap": 0.9998779296875
+            },
+            "oracle": {
+              "single": 0.823944091796875,
+              "repeat": 0.920562744140625,
+              "swap": 0.999908447265625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            4,
+            5
+          ],
+          "kinetics": "fast/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.735015869140625,
+              "repeat": 0.8233642578125,
+              "swap": 0.94818115234375
+            },
+            "fixed_gw": {
+              "single": 0.73663330078125,
+              "repeat": 0.832305908203125,
+              "swap": 0.949981689453125
+            },
+            "history_basis": {
+              "single": 0.74493408203125,
+              "repeat": 0.84149169921875,
+              "swap": 0.953094482421875
+            },
+            "oracle": {
+              "single": 0.7252197265625,
+              "repeat": 0.80816650390625,
+              "swap": 0.948883056640625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            5,
+            2
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.76220703125,
+              "repeat": 0.8433837890625,
+              "swap": 0.996368408203125
+            },
+            "fixed_gw": {
+              "single": 0.755584716796875,
+              "repeat": 0.84124755859375,
+              "swap": 0.996551513671875
+            },
+            "history_basis": {
+              "single": 0.699676513671875,
+              "repeat": 0.775238037109375,
+              "swap": 0.994537353515625
+            },
+            "oracle": {
+              "single": 0.791290283203125,
+              "repeat": 0.869903564453125,
+              "swap": 0.99609375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            1,
+            4
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.59100341796875,
+              "repeat": 0.716094970703125,
+              "swap": 0.993499755859375
+            },
+            "fixed_gw": {
+              "single": 0.519989013671875,
+              "repeat": 0.616455078125,
+              "swap": 0.9930419921875
+            },
+            "history_basis": {
+              "single": 0.4874267578125,
+              "repeat": 0.553009033203125,
+              "swap": 0.992828369140625
+            },
+            "oracle": {
+              "single": 0.6805419921875,
+              "repeat": 0.8206787109375,
+              "swap": 0.9947509765625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.0004052490520692328,
+          "noisy_unforced_mse": 0.016666200012312598,
+          "absolute_mse": 0.002449707182578294
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.0014666017006553281,
+          "noisy_unforced_mse": 0.017713407825169787,
+          "absolute_mse": 0.0036564140265899687
+        },
+        "history_basis": {
+          "unforced_mse": 0.0013379643394324633,
+          "noisy_unforced_mse": 0.017594510866687164,
+          "absolute_mse": 0.002661828267076138
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.6876220703125,
+          "repeat": 0.7877451578776041,
+          "swap": 0.9699249267578124
+        },
+        "fixed_gw": {
+          "single": 0.6690165201822917,
+          "repeat": 0.7663218180338542,
+          "swap": 0.968287150065104
+        },
+        "history_basis": {
+          "single": 0.6545817057291667,
+          "repeat": 0.7453460693359375,
+          "swap": 0.9704640706380208
+        },
+        "oracle": {
+          "single": 0.7095286051432292,
+          "repeat": 0.8112284342447916,
+          "swap": 0.972071329752604
+        }
+      }
+    },
+    {
+      "seed": 57004,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            1,
+            2
+          ],
+          "kinetics": "slow/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.733489990234375,
+              "repeat": 0.797271728515625,
+              "swap": 0.99468994140625
+            },
+            "fixed_gw": {
+              "single": 0.758148193359375,
+              "repeat": 0.83111572265625,
+              "swap": 0.995361328125
+            },
+            "history_basis": {
+              "single": 0.728271484375,
+              "repeat": 0.78936767578125,
+              "swap": 0.9940185546875
+            },
+            "oracle": {
+              "single": 0.743988037109375,
+              "repeat": 0.82244873046875,
+              "swap": 0.99554443359375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            4,
+            3
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.657470703125,
+              "repeat": 0.765625,
+              "swap": 0.96539306640625
+            },
+            "fixed_gw": {
+              "single": 0.6368408203125,
+              "repeat": 0.7379150390625,
+              "swap": 0.959625244140625
+            },
+            "history_basis": {
+              "single": 0.692230224609375,
+              "repeat": 0.80401611328125,
+              "swap": 0.950775146484375
+            },
+            "oracle": {
+              "single": 0.6563720703125,
+              "repeat": 0.76409912109375,
+              "swap": 0.9642333984375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            0,
+            5
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.765350341796875,
+              "repeat": 0.8555908203125,
+              "swap": 0.992767333984375
+            },
+            "fixed_gw": {
+              "single": 0.80450439453125,
+              "repeat": 0.893035888671875,
+              "swap": 0.994140625
+            },
+            "history_basis": {
+              "single": 0.837310791015625,
+              "repeat": 0.919342041015625,
+              "swap": 0.996124267578125
+            },
+            "oracle": {
+              "single": 0.729034423828125,
+              "repeat": 0.815216064453125,
+              "swap": 0.991912841796875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            5,
+            4
+          ],
+          "kinetics": "fast/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.708160400390625,
+              "repeat": 0.828948974609375,
+              "swap": 0.984375
+            },
+            "fixed_gw": {
+              "single": 0.68438720703125,
+              "repeat": 0.7987060546875,
+              "swap": 0.976593017578125
+            },
+            "history_basis": {
+              "single": 0.76788330078125,
+              "repeat": 0.889373779296875,
+              "swap": 0.985107421875
+            },
+            "oracle": {
+              "single": 0.701324462890625,
+              "repeat": 0.81927490234375,
+              "swap": 0.987884521484375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            2,
+            0
+          ],
+          "kinetics": "fast/fast",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.469940185546875,
+              "repeat": 0.6162109375,
+              "swap": 0.914825439453125
+            },
+            "fixed_gw": {
+              "single": 0.46575927734375,
+              "repeat": 0.613800048828125,
+              "swap": 0.913421630859375
+            },
+            "history_basis": {
+              "single": 0.38323974609375,
+              "repeat": 0.507415771484375,
+              "swap": 0.88116455078125
+            },
+            "oracle": {
+              "single": 0.509368896484375,
+              "repeat": 0.658782958984375,
+              "swap": 0.934112548828125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            3,
+            1
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.8848876953125,
+              "repeat": 0.95220947265625,
+              "swap": 0.999969482421875
+            },
+            "fixed_gw": {
+              "single": 0.92071533203125,
+              "repeat": 0.975982666015625,
+              "swap": 0.999969482421875
+            },
+            "history_basis": {
+              "single": 0.957489013671875,
+              "repeat": 0.993316650390625,
+              "swap": 0.999969482421875
+            },
+            "oracle": {
+              "single": 0.796875,
+              "repeat": 0.877655029296875,
+              "swap": 0.999603271484375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.00032167417801544373,
+          "noisy_unforced_mse": 0.016516477329654583,
+          "absolute_mse": 0.002757890217888921
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.001041948165077108,
+          "noisy_unforced_mse": 0.017189908920642025,
+          "absolute_mse": 0.003481097571228364
+        },
+        "history_basis": {
+          "unforced_mse": 0.0013510269748828424,
+          "noisy_unforced_mse": 0.017533617272621208,
+          "absolute_mse": 0.0030461060506944875
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.703216552734375,
+          "repeat": 0.802642822265625,
+          "swap": 0.9753367106119791
+        },
+        "fixed_gw": {
+          "single": 0.7117258707682291,
+          "repeat": 0.8084259033203125,
+          "swap": 0.9731852213541666
+        },
+        "history_basis": {
+          "single": 0.7277374267578125,
+          "repeat": 0.817138671875,
+          "swap": 0.9678599039713541
+        },
+        "oracle": {
+          "single": 0.6894938151041666,
+          "repeat": 0.7929128011067708,
+          "swap": 0.9788818359375
+        }
+      }
+    },
+    {
+      "seed": 57005,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            2,
+            5
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.870361328125,
+              "repeat": 0.94842529296875,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 0.901275634765625,
+              "repeat": 0.96905517578125,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.926849365234375,
+              "repeat": 0.9810791015625,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 0.846893310546875,
+              "repeat": 0.9273681640625,
+              "swap": 0.99993896484375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            5,
+            3
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.583251953125,
+              "repeat": 0.707733154296875,
+              "swap": 0.99273681640625
+            },
+            "fixed_gw": {
+              "single": 0.533111572265625,
+              "repeat": 0.6402587890625,
+              "swap": 0.99224853515625
+            },
+            "history_basis": {
+              "single": 0.486083984375,
+              "repeat": 0.568328857421875,
+              "swap": 0.9920654296875
+            },
+            "oracle": {
+              "single": 0.6568603515625,
+              "repeat": 0.802642822265625,
+              "swap": 0.992706298828125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            3,
+            4
+          ],
+          "kinetics": "fast/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.633453369140625,
+              "repeat": 0.69873046875,
+              "swap": 0.95391845703125
+            },
+            "fixed_gw": {
+              "single": 0.627044677734375,
+              "repeat": 0.68829345703125,
+              "swap": 0.951629638671875
+            },
+            "history_basis": {
+              "single": 0.6480712890625,
+              "repeat": 0.70184326171875,
+              "swap": 0.960235595703125
+            },
+            "oracle": {
+              "single": 0.70135498046875,
+              "repeat": 0.78240966796875,
+              "swap": 0.96826171875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            1,
+            2
+          ],
+          "kinetics": "fast/fast",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.305145263671875,
+              "repeat": 0.43060302734375,
+              "swap": 0.817962646484375
+            },
+            "fixed_gw": {
+              "single": 0.3455810546875,
+              "repeat": 0.491546630859375,
+              "swap": 0.828369140625
+            },
+            "history_basis": {
+              "single": 0.306671142578125,
+              "repeat": 0.40338134765625,
+              "swap": 0.822235107421875
+            },
+            "oracle": {
+              "single": 0.422393798828125,
+              "repeat": 0.57244873046875,
+              "swap": 0.866790771484375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            0,
+            1
+          ],
+          "kinetics": "slow/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.629638671875,
+              "repeat": 0.68353271484375,
+              "swap": 0.9940185546875
+            },
+            "fixed_gw": {
+              "single": 0.65631103515625,
+              "repeat": 0.708343505859375,
+              "swap": 0.995208740234375
+            },
+            "history_basis": {
+              "single": 0.532745361328125,
+              "repeat": 0.56878662109375,
+              "swap": 0.98748779296875
+            },
+            "oracle": {
+              "single": 0.68597412109375,
+              "repeat": 0.74237060546875,
+              "swap": 0.994598388671875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            4,
+            0
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.756683349609375,
+              "repeat": 0.84393310546875,
+              "swap": 0.98345947265625
+            },
+            "fixed_gw": {
+              "single": 0.72943115234375,
+              "repeat": 0.81304931640625,
+              "swap": 0.979888916015625
+            },
+            "history_basis": {
+              "single": 0.796112060546875,
+              "repeat": 0.856292724609375,
+              "swap": 0.9654541015625
+            },
+            "oracle": {
+              "single": 0.744903564453125,
+              "repeat": 0.835540771484375,
+              "swap": 0.987762451171875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.00040298204231911823,
+          "noisy_unforced_mse": 0.017811455078214345,
+          "absolute_mse": 0.0027168696747901346
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.001433773192084325,
+          "noisy_unforced_mse": 0.018852580680335032,
+          "absolute_mse": 0.0038256823355210874
+        },
+        "history_basis": {
+          "unforced_mse": 0.0015685922931984347,
+          "noisy_unforced_mse": 0.019013615120742556,
+          "absolute_mse": 0.003426210713120582
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.6297556559244792,
+          "repeat": 0.7188262939453125,
+          "swap": 0.9570159912109374
+        },
+        "fixed_gw": {
+          "single": 0.6321258544921875,
+          "repeat": 0.7184244791666667,
+          "swap": 0.9578908284505208
+        },
+        "history_basis": {
+          "single": 0.6160888671875,
+          "repeat": 0.6799519856770834,
+          "swap": 0.9545796712239583
+        },
+        "oracle": {
+          "single": 0.6763966878255208,
+          "repeat": 0.777130126953125,
+          "swap": 0.9683430989583333
+        }
+      }
+    },
+    {
+      "seed": 57006,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            2,
+            4
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.634735107421875,
+              "repeat": 0.7696533203125,
+              "swap": 0.992462158203125
+            },
+            "fixed_gw": {
+              "single": 0.572601318359375,
+              "repeat": 0.6920166015625,
+              "swap": 0.992462158203125
+            },
+            "history_basis": {
+              "single": 0.53546142578125,
+              "repeat": 0.633544921875,
+              "swap": 0.99395751953125
+            },
+            "oracle": {
+              "single": 0.6741943359375,
+              "repeat": 0.808868408203125,
+              "swap": 0.993316650390625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            3,
+            5
+          ],
+          "kinetics": "fast/fast",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.44696044921875,
+              "repeat": 0.59674072265625,
+              "swap": 0.895111083984375
+            },
+            "fixed_gw": {
+              "single": 0.4464111328125,
+              "repeat": 0.59637451171875,
+              "swap": 0.895050048828125
+            },
+            "history_basis": {
+              "single": 0.392608642578125,
+              "repeat": 0.530426025390625,
+              "swap": 0.882415771484375
+            },
+            "oracle": {
+              "single": 0.47332763671875,
+              "repeat": 0.62261962890625,
+              "swap": 0.907684326171875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            4,
+            0
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.8416748046875,
+              "repeat": 0.923553466796875,
+              "swap": 0.99859619140625
+            },
+            "fixed_gw": {
+              "single": 0.857330322265625,
+              "repeat": 0.9349365234375,
+              "swap": 0.9991455078125
+            },
+            "history_basis": {
+              "single": 0.835601806640625,
+              "repeat": 0.90423583984375,
+              "swap": 0.99859619140625
+            },
+            "oracle": {
+              "single": 0.789886474609375,
+              "repeat": 0.878936767578125,
+              "swap": 0.99810791015625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            0,
+            2
+          ],
+          "kinetics": "fast/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.632171630859375,
+              "repeat": 0.698974609375,
+              "swap": 0.882232666015625
+            },
+            "fixed_gw": {
+              "single": 0.61834716796875,
+              "repeat": 0.6788330078125,
+              "swap": 0.881561279296875
+            },
+            "history_basis": {
+              "single": 0.616119384765625,
+              "repeat": 0.65185546875,
+              "swap": 0.883575439453125
+            },
+            "oracle": {
+              "single": 0.688568115234375,
+              "repeat": 0.767974853515625,
+              "swap": 0.917877197265625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            5,
+            1
+          ],
+          "kinetics": "slow/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.751373291015625,
+              "repeat": 0.8165283203125,
+              "swap": 0.997314453125
+            },
+            "fixed_gw": {
+              "single": 0.75677490234375,
+              "repeat": 0.82257080078125,
+              "swap": 0.99761962890625
+            },
+            "history_basis": {
+              "single": 0.7349853515625,
+              "repeat": 0.7930908203125,
+              "swap": 0.997344970703125
+            },
+            "oracle": {
+              "single": 0.7227783203125,
+              "repeat": 0.778961181640625,
+              "swap": 0.996826171875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            1,
+            3
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.77484130859375,
+              "repeat": 0.87213134765625,
+              "swap": 0.9658203125
+            },
+            "fixed_gw": {
+              "single": 0.767730712890625,
+              "repeat": 0.86834716796875,
+              "swap": 0.962371826171875
+            },
+            "history_basis": {
+              "single": 0.825164794921875,
+              "repeat": 0.924102783203125,
+              "swap": 0.95843505859375
+            },
+            "oracle": {
+              "single": 0.709808349609375,
+              "repeat": 0.8050537109375,
+              "swap": 0.968231201171875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.00034522213361390256,
+          "noisy_unforced_mse": 0.01841401282241833,
+          "absolute_mse": 0.0023337872480766082
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.0009957022308944522,
+          "noisy_unforced_mse": 0.019090555415602336,
+          "absolute_mse": 0.0030359849345673396
+        },
+        "history_basis": {
+          "unforced_mse": 0.001132375327615569,
+          "noisy_unforced_mse": 0.019209481780437597,
+          "absolute_mse": 0.002785824518875199
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.6802927652994791,
+          "repeat": 0.7795969645182292,
+          "swap": 0.9552561442057291
+        },
+        "fixed_gw": {
+          "single": 0.6698659261067708,
+          "repeat": 0.7655131022135416,
+          "swap": 0.9547017415364583
+        },
+        "history_basis": {
+          "single": 0.6566569010416666,
+          "repeat": 0.7395426432291667,
+          "swap": 0.9523874918619791
+        },
+        "oracle": {
+          "single": 0.6764272054036458,
+          "repeat": 0.777069091796875,
+          "swap": 0.9636739095052083
+        }
+      }
+    },
+    {
+      "seed": 57007,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            3,
+            4
+          ],
+          "kinetics": "fast/fast",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.493438720703125,
+              "repeat": 0.61456298828125,
+              "swap": 0.9578857421875
+            },
+            "fixed_gw": {
+              "single": 0.489898681640625,
+              "repeat": 0.615478515625,
+              "swap": 0.956329345703125
+            },
+            "history_basis": {
+              "single": 0.385772705078125,
+              "repeat": 0.5069580078125,
+              "swap": 0.92584228515625
+            },
+            "oracle": {
+              "single": 0.560302734375,
+              "repeat": 0.703948974609375,
+              "swap": 0.963531494140625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            2,
+            0
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.848236083984375,
+              "repeat": 0.90264892578125,
+              "swap": 0.99957275390625
+            },
+            "fixed_gw": {
+              "single": 0.87420654296875,
+              "repeat": 0.920654296875,
+              "swap": 0.999847412109375
+            },
+            "history_basis": {
+              "single": 0.941314697265625,
+              "repeat": 0.9820556640625,
+              "swap": 0.999725341796875
+            },
+            "oracle": {
+              "single": 0.73541259765625,
+              "repeat": 0.785186767578125,
+              "swap": 0.998382568359375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            1,
+            3
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.653350830078125,
+              "repeat": 0.714599609375,
+              "swap": 0.985321044921875
+            },
+            "fixed_gw": {
+              "single": 0.663970947265625,
+              "repeat": 0.728759765625,
+              "swap": 0.98602294921875
+            },
+            "history_basis": {
+              "single": 0.507843017578125,
+              "repeat": 0.511138916015625,
+              "swap": 0.970916748046875
+            },
+            "oracle": {
+              "single": 0.743621826171875,
+              "repeat": 0.825927734375,
+              "swap": 0.98736572265625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            5,
+            2
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.702239990234375,
+              "repeat": 0.82366943359375,
+              "swap": 0.998138427734375
+            },
+            "fixed_gw": {
+              "single": 0.66754150390625,
+              "repeat": 0.78082275390625,
+              "swap": 0.9979248046875
+            },
+            "history_basis": {
+              "single": 0.615203857421875,
+              "repeat": 0.732330322265625,
+              "swap": 0.996307373046875
+            },
+            "oracle": {
+              "single": 0.739990234375,
+              "repeat": 0.864349365234375,
+              "swap": 0.998321533203125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            0,
+            5
+          ],
+          "kinetics": "fast/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.735931396484375,
+              "repeat": 0.847747802734375,
+              "swap": 0.984344482421875
+            },
+            "fixed_gw": {
+              "single": 0.749053955078125,
+              "repeat": 0.86334228515625,
+              "swap": 0.985443115234375
+            },
+            "history_basis": {
+              "single": 0.76470947265625,
+              "repeat": 0.8729248046875,
+              "swap": 0.980194091796875
+            },
+            "oracle": {
+              "single": 0.71124267578125,
+              "repeat": 0.820953369140625,
+              "swap": 0.98638916015625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            4,
+            1
+          ],
+          "kinetics": "slow/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.74896240234375,
+              "repeat": 0.82183837890625,
+              "swap": 0.997833251953125
+            },
+            "fixed_gw": {
+              "single": 0.76263427734375,
+              "repeat": 0.837005615234375,
+              "swap": 0.998321533203125
+            },
+            "history_basis": {
+              "single": 0.6939697265625,
+              "repeat": 0.75579833984375,
+              "swap": 0.997100830078125
+            },
+            "oracle": {
+              "single": 0.760894775390625,
+              "repeat": 0.8306884765625,
+              "swap": 0.998260498046875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.00042731036780514477,
+          "noisy_unforced_mse": 0.01523362856267795,
+          "absolute_mse": 0.002003800273479559
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.00129048220069487,
+          "noisy_unforced_mse": 0.016098438835161263,
+          "absolute_mse": 0.002951869259376001
+        },
+        "history_basis": {
+          "unforced_mse": 0.0017507049558308989,
+          "noisy_unforced_mse": 0.01654581083473592,
+          "absolute_mse": 0.0030482661577690725
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.6970265706380208,
+          "repeat": 0.7875111897786458,
+          "swap": 0.9871826171874999
+        },
+        "fixed_gw": {
+          "single": 0.7012176513671875,
+          "repeat": 0.7910105387369792,
+          "swap": 0.9873148600260415
+        },
+        "history_basis": {
+          "single": 0.6514689127604167,
+          "repeat": 0.72686767578125,
+          "swap": 0.9783477783203124
+        },
+        "oracle": {
+          "single": 0.7085774739583334,
+          "repeat": 0.80517578125,
+          "swap": 0.9887084960937499
+        }
+      }
+    },
+    {
+      "seed": 57008,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            5,
+            2
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.799224853515625,
+              "repeat": 0.867645263671875,
+              "swap": 0.997589111328125
+            },
+            "fixed_gw": {
+              "single": 0.834808349609375,
+              "repeat": 0.904876708984375,
+              "swap": 0.9979248046875
+            },
+            "history_basis": {
+              "single": 0.923065185546875,
+              "repeat": 0.9769287109375,
+              "swap": 0.9993896484375
+            },
+            "oracle": {
+              "single": 0.731414794921875,
+              "repeat": 0.802337646484375,
+              "swap": 0.995391845703125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            3,
+            4
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.783721923828125,
+              "repeat": 0.875274658203125,
+              "swap": 0.993927001953125
+            },
+            "fixed_gw": {
+              "single": 0.816986083984375,
+              "repeat": 0.904632568359375,
+              "swap": 0.9951171875
+            },
+            "history_basis": {
+              "single": 0.84063720703125,
+              "repeat": 0.924163818359375,
+              "swap": 0.99560546875
+            },
+            "oracle": {
+              "single": 0.74267578125,
+              "repeat": 0.82659912109375,
+              "swap": 0.992095947265625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            1,
+            3
+          ],
+          "kinetics": "slow/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.66912841796875,
+              "repeat": 0.796630859375,
+              "swap": 0.997589111328125
+            },
+            "fixed_gw": {
+              "single": 0.650970458984375,
+              "repeat": 0.775604248046875,
+              "swap": 0.99755859375
+            },
+            "history_basis": {
+              "single": 0.672454833984375,
+              "repeat": 0.800872802734375,
+              "swap": 0.997528076171875
+            },
+            "oracle": {
+              "single": 0.718658447265625,
+              "repeat": 0.8497314453125,
+              "swap": 0.99798583984375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            4,
+            5
+          ],
+          "kinetics": "fast/fast",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.6187744140625,
+              "repeat": 0.65838623046875,
+              "swap": 0.943145751953125
+            },
+            "fixed_gw": {
+              "single": 0.57672119140625,
+              "repeat": 0.5986328125,
+              "swap": 0.93780517578125
+            },
+            "history_basis": {
+              "single": 0.506256103515625,
+              "repeat": 0.50543212890625,
+              "swap": 0.896392822265625
+            },
+            "oracle": {
+              "single": 0.664520263671875,
+              "repeat": 0.718597412109375,
+              "swap": 0.955810546875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            2,
+            0
+          ],
+          "kinetics": "fast/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.7169189453125,
+              "repeat": 0.7802734375,
+              "swap": 0.981048583984375
+            },
+            "fixed_gw": {
+              "single": 0.655731201171875,
+              "repeat": 0.7191162109375,
+              "swap": 0.962188720703125
+            },
+            "history_basis": {
+              "single": 0.678924560546875,
+              "repeat": 0.73883056640625,
+              "swap": 0.949310302734375
+            },
+            "oracle": {
+              "single": 0.79510498046875,
+              "repeat": 0.869781494140625,
+              "swap": 0.9891357421875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            0,
+            1
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.667816162109375,
+              "repeat": 0.73583984375,
+              "swap": 0.985321044921875
+            },
+            "fixed_gw": {
+              "single": 0.6727294921875,
+              "repeat": 0.7430419921875,
+              "swap": 0.980133056640625
+            },
+            "history_basis": {
+              "single": 0.705047607421875,
+              "repeat": 0.78521728515625,
+              "swap": 0.986602783203125
+            },
+            "oracle": {
+              "single": 0.731689453125,
+              "repeat": 0.81097412109375,
+              "swap": 0.9840087890625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.00042580033565453124,
+          "noisy_unforced_mse": 0.01676190285055163,
+          "absolute_mse": 0.0024779406902299098
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.0011118671716376677,
+          "noisy_unforced_mse": 0.01744384595292064,
+          "absolute_mse": 0.0031345554026408515
+        },
+        "history_basis": {
+          "unforced_mse": 0.001327593187354727,
+          "noisy_unforced_mse": 0.017664931747788517,
+          "absolute_mse": 0.0028788050129022837
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.7092641194661459,
+          "repeat": 0.785675048828125,
+          "swap": 0.9831034342447915
+        },
+        "fixed_gw": {
+          "single": 0.701324462890625,
+          "repeat": 0.7743174235026042,
+          "swap": 0.97845458984375
+        },
+        "history_basis": {
+          "single": 0.7210642496744792,
+          "repeat": 0.78857421875,
+          "swap": 0.9708048502604166
+        },
+        "oracle": {
+          "single": 0.7306772867838541,
+          "repeat": 0.8130035400390625,
+          "swap": 0.9857381184895833
+        }
+      }
+    },
+    {
+      "seed": 57009,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            3,
+            2
+          ],
+          "kinetics": "fast/fast",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.433837890625,
+              "repeat": 0.57037353515625,
+              "swap": 0.885223388671875
+            },
+            "fixed_gw": {
+              "single": 0.436737060546875,
+              "repeat": 0.573577880859375,
+              "swap": 0.880767822265625
+            },
+            "history_basis": {
+              "single": 0.36761474609375,
+              "repeat": 0.48895263671875,
+              "swap": 0.856048583984375
+            },
+            "oracle": {
+              "single": 0.455841064453125,
+              "repeat": 0.59503173828125,
+              "swap": 0.896392822265625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            2,
+            0
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.721893310546875,
+              "repeat": 0.826080322265625,
+              "swap": 0.999847412109375
+            },
+            "fixed_gw": {
+              "single": 0.650909423828125,
+              "repeat": 0.7342529296875,
+              "swap": 0.999755859375
+            },
+            "history_basis": {
+              "single": 0.584686279296875,
+              "repeat": 0.639373779296875,
+              "swap": 0.999755859375
+            },
+            "oracle": {
+              "single": 0.802032470703125,
+              "repeat": 0.910858154296875,
+              "swap": 0.9998779296875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            4,
+            1
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.7442626953125,
+              "repeat": 0.856781005859375,
+              "swap": 0.9779052734375
+            },
+            "fixed_gw": {
+              "single": 0.73236083984375,
+              "repeat": 0.838104248046875,
+              "swap": 0.9755859375
+            },
+            "history_basis": {
+              "single": 0.70867919921875,
+              "repeat": 0.828369140625,
+              "swap": 0.961517333984375
+            },
+            "oracle": {
+              "single": 0.662017822265625,
+              "repeat": 0.770416259765625,
+              "swap": 0.97467041015625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            5,
+            4
+          ],
+          "kinetics": "slow/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.785400390625,
+              "repeat": 0.8668212890625,
+              "swap": 0.99737548828125
+            },
+            "fixed_gw": {
+              "single": 0.81298828125,
+              "repeat": 0.8941650390625,
+              "swap": 0.997802734375
+            },
+            "history_basis": {
+              "single": 0.808258056640625,
+              "repeat": 0.890472412109375,
+              "swap": 0.99755859375
+            },
+            "oracle": {
+              "single": 0.748138427734375,
+              "repeat": 0.82861328125,
+              "swap": 0.996002197265625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            1,
+            5
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.845550537109375,
+              "repeat": 0.9287109375,
+              "swap": 0.999755859375
+            },
+            "fixed_gw": {
+              "single": 0.885406494140625,
+              "repeat": 0.954559326171875,
+              "swap": 0.999969482421875
+            },
+            "history_basis": {
+              "single": 0.88983154296875,
+              "repeat": 0.95574951171875,
+              "swap": 0.99993896484375
+            },
+            "oracle": {
+              "single": 0.785797119140625,
+              "repeat": 0.877899169921875,
+              "swap": 0.9993896484375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            0,
+            3
+          ],
+          "kinetics": "fast/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.649169921875,
+              "repeat": 0.7154541015625,
+              "swap": 0.89715576171875
+            },
+            "fixed_gw": {
+              "single": 0.620574951171875,
+              "repeat": 0.68524169921875,
+              "swap": 0.86883544921875
+            },
+            "history_basis": {
+              "single": 0.677734375,
+              "repeat": 0.743255615234375,
+              "swap": 0.913116455078125
+            },
+            "oracle": {
+              "single": 0.7236328125,
+              "repeat": 0.804412841796875,
+              "swap": 0.927520751953125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.0004880457840453697,
+          "noisy_unforced_mse": 0.017487998640348824,
+          "absolute_mse": 0.0025763879565625486
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.0013928593175350258,
+          "noisy_unforced_mse": 0.018345478552008094,
+          "absolute_mse": 0.0034210024207260896
+        },
+        "history_basis": {
+          "unforced_mse": 0.0014343723851614509,
+          "noisy_unforced_mse": 0.018399992140325967,
+          "absolute_mse": 0.0030199876096104173
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.696685791015625,
+          "repeat": 0.794036865234375,
+          "swap": 0.9595438639322915
+        },
+        "fixed_gw": {
+          "single": 0.6898295084635416,
+          "repeat": 0.7799835205078125,
+          "swap": 0.9537862141927083
+        },
+        "history_basis": {
+          "single": 0.6728006998697917,
+          "repeat": 0.7576955159505209,
+          "swap": 0.9546559651692708
+        },
+        "oracle": {
+          "single": 0.6962432861328125,
+          "repeat": 0.7978719075520834,
+          "swap": 0.9656422932942708
+        }
+      }
+    },
+    {
+      "seed": 57010,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            1,
+            3
+          ],
+          "kinetics": "slow/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.82830810546875,
+              "repeat": 0.910797119140625,
+              "swap": 0.999725341796875
+            },
+            "fixed_gw": {
+              "single": 0.850250244140625,
+              "repeat": 0.930816650390625,
+              "swap": 0.999755859375
+            },
+            "history_basis": {
+              "single": 0.862548828125,
+              "repeat": 0.939300537109375,
+              "swap": 0.999755859375
+            },
+            "oracle": {
+              "single": 0.811431884765625,
+              "repeat": 0.89593505859375,
+              "swap": 0.999725341796875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            4,
+            2
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.67041015625,
+              "repeat": 0.7344970703125,
+              "swap": 0.977874755859375
+            },
+            "fixed_gw": {
+              "single": 0.656646728515625,
+              "repeat": 0.71673583984375,
+              "swap": 0.975799560546875
+            },
+            "history_basis": {
+              "single": 0.51971435546875,
+              "repeat": 0.53125,
+              "swap": 0.96697998046875
+            },
+            "oracle": {
+              "single": 0.748382568359375,
+              "repeat": 0.8287353515625,
+              "swap": 0.985260009765625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            0,
+            5
+          ],
+          "kinetics": "fast/fast",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.501495361328125,
+              "repeat": 0.65875244140625,
+              "swap": 0.922088623046875
+            },
+            "fixed_gw": {
+              "single": 0.4906005859375,
+              "repeat": 0.654876708984375,
+              "swap": 0.918304443359375
+            },
+            "history_basis": {
+              "single": 0.464447021484375,
+              "repeat": 0.628326416015625,
+              "swap": 0.901214599609375
+            },
+            "oracle": {
+              "single": 0.50006103515625,
+              "repeat": 0.650909423828125,
+              "swap": 0.928802490234375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            5,
+            4
+          ],
+          "kinetics": "fast/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.69647216796875,
+              "repeat": 0.791168212890625,
+              "swap": 0.958160400390625
+            },
+            "fixed_gw": {
+              "single": 0.67559814453125,
+              "repeat": 0.76898193359375,
+              "swap": 0.95330810546875
+            },
+            "history_basis": {
+              "single": 0.66864013671875,
+              "repeat": 0.751922607421875,
+              "swap": 0.95245361328125
+            },
+            "oracle": {
+              "single": 0.713531494140625,
+              "repeat": 0.798583984375,
+              "swap": 0.96234130859375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            2,
+            0
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.620147705078125,
+              "repeat": 0.72332763671875,
+              "swap": 0.998748779296875
+            },
+            "fixed_gw": {
+              "single": 0.559600830078125,
+              "repeat": 0.647064208984375,
+              "swap": 0.998443603515625
+            },
+            "history_basis": {
+              "single": 0.490509033203125,
+              "repeat": 0.55987548828125,
+              "swap": 0.99591064453125
+            },
+            "oracle": {
+              "single": 0.72235107421875,
+              "repeat": 0.850830078125,
+              "swap": 0.998199462890625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            3,
+            1
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.74273681640625,
+              "repeat": 0.835113525390625,
+              "swap": 0.99993896484375
+            },
+            "fixed_gw": {
+              "single": 0.707916259765625,
+              "repeat": 0.79595947265625,
+              "swap": 0.99993896484375
+            },
+            "history_basis": {
+              "single": 0.72943115234375,
+              "repeat": 0.815185546875,
+              "swap": 0.99993896484375
+            },
+            "oracle": {
+              "single": 0.819427490234375,
+              "repeat": 0.915679931640625,
+              "swap": 0.999969482421875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.00034198192401001254,
+          "noisy_unforced_mse": 0.016230574089214102,
+          "absolute_mse": 0.002745472658438406
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.001292621516996778,
+          "noisy_unforced_mse": 0.017163980528525875,
+          "absolute_mse": 0.003914888845256502
+        },
+        "history_basis": {
+          "unforced_mse": 0.0011113231063536635,
+          "noisy_unforced_mse": 0.01703964446666246,
+          "absolute_mse": 0.0028585488585876105
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.6765950520833333,
+          "repeat": 0.7756093343098959,
+          "swap": 0.9760894775390624
+        },
+        "fixed_gw": {
+          "single": 0.656768798828125,
+          "repeat": 0.7524058024088542,
+          "swap": 0.9742584228515624
+        },
+        "history_basis": {
+          "single": 0.6225484212239583,
+          "repeat": 0.7043100992838541,
+          "swap": 0.9693756103515625
+        },
+        "oracle": {
+          "single": 0.7191975911458334,
+          "repeat": 0.8234456380208333,
+          "swap": 0.9790496826171874
+        }
+      }
+    },
+    {
+      "seed": 57011,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            1,
+            3
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.7288818359375,
+              "repeat": 0.820098876953125,
+              "swap": 0.94818115234375
+            },
+            "fixed_gw": {
+              "single": 0.723419189453125,
+              "repeat": 0.811126708984375,
+              "swap": 0.935333251953125
+            },
+            "history_basis": {
+              "single": 0.77032470703125,
+              "repeat": 0.85443115234375,
+              "swap": 0.925445556640625
+            },
+            "oracle": {
+              "single": 0.70684814453125,
+              "repeat": 0.798065185546875,
+              "swap": 0.951812744140625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            2,
+            4
+          ],
+          "kinetics": "fast/fast",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.4505615234375,
+              "repeat": 0.591522216796875,
+              "swap": 0.905120849609375
+            },
+            "fixed_gw": {
+              "single": 0.413238525390625,
+              "repeat": 0.551727294921875,
+              "swap": 0.90447998046875
+            },
+            "history_basis": {
+              "single": 0.329498291015625,
+              "repeat": 0.424560546875,
+              "swap": 0.88177490234375
+            },
+            "oracle": {
+              "single": 0.499053955078125,
+              "repeat": 0.64447021484375,
+              "swap": 0.9273681640625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            3,
+            5
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.755401611328125,
+              "repeat": 0.81591796875,
+              "swap": 0.991912841796875
+            },
+            "fixed_gw": {
+              "single": 0.791717529296875,
+              "repeat": 0.85443115234375,
+              "swap": 0.9940185546875
+            },
+            "history_basis": {
+              "single": 0.840484619140625,
+              "repeat": 0.898651123046875,
+              "swap": 0.996856689453125
+            },
+            "oracle": {
+              "single": 0.6981201171875,
+              "repeat": 0.751129150390625,
+              "swap": 0.98675537109375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            4,
+            0
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.71099853515625,
+              "repeat": 0.829925537109375,
+              "swap": 0.995758056640625
+            },
+            "fixed_gw": {
+              "single": 0.680633544921875,
+              "repeat": 0.7864990234375,
+              "swap": 0.99761962890625
+            },
+            "history_basis": {
+              "single": 0.6912841796875,
+              "repeat": 0.807281494140625,
+              "swap": 0.9962158203125
+            },
+            "oracle": {
+              "single": 0.73248291015625,
+              "repeat": 0.852996826171875,
+              "swap": 0.997406005859375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            5,
+            1
+          ],
+          "kinetics": "slow/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.654541015625,
+              "repeat": 0.791351318359375,
+              "swap": 0.99554443359375
+            },
+            "fixed_gw": {
+              "single": 0.619415283203125,
+              "repeat": 0.744598388671875,
+              "swap": 0.996002197265625
+            },
+            "history_basis": {
+              "single": 0.62664794921875,
+              "repeat": 0.748779296875,
+              "swap": 0.99591064453125
+            },
+            "oracle": {
+              "single": 0.691131591796875,
+              "repeat": 0.8336181640625,
+              "swap": 0.996124267578125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            0,
+            2
+          ],
+          "kinetics": "fast/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.68475341796875,
+              "repeat": 0.812744140625,
+              "swap": 0.963409423828125
+            },
+            "fixed_gw": {
+              "single": 0.6920166015625,
+              "repeat": 0.824737548828125,
+              "swap": 0.968780517578125
+            },
+            "history_basis": {
+              "single": 0.728424072265625,
+              "repeat": 0.8565673828125,
+              "swap": 0.96978759765625
+            },
+            "oracle": {
+              "single": 0.642578125,
+              "repeat": 0.758148193359375,
+              "swap": 0.96221923828125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.00033891722251593964,
+          "noisy_unforced_mse": 0.017908372076771175,
+          "absolute_mse": 0.002359239434973837
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.0012151789638511518,
+          "noisy_unforced_mse": 0.018804119679471293,
+          "absolute_mse": 0.0028687569402291073
+        },
+        "history_basis": {
+          "unforced_mse": 0.0012378668098748983,
+          "noisy_unforced_mse": 0.018783792348293617,
+          "absolute_mse": 0.002610298294448075
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.6641896565755208,
+          "repeat": 0.7769266764322916,
+          "swap": 0.9666544596354165
+        },
+        "fixed_gw": {
+          "single": 0.6534067789713542,
+          "repeat": 0.7621866861979167,
+          "swap": 0.9660390218098958
+        },
+        "history_basis": {
+          "single": 0.6644439697265625,
+          "repeat": 0.765045166015625,
+          "swap": 0.9609985351562499
+        },
+        "oracle": {
+          "single": 0.6617024739583334,
+          "repeat": 0.7730712890625,
+          "swap": 0.9702809651692708
+        }
+      }
+    },
+    {
+      "seed": 57012,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            2,
+            5
+          ],
+          "kinetics": "slow/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.819366455078125,
+              "repeat": 0.88665771484375,
+              "swap": 0.999542236328125
+            },
+            "fixed_gw": {
+              "single": 0.838836669921875,
+              "repeat": 0.908050537109375,
+              "swap": 0.999542236328125
+            },
+            "history_basis": {
+              "single": 0.81591796875,
+              "repeat": 0.87664794921875,
+              "swap": 0.99951171875
+            },
+            "oracle": {
+              "single": 0.75164794921875,
+              "repeat": 0.814605712890625,
+              "swap": 0.999114990234375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            0,
+            2
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.778900146484375,
+              "repeat": 0.875640869140625,
+              "swap": 0.97943115234375
+            },
+            "fixed_gw": {
+              "single": 0.782196044921875,
+              "repeat": 0.872314453125,
+              "swap": 0.97552490234375
+            },
+            "history_basis": {
+              "single": 0.84747314453125,
+              "repeat": 0.9381103515625,
+              "swap": 0.984619140625
+            },
+            "oracle": {
+              "single": 0.72259521484375,
+              "repeat": 0.822906494140625,
+              "swap": 0.97491455078125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            4,
+            1
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.606475830078125,
+              "repeat": 0.717681884765625,
+              "swap": 0.994873046875
+            },
+            "fixed_gw": {
+              "single": 0.526092529296875,
+              "repeat": 0.60888671875,
+              "swap": 0.994781494140625
+            },
+            "history_basis": {
+              "single": 0.494049072265625,
+              "repeat": 0.565399169921875,
+              "swap": 0.9923095703125
+            },
+            "oracle": {
+              "single": 0.703887939453125,
+              "repeat": 0.827484130859375,
+              "swap": 0.995849609375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            5,
+            4
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.714630126953125,
+              "repeat": 0.8367919921875,
+              "swap": 0.997711181640625
+            },
+            "fixed_gw": {
+              "single": 0.63970947265625,
+              "repeat": 0.747161865234375,
+              "swap": 0.99755859375
+            },
+            "history_basis": {
+              "single": 0.72613525390625,
+              "repeat": 0.8416748046875,
+              "swap": 0.9976806640625
+            },
+            "oracle": {
+              "single": 0.7333984375,
+              "repeat": 0.855377197265625,
+              "swap": 0.9979248046875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            3,
+            0
+          ],
+          "kinetics": "fast/fast",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.498016357421875,
+              "repeat": 0.620208740234375,
+              "swap": 0.937835693359375
+            },
+            "fixed_gw": {
+              "single": 0.486328125,
+              "repeat": 0.62115478515625,
+              "swap": 0.9327392578125
+            },
+            "history_basis": {
+              "single": 0.503173828125,
+              "repeat": 0.6395263671875,
+              "swap": 0.931915283203125
+            },
+            "oracle": {
+              "single": 0.523040771484375,
+              "repeat": 0.64398193359375,
+              "swap": 0.943817138671875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            1,
+            3
+          ],
+          "kinetics": "fast/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.747772216796875,
+              "repeat": 0.873199462890625,
+              "swap": 0.987945556640625
+            },
+            "fixed_gw": {
+              "single": 0.71759033203125,
+              "repeat": 0.847442626953125,
+              "swap": 0.98736572265625
+            },
+            "history_basis": {
+              "single": 0.7672119140625,
+              "repeat": 0.892822265625,
+              "swap": 0.9830322265625
+            },
+            "oracle": {
+              "single": 0.6898193359375,
+              "repeat": 0.808807373046875,
+              "swap": 0.98651123046875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.0004160126363687514,
+          "noisy_unforced_mse": 0.014918501014313735,
+          "absolute_mse": 0.002244796062404748
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.0014836829896417714,
+          "noisy_unforced_mse": 0.016014313074168455,
+          "absolute_mse": 0.003328883629043412
+        },
+        "history_basis": {
+          "unforced_mse": 0.0014486324651327247,
+          "noisy_unforced_mse": 0.015976220160179713,
+          "absolute_mse": 0.0028941003657575134
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.6941935221354166,
+          "repeat": 0.80169677734375,
+          "swap": 0.9828898111979166
+        },
+        "fixed_gw": {
+          "single": 0.6651255289713542,
+          "repeat": 0.7675018310546875,
+          "swap": 0.9812520345052083
+        },
+        "history_basis": {
+          "single": 0.6923268636067708,
+          "repeat": 0.7923634847005208,
+          "swap": 0.9815114339192708
+        },
+        "oracle": {
+          "single": 0.6873982747395834,
+          "repeat": 0.7955271402994792,
+          "swap": 0.9830220540364583
+        }
+      }
+    },
+    {
+      "seed": 57013,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            1,
+            5
+          ],
+          "kinetics": "fast/fast",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.526153564453125,
+              "repeat": 0.6717529296875,
+              "swap": 0.97088623046875
+            },
+            "fixed_gw": {
+              "single": 0.537994384765625,
+              "repeat": 0.688568115234375,
+              "swap": 0.968536376953125
+            },
+            "history_basis": {
+              "single": 0.506256103515625,
+              "repeat": 0.638519287109375,
+              "swap": 0.967742919921875
+            },
+            "oracle": {
+              "single": 0.585205078125,
+              "repeat": 0.7379150390625,
+              "swap": 0.97503662109375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            4,
+            2
+          ],
+          "kinetics": "fast/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.682281494140625,
+              "repeat": 0.812713623046875,
+              "swap": 0.9791259765625
+            },
+            "fixed_gw": {
+              "single": 0.6881103515625,
+              "repeat": 0.81658935546875,
+              "swap": 0.978363037109375
+            },
+            "history_basis": {
+              "single": 0.716888427734375,
+              "repeat": 0.8447265625,
+              "swap": 0.97528076171875
+            },
+            "oracle": {
+              "single": 0.67218017578125,
+              "repeat": 0.7955322265625,
+              "swap": 0.9859619140625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            5,
+            3
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.80291748046875,
+              "repeat": 0.908782958984375,
+              "swap": 0.97723388671875
+            },
+            "fixed_gw": {
+              "single": 0.7811279296875,
+              "repeat": 0.892822265625,
+              "swap": 0.9769287109375
+            },
+            "history_basis": {
+              "single": 0.83209228515625,
+              "repeat": 0.936431884765625,
+              "swap": 0.983673095703125
+            },
+            "oracle": {
+              "single": 0.68304443359375,
+              "repeat": 0.7830810546875,
+              "swap": 0.970428466796875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            0,
+            1
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.808746337890625,
+              "repeat": 0.900665283203125,
+              "swap": 0.997833251953125
+            },
+            "fixed_gw": {
+              "single": 0.83795166015625,
+              "repeat": 0.923370361328125,
+              "swap": 0.998382568359375
+            },
+            "history_basis": {
+              "single": 0.86419677734375,
+              "repeat": 0.94073486328125,
+              "swap": 0.99859619140625
+            },
+            "oracle": {
+              "single": 0.75384521484375,
+              "repeat": 0.848602294921875,
+              "swap": 0.996490478515625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            2,
+            0
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.82794189453125,
+              "repeat": 0.9129638671875,
+              "swap": 0.998321533203125
+            },
+            "fixed_gw": {
+              "single": 0.866912841796875,
+              "repeat": 0.94525146484375,
+              "swap": 0.999176025390625
+            },
+            "history_basis": {
+              "single": 0.85565185546875,
+              "repeat": 0.929443359375,
+              "swap": 0.9989013671875
+            },
+            "oracle": {
+              "single": 0.751617431640625,
+              "repeat": 0.8338623046875,
+              "swap": 0.99700927734375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            3,
+            4
+          ],
+          "kinetics": "slow/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.709503173828125,
+              "repeat": 0.733917236328125,
+              "swap": 0.99609375
+            },
+            "fixed_gw": {
+              "single": 0.71533203125,
+              "repeat": 0.73583984375,
+              "swap": 0.996612548828125
+            },
+            "history_basis": {
+              "single": 0.705474853515625,
+              "repeat": 0.72540283203125,
+              "swap": 0.994781494140625
+            },
+            "oracle": {
+              "single": 0.70318603515625,
+              "repeat": 0.737518310546875,
+              "swap": 0.99493408203125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.0004078738206829258,
+          "noisy_unforced_mse": 0.015990405808000468,
+          "absolute_mse": 0.002942689943107445
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.0009876262542064412,
+          "noisy_unforced_mse": 0.016575358095020733,
+          "absolute_mse": 0.003745093805048395
+        },
+        "history_basis": {
+          "unforced_mse": 0.0012614190507999022,
+          "noisy_unforced_mse": 0.016904403400637542,
+          "absolute_mse": 0.0030405339024321136
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.72625732421875,
+          "repeat": 0.8234659830729166,
+          "swap": 0.9865824381510415
+        },
+        "fixed_gw": {
+          "single": 0.7379048665364583,
+          "repeat": 0.833740234375,
+          "swap": 0.9863332112630206
+        },
+        "history_basis": {
+          "single": 0.7467600504557292,
+          "repeat": 0.83587646484375,
+          "swap": 0.9864959716796874
+        },
+        "oracle": {
+          "single": 0.6915130615234375,
+          "repeat": 0.7894185384114584,
+          "swap": 0.9866434733072915
+        }
+      }
+    },
+    {
+      "seed": 57014,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            5,
+            1
+          ],
+          "kinetics": "fast/fast",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.642913818359375,
+              "repeat": 0.68780517578125,
+              "swap": 0.9547119140625
+            },
+            "fixed_gw": {
+              "single": 0.64599609375,
+              "repeat": 0.69366455078125,
+              "swap": 0.95489501953125
+            },
+            "history_basis": {
+              "single": 0.66278076171875,
+              "repeat": 0.715850830078125,
+              "swap": 0.958038330078125
+            },
+            "oracle": {
+              "single": 0.677093505859375,
+              "repeat": 0.742645263671875,
+              "swap": 0.956787109375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            2,
+            3
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.652099609375,
+              "repeat": 0.766754150390625,
+              "swap": 0.997222900390625
+            },
+            "fixed_gw": {
+              "single": 0.605499267578125,
+              "repeat": 0.7078857421875,
+              "swap": 0.996307373046875
+            },
+            "history_basis": {
+              "single": 0.655181884765625,
+              "repeat": 0.765106201171875,
+              "swap": 0.99676513671875
+            },
+            "oracle": {
+              "single": 0.72357177734375,
+              "repeat": 0.850067138671875,
+              "swap": 0.997772216796875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            4,
+            0
+          ],
+          "kinetics": "fast/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.726287841796875,
+              "repeat": 0.8538818359375,
+              "swap": 0.985748291015625
+            },
+            "fixed_gw": {
+              "single": 0.7310791015625,
+              "repeat": 0.85626220703125,
+              "swap": 0.984588623046875
+            },
+            "history_basis": {
+              "single": 0.779266357421875,
+              "repeat": 0.904327392578125,
+              "swap": 0.98876953125
+            },
+            "oracle": {
+              "single": 0.6727294921875,
+              "repeat": 0.79534912109375,
+              "swap": 0.984130859375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            1,
+            4
+          ],
+          "kinetics": "slow/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.720062255859375,
+              "repeat": 0.84613037109375,
+              "swap": 0.99652099609375
+            },
+            "fixed_gw": {
+              "single": 0.6917724609375,
+              "repeat": 0.8172607421875,
+              "swap": 0.995941162109375
+            },
+            "history_basis": {
+              "single": 0.701812744140625,
+              "repeat": 0.827117919921875,
+              "swap": 0.996185302734375
+            },
+            "oracle": {
+              "single": 0.72662353515625,
+              "repeat": 0.850311279296875,
+              "swap": 0.997650146484375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            0,
+            5
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.661529541015625,
+              "repeat": 0.732421875,
+              "swap": 0.93939208984375
+            },
+            "fixed_gw": {
+              "single": 0.6597900390625,
+              "repeat": 0.732391357421875,
+              "swap": 0.938812255859375
+            },
+            "history_basis": {
+              "single": 0.5308837890625,
+              "repeat": 0.561492919921875,
+              "swap": 0.898040771484375
+            },
+            "oracle": {
+              "single": 0.734649658203125,
+              "repeat": 0.81988525390625,
+              "swap": 0.96783447265625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            3,
+            2
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.853912353515625,
+              "repeat": 0.92913818359375,
+              "swap": 0.999664306640625
+            },
+            "fixed_gw": {
+              "single": 0.894378662109375,
+              "repeat": 0.959197998046875,
+              "swap": 0.999755859375
+            },
+            "history_basis": {
+              "single": 0.945220947265625,
+              "repeat": 0.98883056640625,
+              "swap": 0.999908447265625
+            },
+            "oracle": {
+              "single": 0.780487060546875,
+              "repeat": 0.86761474609375,
+              "swap": 0.999267578125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.0003598784899918089,
+          "noisy_unforced_mse": 0.01617370129667808,
+          "absolute_mse": 0.0023140748034655508
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.0010706886287943987,
+          "noisy_unforced_mse": 0.016894859913329955,
+          "absolute_mse": 0.0030646955021135097
+        },
+        "history_basis": {
+          "unforced_mse": 0.0011184120847800643,
+          "noisy_unforced_mse": 0.01691608105999269,
+          "absolute_mse": 0.0027025156190233755
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.7094675699869792,
+          "repeat": 0.8026885986328125,
+          "swap": 0.978876749674479
+        },
+        "fixed_gw": {
+          "single": 0.7047526041666666,
+          "repeat": 0.7944437662760417,
+          "swap": 0.9783833821614583
+        },
+        "history_basis": {
+          "single": 0.7125244140625,
+          "repeat": 0.793787638346354,
+          "swap": 0.9729512532552083
+        },
+        "oracle": {
+          "single": 0.7191925048828125,
+          "repeat": 0.8209788004557292,
+          "swap": 0.9839070638020833
+        }
+      }
+    },
+    {
+      "seed": 57015,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            5,
+            3
+          ],
+          "kinetics": "fast/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.753509521484375,
+              "repeat": 0.871307373046875,
+              "swap": 0.99591064453125
+            },
+            "fixed_gw": {
+              "single": 0.738433837890625,
+              "repeat": 0.85894775390625,
+              "swap": 0.99578857421875
+            },
+            "history_basis": {
+              "single": 0.786224365234375,
+              "repeat": 0.887664794921875,
+              "swap": 0.99395751953125
+            },
+            "oracle": {
+              "single": 0.7431640625,
+              "repeat": 0.851806640625,
+              "swap": 0.994049072265625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            3,
+            2
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.75457763671875,
+              "repeat": 0.86260986328125,
+              "swap": 0.999053955078125
+            },
+            "fixed_gw": {
+              "single": 0.70928955078125,
+              "repeat": 0.808349609375,
+              "swap": 0.998687744140625
+            },
+            "history_basis": {
+              "single": 0.71563720703125,
+              "repeat": 0.823394775390625,
+              "swap": 0.9989013671875
+            },
+            "oracle": {
+              "single": 0.782012939453125,
+              "repeat": 0.888763427734375,
+              "swap": 0.99920654296875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            1,
+            0
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.745880126953125,
+              "repeat": 0.82293701171875,
+              "swap": 0.996551513671875
+            },
+            "fixed_gw": {
+              "single": 0.74273681640625,
+              "repeat": 0.815673828125,
+              "swap": 0.996612548828125
+            },
+            "history_basis": {
+              "single": 0.625335693359375,
+              "repeat": 0.666778564453125,
+              "swap": 0.993316650390625
+            },
+            "oracle": {
+              "single": 0.7685546875,
+              "repeat": 0.847198486328125,
+              "swap": 0.995758056640625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            2,
+            4
+          ],
+          "kinetics": "slow/slow",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.771484375,
+              "repeat": 0.85345458984375,
+              "swap": 0.998077392578125
+            },
+            "fixed_gw": {
+              "single": 0.782501220703125,
+              "repeat": 0.864471435546875,
+              "swap": 0.99853515625
+            },
+            "history_basis": {
+              "single": 0.7974853515625,
+              "repeat": 0.883270263671875,
+              "swap": 0.998504638671875
+            },
+            "oracle": {
+              "single": 0.758697509765625,
+              "repeat": 0.845245361328125,
+              "swap": 0.997802734375
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            0,
+            5
+          ],
+          "kinetics": "fast/fast",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.61663818359375,
+              "repeat": 0.649932861328125,
+              "swap": 0.942413330078125
+            },
+            "fixed_gw": {
+              "single": 0.58709716796875,
+              "repeat": 0.623138427734375,
+              "swap": 0.9395751953125
+            },
+            "history_basis": {
+              "single": 0.761199951171875,
+              "repeat": 0.84490966796875,
+              "swap": 0.9287109375
+            },
+            "oracle": {
+              "single": 0.6627197265625,
+              "repeat": 0.688323974609375,
+              "swap": 0.946502685546875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            4,
+            1
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.551055908203125,
+              "repeat": 0.685760498046875,
+              "swap": 0.980010986328125
+            },
+            "fixed_gw": {
+              "single": 0.51226806640625,
+              "repeat": 0.630706787109375,
+              "swap": 0.97991943359375
+            },
+            "history_basis": {
+              "single": 0.434051513671875,
+              "repeat": 0.531585693359375,
+              "swap": 0.974700927734375
+            },
+            "oracle": {
+              "single": 0.608001708984375,
+              "repeat": 0.75469970703125,
+              "swap": 0.9815673828125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.00025507329232592733,
+          "noisy_unforced_mse": 0.016361772386811187,
+          "absolute_mse": 0.0024482505113837517
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.0009157683656489716,
+          "noisy_unforced_mse": 0.0170063133529006,
+          "absolute_mse": 0.0032763231616271616
+        },
+        "history_basis": {
+          "unforced_mse": 0.0010419739553185546,
+          "noisy_unforced_mse": 0.01714626734237008,
+          "absolute_mse": 0.0027718747338188795
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.6988576253255208,
+          "repeat": 0.7910003662109375,
+          "swap": 0.9853363037109374
+        },
+        "fixed_gw": {
+          "single": 0.6787211100260417,
+          "repeat": 0.7668813069661458,
+          "swap": 0.9848531087239583
+        },
+        "history_basis": {
+          "single": 0.6866556803385417,
+          "repeat": 0.7729339599609375,
+          "swap": 0.981348673502604
+        },
+        "oracle": {
+          "single": 0.7205251057942709,
+          "repeat": 0.8126729329427084,
+          "swap": 0.9858144124348958
+        }
+      }
+    },
+    {
+      "seed": 57016,
+      "targets": [
+        {
+          "target": 0,
+          "parents": [
+            2,
+            3
+          ],
+          "kinetics": "fast/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.753631591796875,
+              "repeat": 0.83758544921875,
+              "swap": 0.988128662109375
+            },
+            "fixed_gw": {
+              "single": 0.706146240234375,
+              "repeat": 0.769683837890625,
+              "swap": 0.978607177734375
+            },
+            "history_basis": {
+              "single": 0.718658447265625,
+              "repeat": 0.76513671875,
+              "swap": 0.97650146484375
+            },
+            "oracle": {
+              "single": 0.74957275390625,
+              "repeat": 0.847076416015625,
+              "swap": 0.989044189453125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 1,
+          "parents": [
+            3,
+            5
+          ],
+          "kinetics": "fast/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.719451904296875,
+              "repeat": 0.835968017578125,
+              "swap": 0.941436767578125
+            },
+            "fixed_gw": {
+              "single": 0.72857666015625,
+              "repeat": 0.848602294921875,
+              "swap": 0.94793701171875
+            },
+            "history_basis": {
+              "single": 0.757568359375,
+              "repeat": 0.87554931640625,
+              "swap": 0.94342041015625
+            },
+            "oracle": {
+              "single": 0.668365478515625,
+              "repeat": 0.77825927734375,
+              "swap": 0.943817138671875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 2,
+          "parents": [
+            1,
+            0
+          ],
+          "kinetics": "slow/slow",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.6533203125,
+              "repeat": 0.791351318359375,
+              "swap": 0.994781494140625
+            },
+            "fixed_gw": {
+              "single": 0.623779296875,
+              "repeat": 0.756927490234375,
+              "swap": 0.99481201171875
+            },
+            "history_basis": {
+              "single": 0.61175537109375,
+              "repeat": 0.7452392578125,
+              "swap": 0.994720458984375
+            },
+            "oracle": {
+              "single": 0.6929931640625,
+              "repeat": 0.828765869140625,
+              "swap": 0.9952392578125
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 3,
+          "parents": [
+            0,
+            4
+          ],
+          "kinetics": "slow/biphasic",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.7655029296875,
+              "repeat": 0.87200927734375,
+              "swap": 0.999847412109375
+            },
+            "fixed_gw": {
+              "single": 0.71282958984375,
+              "repeat": 0.815521240234375,
+              "swap": 0.999786376953125
+            },
+            "history_basis": {
+              "single": 0.7032470703125,
+              "repeat": 0.80462646484375,
+              "swap": 0.99969482421875
+            },
+            "oracle": {
+              "single": 0.8009033203125,
+              "repeat": 0.903350830078125,
+              "swap": 0.999908447265625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 4,
+          "parents": [
+            5,
+            1
+          ],
+          "kinetics": "biphasic/biphasic",
+          "opposing": true,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.5316162109375,
+              "repeat": 0.61322021484375,
+              "swap": 0.996826171875
+            },
+            "fixed_gw": {
+              "single": 0.478668212890625,
+              "repeat": 0.546142578125,
+              "swap": 0.995697021484375
+            },
+            "history_basis": {
+              "single": 0.409698486328125,
+              "repeat": 0.438201904296875,
+              "swap": 0.991119384765625
+            },
+            "oracle": {
+              "single": 0.6961669921875,
+              "repeat": 0.83251953125,
+              "swap": 0.996734619140625
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 0.5,
+              "repeat": 0.5,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        },
+        {
+          "target": 5,
+          "parents": [
+            4,
+            2
+          ],
+          "kinetics": "fast/fast",
+          "opposing": false,
+          "accuracy": {
+            "learned_gw": {
+              "single": 0.638031005859375,
+              "repeat": 0.695526123046875,
+              "swap": 0.929901123046875
+            },
+            "fixed_gw": {
+              "single": 0.608428955078125,
+              "repeat": 0.663726806640625,
+              "swap": 0.9095458984375
+            },
+            "history_basis": {
+              "single": 0.655548095703125,
+              "repeat": 0.7332763671875,
+              "swap": 0.904449462890625
+            },
+            "oracle": {
+              "single": 0.655426025390625,
+              "repeat": 0.69384765625,
+              "swap": 0.948211669921875
+            }
+          },
+          "clean": {
+            "learned_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "fixed_gw": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "history_basis": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            },
+            "oracle": {
+              "single": 1.0,
+              "repeat": 1.0,
+              "swap": 1.0
+            }
+          }
+        }
+      ],
+      "forecasts": {
+        "learned_gw": {
+          "unforced_mse": 0.0004094679232329935,
+          "noisy_unforced_mse": 0.015050598268301027,
+          "absolute_mse": 0.0028512881374761897
+        },
+        "fixed_gw": {
+          "unforced_mse": 0.0012763286059714702,
+          "noisy_unforced_mse": 0.01592786811715375,
+          "absolute_mse": 0.0032762618811270137
+        },
+        "history_basis": {
+          "unforced_mse": 0.0017696405854897405,
+          "noisy_unforced_mse": 0.016406273106706844,
+          "absolute_mse": 0.0036125070981335478
+        }
+      },
+      "accuracy": {
+        "learned_gw": {
+          "single": 0.6769256591796875,
+          "repeat": 0.7742767333984376,
+          "swap": 0.9751536051432291
+        },
+        "fixed_gw": {
+          "single": 0.6430714925130209,
+          "repeat": 0.7334340413411459,
+          "swap": 0.971064249674479
+        },
+        "history_basis": {
+          "single": 0.6427459716796875,
+          "repeat": 0.7270050048828125,
+          "swap": 0.968317667643229
+        },
+        "oracle": {
+          "single": 0.7105712890625,
+          "repeat": 0.8139699300130209,
+          "swap": 0.9788258870442708
+        }
+      }
+    }
+  ]
+}

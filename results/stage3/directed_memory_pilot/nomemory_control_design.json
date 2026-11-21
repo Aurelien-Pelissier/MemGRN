@@ -1,0 +1,9 @@
+{
+  "recorded_utc": "2026-11-10T20:26:09.393737+00:00",
+  "status": "Post-score additional control, primary comparison preserved",
+  "motivation": "The directed memory model improves even in Markov worlds. Separate its known tanh interaction family from actual memory benefits.",
+  "model": "dx=-d*x+A*tanh(x)+b+u, same known sensor, actuation/clamp semantics, no hidden or memory parameters. Implemented by expanding48 parameters into the original directed model with both memory-output matrices fixed tozero.",
+  "training": "Same source-only arrays, two initializations,400updates, identical Adam schedule, gradient clip,1e-4 mean L2, validation checkpoint selection; seed1101 also800-update sensitivity.",
+  "metrics": "Same frozen held-out schedules and intervention-derived edge probes; no tuning after this control scoring. Original results remain intact.",
+  "primary_scores_sha256": "38e7f05bce07530bbb9c16a36b27563905d3878b97ad64956e712f4841c90bd1"
+}

@@ -1,0 +1,145 @@
+{
+  "splits": {
+    "train_durations": [
+      1.2000000000000002,
+      2.0,
+      2.8000000000000003
+    ],
+    "test_strengths": [
+      0.068599434,
+      0.274397736,
+      0.35,
+      1.4
+    ]
+  },
+  "original_gw": {
+    "trajectories": 480,
+    "max_abs": 0.00020155945619546034,
+    "rmse": 2.0139289995278352e-05
+  },
+  "independent_decisions": 384,
+  "optimization": [
+    {
+      "regime": "constant",
+      "model": "current_gw",
+      "parameters": 168,
+      "selected_steps": [
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600
+      ]
+    },
+    {
+      "regime": "constant",
+      "model": "two_rate_gw",
+      "parameters": 186,
+      "selected_steps": [
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600
+      ]
+    },
+    {
+      "regime": "constant",
+      "model": "neural_rate_gw",
+      "parameters": 274,
+      "selected_steps": [
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600
+      ]
+    },
+    {
+      "regime": "constant",
+      "model": "latent_ode",
+      "parameters": 1158,
+      "selected_steps": [
+        600,
+        600,
+        600,
+        500,
+        600,
+        600,
+        600,
+        600
+      ]
+    },
+    {
+      "regime": "asymmetric",
+      "model": "current_gw",
+      "parameters": 168,
+      "selected_steps": [
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600
+      ]
+    },
+    {
+      "regime": "asymmetric",
+      "model": "two_rate_gw",
+      "parameters": 186,
+      "selected_steps": [
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        600
+      ]
+    },
+    {
+      "regime": "asymmetric",
+      "model": "neural_rate_gw",
+      "parameters": 274,
+      "selected_steps": [
+        600,
+        600,
+        600,
+        600,
+        600,
+        600,
+        500,
+        600
+      ]
+    },
+    {
+      "regime": "asymmetric",
+      "model": "latent_ode",
+      "parameters": 1158,
+      "selected_steps": [
+        600,
+        600,
+        600,
+        500,
+        600,
+        600,
+        600,
+        500
+      ]
+    }
+  ],
+  "raw_metrics": "07e6213b5256184945b906342439cfed9f2fda201255af104334266a12f65df9",
+  "test_scores": "46273a94aaeb2dd3abce00b9b884fe8c790f99510cc8fdd27ced4c312e37ee0f"
+}

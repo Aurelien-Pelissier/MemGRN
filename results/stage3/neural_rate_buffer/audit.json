@@ -1,0 +1,343 @@
+{
+  "budgets": {
+    "600": {
+      "decisions_recomputed": 491520,
+      "scored_models": 96,
+      "checkpoints": [
+        {
+          "regime": "constant",
+          "model": "current_gw",
+          "selected": [
+            600,
+            600,
+            600,
+            600,
+            600,
+            500,
+            600,
+            600,
+            600,
+            500,
+            600,
+            600
+          ],
+          "at_limit": 10,
+          "mean_validation": 0.2061423771083355
+        },
+        {
+          "regime": "constant",
+          "model": "two_rate_gw",
+          "selected": [
+            600,
+            600,
+            600,
+            600,
+            600,
+            500,
+            600,
+            600,
+            600,
+            500,
+            600,
+            600
+          ],
+          "at_limit": 10,
+          "mean_validation": 0.20601542418201765
+        },
+        {
+          "regime": "constant",
+          "model": "neural_rate_gw",
+          "selected": [
+            600,
+            600,
+            600,
+            600,
+            600,
+            500,
+            600,
+            600,
+            600,
+            500,
+            600,
+            600
+          ],
+          "at_limit": 10,
+          "mean_validation": 0.205811886737744
+        },
+        {
+          "regime": "constant",
+          "model": "latent_ode",
+          "selected": [
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            500,
+            600,
+            600
+          ],
+          "at_limit": 11,
+          "mean_validation": 0.2102068948249022
+        },
+        {
+          "regime": "buffered",
+          "model": "current_gw",
+          "selected": [
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            500,
+            600,
+            600
+          ],
+          "at_limit": 11,
+          "mean_validation": 0.2867770344018936
+        },
+        {
+          "regime": "buffered",
+          "model": "two_rate_gw",
+          "selected": [
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            500,
+            600,
+            600
+          ],
+          "at_limit": 11,
+          "mean_validation": 0.28613956024249393
+        },
+        {
+          "regime": "buffered",
+          "model": "neural_rate_gw",
+          "selected": [
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600
+          ],
+          "at_limit": 12,
+          "mean_validation": 0.2846657757957776
+        },
+        {
+          "regime": "buffered",
+          "model": "latent_ode",
+          "selected": [
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600,
+            600
+          ],
+          "at_limit": 12,
+          "mean_validation": 0.28972260653972626
+        }
+      ],
+      "total_at_limit": 87,
+      "scores": "49dec05ddccbd6656bbe426cdc2215c5301dce11e869784fd19e95e1af346260"
+    },
+    "2400": {
+      "decisions_recomputed": 491520,
+      "scored_models": 96,
+      "checkpoints": [
+        {
+          "regime": "constant",
+          "model": "current_gw",
+          "selected": [
+            2300,
+            2400,
+            2400,
+            2200,
+            2300,
+            2300,
+            2400,
+            2200,
+            2400,
+            2300,
+            2200,
+            2400
+          ],
+          "at_limit": 5,
+          "mean_validation": 0.2052039069434007
+        },
+        {
+          "regime": "constant",
+          "model": "two_rate_gw",
+          "selected": [
+            2300,
+            2400,
+            2400,
+            2200,
+            2300,
+            2300,
+            2400,
+            2200,
+            2400,
+            2300,
+            2200,
+            2400
+          ],
+          "at_limit": 5,
+          "mean_validation": 0.20522876704732576
+        },
+        {
+          "regime": "constant",
+          "model": "neural_rate_gw",
+          "selected": [
+            2300,
+            2400,
+            2400,
+            2200,
+            2300,
+            2300,
+            2400,
+            2200,
+            2400,
+            2300,
+            2200,
+            2400
+          ],
+          "at_limit": 5,
+          "mean_validation": 0.20523889486988386
+        },
+        {
+          "regime": "constant",
+          "model": "latent_ode",
+          "selected": [
+            2000,
+            2300,
+            2400,
+            2400,
+            2300,
+            2300,
+            2400,
+            2200,
+            2400,
+            2400,
+            2200,
+            2300
+          ],
+          "at_limit": 5,
+          "mean_validation": 0.20569209630290666
+        },
+        {
+          "regime": "buffered",
+          "model": "current_gw",
+          "selected": [
+            2300,
+            2400,
+            2100,
+            2200,
+            2300,
+            2300,
+            2400,
+            2400,
+            2400,
+            2100,
+            2200,
+            1800
+          ],
+          "at_limit": 4,
+          "mean_validation": 0.28585610042015713
+        },
+        {
+          "regime": "buffered",
+          "model": "two_rate_gw",
+          "selected": [
+            2300,
+            2400,
+            2400,
+            2200,
+            2300,
+            2300,
+            1800,
+            2200,
+            2400,
+            2100,
+            2200,
+            2300
+          ],
+          "at_limit": 3,
+          "mean_validation": 0.28530147423346836
+        },
+        {
+          "regime": "buffered",
+          "model": "neural_rate_gw",
+          "selected": [
+            2300,
+            2400,
+            1800,
+            2200,
+            2300,
+            2300,
+            2400,
+            2400,
+            2400,
+            2100,
+            2200,
+            2300
+          ],
+          "at_limit": 4,
+          "mean_validation": 0.2831884001692136
+        },
+        {
+          "regime": "buffered",
+          "model": "latent_ode",
+          "selected": [
+            2200,
+            2400,
+            2400,
+            2200,
+            2300,
+            2300,
+            2400,
+            2400,
+            2400,
+            2100,
+            2200,
+            2400
+          ],
+          "at_limit": 6,
+          "mean_validation": 0.2845970392227173
+        }
+      ],
+      "total_at_limit": 37,
+      "scores": "cb677e80000a4df397dae262415251bcf46788165f7cd11acbd9a589f01a2f74"
+    }
+  },
+  "calibration": "a8d8277c02a55d64a29d5facf1041e3859ad9e5660b0fe2ab6b73c056fdd55b4",
+  "dynamics": "f7f4a0703fdf258123fd01fa7d84f62aa11a1b181b8eb43a6fc6050b2ab598a6",
+  "freeze": "e22f565503d9a58b1cc3c724e3d8de8b754e27b3eae8a1a73b015b2373c85534"
+}

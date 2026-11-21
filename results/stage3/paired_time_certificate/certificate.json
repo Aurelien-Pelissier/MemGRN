@@ -1,0 +1,122 @@
+{
+  "issued_utc": "2026-11-11T01:23:12.636193+00:00",
+  "schedule": "b92c5ee2197a02a6bd8d3107c7995d0e5144a38eff89816079a2fbfdb3e27011",
+  "controls": "a8d8277c02a55d64a29d5facf1041e3859ad9e5660b0fe2ab6b73c056fdd55b4",
+  "predictions": "109de3d3438a060e89a979f1f7a34431881376fea4383d462bbd84bfceaaa71b",
+  "code": "e518496960089b0b7cedc0d543749a5e9861f43f1fdf66109f75f2d8292e1a4d",
+  "assay_code": "ae7f99a3a3e16aae0d56e8d29f6f83924aa64e4ab2f8507d5c0991b0cddbe3dd",
+  "models": [
+    "learned_gw",
+    "fixed_gw",
+    "history_basis"
+  ],
+  "primary_identical": true,
+  "primary": {
+    "structural_identity": true,
+    "calibration_records": 0,
+    "panels": [
+      {
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "proof": "5795efddd8bf966f7c39607ab590220d905ba2b030ed3acd9e57c13acd4abddb"
+  },
+  "calibrated_contrast": "progression minus full-window even spacing",
+  "calibrated_contrast_identical": false,
+  "calibration_dose": 0.28370956438395195,
+  "weights": [
+    0.2478587917979518,
+    0.9687961701660776
+  ],
+  "targets": 96,
+  "resolved": 96,
+  "screen_hash": "a8c0e4032709196d0cf42fca8560b7a514cd0c0e5e0792b84354dc5f75df7f20",
+  "screen_records": 983040,
+  "calibration_records": 3080192,
+  "interval_queries": 524288,
+  "single_contrasts_for_queries": 2097152,
+  "calibration_transcript": "35674d4069c98b55d2157edc35bf541d0b9220b1c197e49dee42b0393819807c",
+  "policy_accuracy": [
+    [
+      0.40718650817871094,
+      0.4059734344482422,
+      0.4059619903564453
+    ],
+    [
+      0.38763427734375,
+      0.38297271728515625,
+      0.3867950439453125
+    ]
+  ],
+  "panels": [
+    {
+      "positive": 80877,
+      "negative": 70626,
+      "queries": 524288,
+      "estimate_among_resolved": 0.019552230834960938,
+      "discordance_interval": [
+        0.28729631445480963,
+        0.29064587377263124
+      ],
+      "win_given_discordance_interval": [
+        0.530399810367457,
+        0.5372599356619936
+      ],
+      "ci": [
+        0.017467506957391004,
+        0.021658893114384303
+      ]
+    },
+    {
+      "positive": 82526,
+      "negative": 70467,
+      "queries": 524288,
+      "estimate_among_resolved": 0.023000717163085938,
+      "discordance_interval": [
+        0.29013339041502406,
+        0.29349264140123205
+      ],
+      "win_given_discordance_interval": [
+        0.5359984818367016,
+        0.5428194871337151
+      ],
+      "ci": [
+        0.02088872317015181,
+        0.02513440876464022
+      ]
+    },
+    {
+      "positive": 79052,
+      "negative": 69003,
+      "queries": 524288,
+      "estimate_among_resolved": 0.019166946411132812,
+      "discordance_interval": [
+        0.28073136230085904,
+        0.2840578778114683
+      ],
+      "win_given_discordance_interval": [
+        0.5304657810560718,
+        0.5374053034596442
+      ],
+      "ci": [
+        0.01710540043886147,
+        0.021250542239281016
+      ]
+    }
+  ]
+}

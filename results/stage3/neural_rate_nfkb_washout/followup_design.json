@@ -1,0 +1,11 @@
+{
+  "status": "Exploratory diagnostics specified after the locked holdouts were scored. Neither changes the primary comparison.",
+  "conditions": [
+    "IL1",
+    "TNF",
+    "LPS"
+  ],
+  "matched_updates": "Force each model to the original maximum budget of 2400 updates and average the same two starts, with unchanged source data, pre-processing, cosine schedule, objective and measured activity. A single fixed checkpoint; no test-based search.",
+  "washout_origin": "Use the originally selected weights. Use held-out EMSA observations only at t=0 and 0.5 h. For each genotype, forecast the baseline-subtracted activity after 0.5 h with the equal mean of the two training ligand activity shapes, each divided by its own 0.5 h amplitude, times the held-out 0.5 h amplitude. No future RNA or activity used to construct these inputs. All four models get the same estimated TF trajectory. This estimates the impact of supplying the measured future TF on the post-washout score; source-mean and no-response controls are invariant.",
+  "metrics": "Report the same overall post-washout and late MSE per fold, seed and genotype. Compare the true held-out input only after constructing forecast paths."
+}

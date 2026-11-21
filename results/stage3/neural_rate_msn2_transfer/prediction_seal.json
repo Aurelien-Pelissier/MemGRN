@@ -1,0 +1,10 @@
+{
+  "utc": "2026-11-11T02:54:26.333106+00:00",
+  "protocol": "a38fc0499c06fabd04f31837ce7787bbb16a246716d6b88cd7ff3fd76f2d5886",
+  "sha256": {
+    "final_neural_rate_gw.npz": "07fa743f9257b8df6410e49c242c1416de13d4111875013eb344e62eefa0d599",
+    "final_two_rate_gw.npz": "54a50b11e37aef0e0007709120fa10e548c6e097619b91ddc54579d0c5ac56ac",
+    "final_latent_ode.npz": "2e441f78220a36a59181855dca48a37207721567332a86533a24a7cfa3e92e6c",
+    "predictions.npz": "5d6613a192075b9612dd88f756f912a2da865ac423b02ea5d9459fb3fdda444c"
+  }
+}

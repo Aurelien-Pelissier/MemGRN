@@ -1,0 +1,10 @@
+{
+  "utc": "2026-11-11T04:01:12.278917+00:00",
+  "spec": {
+    "design": "07496fed960f82dd31beaefca4edaef51181c081832ae843d8aa98dd41a33e50",
+    "code": "47a4df473f5a56b03c647896375c0c60a3fd106be6a3e574ac23c48fdbe13941",
+    "weights": "07fa743f9257b8df6410e49c242c1416de13d4111875013eb344e62eefa0d599",
+    "training": "af065eb35c5bf933bcf796c6692c0bfecf9da555dedd3f55500a47b1483de7dd",
+    "parent_seal": "611e5666732504e5f14ab7d4a3199f9cb120f0044d7ed6d51e9d386c5ed7921c"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "adaptive_solver_max_abs_error": 8.050212598788298e-08,
+  "zero_capacity_reduction_error": 5.551115123125783e-17,
+  "equilibrium_residual": 5.828670879282072e-16,
+  "mass_balance_residual": 4.440892098500626e-16,
+  "independent_trajectories": 48,
+  "byte_identical_training_files": 24,
+  "test_strengths": [
+    0.06859943,
+    0.27439774,
+    0.35,
+    1.4
+  ]
+}

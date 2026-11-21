@@ -1,0 +1,15 @@
+{
+  "status": "Retrospective four-family comparison for the previously selected RTN2 reporter and ten previously scored pulse schedules.",
+  "models": [
+    "constant",
+    "activity",
+    "memory",
+    "both"
+  ],
+  "inputs": "All variants retain the direct measured TF input, all three continuously carried serial memory channels z,h, and the target readout. Only the rate correction changes. Constant has three intercepts; activity admits tanh(current normalized Msn2) only; memory admits each channel's current z and h only; both admits all three. No explicit on/off gate. Same four hidden tanh units, three channel-specific logit outputs and rates 0.05 to 14 per hour. Excluded feature rows are exactly zero.",
+  "freeze": "Readout seeds 416 and 819 from the archived neural-rate single-pulse fits. Freeze direct W, delayed W, reporter decay, driver and target normalization and zero initial states. Train only active rate parameters. No resets.",
+  "source": "16 original single-pulse schedules. Exclude all 30-minute single pulses and all repeated-pulse reporter outcomes from training, start selection and scaling. Loss is RTN2 standardized MSE strictly after each training pulse shuts off through minute 120. Equal weight per schedule.",
+  "optimization": "Three deterministic source-only starts per model and readout: projected original archived fit, original untrained init, dispersed init; reuse previous definitions. Each gets a common budget of 2400 full-batch Adam updates, original clipping and cosine schedule. Pick smallest final single-pulse loss per readout, then average the two readout predictions.",
+  "solver": "Fit and evaluate with classical RK4, eight equal substeps per 2.5-minute measured TF interval (0.3125 minutes). Linearly interpolate the measured driver at each RK stage. All four families are smooth between measured knots. Validate selected predictions with an independent implementation and half the primary step.",
+  "test": "Original ten frequency-modulated schedules. Primary: equal-schedule mean post-final-shutoff RTN2 MSE through minute 120 on the five-minute reporter grid. Report all per-schedule results, first 40 minutes, two readout seeds, initialization sensitivity and the six/eight versus other eight schedule means. Four prespecified comparisons: activity and memory each versus constant, both versus activity and both versus memory. No inference treating time points or cells as independent schedules."
+}

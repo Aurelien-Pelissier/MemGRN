@@ -1,0 +1,8 @@
+{
+  "status": "Exploratory. Added after the locked primary and full-window comparisons were scored, before evaluating the standalone greedy grid on these networks.",
+  "question": "How does the schedule chosen by forward selection alone compare to the learned arithmetic progression?",
+  "policies": ["greedy", "progression"],
+  "selection": "Take the unmodified greedy path stored in the original frozen training selection. Same 16 evaluation networks and 48 frozen fitted libraries. No refits and no time changes.",
+  "calibration": "Reuse only the original singleton support screen, control-based covariance and frozen templates. Independently simulate 524288 uniformly sampled cases with fresh singleton contrast errors using seed 691147. Same single-source law, unresolved-target bounds and within-comparison error allocation as before. Seal this result before scoring this grid on independent two-source observations.",
+  "test": "4096 new two-record draws per target, history, strength assignment and regime using seed 691149; report the greedy-minus-progression gap in exact parent-pair recovery. No independent network replication is claimed. Intervals for this three-model comparison form a separate exploratory family."
+}

@@ -1,0 +1,15 @@
+{
+  "utc": "2026-11-11T01:44:47.455000+00:00",
+  "spec": {
+    "design": "007509b8677f139951492200e759673e89a884ed4e1acd47bfb8381b61528ebe",
+    "controls": "a8d8277c02a55d64a29d5facf1041e3859ad9e5660b0fe2ab6b73c056fdd55b4",
+    "schedule": "f27e18528f791a2ba942236c131194a89d5b51826dddeedabfa8b6120b168693",
+    "sources": {
+      "neural_rate_pulse_data.py": "0981445664828b8fa2fd02a9499df0319e206826f65119b36a5645de4e856b47",
+      "neural_rate_pulse_fit.py": "f8181b5ed34050c7bac149815e033bce65b77b9f2c512d42da723b6a1a45e132",
+      "neural_rate_pulse_score.py": "03eab9c0c835159200e7f8de179c33612afd188ebdad1fca27320215043a3f8a",
+      "multiscale_gw_fit.py": "82cf10e45abd5b9554d545e95f2cc2956299e4da954c97ec7263b1c124e6da7e",
+      "two_parent_data.py": "b3d3f7d358de0223420847cb6db3000a9abf1482bca863a337be202c25c1de00"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "utc": "2026-11-11T04:49:40.139455+00:00",
+  "code": "f700a8eb795168bd0cb6318cd39863957dc4edce29f548eb03344f30d18dbd21",
+  "scores": "14fe427cec0b6002d9285faa4d9d905543188409a000fdacf96e01bbda0e8afa",
+  "selected_seed_fits": 48,
+  "model_schedule_scores": 240,
+  "worst_source_mse_delta": 1.1612112282843867e-07,
+  "worst_trajectory_delta": 1.2804060935955874e-06,
+  "worst_raw_mse_delta": 4.440892098500626e-16
+}

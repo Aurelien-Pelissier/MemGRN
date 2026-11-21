@@ -1,0 +1,293 @@
+{
+  "angle_checks": [
+    {
+      "r": 0.05,
+      "degrees": 5,
+      "accuracy": 0.5000346637243638,
+      "direct_integral": 0.5000346637243638
+    },
+    {
+      "r": 0.05,
+      "degrees": 20,
+      "accuracy": 0.5001360288095348,
+      "direct_integral": 0.5001360288095349
+    },
+    {
+      "r": 0.05,
+      "degrees": 45,
+      "accuracy": 0.5002812316591778,
+      "direct_integral": 0.5002812316591779
+    },
+    {
+      "r": 0.05,
+      "degrees": 70,
+      "accuracy": 0.5003737360726525,
+      "direct_integral": 0.5003737360726523
+    },
+    {
+      "r": 0.05,
+      "degrees": 90,
+      "accuracy": 0.500397721619674,
+      "direct_integral": 0.500397721619674
+    },
+    {
+      "r": 0.25,
+      "degrees": 5,
+      "accuracy": 0.5008580073282054,
+      "direct_integral": 0.5008580073282054
+    },
+    {
+      "r": 0.25,
+      "degrees": 20,
+      "accuracy": 0.5033670196089477,
+      "direct_integral": 0.5033670196089477
+    },
+    {
+      "r": 0.25,
+      "degrees": 45,
+      "accuracy": 0.5069610597905011,
+      "direct_integral": 0.506961059790501
+    },
+    {
+      "r": 0.25,
+      "degrees": 70,
+      "accuracy": 0.5092506570194879,
+      "direct_integral": 0.509250657019488
+    },
+    {
+      "r": 0.25,
+      "degrees": 90,
+      "accuracy": 0.509844318664925,
+      "direct_integral": 0.509844318664925
+    },
+    {
+      "r": 0.75,
+      "degrees": 5,
+      "accuracy": 0.5071288053764916,
+      "direct_integral": 0.5071288053764916
+    },
+    {
+      "r": 0.75,
+      "degrees": 20,
+      "accuracy": 0.5279699212745685,
+      "direct_integral": 0.5279699212745685
+    },
+    {
+      "r": 0.75,
+      "degrees": 45,
+      "accuracy": 0.5577883429227102,
+      "direct_integral": 0.5577883429227103
+    },
+    {
+      "r": 0.75,
+      "degrees": 70,
+      "accuracy": 0.5767461701161715,
+      "direct_integral": 0.5767461701161716
+    },
+    {
+      "r": 0.75,
+      "degrees": 90,
+      "accuracy": 0.5816552382455762,
+      "direct_integral": 0.5816552382455762
+    },
+    {
+      "r": 1.5,
+      "degrees": 5,
+      "accuracy": 0.5225889849408403,
+      "direct_integral": 0.5225889849408402
+    },
+    {
+      "r": 1.5,
+      "degrees": 20,
+      "accuracy": 0.5884043690523844,
+      "direct_integral": 0.5884043690523844
+    },
+    {
+      "r": 1.5,
+      "degrees": 45,
+      "accuracy": 0.6810414751089164,
+      "direct_integral": 0.6810414751089163
+    },
+    {
+      "r": 1.5,
+      "degrees": 70,
+      "accuracy": 0.7383128227951193,
+      "direct_integral": 0.7383128227951192
+    },
+    {
+      "r": 1.5,
+      "degrees": 90,
+      "accuracy": 0.7528711676385664,
+      "direct_integral": 0.7528711676385663
+    },
+    {
+      "r": 3.0,
+      "degrees": 5,
+      "accuracy": 0.5519143797089043,
+      "direct_integral": 0.551914379708904
+    },
+    {
+      "r": 3.0,
+      "degrees": 20,
+      "accuracy": 0.6981745536835546,
+      "direct_integral": 0.6981745536835545
+    },
+    {
+      "r": 3.0,
+      "degrees": 45,
+      "accuracy": 0.872437183187996,
+      "direct_integral": 0.8724371831879959
+    },
+    {
+      "r": 3.0,
+      "degrees": 70,
+      "accuracy": 0.9509505567993713,
+      "direct_integral": 0.9509505567993716
+    },
+    {
+      "r": 3.0,
+      "degrees": 90,
+      "accuracy": 0.9666795770230407,
+      "direct_integral": 0.9666795770230409
+    }
+  ],
+  "max_quadrature_error": 3.3306690738754696e-16,
+  "reduced_law_checks": [
+    {
+      "case": "common difference up to sign",
+      "scale": 0.0,
+      "exact": 0.0,
+      "estimate": 0.0
+    },
+    {
+      "case": "common difference up to sign",
+      "scale": 0.1,
+      "exact": 0.03987761167674497,
+      "estimate": 0.039893255162356034
+    },
+    {
+      "case": "common difference up to sign",
+      "scale": 0.7,
+      "exact": 0.2736613023512382,
+      "estimate": 0.27365390743909945
+    },
+    {
+      "case": "common difference up to sign",
+      "scale": 1.5,
+      "exact": 0.5467452952462635,
+      "estimate": 0.5461355151198908
+    },
+    {
+      "case": "equal energy, angle pi/4",
+      "scale": 0.05,
+      "exact": 0.0005624633183557198,
+      "estimate": 0.0005641488958564014
+    },
+    {
+      "case": "equal energy, angle pi/4",
+      "scale": 0.25,
+      "exact": 0.013922119581002132,
+      "estimate": 0.013969254140744937
+    },
+    {
+      "case": "equal energy, angle pi/4",
+      "scale": 1.0,
+      "exact": 0.1920757083547189,
+      "estimate": 0.1921802376383971
+    },
+    {
+      "case": "equal energy, angle pi/4",
+      "scale": 2.0,
+      "exact": 0.5200120291039039,
+      "estimate": 0.5190533539351397
+    }
+  ],
+  "design_certificate": {
+    "seed": 57001,
+    "target": 0,
+    "scenario_count": 54,
+    "schedules": 142506,
+    "selected_from_all_data": false,
+    "weights": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "oracle_max_error": 1.7763568394002505e-15,
+    "exhaustive_maximin_squared_distance": 0.25204217679301233,
+    "exhaustive_optimum_indices": [
+      2,
+      8,
+      11,
+      14,
+      19
+    ],
+    "dp_upper": 0.25204217679301233,
+    "best_active_lower": 0.2520421767930123,
+    "best_active_indices": [
+      2,
+      8,
+      11,
+      14,
+      19
+    ],
+    "dual_iterations": 2,
+    "uniform_designs": {
+      "even": 0.19188549211861558,
+      "iid": 0.21940339463150105,
+      "correlated": 0.2477196799149782
+    }
+  },
+  "checker_sha256": "9493b21a35da067c75af73494e60ee1ab0ccb4f8da9398ae92585f4c19070afd"
+}

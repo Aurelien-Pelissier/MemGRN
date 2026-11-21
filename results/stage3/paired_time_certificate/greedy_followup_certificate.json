@@ -1,0 +1,69 @@
+{
+  "locked": {
+    "design": "1fbbe79088a5a1ce13f8b44f9cb7ca3eaefe69d9185d547366408b0df1c3c7fb",
+    "selection": "b92c5ee2197a02a6bd8d3107c7995d0e5144a38eff89816079a2fbfdb3e27011",
+    "original_test": "263cf33dd73f857fd5d67e72401fe4b5bd34e3c85550ab1188b6fee493fe1a3c",
+    "predictions": "109de3d3438a060e89a979f1f7a34431881376fea4383d462bbd84bfceaaa71b",
+    "source": "9f903bc64994b92d23183e13cdced2e57d1fd96357545c208f669cabe5f2621d"
+  },
+  "issued_utc": "2026-11-11T01:26:32.814972+00:00",
+  "panels": [
+    {
+      "positive": 64538,
+      "negative": 65046,
+      "queries": 524288,
+      "estimate_among_resolved": -0.00096893310546875,
+      "discordance_interval": [
+        0.2455704965648913,
+        0.24875815640707694
+      ],
+      "win_given_discordance_interval": [
+        0.49432236453811346,
+        0.501757552887395
+      ],
+      "ci": [
+        -0.0028247162605006784,
+        0.0008744112321126234
+      ]
+    },
+    {
+      "positive": 65261,
+      "negative": 65235,
+      "queries": 524288,
+      "estimate_among_resolved": 4.9591064453125e-05,
+      "discordance_interval": [
+        0.24730623394681547,
+        0.2505013890554539
+      ],
+      "win_given_discordance_interval": [
+        0.49639501991533014,
+        0.5038042121112245
+      ],
+      "ci": [
+        -0.0018061050374540964,
+        0.0019059208362466377
+      ]
+    },
+    {
+      "positive": 62888,
+      "negative": 63736,
+      "queries": 524288,
+      "estimate_among_resolved": -0.001617431640625,
+      "discordance_interval": [
+        0.23993720403135246,
+        0.24310005498450724
+      ],
+      "win_given_discordance_interval": [
+        0.49289085516414605,
+        0.5004124222589625
+      ],
+      "ci": [
+        -0.0034564670009778436,
+        0.00020051974766125704
+      ]
+    }
+  ],
+  "records": 2097152,
+  "transcript": "1c7dec6bf0beca171e38591c9e4cad65a380020050aa74a8e2a2687464778be8",
+  "screen": "a8c0e4032709196d0cf42fca8560b7a514cd0c0e5e0792b84354dc5f75df7f20"
+}

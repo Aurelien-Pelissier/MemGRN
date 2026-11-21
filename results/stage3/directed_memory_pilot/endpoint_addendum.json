@@ -1,0 +1,6 @@
+{
+  "recorded_utc": "2026-11-10T20:20:41.801160+00:00",
+  "status": "Supplementary endpoint specified during source-only training, before prediction freeze and test scoring",
+  "endpoint": "Report normalized test MSE on physical coordinates that were never directly actuated or clamped in a schedule, alongside the unchanged all-coordinate primary metric. This prevents accurate actuator self-responses from hiding poor network transmission.",
+  "selection": "No effect on training, checkpoint choice, graph ranking or primary metric."
+}

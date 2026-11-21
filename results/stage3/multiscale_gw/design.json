@@ -1,0 +1,24 @@
+{
+  "seeds": [
+    3601,
+    3602,
+    3603,
+    3604,
+    3605,
+    3606
+  ],
+  "models": [
+    "learned_gw",
+    "current_hybrid",
+    "history_basis",
+    "state_space",
+    "fixed_gw"
+  ],
+  "network": "Six fresh six-node networks. Each target has exactly one delayed parent, each of three active delayed sources has two targets with different kinetics, plus three distinct instantaneous links per network. Each of fast, slow and biphasic occurs twice. Two directly driven nodes have no mutual link. Plant third-order causal filters with edge-specific fast and slow rates and an opposed slow lobe on biphasic edges. Simulate independent non-sinusoidal autonomous van der Pol dynamics with varying starting phase and no oscillator metadata supplied.",
+  "interventions": "Reuse the 18/6/12 disjoint train/validation/test temporal schedules. Four quarter-cycle offsets around random per-schedule origin per split. Four pre-intervention time units and 20 noisy measurements of six nodes. All models receive identical history and control inputs. Independent measurement noise sd .015 for paired treatment/control responses, identical prehistory for their forecasts. Same observed starting state, no test observations used during rollout.",
+  "architectures": "One learned gW block: instantaneous signed messages plus signed edge-specific mixtures of three parallel two-stage source filters with positive trainable rates per source. State update is integrated through physical time. New block and history-basis comparator use identical history-conditioned time basis (3 Fourier harmonics, fitted frequency and damping and history-dependent coefficients) and same pooled history inputs. History-basis comparator uses previous single-rate two-stage directed memory. Refit current hybrid (single-rate memory plus history-initialized damped oscillator), prior continuous-time latent linear state-space. Fixed-gW refits multiscale model with its initialization rates frozen as a control for the benefit of learning rates. Different architectures have different free parameter counts.",
+  "fit": "Separate fits per world, two starts, 800 Adam steps per start, cosine .01 to .001, batch of 6 paired schedules, 1e-4 mean squared parameter penalty, clip 5. Joint normalized loss: .25 each absolute treated/control error and .5 paired effect error. Select start/checkpoint every 100 updates by validation normalized paired effect MSE on unforced targets. Fixed edge labels, phases and clean outcomes excluded. Fresh minibatch order shared across models.",
+  "primary": "MSE for intervention minus phase-matched control on nodes never driven/clamped in each held-out schedule, normalized by training node RMS floor .05. Compare across six networks against each baseline, report full effect MSE and absolute clean/noisy forecast MSE separately and by schedule family.",
+  "shutoff": "All 30 source-target pairs under four matching test histories. Source clamped at .2 vs zero during first 2 time units, target and other nodes held zero. Then clamp source to zero and release only target over 6 time units. Rank five candidate sources per target by RMS paired tail (top-1, ties fractional) and independently use waveform matching to assign the oracle response among five predicted source waveforms. Also delayed-edge AP, class-wise squared waveform error/true energy, and biphasic early/late signs (mean 0.2..0.8 vs 3.0..5.0 after release). Oracle check that each targeted biphasic edge exhibits reversal on the chosen assay. Score by network first.",
+  "interpretation": "Paired effect and source identification are separate endpoints. Report the same-driver comparison and the matched fixed rates control. All tests within newly fitted synthetic networks, no claim of generalization of one fit across networks or biological causal recovery."
+}

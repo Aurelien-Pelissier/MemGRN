@@ -1,0 +1,11 @@
+{
+  "networks": 16,
+  "targets": 96,
+  "fitted_models": 48,
+  "ranking_checks_per_protocol": 12288,
+  "reversed_record_checks": 12288,
+  "all_forecasts_and_primary_intervals_recomputed": true,
+  "ground_truth_and_data_check": "oracle_audit.json",
+  "scores_sha256": "4727dfd2f0d48d6aca095cb521297503ce85374ad4f4c678696a2f73bf8d53d3",
+  "audit_script_sha256": "18f93331c1d461d5fd779015b61f133f92adf53e1839faf0dce26391333da653"
+}

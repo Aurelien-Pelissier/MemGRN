@@ -1,0 +1,89 @@
+{
+  "question": "Does neural-rate gW improve out-of-sample pulse response and retain exact source-pair recovery relative to an on/off two-rate model?",
+  "seeds": [
+    106231,
+    106232,
+    106233,
+    106234,
+    106235,
+    106236,
+    106237,
+    106238
+  ],
+  "regimes": [
+    "constant",
+    "asymmetric"
+  ],
+  "models": [
+    "current_gw",
+    "two_rate_gw",
+    "neural_rate_gw",
+    "latent_ode"
+  ],
+  "setup": "Controlled open-loop assay: six measured/clamped source activities, six target readouts from a known zero equilibrium, all 15 source pairs, responses integrated jointly. Each target has two delayed parents excluding its same-index source; ten eligible unordered pairs at identification. No hidden prehistory or independent driver. Same wiring, target coefficients, training noise and inputs between regimes. Current gW retains the existing three source channels, two serial filter stages, direct and delayed signed readouts and target decay, specialized to this controlled assay. All model parameters learned separately per network and regime, no given edges.",
+  "kinetics": "Three source-specific constant filter rates in both regimes. Asymmetric truth adds an unobserved, saturating occupancy driven by activity with independent association/dissociation constants; occupancy and dose modulate the filter speeds, without changing constant-input steady-state gain. No fitted model is supplied occupancy.",
+  "train": {
+    "durations": [
+      1.2,
+      2,
+      2.8
+    ],
+    "strong": [
+      0.55,
+      0.85,
+      1.1
+    ],
+    "ratios": [
+      2,
+      4
+    ],
+    "replicates": 2,
+    "sd_per_arm": 0.015
+  },
+  "validation": {
+    "durations": [
+      1.6,
+      2.4
+    ],
+    "strong": [
+      0.7,
+      1
+    ],
+    "ratios": [
+      4
+    ],
+    "replicates": 1,
+    "sd_per_arm": 0.015
+  },
+  "test": {
+    "durations": [
+      0.8,
+      3.6
+    ],
+    "strong": [
+      0.27439773622801417,
+      1.4
+    ],
+    "ratio": 4,
+    "tail": 6,
+    "dt_obs": 0.2,
+    "noise_sd_per_arm": 0.06,
+    "rho": [
+      0.5,
+      0.75,
+      0.9
+    ],
+    "draws": 4096,
+    "innovation_seed": 702391,
+    "criteria": "Primary trajectory endpoint: mean over true-parent positive two-source pulse orientations, networks, targets and four equally weighted duration/dose combinations of the full treated-minus-control curve MSE from onset through 6 after shutoff. Primary tail endpoint: MSE at the five locked post-shutoff times. Dense 30-time tail MSE secondary. Primary recovery: exact unordered pair using two direct simulations with weak/strong assignments reversed and Gaussian AR(1) contrast noise; frozen control-estimated Mahalanobis metric; all ten candidates. Score known simulator means for errors, no derivative or truth supervision during training."
+  },
+  "integration": "Independent truth RK4 dt=.025 (refine to .0125 for audit), fitted ODE explicit midpoint dt=.1 at training and test, numerical refinement on held-out forecasts. Timing and observation parameters locked before fitting.",
+  "optimization": {
+    "starts": 2,
+    "steps": 600,
+    "batch": 12,
+    "checkpoint": 100,
+    "loss": "Train paired noisy target contrasts with train-only per-target RMS scaling; select start and checkpoint by target-standardized validation contrast MSE. Same draws, minibatch order, optimizer and validation criterion across all four fits."
+  },
+  "comparison": "Network is unit, paired log MSE ratios (geometric means; show pooled raw MSE too) and absolute paired recovery differences. Six simultaneous 95% Bonferroni t intervals for neural vs two-rate across two regimes and full MSE, five-time MSE and recovery. A positive pilot requires in asymmetric regime lower full and five-time MSE by interval and recovery lower bound above -1pp. Constant regime serves as specification control. No tuning on held-out outcomes."
+}

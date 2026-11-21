@@ -1,0 +1,5 @@
+{
+  "timing": "Supplemental analysis added during baseline fitting, after inspecting validation scores and before held-out scoring.",
+  "endpoint": "In each of four test histories per true delayed edge, add independent Gaussian observation noise (sd .015 per arm) to a treated-minus-control target response after shutoff. Rank the five frozen model response waveforms by mean squared distance to that noisy query. Use one treated and one control observation per time point. Use 200 draws per phase strictly as noise sensitivity using identical draws for every model. Report by network and edge class and include exact simulator templates. Independent unit remains network. Does not change the primary endpoints.",
+  "seeds": "450000 + network seed"
+}

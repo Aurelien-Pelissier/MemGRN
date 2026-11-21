@@ -1,0 +1,31 @@
+{
+  "time": 1794342515.715877,
+  "code": "51f84a420cf796e18b089c5144f919f0aa4c666c76e5f54808e0e60049c208d3",
+  "design": "8792e79a2b98951c0b26c2ef9d2c55b74a49dcd1d5cd9e9ea81dc805cee7efa7",
+  "files": {
+    "markov_1101_model.npz": "f9eae4100299426feeba21da47c4099ba82c4d61b168e63ff6febde98378be49",
+    "markov_1101_model.json": "eb8d91a88ed942cd31f039e642ec7cd6d399c018fb7de1cbf691a65d8f1352df",
+    "hidden_mediators_1101_model.npz": "51f1d07c64ed947c46669f85d83cd9009107ac8c3eb1a09c3e88fc04bf337498",
+    "hidden_mediators_1101_model.json": "cb30dcf7cf526adcbda644b930232ac00e9634c5635f1a38aecb9cbecba175bb",
+    "measurement_filter_1101_model.npz": "1b9b7fb244accce51587f7569b70f9a35f0a0fa455729f15dfc3010f1e99c223",
+    "measurement_filter_1101_model.json": "af80eba8421955ac23856dcc2b51be657c6d8fc4d7590c988275f08876a492ee",
+    "hidden_common_cause_1101_model.npz": "fc9284455566330d8392ec5097961fe0ae4da9d1e8b272ac2f8b0404523b770f",
+    "hidden_common_cause_1101_model.json": "88341b69ab4127263ec8f644444625d60be7d3ac7d82241b59b8eb11f895d2fd",
+    "markov_1102_model.npz": "2287a1ae23905cad0217a1c321a8cb2d72b4e5d88727f90e39588ae6f07deb21",
+    "markov_1102_model.json": "7eba90789f2d750ca1bb9d873d26c6e4d7b6ec997ba60c1e96d65a675ce334b3",
+    "hidden_mediators_1102_model.npz": "9048bc8a375f736c2ab15924f264805db6d369d4a96ae8b0f732b06aff6afbb4",
+    "hidden_mediators_1102_model.json": "8ca49aaa70088ab0375d6eec12fee2a7168f196c8cacce312eb64c6f81bb9253",
+    "measurement_filter_1102_model.npz": "59b6a0b726bd1daf73f448b8cdd0b74851c88699fe84f4a5229184e4af8c6edc",
+    "measurement_filter_1102_model.json": "2fd8548964b2f37c4d03961cc96f0ef61126529352273d0e59710aa0a8738b3f",
+    "hidden_common_cause_1102_model.npz": "a96c76189b66851085cbea3da41903ef6a62f4691f2839de0d51abaf996c7a9a",
+    "hidden_common_cause_1102_model.json": "9cfd53a78dd6a7aedf4da5e716b70f72e7819de00e5680e6e69bf0e8531c9a57",
+    "markov_1103_model.npz": "38c10e44d5a3826adf25fde4edf56ebc102cfd04ce836874ed9fb0c6400489d2",
+    "markov_1103_model.json": "0bbad6850cd8ad8206eb812c90a0498cb4d62344b6d9e5241fb0fba9b80dd81a",
+    "hidden_mediators_1103_model.npz": "295d4a1b406e325292acb9f65f6148f98e9ce5f3431cfbe36c99b79fe5980758",
+    "hidden_mediators_1103_model.json": "a797f8637485ff518b88007c97daf96b021b39574a3262e5f8747eba0aec0f7f",
+    "measurement_filter_1103_model.npz": "1ce8042ce4317020fb82592362dea54e82a25659a17a4d675bc974e36e75a687",
+    "measurement_filter_1103_model.json": "34daed95d66236c0c5dee6830fa598a3035abad2d9b5f25e7c387d4ee3004f8f",
+    "hidden_common_cause_1103_model.npz": "683e9ac6be93710b868523eb9012e38fb2e056082268eb1b9c0d8da4b528b628",
+    "hidden_common_cause_1103_model.json": "861de584a2e74eef6942bfb72ea1db59a82073f9a42205b022927c2045478852"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "dataset": "Hansen and O'Shea yeast microscopy as released by Hansen and Zechner, Zenodo 2755026",
+  "revision": "9d22cc6f5d06f85543be2cfbdbb13fb7e57c1c70",
+  "parent": "neural_rate_msn2_transfer",
+  "original_primary_lock_sha256": "a38fc0499c06fabd04f31837ce7787bbb16a246716d6b88cd7ff3fd76f2d5886",
+  "schedules": [
+    {
+      "id": "FM_2_5min_690nM",
+      "n": 2,
+      "gap": 5
+    },
+    {
+      "id": "FM_3_5min_690nM",
+      "n": 3,
+      "gap": 5
+    },
+    {
+      "id": "FM_4_5min_690nM",
+      "n": 4,
+      "gap": 5
+    },
+    {
+      "id": "FM_5_5min_690nM",
+      "n": 5,
+      "gap": 5
+    },
+    {
+      "id": "FM_6_5min_690nM",
+      "n": 6,
+      "gap": 5
+    },
+    {
+      "id": "FM_8_5min_690nM",
+      "n": 8,
+      "gap": 5
+    },
+    {
+      "id": "FM4_75minINT_690nM",
+      "n": 4,
+      "gap": 7.5
+    },
+    {
+      "id": "FM4_10minINT_690nM",
+      "n": 4,
+      "gap": 10
+    },
+    {
+      "id": "FM4_15minINT_690nM",
+      "n": 4,
+      "gap": 15
+    },
+    {
+      "id": "FM4_20minINT_690nM",
+      "n": 4,
+      "gap": 20
+    }
+  ],
+  "pulse_width_min": 5,
+  "inhibitor_nM": 690,
+  "freeze": "Original 2,400-update single-pulse weights for seeds 416 and 819, all seven outputs, original training-only Msn2 and reporter scales, midpoint step 2.5 min, and original averaged seed forecasts. All ten FM schedules held out. No fitting, response calibration, ensemble tuning, checkpoint selection, or resetting the state between pulses.",
+  "input": "For each schedule use the original across-promoter mean of measured nuclear Msn2 from the seven promoter strains, baseline-centered per strain, through minute 120. Same measured input in both promoter analyses. Baseline is the mean over times strictly before 0.",
+  "baseline": "Use the exact sealed source mean across all 16 single-pulse training conditions at matched elapsed times since first onset. Also report the frozen source mean restricted to the four 690 nM training conditions as a secondary comparator.",
+  "outcome": "Mean YFP molecules/cell at each time minus mean pre-pulse level, divided by frozen training RMS for each promoter. Score 5 min grid from first onset (5..120 minutes). No filtering on post-pulse expression or dynamics.",
+  "primary": "After last nominal inhibitor removal at n*5+(n-1)*gap, score times strictly after removal through minute 120. Average squared errors equally over times and promoters within a schedule, then equally over ten schedules. Report seven promoters and six after omitting SIP18 from scoring only.",
+  "support": "Fixed first 40 minutes after final removal for comparable follow-up length; per-schedule, per-promoter, seed and half-step solver scores. Count strict per-schedule wins. Treat schedules descriptively; no IID test using times, cells or promoters."
+}

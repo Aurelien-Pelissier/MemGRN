@@ -1,0 +1,21 @@
+{
+  "utc": "2026-11-11T04:47:22.120559+00:00",
+  "fit": "05c8380fffc36b47619bdc006b3cff814ebc962b77d53efb7585d8826eefbc4b",
+  "lock": "fe54d769149ab2389cebe54e39b454ad594b768602a3d167e324dfc2806e9dfb",
+  "gene": "HXK1",
+  "model": "memory",
+  "seed": 819,
+  "updates": 2400,
+  "starts": [
+    "archived",
+    "original_init",
+    "dispersed"
+  ],
+  "losses": [
+    0.007968582212924957,
+    0.0099573889747262,
+    0.008887510746717453
+  ],
+  "chosen": 0,
+  "parameters": 27
+}

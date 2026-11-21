@@ -1,0 +1,32 @@
+[
+  {
+    "seed": 2501,
+    "independent_max_error": 5.162545843595545e-07,
+    "nested_max_error": 0.0
+  },
+  {
+    "seed": 2502,
+    "independent_max_error": 6.116727546134904e-07,
+    "nested_max_error": 0.0
+  },
+  {
+    "seed": 2503,
+    "independent_max_error": 5.211943480964987e-07,
+    "nested_max_error": 0.0
+  },
+  {
+    "seed": 2504,
+    "independent_max_error": 5.711685496789798e-07,
+    "nested_max_error": 0.0
+  },
+  {
+    "seed": 2505,
+    "independent_max_error": 5.379479459666214e-07,
+    "nested_max_error": 0.0
+  },
+  {
+    "seed": 2506,
+    "independent_max_error": 4.825260433924394e-07,
+    "nested_max_error": 0.0
+  }
+]

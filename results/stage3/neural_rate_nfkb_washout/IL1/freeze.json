@@ -1,0 +1,10 @@
+{
+  "utc": "2026-11-11T02:31:40.398696+00:00",
+  "models": {
+    "current_gw": "5de2ed1e8c78d74cf569ebeca6971afc16a9ac7d31a74a858b383c0f1fe881f6",
+    "two_rate_gw": "e654739664cb9866c6df59a428c56e230241bb762320840ea3bef1b7b19cc1d8",
+    "neural_rate_gw": "5c2b1dbd31876c65bbc6bb9a80697ce0bd41c4fd31036d1d9f4692f8370faadf",
+    "latent_ode": "21b6c6a9ba3dfc59ed775e7666a8fc755285a8021c940d2351f36384193f3ede"
+  },
+  "held": "IL1"
+}

@@ -1,0 +1,35 @@
+{
+  "utc": "2026-11-11T04:01:30.662638+00:00",
+  "lock": "7f86326cd3ff8abda1504238b0b44c43801bc09c14ef7aa168f6f40141b5e361",
+  "fit": "8e83f15230ddc3cbd4ab9ca0063c78a4cead0454aaed06f26f87ee21b5f5bb0c",
+  "seeds": {
+    "416": {
+      "chosen": 1,
+      "starts": [
+        "archived",
+        "original_init",
+        "dispersed"
+      ],
+      "source_mse": [
+        0.09808821976184845,
+        0.09808768332004547,
+        0.09808774292469025
+      ],
+      "parameters": 3
+    },
+    "819": {
+      "chosen": 2,
+      "starts": [
+        "archived",
+        "original_init",
+        "dispersed"
+      ],
+      "source_mse": [
+        0.09681333601474762,
+        0.09681329876184464,
+        0.09681328386068344
+      ],
+      "parameters": 3
+    }
+  }
+}

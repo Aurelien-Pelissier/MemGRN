@@ -1,0 +1,10 @@
+{
+  "utc": "2026-11-11T02:32:43.857851+00:00",
+  "models": {
+    "current_gw": "3c792588979962fae343ab6f360e424534b34d60bc2562ac8491f7c6d8d1c973",
+    "two_rate_gw": "49add49513e4257df0dba6589e351b99293664a22514cd3b2d5eb3a99989679c",
+    "neural_rate_gw": "9f3b900637d4d852c9adbc73705143677d962f0708a23cdd06b27a2b7f1f341d",
+    "latent_ode": "6df9f752050a5b63f4966991afec8b2d5c82fdcf17cfe4f1bb21430ad05b0dde"
+  },
+  "held": "TNF"
+}

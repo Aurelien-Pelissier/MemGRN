@@ -1,0 +1,35 @@
+{
+  "question": "Does a locked simultaneous 4:1 strength swap improve noisy two-record exact parent-pair recovery on fresh networks, and does the learned memory bank outperform its two earlier comparators under this protocol?",
+  "seeds": [
+    57001,
+    57002,
+    57003,
+    57004,
+    57005,
+    57006,
+    57007,
+    57008,
+    57009,
+    57010,
+    57011,
+    57012,
+    57013,
+    57014,
+    57015,
+    57016
+  ],
+  "models": [
+    "learned_gw",
+    "fixed_gw",
+    "history_basis"
+  ],
+  "inclusion": "Generate exactly these 16 fresh independent-seed networks with the previous two-parent generator, retain all six targets per network and both true assignments. No screening on model performance or signal cancellation. Each network includes all six unordered pairings of fast, slow and biphasic kinetics, three aligned and three opposing pairs. Old networks excluded. Report any unresolved fit or missing target; no replacement seed. Same simulator family, new fitted networks.",
+  "protocol": "Same zero-onset-spacing, width 2.4 for each pulse, b/a=4 with a=.2*sqrt(2/17), b=4a, squared amplitudes sum to .08. Post-shutoff release of only target, 30 samples over 6 time units, matched control history, all other nodes clamped. Two independent paired records at identical prehistory/phase. Repeat uses the identical 4:1 assignment twice; swap exchanges the stronger and weaker source on record two. No dose/timing grid or protocol tuning.",
+  "training": "Reuse previous data protocol and exact model/optimizer code, including two starts x 800 Adam updates per model per network. Select checkpoint and start by noisy paired-effect MSE on validation never-driven nodes only. Fit separate weights to each graph, then freeze all before held-out swap scoring. Test pair probes, true topology and test waveforms are excluded from fitting. Same training interventions, noise, histories, and paired-control availability across methods.",
+  "endpoint": "For every target, 10 possible unordered pairs among five candidates. For a candidate pair minimize whitened Euclidean distance over its two possible role assignments, consistent across both traces and reversed only for the locked swap. Tie credit fractional. Primary exact pair accuracy averaged equally over 4096 fresh Gaussian draw pairs, both true role assignments, first four held-out histories, all six targets, then networks. Independent SD .015 errors per treated and matched control observation, so each contrast SD sqrt(2)*.015. Independent draws for second record, same two noise vectors across protocols and models. Simulator templates are a comparison using same decision rule. Include single-record and clean scores as diagnostics.",
+  "inference": "Three prespecified paired comparisons in percentage points: learned swap minus learned repeat, learned swap minus fixed-rate swap, learned swap minus history-basis swap. Average within each network; independent unit is network (n=16). Report paired sample means, number of network wins, and two-sided 95% familywise Bonferroni t intervals (critical quantile 1-.05/(2*3), df15); call superiority only if adjusted lower limit >0. Approximate intervals assume reasonably regular network means. Sensitivity: exact one-sided paired sign test and Holm correction over the same three tests, targeting probability of a positive network difference. Noisy Monte Carlo draws do not increase biological/graph n.",
+  "secondary": "Report per-model repeat/swap, per-protocol learned minus baseline where useful; swap gain by sign and kinetic classes, and the previously targeted fast/fast opposing group included solely by generator labels. Record held-out unforced target paired-effect forecast MSE from the standard schedules as a distinct diagnostic. Quantify closeness to oracle under swap. No significance claims for these subgroups.",
+  "audits": "Independent full simulator vs analytic component rescaling on every graph, source exposure and held-out pair exclusions, proposal-to-score hash chain, no overlap with past study seeds, role-swap invariance, direct brute-force two-record ranking checks, complete network/target inclusion.",
+  "noise_seed_offset": 918200,
+  "draws": 4096
+}

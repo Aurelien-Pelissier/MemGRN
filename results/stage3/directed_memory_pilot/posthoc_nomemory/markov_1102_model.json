@@ -1,0 +1,63 @@
+{
+  "start": 1,
+  "validation": 0.027384931436583108,
+  "parameter_count": 48,
+  "records": [
+    {
+      "start": 0,
+      "validation": 0.02744580935092706,
+      "best_step": 400,
+      "history": [
+        {
+          "step": 50,
+          "validation": 0.03164784579712847
+        },
+        {
+          "step": 100,
+          "validation": 0.02749743322089826
+        },
+        {
+          "step": 200,
+          "validation": 0.02753083760976087
+        },
+        {
+          "step": 300,
+          "validation": 0.027612890587765965
+        },
+        {
+          "step": 400,
+          "validation": 0.02744580935092706
+        }
+      ],
+      "seconds": 1.6962443999946117
+    },
+    {
+      "start": 1,
+      "validation": 0.027384931436583108,
+      "best_step": 400,
+      "history": [
+        {
+          "step": 50,
+          "validation": 0.03004585030034738
+        },
+        {
+          "step": 100,
+          "validation": 0.02748901618258913
+        },
+        {
+          "step": 200,
+          "validation": 0.027442464441616906
+        },
+        {
+          "step": 300,
+          "validation": 0.02746902421575493
+        },
+        {
+          "step": 400,
+          "validation": 0.027384931436583108
+        }
+      ],
+      "seconds": 1.7857822999358177
+    }
+  ]
+}

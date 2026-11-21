@@ -1,0 +1,14 @@
+{
+  "utc": "2026-11-11T04:14:50.912151+00:00",
+  "code": "d6d5b8a550d1519ae926812ec0dad439f229e477e5024104db3cb2fa9502b04b",
+  "scores": "a642ca5bab9d51a04a180da13a87663369727faa47fca6a2af0d1e54e06aa993",
+  "max_test_replay_difference": 7.258968877099647e-07,
+  "max_source_mse_difference": 1.3563202791444517e-07,
+  "max_raw_score_difference": 1.942890293094024e-16,
+  "replay_mse": {
+    "constant": 0.08015735584671031,
+    "activity": 0.02376817454066198,
+    "memory": 0.046376758649189324,
+    "both": 0.017908517054044813
+  }
+}

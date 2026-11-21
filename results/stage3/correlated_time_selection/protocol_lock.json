@@ -1,0 +1,14 @@
+{
+  "locked_utc": "2026-11-10T23:42:21.018872+00:00",
+  "design": "0d52c76e868e611bf525dbb3b0acba509e75a3b25f389d1d5a04c8dc1cc69d8e",
+  "prior_schedule": "3452d282d512e45a41422bddbf661960645aed5c99677e5a70d2009416271bce",
+  "training_data": "9efeaadaddf21ad83d8ff3f0d3cc876ca462d5d3245d3ea1a57fcc85b6c0b809",
+  "training_libraries": "77449b934edeeac2ba7e1fd4c1560eee15d571cf970fdaad7fd006c8a1865f71",
+  "code": {
+    "select_correlated_times.py": "34bc73f6a2aeddb6f22e1255d8f437fee1d6811c491bf53446015b82bcb5e520",
+    "select_strength_swap_times.py": "5d650893136003bc734cb014530a7a6f40a7b104e11ac5f51b170efa87d73e01",
+    "fit_strength_swap_time_networks.py": "380116bc29721a6cbfe8758f4cf25c9d806e834861c069f2fdd94798a4d5ad59",
+    "swap_replication_fit.py": "e3c057d60cffdc8d3451f2f6d0206e195f42d75a61e633ae8c147773770c2dae",
+    "strength_swap_temporal_noise.py": "83b545bfa26c189a056d3926536fe6215e7da0e3fddf263836807916036b7edc"
+  }
+}

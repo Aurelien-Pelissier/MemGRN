@@ -1,0 +1,10 @@
+{
+  "demix_max_error": 6.938893903907228e-17,
+  "sigma_min": 0.19922014330586915,
+  "direct_score_error": 0.0,
+  "hoeffding_radius": 0.01061016809172359,
+  "joint_95_lower": {
+    "versus_fixed": 0.03259814489655766,
+    "versus_basis": 0.03745654333405766
+  }
+}

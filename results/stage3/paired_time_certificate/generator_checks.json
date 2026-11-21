@@ -1,0 +1,146 @@
+[
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.021881091115054287,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91501,
+    "probe_error": 9.342956529961866e-09,
+    "refinement": 1.0830319456082982e-06
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.03890151647721362,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91502,
+    "probe_error": 1.0277220619664407e-08,
+    "refinement": 1.1548038734154886e-06
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.021184507635562046,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91503,
+    "probe_error": 1.2144333424307652e-08,
+    "refinement": 1.1142677233261233e-06
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.029462128291102622,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91504,
+    "probe_error": 1.1143203505759036e-08,
+    "refinement": 1.1204120121816041e-06
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.035068752844062565,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91505,
+    "probe_error": 9.826051996369989e-09,
+    "refinement": 1.239192358217997e-06
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.030456119004119313,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91506,
+    "probe_error": 9.30517967193123e-09,
+    "refinement": 1.0601871799874318e-06
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.023335740330933098,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91507,
+    "probe_error": 1.4398255242589753e-08,
+    "refinement": 8.598720774473378e-07
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.029609037268615232,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91508,
+    "probe_error": 1.088625678317967e-08,
+    "refinement": 7.975566845910831e-07
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.026741544187436992,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91509,
+    "probe_error": 8.370909174160168e-09,
+    "refinement": 8.958286872688681e-07
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.04420891245573532,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91510,
+    "probe_error": 9.298010562874826e-09,
+    "refinement": 9.537800879522856e-07
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.04138323611349364,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91511,
+    "probe_error": 9.826081115438257e-09,
+    "refinement": 8.15733559918902e-07
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.04789594396525494,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91512,
+    "probe_error": 1.1617109843542472e-08,
+    "refinement": 8.730827305326871e-07
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.032663835264625386,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91513,
+    "probe_error": 1.1806286032145508e-08,
+    "refinement": 8.219139280120705e-07
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.026122401716794807,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91514,
+    "probe_error": 1.1445660814957126e-08,
+    "refinement": 9.103333270255032e-07
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.03769128963658707,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91515,
+    "probe_error": 1.3370554666908285e-08,
+    "refinement": 7.257078540028744e-07
+  },
+  {
+    "input_rank": 6,
+    "max_abs_source_corr": 0.032663835264625386,
+    "overlap_min": 0.6206896551724138,
+    "overlap_max": 0.7083333333333334,
+    "seed": 91516,
+    "probe_error": 6.6145303210390916e-09,
+    "refinement": 9.67629439420012e-07
+  }
+]

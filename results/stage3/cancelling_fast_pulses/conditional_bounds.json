@@ -1,0 +1,1688 @@
+{
+  "box": 5.0,
+  "width": 0.125,
+  "posthoc": true,
+  "score_hash": "aefcd2a182c928207d2eb9ef99e68e16d1c58e791b03e614336c5f67ae378d64",
+  "rows": [
+    {
+      "seed": 4601,
+      "index": 0,
+      "model": "learned_gw",
+      "lower": 0.3765676923318466,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 0,
+      "model": "fixed_gw",
+      "lower": 0.3763067261987656,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 0,
+      "model": "history_basis",
+      "lower": 0.3531994870958159,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 0,
+      "model": "oracle",
+      "lower": 0.40886809772373806,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 1,
+      "model": "learned_gw",
+      "lower": 0.14971255414466766,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 1,
+      "model": "fixed_gw",
+      "lower": 0.11878697378033093,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 1,
+      "model": "history_basis",
+      "lower": 0.08965359234933275,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 1,
+      "model": "oracle",
+      "lower": 0.27196503996395294,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 2,
+      "model": "learned_gw",
+      "lower": 0.25986611504332213,
+      "robust": 0.17201871247665765
+    },
+    {
+      "seed": 4601,
+      "index": 2,
+      "model": "fixed_gw",
+      "lower": 0.20859973638858936,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 2,
+      "model": "history_basis",
+      "lower": 0.20488874129805285,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 2,
+      "model": "oracle",
+      "lower": 0.4002035157277833,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 3,
+      "model": "learned_gw",
+      "lower": 0.14971255414466758,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 3,
+      "model": "fixed_gw",
+      "lower": 0.11878697378033105,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 3,
+      "model": "history_basis",
+      "lower": 0.08965359234933276,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 3,
+      "model": "oracle",
+      "lower": 0.27196503996395294,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 4,
+      "model": "learned_gw",
+      "lower": 0.3765676923318466,
+      "robust": 0.11675536555280652
+    },
+    {
+      "seed": 4601,
+      "index": 4,
+      "model": "fixed_gw",
+      "lower": 0.3763067261987656,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 4,
+      "model": "history_basis",
+      "lower": 0.35319948709581594,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 4,
+      "model": "oracle",
+      "lower": 0.40886809772373806,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 5,
+      "model": "learned_gw",
+      "lower": 0.1132148414775837,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 5,
+      "model": "fixed_gw",
+      "lower": 0.11791437232118329,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 5,
+      "model": "history_basis",
+      "lower": 0.15975029722679723,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 5,
+      "model": "oracle",
+      "lower": 0.21752116572399274,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 6,
+      "model": "learned_gw",
+      "lower": 0.21030074475712926,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 6,
+      "model": "fixed_gw",
+      "lower": 0.24054503673364352,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 6,
+      "model": "history_basis",
+      "lower": 0.26740209899513107,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 6,
+      "model": "oracle",
+      "lower": 0.3908009438117076,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 7,
+      "model": "learned_gw",
+      "lower": 0.13197614560455345,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 7,
+      "model": "fixed_gw",
+      "lower": 0.14798979076463056,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 7,
+      "model": "history_basis",
+      "lower": 0.20403422498121018,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 7,
+      "model": "oracle",
+      "lower": 0.2516522823943558,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 8,
+      "model": "learned_gw",
+      "lower": 0.29059928072248464,
+      "robust": 0.04520031108500079
+    },
+    {
+      "seed": 4601,
+      "index": 8,
+      "model": "fixed_gw",
+      "lower": 0.29769071308493433,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 8,
+      "model": "history_basis",
+      "lower": 0.25790969252504464,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 8,
+      "model": "oracle",
+      "lower": 0.37915963226391197,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 9,
+      "model": "learned_gw",
+      "lower": 0.38156791410732505,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 9,
+      "model": "fixed_gw",
+      "lower": 0.3924054942696231,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 9,
+      "model": "history_basis",
+      "lower": 0.3547337706233168,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 9,
+      "model": "oracle",
+      "lower": 0.43387568577244956,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 10,
+      "model": "learned_gw",
+      "lower": 0.13707199520287544,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 10,
+      "model": "fixed_gw",
+      "lower": 0.15254334518709395,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 10,
+      "model": "history_basis",
+      "lower": 0.17261788040109066,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 10,
+      "model": "oracle",
+      "lower": 0.24382456049924656,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 11,
+      "model": "learned_gw",
+      "lower": 0.14067407848548671,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 11,
+      "model": "fixed_gw",
+      "lower": 0.15193255517939902,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 11,
+      "model": "history_basis",
+      "lower": 0.2135049215308794,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 11,
+      "model": "oracle",
+      "lower": 0.19240405957436305,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 12,
+      "model": "learned_gw",
+      "lower": 0.2145723846028665,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 12,
+      "model": "fixed_gw",
+      "lower": 0.20769680036201554,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 12,
+      "model": "history_basis",
+      "lower": 0.12293803760683705,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 12,
+      "model": "oracle",
+      "lower": 0.318451157482456,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 13,
+      "model": "learned_gw",
+      "lower": 0.32096650595251225,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 13,
+      "model": "fixed_gw",
+      "lower": 0.32736705894809415,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 13,
+      "model": "history_basis",
+      "lower": 0.2712013859285607,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 13,
+      "model": "oracle",
+      "lower": 0.4093389020398344,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 14,
+      "model": "learned_gw",
+      "lower": 0.3553389785554415,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 14,
+      "model": "fixed_gw",
+      "lower": 0.3687070253411344,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 14,
+      "model": "history_basis",
+      "lower": 0.33152650922483207,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 14,
+      "model": "oracle",
+      "lower": 0.42651528761561025,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 15,
+      "model": "learned_gw",
+      "lower": 0.1564817800511024,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 15,
+      "model": "fixed_gw",
+      "lower": 0.15284925924647522,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 15,
+      "model": "history_basis",
+      "lower": 0.15962388704120625,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 15,
+      "model": "oracle",
+      "lower": 0.14364450211192545,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 16,
+      "model": "learned_gw",
+      "lower": 0.18889369919107213,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 16,
+      "model": "fixed_gw",
+      "lower": 0.17964156391785518,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 16,
+      "model": "history_basis",
+      "lower": 0.1259932372693482,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 16,
+      "model": "oracle",
+      "lower": 0.23397710724201531,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 17,
+      "model": "learned_gw",
+      "lower": 0.2520960431117315,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 17,
+      "model": "fixed_gw",
+      "lower": 0.24572849560888,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 17,
+      "model": "history_basis",
+      "lower": 0.18375875155559346,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 17,
+      "model": "oracle",
+      "lower": 0.34458742981198975,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 18,
+      "model": "learned_gw",
+      "lower": 0.2736416741198345,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 18,
+      "model": "fixed_gw",
+      "lower": 0.2710642885100363,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 18,
+      "model": "history_basis",
+      "lower": 0.25400483463048196,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 18,
+      "model": "oracle",
+      "lower": 0.4001735709790645,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 19,
+      "model": "learned_gw",
+      "lower": 0.2730588788838074,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 19,
+      "model": "fixed_gw",
+      "lower": 0.2562657649527105,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 19,
+      "model": "history_basis",
+      "lower": 0.28688567389596586,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 19,
+      "model": "oracle",
+      "lower": 0.41485937464212563,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 20,
+      "model": "learned_gw",
+      "lower": 0.22177171410053786,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 20,
+      "model": "fixed_gw",
+      "lower": 0.20683064747874103,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 20,
+      "model": "history_basis",
+      "lower": 0.1929527138637096,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 20,
+      "model": "oracle",
+      "lower": 0.15233360064708124,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 21,
+      "model": "learned_gw",
+      "lower": 0.22996198602495205,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 21,
+      "model": "fixed_gw",
+      "lower": 0.21981557527416856,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 21,
+      "model": "history_basis",
+      "lower": 0.17578870100397698,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 21,
+      "model": "oracle",
+      "lower": 0.23812833001908423,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 22,
+      "model": "learned_gw",
+      "lower": 0.24596536173610636,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 22,
+      "model": "fixed_gw",
+      "lower": 0.23890288906456958,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 22,
+      "model": "history_basis",
+      "lower": 0.19390946419497562,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 22,
+      "model": "oracle",
+      "lower": 0.3461203327145544,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 23,
+      "model": "learned_gw",
+      "lower": 0.2417688040597845,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 23,
+      "model": "fixed_gw",
+      "lower": 0.21356767919566538,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 23,
+      "model": "history_basis",
+      "lower": 0.20205425878779976,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 23,
+      "model": "oracle",
+      "lower": 0.39776724863828233,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 24,
+      "model": "learned_gw",
+      "lower": 0.22981786457305095,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 24,
+      "model": "fixed_gw",
+      "lower": 0.16638364099261083,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 24,
+      "model": "history_basis",
+      "lower": 0.20448155882357003,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 24,
+      "model": "oracle",
+      "lower": 0.4132302096750913,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 25,
+      "model": "learned_gw",
+      "lower": 0.29828620362796404,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 25,
+      "model": "fixed_gw",
+      "lower": 0.27125013852224256,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 25,
+      "model": "history_basis",
+      "lower": 0.3100150967215636,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 25,
+      "model": "oracle",
+      "lower": 0.15263701933122348,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 26,
+      "model": "learned_gw",
+      "lower": 0.29058252051385536,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 26,
+      "model": "fixed_gw",
+      "lower": 0.27164390418566375,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 26,
+      "model": "history_basis",
+      "lower": 0.2800972280124634,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 26,
+      "model": "oracle",
+      "lower": 0.23852978199323435,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 27,
+      "model": "learned_gw",
+      "lower": 0.2879026050668908,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 27,
+      "model": "fixed_gw",
+      "lower": 0.26952846587844065,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 27,
+      "model": "history_basis",
+      "lower": 0.2621350329210689,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 27,
+      "model": "oracle",
+      "lower": 0.34537086855171306,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 28,
+      "model": "learned_gw",
+      "lower": 0.26789822993119927,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 28,
+      "model": "fixed_gw",
+      "lower": 0.22042062103695437,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 28,
+      "model": "history_basis",
+      "lower": 0.24574197128308364,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 28,
+      "model": "oracle",
+      "lower": 0.3974782890838576,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 29,
+      "model": "learned_gw",
+      "lower": 0.2565636946172208,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 29,
+      "model": "fixed_gw",
+      "lower": 0.16939818868635448,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 29,
+      "model": "history_basis",
+      "lower": 0.23577255977851042,
+      "robust": null
+    },
+    {
+      "seed": 4601,
+      "index": 29,
+      "model": "oracle",
+      "lower": 0.4127895248304103,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 0,
+      "model": "learned_gw",
+      "lower": 0.5076457405580808,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 0,
+      "model": "fixed_gw",
+      "lower": 0.4297470429650576,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 0,
+      "model": "history_basis",
+      "lower": 0.40189781169095906,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 0,
+      "model": "oracle",
+      "lower": 0.5960807102973535,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 1,
+      "model": "learned_gw",
+      "lower": 0.11793224229504624,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 1,
+      "model": "fixed_gw",
+      "lower": 0.0666204979086715,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 1,
+      "model": "history_basis",
+      "lower": 0.10723060436273284,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 1,
+      "model": "oracle",
+      "lower": 0.37945797123785063,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 2,
+      "model": "learned_gw",
+      "lower": 0.36538273448883235,
+      "robust": 0.1917325631233709
+    },
+    {
+      "seed": 4602,
+      "index": 2,
+      "model": "fixed_gw",
+      "lower": 0.15988303684073474,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 2,
+      "model": "history_basis",
+      "lower": 0.1583577001585924,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 2,
+      "model": "oracle",
+      "lower": 0.5269896276423326,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 3,
+      "model": "learned_gw",
+      "lower": 0.11793224229504627,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 3,
+      "model": "fixed_gw",
+      "lower": 0.06662049790867149,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 3,
+      "model": "history_basis",
+      "lower": 0.10723060436273281,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 3,
+      "model": "oracle",
+      "lower": 0.3794579712378505,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 4,
+      "model": "learned_gw",
+      "lower": 0.5076457405580806,
+      "robust": 0.1742880565931662
+    },
+    {
+      "seed": 4602,
+      "index": 4,
+      "model": "fixed_gw",
+      "lower": 0.42974704296505756,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 4,
+      "model": "history_basis",
+      "lower": 0.40189781169095906,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 4,
+      "model": "oracle",
+      "lower": 0.5960807102973533,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 5,
+      "model": "learned_gw",
+      "lower": 0.1335203851612204,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 5,
+      "model": "fixed_gw",
+      "lower": 0.0745109566443534,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 5,
+      "model": "history_basis",
+      "lower": 0.20042825631229044,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 5,
+      "model": "oracle",
+      "lower": 0.29702764297506856,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 6,
+      "model": "learned_gw",
+      "lower": 0.27687535893329174,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 6,
+      "model": "fixed_gw",
+      "lower": 0.16549158424403415,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 6,
+      "model": "history_basis",
+      "lower": 0.2871190895977923,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 6,
+      "model": "oracle",
+      "lower": 0.5484320125423641,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 7,
+      "model": "learned_gw",
+      "lower": 0.18766452338897655,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 7,
+      "model": "fixed_gw",
+      "lower": 0.14259464326565463,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 7,
+      "model": "history_basis",
+      "lower": 0.26059564928887613,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 7,
+      "model": "oracle",
+      "lower": 0.368426908089202,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 8,
+      "model": "learned_gw",
+      "lower": 0.41407588666404876,
+      "robust": 0.12361855363788743
+    },
+    {
+      "seed": 4602,
+      "index": 8,
+      "model": "fixed_gw",
+      "lower": 0.32651910769239856,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 8,
+      "model": "history_basis",
+      "lower": 0.23304918214027737,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 8,
+      "model": "oracle",
+      "lower": 0.5488717542791883,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 9,
+      "model": "learned_gw",
+      "lower": 0.47337657869941185,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 9,
+      "model": "fixed_gw",
+      "lower": 0.38817367383384677,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 9,
+      "model": "history_basis",
+      "lower": 0.36428261423076197,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 9,
+      "model": "oracle",
+      "lower": 0.579668370523282,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 10,
+      "model": "learned_gw",
+      "lower": 0.06231362688530977,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 10,
+      "model": "fixed_gw",
+      "lower": 0.04121032946683252,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 10,
+      "model": "history_basis",
+      "lower": 0.07915329652836915,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 10,
+      "model": "oracle",
+      "lower": 0.35223036264923846,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 11,
+      "model": "learned_gw",
+      "lower": 0.08821811130590325,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 11,
+      "model": "fixed_gw",
+      "lower": 0.08050827002198106,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 11,
+      "model": "history_basis",
+      "lower": 0.19483530233131222,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 11,
+      "model": "oracle",
+      "lower": 0.26609383388983726,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 12,
+      "model": "learned_gw",
+      "lower": 0.2193289330190465,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 12,
+      "model": "fixed_gw",
+      "lower": 0.1409129349927347,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 12,
+      "model": "history_basis",
+      "lower": 0.060793569826426905,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 12,
+      "model": "oracle",
+      "lower": 0.45765242932949374,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 13,
+      "model": "learned_gw",
+      "lower": 0.38018101608459387,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 13,
+      "model": "fixed_gw",
+      "lower": 0.296714363996997,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 13,
+      "model": "history_basis",
+      "lower": 0.20739575331040955,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 13,
+      "model": "oracle",
+      "lower": 0.5467638163597137,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 14,
+      "model": "learned_gw",
+      "lower": 0.3917229160706278,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 14,
+      "model": "fixed_gw",
+      "lower": 0.30688711140997593,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 14,
+      "model": "history_basis",
+      "lower": 0.30117006763168847,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 14,
+      "model": "oracle",
+      "lower": 0.5332352434070283,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 15,
+      "model": "learned_gw",
+      "lower": 0.032765668538438014,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 15,
+      "model": "fixed_gw",
+      "lower": 0.019659106154692366,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 15,
+      "model": "history_basis",
+      "lower": 0.08876037979485289,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 15,
+      "model": "oracle",
+      "lower": 0.18722961634864796,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 16,
+      "model": "learned_gw",
+      "lower": 0.09904709742472423,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 16,
+      "model": "fixed_gw",
+      "lower": 0.0431357081779999,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 16,
+      "model": "history_basis",
+      "lower": 0.04822903817333249,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 16,
+      "model": "oracle",
+      "lower": 0.33080171203864117,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 17,
+      "model": "learned_gw",
+      "lower": 0.23515442577426585,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 17,
+      "model": "fixed_gw",
+      "lower": 0.14379588740820504,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 17,
+      "model": "history_basis",
+      "lower": 0.10084570864447188,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 17,
+      "model": "oracle",
+      "lower": 0.44773922892405027,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 18,
+      "model": "learned_gw",
+      "lower": 0.2824302073312287,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 18,
+      "model": "fixed_gw",
+      "lower": 0.1840616627683282,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 18,
+      "model": "history_basis",
+      "lower": 0.19507993445474198,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 18,
+      "model": "oracle",
+      "lower": 0.48182580717848655,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 19,
+      "model": "learned_gw",
+      "lower": 0.3090375763650627,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 19,
+      "model": "fixed_gw",
+      "lower": 0.20338064621454627,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 19,
+      "model": "history_basis",
+      "lower": 0.2548997347731359,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 19,
+      "model": "oracle",
+      "lower": 0.4890211670781141,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 20,
+      "model": "learned_gw",
+      "lower": 0.02360769024295553,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 20,
+      "model": "fixed_gw",
+      "lower": 0.007561083006104639,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 20,
+      "model": "history_basis",
+      "lower": 0.04860532074244604,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 20,
+      "model": "oracle",
+      "lower": 0.20224307819665754,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 21,
+      "model": "learned_gw",
+      "lower": 0.10280484398567799,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 21,
+      "model": "fixed_gw",
+      "lower": 0.05601448577313932,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 21,
+      "model": "history_basis",
+      "lower": 0.07174867465131196,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 21,
+      "model": "oracle",
+      "lower": 0.33618253613561344,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 22,
+      "model": "learned_gw",
+      "lower": 0.19392831011093586,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 22,
+      "model": "fixed_gw",
+      "lower": 0.10979609622450451,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 22,
+      "model": "history_basis",
+      "lower": 0.14804277710987954,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 22,
+      "model": "oracle",
+      "lower": 0.4343699424768235,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 23,
+      "model": "learned_gw",
+      "lower": 0.23032123660026038,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 23,
+      "model": "fixed_gw",
+      "lower": 0.12990377305245737,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 23,
+      "model": "history_basis",
+      "lower": 0.20296523654496515,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 23,
+      "model": "oracle",
+      "lower": 0.46989715550994005,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 24,
+      "model": "learned_gw",
+      "lower": 0.25189617666605724,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 24,
+      "model": "fixed_gw",
+      "lower": 0.1427532400323448,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 24,
+      "model": "history_basis",
+      "lower": 0.2338478062600538,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 24,
+      "model": "oracle",
+      "lower": 0.48177380765631833,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 25,
+      "model": "learned_gw",
+      "lower": 0.015658163003862594,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 25,
+      "model": "fixed_gw",
+      "lower": 0.003119450226992781,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 25,
+      "model": "history_basis",
+      "lower": 0.032281903035007005,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 25,
+      "model": "oracle",
+      "lower": 0.20495040864264613,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 26,
+      "model": "learned_gw",
+      "lower": 0.08356031633544991,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 26,
+      "model": "fixed_gw",
+      "lower": 0.042979298522058854,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 26,
+      "model": "history_basis",
+      "lower": 0.11471779039664294,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 26,
+      "model": "oracle",
+      "lower": 0.3364908153058863,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 27,
+      "model": "learned_gw",
+      "lower": 0.1324144034872885,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 27,
+      "model": "fixed_gw",
+      "lower": 0.06569651264071341,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 27,
+      "model": "history_basis",
+      "lower": 0.163072382116378,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 27,
+      "model": "oracle",
+      "lower": 0.4324297018496871,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 28,
+      "model": "learned_gw",
+      "lower": 0.14821682344169745,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 28,
+      "model": "fixed_gw",
+      "lower": 0.07226112731326742,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 28,
+      "model": "history_basis",
+      "lower": 0.1788415659268957,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 28,
+      "model": "oracle",
+      "lower": 0.46842183486176797,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 29,
+      "model": "learned_gw",
+      "lower": 0.15557469413971742,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 29,
+      "model": "fixed_gw",
+      "lower": 0.07508568150947335,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 29,
+      "model": "history_basis",
+      "lower": 0.19303295710019377,
+      "robust": null
+    },
+    {
+      "seed": 4602,
+      "index": 29,
+      "model": "oracle",
+      "lower": 0.48089148835292883,
+      "robust": null
+    }
+  ]
+}

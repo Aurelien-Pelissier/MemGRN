@@ -1,0 +1,169 @@
+{
+  "frozen_hashes_verified": true,
+  "pinned_twin_unchanged": true,
+  "diffrax_two_stage_chain_max_error": 1.4079594601312806e-08,
+  "diffrax_chain_gradient_error": 1.2978031649346633e-08,
+  "independent_learned_ODE_checks": [
+    {
+      "world": "markov_1101",
+      "model": "directed_memory",
+      "error": 2.86525362214185e-07
+    },
+    {
+      "world": "hidden_mediators_1101",
+      "model": "directed_memory",
+      "error": 2.865526192996626e-07
+    },
+    {
+      "world": "measurement_filter_1101",
+      "model": "directed_memory",
+      "error": 3.7161110130745634e-07
+    },
+    {
+      "world": "hidden_common_cause_1101",
+      "model": "directed_memory",
+      "error": 4.30877536317098e-07
+    },
+    {
+      "world": "markov_1101",
+      "model": "state_space",
+      "error": 2.709544513757045e-07
+    },
+    {
+      "world": "hidden_mediators_1101",
+      "model": "state_space",
+      "error": 2.8926433504050664e-07
+    },
+    {
+      "world": "measurement_filter_1101",
+      "model": "state_space",
+      "error": 3.6702292893764366e-07
+    },
+    {
+      "world": "hidden_common_cause_1101",
+      "model": "state_space",
+      "error": 4.930501512206975e-07
+    },
+    {
+      "world": "markov_1101",
+      "model": "latent_ODE",
+      "error": 3.087036430371448e-07
+    },
+    {
+      "world": "hidden_mediators_1101",
+      "model": "latent_ODE",
+      "error": 3.0388645805290437e-07
+    },
+    {
+      "world": "measurement_filter_1101",
+      "model": "latent_ODE",
+      "error": 3.842781514523663e-07
+    },
+    {
+      "world": "hidden_common_cause_1101",
+      "model": "latent_ODE",
+      "error": 5.097341452195425e-07
+    }
+  ],
+  "step_refinements": [
+    {
+      "world": "markov_1101",
+      "model": "directed_memory",
+      "max_abs_error": 2.6932714541905156e-07,
+      "normalized_rms": 6.266961178974629e-07
+    },
+    {
+      "world": "hidden_mediators_1101",
+      "model": "directed_memory",
+      "max_abs_error": 2.6932893781861367e-07,
+      "normalized_rms": 5.546239766333027e-07
+    },
+    {
+      "world": "measurement_filter_1101",
+      "model": "directed_memory",
+      "max_abs_error": 3.494490071753731e-07,
+      "normalized_rms": 8.99180068881817e-07
+    },
+    {
+      "world": "hidden_common_cause_1101",
+      "model": "directed_memory",
+      "max_abs_error": 4.042999646736156e-07,
+      "normalized_rms": 1.111004751528727e-06
+    },
+    {
+      "world": "markov_1101",
+      "model": "state_space",
+      "max_abs_error": 2.5456351138153366e-07,
+      "normalized_rms": 7.301363322684395e-07
+    },
+    {
+      "world": "hidden_mediators_1101",
+      "model": "state_space",
+      "max_abs_error": 2.718938390544601e-07,
+      "normalized_rms": 5.713257120477984e-07
+    },
+    {
+      "world": "measurement_filter_1101",
+      "model": "state_space",
+      "max_abs_error": 3.4499235482265966e-07,
+      "normalized_rms": 9.094634286900315e-07
+    },
+    {
+      "world": "hidden_common_cause_1101",
+      "model": "state_space",
+      "max_abs_error": 4.6234289888952285e-07,
+      "normalized_rms": 1.3035068553852277e-06
+    },
+    {
+      "world": "markov_1101",
+      "model": "latent_ODE",
+      "max_abs_error": 2.9020989145145393e-07,
+      "normalized_rms": 8.05187153422415e-07
+    },
+    {
+      "world": "hidden_mediators_1101",
+      "model": "latent_ODE",
+      "max_abs_error": 2.856906627379807e-07,
+      "normalized_rms": 6.439448161087862e-07
+    },
+    {
+      "world": "measurement_filter_1101",
+      "model": "latent_ODE",
+      "max_abs_error": 3.6141692809354975e-07,
+      "normalized_rms": 9.834718131869265e-07
+    },
+    {
+      "world": "hidden_common_cause_1101",
+      "model": "latent_ODE",
+      "max_abs_error": 4.774773296398194e-07,
+      "normalized_rms": 1.3518089754087808e-06
+    },
+    {
+      "world": "markov_1101",
+      "model": "neural_delay",
+      "max_abs_error": 4.960121793153461e-05,
+      "normalized_rms": 9.159821569503091e-05
+    },
+    {
+      "world": "hidden_mediators_1101",
+      "model": "neural_delay",
+      "max_abs_error": 6.531816200367759e-05,
+      "normalized_rms": 0.00013543230636624956
+    },
+    {
+      "world": "measurement_filter_1101",
+      "model": "neural_delay",
+      "max_abs_error": 8.140839585162832e-05,
+      "normalized_rms": 0.00015904009543872742
+    },
+    {
+      "world": "hidden_common_cause_1101",
+      "model": "neural_delay",
+      "max_abs_error": 0.007762443358465293,
+      "normalized_rms": 0.008139129423562106
+    }
+  ],
+  "max_finite_difference_gradient_error": 3.6068412145873197e-11,
+  "training_access": "Fit and validation functions receive only source arrays from training/; no sealed outcomes or edge labels are inputs.",
+  "edge_scoring": "Common controlled source-clamp contrasts; latent parameter bases are not thresholded."
+}

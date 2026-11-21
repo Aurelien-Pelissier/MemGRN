@@ -1,0 +1,19 @@
+{
+  "purpose": "Retrospective four-way RTN2 rate ablation on the previously scored ten Msn2 pulse trains. Fit each rate law to the same 16 original training single-pulse schedules only; exclude the 30-minute holdout and all repeated-pulse data from optimization and selection.",
+  "models": [
+    "constant",
+    "switch_only",
+    "neural_only",
+    "full"
+  ],
+  "rate": "Three channel logits have a free intercept. Switch = per-channel offset times 1[normalized measured Msn2 > 0.1]. Neural = original four-hidden-unit tanh correction receiving current tanh(input), upstream memory z and delayed memory h. Remove a term by making its output identically zero; both terms can be active. All laws use 0.05 + 13.95 sigmoid(logit) per hour, applied to both serial filter stages. Preserve all memory across pulses and gaps.",
+  "target": "Frozen direct + delayed W, target decay, baseline, scaling, measurement grid and per-seed readouts from the two original 2400-update neural-rate fits. Fit only active rate-law parameters for each seed. Equal-source-schedule RTN2 normalized squared error strictly after final removal through minute 120, no penalty. All models get identical outcomes, inputs and loss.",
+  "optimizer": "For each model and each frozen readout, compare three source-only starts: projected archived rate weights, the original untrained seed initialization, and a 3/hour base with seeded dispersed logit offsets and fresh hidden features. Each gets 2400 full-batch Adam updates, same original cosine learning-rate schedule and clipping. Select smallest final training recovery error; use mean forecasts across readout seeds. No choice uses repeated-pulse responses. Report source loss and sensitivity to seed/start.",
+  "endpoint": "All ten repeated-pulse schedules, mean per-schedule MSE strictly after final nominal removal to minute 120, standardized as in the frozen study. Each schedule equal weight. Report switch added to constant and neural-only, neural added to constant and switch-only, schedule-wise scores, six/eight-pulse and remaining-eight means, the first 40 minutes, and half-step integration. Relative performance of the previously trained intact network is historical context only.",
+  "parent_forecasts": "2423c2b0454d463f1f61958d928685c08518dbdbcad58883add82d03dae1abd0",
+  "seeds": [
+    416,
+    819
+  ],
+  "updates": 2400
+}

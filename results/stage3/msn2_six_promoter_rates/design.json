@@ -1,0 +1,23 @@
+{
+  "status": "Extension of the frozen RTN2 rate-input protocol to every other native promoter. Same yeast study and ten previously analyzed schedules. Independent rate fits per promoter and per original readout seed.",
+  "promoters": [
+    "ALD3",
+    "DCS2",
+    "DDR2",
+    "HXK1",
+    "SIP18",
+    "TKL2"
+  ],
+  "models": [
+    "constant",
+    "activity",
+    "memory",
+    "both"
+  ],
+  "parent_lock": "7312b9627811b6a870a3fa379dda1ef65520962c3439e7eb92b0871dd6d27a30",
+  "source": "Use all 16 original single-pulse training conditions and the archived source-only promoter and TF scales. For each target, minimize normalized reporter MSE strictly after its source pulse is removed; equal weight across schedules. Exclude the original 30-minute holdout. Three source-only starts, 2400 Adam updates each with identical clipping and cosine schedule. Select the lowest final source MSE per readout seed (416 and 819); then average predictions.",
+  "architecture": "Use the existing refined solver, rate family implementation and starts unchanged. Freeze each promoter's direct W, delayed W and decay from each original single-pulse network. Constant: three channel intercepts. Activity: smooth correction sees current Msn2 only. Memory: correction sees channel z and h only. Both: correction sees all three. All models retain direct Msn2 input and carry both filter states across gaps. No binary switch.",
+  "solver": "Classical RK4 at 0.3125 minutes during training and primary prediction, piecewise linear measured Msn2 before tanh. Check frozen forecasts at 0.15625 minutes and verify independently from raw reporter matrices.",
+  "primary": "Score the ten repeated schedules with observed Msn2, including after final washout, at the original five-minute reporter grid strictly after last removal to 120 minutes. Mean squared normalized YFP change within schedule, then equal weight to schedules and six promoters. RTN2 excluded from all pooled scores. Report all promoter by schedule scores.",
+  "contrasts": "Each adaptive rule vs constant; combined vs activity and vs memory, activity vs memory; promoter-level, schedule-averaged and 60 promoter-schedule win counts. Report leave-one-promoter-out, source-start/seed sensitivity, common first 40 minutes, six/eight trains and the remaining eight. Descriptive comparisons among correlated reporters and schedules."
+}

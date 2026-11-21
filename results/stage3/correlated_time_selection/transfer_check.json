@@ -1,0 +1,159 @@
+{
+  "analysis": "Post hoc check conditional on the 16 networks and simulated true means. Simultaneous one-sided Hoeffding coverage of 95% across six surrogate advantages and six upper allowances for sums of exact TV distances, conditional on templates. Difference and error strata each share draws across methods, schedules and correlations.",
+  "draws": 2048,
+  "noise_seed": 519247,
+  "independent_queries": 1572864,
+  "certified": 0,
+  "score_hash": "027bbac6395e823dc13e5037865d96b47c8ed635e1e7cb6e7580b26aa394ddc2",
+  "code_hash": "0ce76b2e57e4891e6c04764fad28c576a8ea4606e62d0903d33738db0d1bba62",
+  "fitted_accuracy": [
+    [
+      0.38816494411892366,
+      0.380443361070421,
+      0.3788074917263455
+    ],
+    [
+      0.39523527357313376,
+      0.3878898620605469,
+      0.38076655069986987
+    ],
+    [
+      0.40137608846028633,
+      0.39305750528971356,
+      0.3872826894124349
+    ]
+  ],
+  "actual_accuracy": [
+    [
+      0.3906464046902127,
+      0.3852354685465495,
+      0.389502313401964
+    ],
+    [
+      0.4073150422837999,
+      0.40767849816216367,
+      0.4034880532158746
+    ],
+    [
+      0.41144466400146484,
+      0.4098295635647243,
+      0.40890343983968097
+    ]
+  ],
+  "average_tv_bound": [
+    [
+      0.02467881229305699,
+      0.039808358947032496,
+      0.05361442906988109
+    ],
+    [
+      0.03248152347765943,
+      0.049607057704621045,
+      0.07996837438245422
+    ],
+    [
+      0.03373555633651958,
+      0.05008377240266467,
+      0.08430528468419804
+    ]
+  ],
+  "reduced_tv_estimates": [
+    [
+      0.02055055385357914,
+      0.03329221353080515,
+      0.045288010351815386
+    ],
+    [
+      0.026815735797146235,
+      0.04112139887034644,
+      0.06760178751197646
+    ],
+    [
+      0.02746710496215568,
+      0.04097377643469421,
+      0.07044939635922157
+    ]
+  ],
+  "tv_noise_seed": 461735,
+  "tv_independent_draws": 786432,
+  "comparisons": [
+    {
+      "model": "learned_gw",
+      "comparator": "even",
+      "fitted_gain": 0.013211144341362668,
+      "template_error_allowance": 0.05175101997468624,
+      "mc_allowance": 0.0026398849921130175,
+      "analytic_bound": 0.05841436862957657,
+      "reduced_tv_sum": 0.04801765881573482,
+      "tv_mc_allowance": 0.0037333611589514203,
+      "lower_on_expected_gain": -0.04117976062543659,
+      "positive_certificate": false,
+      "measured_gain": 0.02079825931125212
+    },
+    {
+      "model": "fixed_gw",
+      "comparator": "even",
+      "fitted_gain": 0.012614144219292578,
+      "template_error_allowance": 0.07799935112445078,
+      "mc_allowance": 0.0026398849921130175,
+      "analytic_bound": 0.08989213134969717,
+      "reduced_tv_sum": 0.07426598996549935,
+      "tv_mc_allowance": 0.0037333611589514203,
+      "lower_on_expected_gain": -0.06802509189727121,
+      "positive_certificate": false,
+      "measured_gain": 0.024594095018174778
+    },
+    {
+      "model": "history_basis",
+      "comparator": "even",
+      "fitted_gain": 0.008475197686089397,
+      "template_error_allowance": 0.11947076786998838,
+      "mc_allowance": 0.0026398849921130175,
+      "analytic_bound": 0.13791971375407913,
+      "reduced_tv_sum": 0.11573740671103695,
+      "tv_mc_allowance": 0.0037333611589514203,
+      "lower_on_expected_gain": -0.11363545517601199,
+      "positive_certificate": false,
+      "measured_gain": 0.019401126437716965
+    },
+    {
+      "model": "learned_gw",
+      "comparator": "iid",
+      "fitted_gain": 0.006140814887152568,
+      "template_error_allowance": 0.05801620191825333,
+      "mc_allowance": 0.0026398849921130175,
+      "analytic_bound": 0.06621707981417901,
+      "reduced_tv_sum": 0.05428284075930191,
+      "tv_mc_allowance": 0.0037333611589514203,
+      "lower_on_expected_gain": -0.05451527202321378,
+      "positive_certificate": false,
+      "measured_gain": 0.004129621717664955
+    },
+    {
+      "model": "fixed_gw",
+      "comparator": "iid",
+      "fitted_gain": 0.005167643229166685,
+      "template_error_allowance": 0.08582853646399208,
+      "mc_allowance": 0.0026398849921130175,
+      "analytic_bound": 0.09969083010728572,
+      "reduced_tv_sum": 0.08209517530504065,
+      "tv_mc_allowance": 0.0037333611589514203,
+      "lower_on_expected_gain": -0.0833007782269384,
+      "positive_certificate": false,
+      "measured_gain": 0.0021510654025606035
+    },
+    {
+      "model": "history_basis",
+      "comparator": "iid",
+      "fitted_gain": 0.006516138712565012,
+      "template_error_allowance": 0.14178454503014945,
+      "mc_allowance": 0.0026398849921130175,
+      "analytic_bound": 0.16427365906665226,
+      "reduced_tv_sum": 0.13805118387119802,
+      "tv_mc_allowance": 0.0037333611589514203,
+      "lower_on_expected_gain": -0.13790829130969745,
+      "positive_certificate": false,
+      "measured_gain": 0.005415386623806362
+    }
+  ]
+}

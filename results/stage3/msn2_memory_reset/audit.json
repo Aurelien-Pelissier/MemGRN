@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-11T03:12:36.726851+00:00",
+  "scores": "a1a4183c2454c40ce7fd86327c3327eb533af64a28cdbab2de714c003a882fbd",
+  "code": "e7807bb7cb13afbe22bb69321fb220c536a2203f64549bcd22933f895329afde",
+  "max_abs_reset_replay_error": 9.367190867415331e-08,
+  "tested_timing": [
+    "each later onset",
+    "each intervening offset",
+    "final onset only"
+  ],
+  "schedules": [
+    "FM_6_5min_690nM",
+    "FM_8_5min_690nM"
+  ],
+  "solver": "Original archived JAX field run on separate segments, with analytic midpoint propagation of accumulated reporter."
+}

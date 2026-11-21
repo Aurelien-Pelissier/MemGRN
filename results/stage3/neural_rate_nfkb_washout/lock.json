@@ -1,0 +1,18 @@
+{
+  "utc": "2026-11-11T02:30:52.494694+00:00",
+  "spec": {
+    "inputs": {
+      "data/raw/activity_shapes/sen/data/mRNA.nfkbgene.rpkm.csv": "a4b91c3411a4fd9fe1ca0ec6d4dbe5db6e2dc7e3d87d039cdfb5665eb9f9724d",
+      "data/raw/activity_shapes/sen/data/Final_EMSA_ifnar.csv": "2257cf343a9f398fa584a9abe73239ca2c170a93b6ffc02ee04d10ead9ee86c9",
+      "data/raw/activity_shapes/sen/data/Final_EMSA_ifnarikba.csv": "d72cd809992c07a4a2c3878f4561fe8c66e6d03aea9cc0780e46afbc98876be8",
+      "data/raw/activity_shapes/sen/auxilary_functions.R": "ecfa2a1b1d1fb732f6dfca7f1b6d64c85842ec264fa83a6bb7d8d545d358c7d7"
+    },
+    "design": "72d2380b7cb1c5bb60fb79b0ee3f72d775ffec19d13185fa50d2e315538c0342",
+    "scripts": {
+      "real_washout_data.py": "3db2a4db7f44cd27b80caf5b56eecc60ba735bd26da1f8eb6dbee54a94d08a67",
+      "fit_real_washout.py": "7fe61bf2243091a0507b1b25c47f3239db42e39f668cead02b17c992774122e2",
+      "score_real_washout.py": "551c4fb89ce19f1f6bdf10bba14fe5611ffc94014e7ca87d3cb442986c98f330",
+      "nfkb_activity_ode.py": "2969004802a56d07dd05fd370114ea08f3690a067c876fb6d61f5a00f6901241"
+    }
+  }
+}

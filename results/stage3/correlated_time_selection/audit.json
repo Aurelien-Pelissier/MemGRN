@@ -1,0 +1,9 @@
+{
+  "networks": 16,
+  "targets": 96,
+  "training_accuracy_max_error": 1.1102230246251565e-16,
+  "direct_classifications": 55296,
+  "paired_intervals_verified": 24,
+  "max_full_simulator_error": 1.2478666155946172e-08,
+  "scores_sha256": "027bbac6395e823dc13e5037865d96b47c8ed635e1e7cb6e7580b26aa394ddc2"
+}

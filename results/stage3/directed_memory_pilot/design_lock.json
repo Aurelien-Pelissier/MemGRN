@@ -1,0 +1,79 @@
+{
+  "locked_utc": "2026-11-10T20:10:40.435523+00:00",
+  "question": "Do directed finite-memory dynamics improve transfer to held-out intervention schedules and effective parent-edge recovery under partial observation?",
+  "population": {
+    "nodes": 6,
+    "network_seeds": [
+      1101,
+      1102,
+      1103
+    ],
+    "cases": [
+      "markov",
+      "hidden_mediators",
+      "measurement_filter",
+      "hidden_common_cause"
+    ],
+    "worlds": 12
+  },
+  "ground_truth": "Sparse signed tanh network, 9 off-diagonal parent edges, stable self decay. Hidden mediator case splits edges into instantaneous and two-stage delayed paths. Sensor case filters each physical coordinate through a known first-order sensor. Common-cause case adds an autonomous hidden damped oscillator driving a pair with no direct edge in either direction.",
+  "edge_definition": "Effective parent edges between retained physical coordinates, permitting hidden intermediates but blocking paths through other retained coordinates. This is not recovery of the full microscopic graph. The known sensor operator is supplied equally to all models, anchoring physical coordinates.",
+  "inputs": "Known additive interventions enter their named physical coordinates with unit gain in every model. Hard clamps replace the physical coordinate during specified intervals; hidden/memory states persist. All trajectories start with physical state zero. Initial hidden/memory states are learned globally from training, not inferred from test outcomes.",
+  "data": {
+    "train_horizon": 12,
+    "test_horizon": 18,
+    "observation_dt": 0.2,
+    "fit_dt": 0.1,
+    "reference": "independent SciPy DOP853 on constant-input segments, tight tolerances",
+    "noise_sd": 0.015,
+    "train_schedules": 18,
+    "validation_schedules": 6,
+    "test_schedules": 12,
+    "noise_replicates_per_schedule": 2
+  },
+  "train": "Single-coordinate positive/negative pulses plus selected paired pulses, amplitude 0.8, durations 1 or 2. Source interventions and independent observation replicates only.",
+  "validation": "Separate single/pair schedules, durations 1.5, shifted onset, amplitude 0.7 or 0.9. No graph labels for selection.",
+  "test": "Four long pulses, four repeated pulses, two held-out paired activations, two pulse-then-zero-clamp schedules; longer horizon and amplitudes up to1.2. Report all schedule families separately.",
+  "models": {
+    "directed_memory": "dx=-d*x+A*tanh(x)+M1*flux1+M2*flux2+b+u. Each source has a learned stable two-phase memory chain; uses nonmarkov.phase_type_dynamics inside the differentiable vector field. Source-specific rate; global trainable initial phase states. Effective graph is explicit, but no edges are supplied.",
+    "state_space": "Continuous-time linear state-space model with6 physical and12 latent states, fixed named actuation and observation coordinates; trainable stable-diagonal generator, off-diagonal dynamics, bias and global latent initial state. This is a fitted latent SSM, not merely observed linear regression.",
+    "latent_ODE": "6 physical and12 latent states; damped dynamics plus tanh MLP width24; named additive intervention/clamp acts only on physical coordinate; global trainable latent initial state.",
+    "neural_delay": "6 physical coordinates; tanh MLP width24 over current state and delays0.5,1.5,3.0; trainable global constant prehistory, self damping and bias. Explicit fixed-delay DDE; source history preserved after intervention."
+  },
+  "observation_operator": "Only measurement_filter case applies known per-coordinate first-order sensor to all four methods. Others observe physical coordinates directly. This is an observation-aware control, not blind sensor/biology identification.",
+  "optimization": {
+    "initializations": [
+      0,
+      1
+    ],
+    "updates_per_start": 400,
+    "optimizer": "Adam with global gradient clipping5, learning rate cosine0.01 to0.001",
+    "batch_trajectories": 6,
+    "checkpoint_updates": [
+      0,
+      50,
+      100,
+      200,
+      300,
+      400
+    ],
+    "selection": "Lowest mean held-out validation normalized squared error, over both initializations and checkpoints",
+    "regularization": "Common1e-4 mean-square penalty on all unconstrained trainable parameters; no graph-label tuning",
+    "budget_sensitivity": "For network seed1101 in each case and model, continue its validation-selected initialization from update400 to800, then select by validation among original and extra checkpoints. Report separately; no test-based budget expansion."
+  },
+  "implementation": "Models integrated on matched RK4 grid; DDE uses linear interpolation of available delayed states. Directed memory calls pinned twin phase_type_dynamics, with independent Diffrax/solve_memory validation. Memory states are signed deviations, not claimed probabilities. CPU float64. Model parameter counts and timing reported; equal update budget is not equal capacity or convergence.",
+  "metrics": [
+    "Train-scale normalized held-out trajectory MSE against independent noise-free generator and against noisy replicates",
+    "Per-family and per-world paired errors, with no genes/timepoints treated as independent worlds",
+    "Common intervention-derived edge scores: for each source-target pair clamp source to0.2, keep other physical coordinates except target atzero, compare paired baseline response over8h. Score RMS target response /0.2. Native parameter thresholding is not compared across latent bases.",
+    "Average precision and AUROC against generating effective parent adjacency; hidden-common-cause pair scores separately",
+    "Memory-removed and source-memory-reset ablations on frozen directed model",
+    "Optimization budget, step-size sensitivity and false memory usage in Markov/sensor controls"
+  ],
+  "freeze": "Generate training/validation separately from sealed test targets and graph labels; model-selection module reads only training/validation inputs/outcomes and sensor metadata. Freeze all chosen models/predictions before unsealing scoring. Design and all amendments retained.",
+  "limitations": "Small synthetic pilot, not SOTA. Hidden-mediator generator overlaps with proposed memory family; baselines have different inductive biases and parameter counts. Test clamp edge scores are effective causal influences in the specified simulator; hidden microscopic edges remain unidentified. Fixed delay grid and local optimization may limit baselines.",
+  "provenance": {
+    "C:\\Users\\googo\\Documents\\GitHub\\non-markovian-diffrax\\src\\nonmarkov\\phase_type.py": "e4b6d126a89b44000a82c357756f850031a03498586bd6113476017fea99c25d",
+    "C:\\Users\\googo\\Documents\\GitHub\\non-markovian-diffrax\\src\\nonmarkov\\memory.py": "cd4234f727dd7d6abde6104ab1240444220b412a096733b8da22dba6437d65a4"
+  }
+}
