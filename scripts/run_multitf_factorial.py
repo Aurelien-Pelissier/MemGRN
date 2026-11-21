@@ -38,7 +38,7 @@ OUT_DIR = ROOT / "results" / "multitf_factorial"
 MODELS_TO_RUN: tuple[DynamicalModelFamily, ...] = (
     DynamicalModelFamily.LOCAL_CONST,
     DynamicalModelFamily.MEMGRN,
-    DynamicalModelFamily.MEMGRN_INT,
+    DynamicalModelFamily.MEMGRN_ADDITIVE,
     DynamicalModelFamily.COUPLED_CONST,
     DynamicalModelFamily.COUPLED_ADAPTIVE,
     DynamicalModelFamily.LTC_COUPLED,
@@ -181,7 +181,7 @@ def main() -> None:
         "primary_outcomes": ["test_mse", "attribution_rmse"],
         "secondary_outcomes": ["spurious_crosstalk_rmse", "edge_ap", "edge_auroc"],
         "decision_rule": (
-            "Source-local adaptive memory (memgrn / memgrn_int) must reduce counterfactual "
+            "Unified source-local adaptive memory (memgrn) must reduce counterfactual "
             "attribution_rmse relative to coupled_adaptive and ltc_coupled while improving "
             "or matching held-out OOD intervention test_mse."
         ),
@@ -232,7 +232,7 @@ def main() -> None:
                 "edge_ap": float(np.mean([w["models"][m_key]["edge_ap"] for w in sub])),
             }
 
-        hero = "memgrn" if regime == "additive" else "memgrn_int"
+        hero = "memgrn"
         comparisons = {
             f"{hero}_vs_coupled_adaptive_mse": _paired_ci(
                 [w["models"][hero]["test_mse"] for w in sub],

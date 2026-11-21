@@ -215,6 +215,8 @@ def main() -> None:
         (ROOT / "results" / "msn2_joint_and_cross_readout" / "scores.json").read_text()
     )
     mac = json.loads((ROOT / "results" / "macrophage_multitf" / "scores.json").read_text())
+    hipsc = json.loads((ROOT / "results" / "hipsc_closed_loop" / "scores.json").read_text())
+    nfkb_ortho = json.loads((ROOT / "results" / "nfkb_ortho" / "scores.json").read_text())
 
     six_means = {
         m: float(
@@ -238,9 +240,9 @@ def main() -> None:
         "multitf_additive_memgrn_vs_coupled_mse_reduction_pct": mtf["summary"]["additive"][
             "comparisons"
         ]["memgrn_vs_coupled_adaptive_mse"]["pct_reduction_vs_b"],
-        "multitf_cooperative_memgrn_int_vs_ltc_mse_reduction_pct": mtf["summary"][
+        "multitf_cooperative_memgrn_vs_ltc_mse_reduction_pct": mtf["summary"][
             "cooperative"
-        ]["comparisons"]["memgrn_int_vs_ltc_coupled_mse"]["pct_reduction_vs_b"],
+        ]["comparisons"]["memgrn_vs_ltc_coupled_mse"]["pct_reduction_vs_b"],
         "msn2_joint_memgrn_10train_mse": msn2_joint["joint_training"]["memgrn"][
             "ten_trains_post_mse"
         ],
@@ -250,8 +252,17 @@ def main() -> None:
             - msn2_joint["cross_readout_2x2"]["local_const"]["memory"]
             / msn2_joint["cross_readout_2x2"]["local_const"]["constant"]
         ),
-        "macrophage_memgrn_int_auroc": mac["summary"]["memgrn_int"][
+        "macrophage_memgrn_auroc": mac["summary"]["memgrn"][
             "regulator_attribution_auroc"
+        ],
+        "hipsc_closed_loop_memgrn_unseen_ko_mse": hipsc["summary"]["cl_memgrn"][
+            "unseen_ko_mse"
+        ],
+        "hipsc_closed_loop_memgrn_chip_psc_auroc": hipsc["summary"]["cl_memgrn"][
+            "chip_psc_pooled_auroc"
+        ],
+        "nfkb_memgrn_ortho_mean_mse": nfkb_ortho["summary"]["memgrn_ortho"][
+            "mean_post_mse"
         ],
     }
     print(json.dumps(report, indent=2))

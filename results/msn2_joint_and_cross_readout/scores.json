@@ -1,6 +1,6 @@
 {
-  "design_sha256": "06298f811abafef4af81dd90979aec09925485f83df435a8ed30b16dcc912335",
-  "elapsed_seconds": 2948.7064683437347,
+  "design_sha256": "df9c6d9c464d1441a5d12ba228f9ad4bfee402d3cdeeac6c15a514840fc0fd8e",
+  "elapsed_seconds": 853.7849943637848,
   "joint_training": {
     "local_const": {
       "n_params": 38,
@@ -24,6 +24,27 @@
       ]
     },
     "memgrn": {
+      "n_params": 81,
+      "val_loss": 0.06536594033241272,
+      "chosen_reg": 1e-05,
+      "held_30min_post_mse": 0.014319504998152991,
+      "ten_trains_post_mse": 0.03657411706564372,
+      "ten_trains_first40_mse": 0.02754109945600666,
+      "ten_trains_no_sip18_mse": 0.04040507711811663,
+      "by_schedule": [
+        0.01113735748952471,
+        0.02170522380142752,
+        0.048972041835169934,
+        0.03283610912213959,
+        0.053106666989058526,
+        0.06886480697562425,
+        0.04575556656158562,
+        0.026305776595338417,
+        0.02832428632496879,
+        0.02873333496159981
+      ]
+    },
+    "memgrn_sym": {
       "n_params": 66,
       "val_loss": 0.06351587921380997,
       "chosen_reg": 1e-06,
@@ -67,44 +88,44 @@
     },
     "perturb_ode": {
       "n_params": 224,
-      "val_loss": 0.045525774359703064,
+      "val_loss": 0.04543621465563774,
       "chosen_reg": 1e-06,
-      "held_30min_post_mse": 0.032246725977606014,
-      "ten_trains_post_mse": 0.09706322244469359,
-      "ten_trains_first40_mse": 0.08844254961042537,
-      "ten_trains_no_sip18_mse": 0.08658013473667321,
+      "held_30min_post_mse": 0.0323055745343615,
+      "ten_trains_post_mse": 0.0976666309831748,
+      "ten_trains_first40_mse": 0.08865316108700809,
+      "ten_trains_no_sip18_mse": 0.0871461444276804,
       "by_schedule": [
-        0.006140626534631362,
-        0.015417688438066268,
-        0.018730776252461095,
-        0.081949099111291,
-        0.05735869063353867,
-        0.6574555544995163,
-        0.026643001679460494,
-        0.030051979277854548,
-        0.03249267395917157,
-        0.04439213406094427
+        0.00628362970267813,
+        0.015663124926705043,
+        0.01875339465316043,
+        0.0818627773502832,
+        0.05640343376204948,
+        0.6643932648185975,
+        0.026857257329753897,
+        0.030103844034724724,
+        0.03233356818524798,
+        0.04401201506854759
       ]
     },
     "latent_ode": {
       "n_params": 546,
-      "val_loss": 0.017406180500984192,
+      "val_loss": 0.017406173050403595,
       "chosen_reg": 1e-06,
-      "held_30min_post_mse": 0.014657642063688685,
-      "ten_trains_post_mse": 0.03706344624391437,
-      "ten_trains_first40_mse": 0.030511735766926097,
-      "ten_trains_no_sip18_mse": 0.03999261793837904,
+      "held_30min_post_mse": 0.014657616820112908,
+      "ten_trains_post_mse": 0.03706343266745545,
+      "ten_trains_first40_mse": 0.030511722800090648,
+      "ten_trains_no_sip18_mse": 0.03999260682758239,
       "by_schedule": [
-        0.006541905584335085,
-        0.009022746683830315,
-        0.028389151102757793,
-        0.025618685826458685,
-        0.03201811480719198,
-        0.1795002705930789,
-        0.025716762965283857,
-        0.018443436407394036,
-        0.021123319777179766,
-        0.02426006869163319
+        0.006541900719261054,
+        0.009022739281248308,
+        0.028389137411828805,
+        0.02561868757372467,
+        0.032018118521244344,
+        0.17950017489089556,
+        0.02571676073558052,
+        0.018443427708034945,
+        0.02112331684209485,
+        0.02426006299064148
       ]
     }
   },
@@ -116,44 +137,44 @@
       "both": 0.03305085712168113
     },
     "memgrn": {
-      "constant": 0.1749913952249134,
-      "activity": 0.049327992092167684,
-      "memory": 0.027679451742293856,
-      "both": 0.025392007734101673
+      "constant": 0.16970302502665532,
+      "activity": 0.05182567383554449,
+      "memory": 0.029634614416086384,
+      "both": 0.02531417645416927
     }
   },
   "shared_filter_lopo_transfer": {
-    "mean_memgrn_shared": 0.03552884799890248,
+    "mean_memgrn_shared": 0.04111560596110455,
     "mean_const_shared": 0.24488513336183798,
-    "pct_reduction": 85.49162723308088,
+    "pct_reduction": 83.21024825122689,
     "wins_memgrn": 6,
     "by_promoter": {
       "ALD3": {
-        "shared_memgrn_filter_mse": 0.02662705513890009,
+        "shared_memgrn_filter_mse": 0.024430738588162783,
         "shared_const_filter_mse": 0.48024741020638617
       },
       "DCS2": {
-        "shared_memgrn_filter_mse": 0.0076296254071263015,
+        "shared_memgrn_filter_mse": 0.005170737051461341,
         "shared_const_filter_mse": 0.02322399177848155
       },
       "DDR2": {
-        "shared_memgrn_filter_mse": 0.038698496447714115,
+        "shared_memgrn_filter_mse": 0.10449311782034883,
         "shared_const_filter_mse": 0.24771801497323126
       },
       "HXK1": {
-        "shared_memgrn_filter_mse": 0.06949669145906508,
+        "shared_memgrn_filter_mse": 0.06516205061446032,
         "shared_const_filter_mse": 0.054434024750393786
       },
       "RTN2": {
-        "shared_memgrn_filter_mse": 0.04116764554232023,
+        "shared_memgrn_filter_mse": 0.03144112020175283,
         "shared_const_filter_mse": 0.0983556811760475
       },
       "SIP18": {
-        "shared_memgrn_filter_mse": 0.027828798001882916,
+        "shared_memgrn_filter_mse": 0.04323312792549476,
         "shared_const_filter_mse": 0.43068576471692027
       },
       "TKL2": {
-        "shared_memgrn_filter_mse": 0.03725362399530859,
+        "shared_memgrn_filter_mse": 0.013878349526050987,
         "shared_const_filter_mse": 0.37953104593140524
       }
     }
@@ -162,8 +183,8 @@
     "n_matched_pulse_pairs": 5,
     "mean_washout_y_gap": 0.05584799321269548,
     "mean_empirical_tail_divergence_mse": 0.13287463787396542,
-    "mean_memgrn_tail_mse": 0.03214925571861236,
-    "mean_perturb_ode_tail_mse": 0.04826143472466784,
+    "mean_memgrn_tail_mse": 0.03366159487867827,
+    "mean_perturb_ode_tail_mse": 0.04783858587670139,
     "pairs": [
       {
         "promoter": "DDR2",
@@ -177,8 +198,8 @@
         ],
         "washout_y_gap": 0.05256454794400928,
         "empirical_tail_divergence_mse": 0.025488462275081974,
-        "memgrn_pair_tail_mse": 0.027058983180146295,
-        "perturb_ode_pair_tail_mse": 0.00786886385429375
+        "memgrn_pair_tail_mse": 0.028686248570697293,
+        "perturb_ode_pair_tail_mse": 0.007830168177196605
       },
       {
         "promoter": "HXK1",
@@ -192,8 +213,8 @@
         ],
         "washout_y_gap": 0.08390408313446379,
         "empirical_tail_divergence_mse": 0.11759646059777724,
-        "memgrn_pair_tail_mse": 0.032260238189868055,
-        "perturb_ode_pair_tail_mse": 0.01861762624868519
+        "memgrn_pair_tail_mse": 0.032364328846828924,
+        "perturb_ode_pair_tail_mse": 0.018929819118481888
       },
       {
         "promoter": "HXK1",
@@ -207,8 +228,8 @@
         ],
         "washout_y_gap": 0.0017316984060781193,
         "empirical_tail_divergence_mse": 0.056823683698778514,
-        "memgrn_pair_tail_mse": 0.004074081997991953,
-        "perturb_ode_pair_tail_mse": 0.011330213164947537
+        "memgrn_pair_tail_mse": 0.008540721340644243,
+        "perturb_ode_pair_tail_mse": 0.01130891812627061
       },
       {
         "promoter": "RTN2",
@@ -222,8 +243,8 @@
         ],
         "washout_y_gap": 0.06624268902970043,
         "empirical_tail_divergence_mse": 0.20202213882303063,
-        "memgrn_pair_tail_mse": 0.004593244151918521,
-        "perturb_ode_pair_tail_mse": 0.05009440496830539
+        "memgrn_pair_tail_mse": 0.0045154529857604426,
+        "perturb_ode_pair_tail_mse": 0.049521947655813844
       },
       {
         "promoter": "SIP18",
@@ -237,8 +258,8 @@
         ],
         "washout_y_gap": 0.07479694754922578,
         "empirical_tail_divergence_mse": 0.26244244397515865,
-        "memgrn_pair_tail_mse": 0.09275973107313697,
-        "perturb_ode_pair_tail_mse": 0.15339606538710732
+        "memgrn_pair_tail_mse": 0.09420122264946043,
+        "perturb_ode_pair_tail_mse": 0.15160207630574402
       }
     ]
   }

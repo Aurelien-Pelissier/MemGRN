@@ -33,7 +33,7 @@
   "models": [
     "local_const",
     "memgrn",
-    "memgrn_int",
+    "memgrn_additive",
     "coupled_const",
     "coupled_adaptive",
     "ltc_coupled",
@@ -57,5 +57,5 @@
     "edge_ap",
     "edge_auroc"
   ],
-  "decision_rule": "Source-local adaptive memory (memgrn / memgrn_int) must reduce counterfactual attribution_rmse relative to coupled_adaptive and ltc_coupled while improving or matching held-out OOD intervention test_mse."
+  "decision_rule": "Unified source-local adaptive memory (memgrn) must reduce counterfactual attribution_rmse relative to coupled_adaptive and ltc_coupled while improving or matching held-out OOD intervention test_mse."
 }

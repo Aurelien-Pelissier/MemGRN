@@ -21,6 +21,7 @@
   "models_joint": [
     "local_const",
     "memgrn",
+    "memgrn_sym",
     "ltc_local",
     "perturb_ode",
     "latent_ode"

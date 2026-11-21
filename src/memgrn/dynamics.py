@@ -32,6 +32,7 @@ class MemGRNConfig:
     use_activity_switch: bool = False
     switch_threshold: float = 0.1
     use_pairwise_interactions: bool = False
+    use_asymmetric_rates: bool = False
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -63,6 +64,8 @@ class MemGRNParams:
     input_proj: np.ndarray | None = None
     hidden_bias: np.ndarray | None = None
     output_proj: np.ndarray | None = None
+    rate_logits_down: np.ndarray | None = None
+    output_proj_down: np.ndarray | None = None
     interaction_weights: np.ndarray | None = None
 
 
@@ -103,6 +106,7 @@ def initialize_memgrn_params(
     )
 
     n_inputs = _active_input_indices(config.rate_mode)
+    logits_down = rate_logits.copy() if config.use_asymmetric_rates else None
     if not n_inputs:
         return MemGRNParams(
             direct_weights=direct,
@@ -110,6 +114,7 @@ def initialize_memgrn_params(
             relaxation=relaxation,
             rate_logits=rate_logits,
             switch_offsets=switch_offsets,
+            rate_logits_down=logits_down,
             interaction_weights=inter_w,
         )
 
@@ -117,6 +122,13 @@ def initialize_memgrn_params(
     hidden_bias = rng.normal(0.0, 0.28, size=(config.hidden_width,))
     output_proj = np.zeros(
         (config.n_sources, config.n_channels, config.hidden_width), dtype=np.float64
+    )
+    output_proj_down = (
+        np.zeros(
+            (config.n_sources, config.n_channels, config.hidden_width), dtype=np.float64
+        )
+        if config.use_asymmetric_rates
+        else None
     )
     return MemGRNParams(
         direct_weights=direct,
@@ -127,6 +139,8 @@ def initialize_memgrn_params(
         input_proj=input_proj,
         hidden_bias=hidden_bias,
         output_proj=output_proj,
+        rate_logits_down=logits_down,
+        output_proj_down=output_proj_down,
         interaction_weights=inter_w,
     )
 
@@ -141,6 +155,29 @@ def _active_input_indices(mode: RateInputMode) -> tuple[int, ...]:
     return (0, 1, 2)
 
 
+def _compute_hidden_features(
+    activity: np.ndarray,
+    z_state: np.ndarray,
+    h_state: np.ndarray,
+    params: MemGRNParams,
+    config: MemGRNConfig,
+) -> np.ndarray | None:
+    indices = _active_input_indices(config.rate_mode)
+    if not indices or params.input_proj is None or params.hidden_bias is None:
+        return None
+    features = (
+        np.broadcast_to(activity[..., None], z_state.shape),
+        z_state,
+        h_state,
+    )
+    hidden = np.broadcast_to(
+        params.hidden_bias, (*z_state.shape, config.hidden_width)
+    ).copy()
+    for proj_row, feat_idx in enumerate(indices):
+        hidden = hidden + features[feat_idx][..., None] * params.input_proj[proj_row]
+    return np.tanh(hidden)
+
+
 def adaptive_rate_law(
     raw_input: np.ndarray,
     activity: np.ndarray,
@@ -149,20 +186,7 @@ def adaptive_rate_law(
     params: MemGRNParams,
     config: MemGRNConfig,
 ) -> np.ndarray:
-    """Compute bounded source-local channel rates lambda_{ir}(a_i, z_{ir}, h_{ir}).
-
-    Args:
-        raw_input: Uncompressed TF input g_i of shape (..., n_sources).
-        activity: Saturated TF activity a_i = tanh(g_i) of shape (..., n_sources).
-        z_state: Upstream filter state z_{ir} of shape (..., n_sources, n_channels).
-        h_state: Delayed filter state h_{ir} of shape (..., n_sources, n_channels).
-        params: Model parameters.
-        config: Architectural configuration.
-
-    Returns:
-        Positive bounded filter rates in [rate_min, rate_max] of shape
-        (..., n_sources, n_channels).
-    """
+    """Compute bounded source-local upstream channel rates lambda^up_{ir}(a_i, z_{ir}, h_{ir})."""
     logits = np.broadcast_to(params.rate_logits, z_state.shape).copy()
     if config.use_activity_switch and params.switch_offsets is not None:
         gate = (np.abs(raw_input) > config.switch_threshold)[..., None].astype(
@@ -170,21 +194,31 @@ def adaptive_rate_law(
         )
         logits = logits + gate * params.switch_offsets
 
-    indices = _active_input_indices(config.rate_mode)
-    if indices and params.input_proj is not None and params.output_proj is not None:
-        features = (
-            np.broadcast_to(activity[..., None], z_state.shape),
-            z_state,
-            h_state,
-        )
-        hidden = np.broadcast_to(
-            params.hidden_bias, (*z_state.shape, config.hidden_width)
-        ).copy()
-        for proj_row, feat_idx in enumerate(indices):
-            hidden = hidden + features[feat_idx][..., None] * params.input_proj[proj_row]
-        logits = logits + np.sum(np.tanh(hidden) * params.output_proj, axis=-1)
+    tanh_hidden = _compute_hidden_features(activity, z_state, h_state, params, config)
+    if tanh_hidden is not None and params.output_proj is not None:
+        logits = logits + np.sum(tanh_hidden * params.output_proj, axis=-1)
 
     return config.rate_min + (config.rate_max - config.rate_min) * expit(logits)
+
+
+def adaptive_rate_pair(
+    raw_input: np.ndarray,
+    activity: np.ndarray,
+    z_state: np.ndarray,
+    h_state: np.ndarray,
+    params: MemGRNParams,
+    config: MemGRNConfig,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Compute (lambda_up, lambda_down) for upstream loading and delayed clearance."""
+    rate_up = adaptive_rate_law(raw_input, activity, z_state, h_state, params, config)
+    if not config.use_asymmetric_rates or params.rate_logits_down is None:
+        return rate_up, rate_up
+    logits_dn = np.broadcast_to(params.rate_logits_down, z_state.shape).copy()
+    tanh_hidden = _compute_hidden_features(activity, z_state, h_state, params, config)
+    if tanh_hidden is not None and params.output_proj_down is not None:
+        logits_dn = logits_dn + np.sum(tanh_hidden * params.output_proj_down, axis=-1)
+    rate_dn = config.rate_min + (config.rate_max - config.rate_min) * expit(logits_dn)
+    return rate_up, rate_dn
 
 
 def memgrn_vector_field(
@@ -197,9 +231,11 @@ def memgrn_vector_field(
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Evaluate (dz/dt, dh/dt, dy/dt) for MemGRN."""
     activity = np.tanh(raw_input)
-    rates = adaptive_rate_law(raw_input, activity, z_state, h_state, params, config)
-    dz = rates * (activity[..., None] - z_state)
-    dh = rates * (z_state - h_state)
+    rates_up, rates_dn = adaptive_rate_pair(
+        raw_input, activity, z_state, h_state, params, config
+    )
+    dz = rates_up * (activity[..., None] - z_state)
+    dh = rates_dn * (z_state - h_state)
 
     flat_h = h_state.reshape(*h_state.shape[:-2], config.n_sources * config.n_channels)
     flat_b = params.delayed_weights.reshape(
@@ -538,3 +574,119 @@ def rollout_latent_ode(
         obs.append(s[:, -n_targets:].copy())
     out = np.stack(obs, axis=0)
     return out[:, 0] if unbatched else out
+
+
+def rollout_closed_loop_memgrn_rk4(
+    n_steps: int,
+    dt: float,
+    params: MemGRNParams,
+    config: MemGRNConfig,
+    ko_mask: np.ndarray | None = None,
+    basal_levels: np.ndarray | None = None,
+    y0: np.ndarray | None = None,
+    external_drive: np.ndarray | None = None,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Integrate closed-loop Autonomous MemGRN over an N-gene network from t=0 alone.
+
+    In closed-loop mode (config.n_sources == config.n_targets == N), each gene's expression
+    shift y_i(t) relative to wild-type control drives its own source-isolated memory bank via
+    g_i(t) = (1 - ko_i) * y_i(t) - ko_i * y_{i,basal} + u_i(t), with hollow self-readout
+    (D_{ii} = 0, B_{iri} = 0). No future TF trajectories are supplied.
+    """
+    if config.n_sources != config.n_targets:
+        raise ValueError("Closed-loop MemGRN requires n_sources == n_targets")
+    n_nodes = config.n_sources
+
+    ko_arr = (
+        np.zeros((1, n_nodes), dtype=np.float64)
+        if ko_mask is None
+        else np.asarray(ko_mask, dtype=np.float64)
+    )
+    unbatched = ko_arr.ndim == 1
+    if unbatched:
+        ko_arr = ko_arr[None, :]
+    batch = ko_arr.shape[0]
+
+    basal = (
+        np.zeros((1, n_nodes), dtype=np.float64)
+        if basal_levels is None
+        else np.broadcast_to(np.asarray(basal_levels, dtype=np.float64), (batch, n_nodes))
+    )
+    y = (
+        np.zeros((batch, n_nodes), dtype=np.float64)
+        if y0 is None
+        else np.broadcast_to(np.asarray(y0, dtype=np.float64), (batch, n_nodes)).copy()
+    )
+    z = np.zeros((batch, n_nodes, config.n_channels), dtype=np.float64)
+    h = np.zeros((batch, n_nodes, config.n_channels), dtype=np.float64)
+
+    off_diag = 1.0 - np.eye(n_nodes, dtype=np.float64)
+    hollow_params = MemGRNParams(
+        direct_weights=params.direct_weights * off_diag,
+        delayed_weights=params.delayed_weights * off_diag[:, None, :],
+        relaxation=params.relaxation,
+        rate_logits=params.rate_logits,
+        switch_offsets=params.switch_offsets,
+        input_proj=params.input_proj,
+        hidden_bias=params.hidden_bias,
+        output_proj=params.output_proj,
+        rate_logits_down=params.rate_logits_down,
+        output_proj_down=params.output_proj_down,
+        interaction_weights=params.interaction_weights,
+    )
+
+    def _cl_rhs(z_s: np.ndarray, h_s: np.ndarray, y_s: np.ndarray, ext_s: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        raw_g = (1.0 - ko_arr) * y_s - ko_arr * basal + ext_s
+        return memgrn_vector_field(raw_g, z_s, h_s, y_s, hollow_params, config)
+
+    z_hist = [z.copy()]
+    h_hist = [h.copy()]
+    y_hist = [y.copy()]
+    zero_ext = np.zeros((batch, n_nodes), dtype=np.float64)
+
+    for step in range(n_steps):
+        if external_drive is None:
+            e0 = em = e1 = zero_ext
+        else:
+            e0 = external_drive[step, ..., 0]
+            em = external_drive[step, ..., 1]
+            e1 = external_drive[step, ..., 2]
+        kz1, kh1, ky1 = _cl_rhs(z, h, y, e0)
+        kz2, kh2, ky2 = _cl_rhs(z + 0.5 * dt * kz1, h + 0.5 * dt * kh1, y + 0.5 * dt * ky1, em)
+        kz3, kh3, ky3 = _cl_rhs(z + 0.5 * dt * kz2, h + 0.5 * dt * kh2, y + 0.5 * dt * ky2, em)
+        kz4, kh4, ky4 = _cl_rhs(z + dt * kz3, h + dt * kh3, y + dt * ky3, e1)
+        z = z + (dt / 6.0) * (kz1 + 2.0 * kz2 + 2.0 * kz3 + kz4)
+        h = h + (dt / 6.0) * (kh1 + 2.0 * kh2 + 2.0 * kh3 + kh4)
+        y = y + (dt / 6.0) * (ky1 + 2.0 * ky2 + 2.0 * ky3 + ky4)
+        z_hist.append(z.copy())
+        h_hist.append(h.copy())
+        y_hist.append(y.copy())
+
+    z_out = np.stack(z_hist, axis=0)
+    h_out = np.stack(h_hist, axis=0)
+    y_out = np.stack(y_hist, axis=0)
+    if unbatched:
+        return z_out[:, 0], h_out[:, 0], y_out[:, 0]
+    return z_out, h_out, y_out
+
+
+def project_orthogonal_cofactor_basis(
+    observed_basis: np.ndarray,
+    latent_basis: np.ndarray,
+    ridge_eps: float = 1e-10,
+) -> np.ndarray:
+    """Project latent cofactor trajectories onto the orthogonal complement of observed TF features.
+
+    Args:
+        observed_basis: Flattened sample-by-feature observed TF basis Psi_obs of shape (M, P).
+        latent_basis: Flattened sample-by-cofactor latent basis Psi_lat of shape (M, K).
+        ridge_eps: Small numerical stabilizer for rank-deficient observed subspaces.
+
+    Returns:
+        Projected cofactor basis Psi_perp of shape (M, K) satisfying Psi_obs^T Psi_perp -> 0.
+    """
+    gram = observed_basis.T @ observed_basis + ridge_eps * np.eye(
+        observed_basis.shape[1], dtype=observed_basis.dtype
+    )
+    proj_coeff = np.linalg.solve(gram, observed_basis.T @ latent_basis)
+    return latent_basis - observed_basis @ proj_coeff

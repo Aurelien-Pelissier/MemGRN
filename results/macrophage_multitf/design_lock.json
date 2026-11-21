@@ -58,7 +58,7 @@
   "models": [
     "local_const",
     "memgrn",
-    "memgrn_int",
+    "memgrn_additive",
     "coupled_const",
     "coupled_adaptive",
     "ltc_coupled",

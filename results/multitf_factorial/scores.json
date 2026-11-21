@@ -1,6 +1,6 @@
 {
-  "design_sha256": "eb3ce08356563a9d72775227aff1dc039d914b25f0c3d75e808a83d123d81042",
-  "elapsed_seconds": 1222.107698917389,
+  "design_sha256": "2a0b6b889d0f1879a443d7dd92f4939ce166ca12e48ff051820cd87f7c82e69f",
+  "elapsed_seconds": 1693.2511546611786,
   "summary": {
     "additive": {
       "means": {
@@ -16,26 +16,26 @@
           "edge_ap": 0.6710348330174534
         },
         "memgrn": {
-          "n_params": 984,
-          "test_mse": 0.209605512976099,
-          "single_ko_mse": 0.18395342250550573,
-          "phase_lag_mse": 0.18955734613553174,
-          "cross_combo_mse": 0.25530577028725965,
-          "attribution_rmse": 0.18327975122228843,
-          "spurious_crosstalk_rmse": 0.10364613820348485,
-          "edge_auroc": 0.8971836419753089,
-          "edge_ap": 0.7455638028321919
+          "n_params": 1824,
+          "test_mse": 0.20536783810849543,
+          "single_ko_mse": 0.17521668968643986,
+          "phase_lag_mse": 0.1867122304852875,
+          "cross_combo_mse": 0.2541745941537589,
+          "attribution_rmse": 0.18225567734536732,
+          "spurious_crosstalk_rmse": 0.09845310363583491,
+          "edge_auroc": 0.9089506172839505,
+          "edge_ap": 0.7697996872777355
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "test_mse": 0.20077486326803187,
-          "single_ko_mse": 0.17088463838880474,
-          "phase_lag_mse": 0.18112871292598806,
-          "cross_combo_mse": 0.25031123848930287,
-          "attribution_rmse": 0.1801543835160152,
-          "spurious_crosstalk_rmse": 0.10053677309263863,
-          "edge_auroc": 0.901933834876543,
-          "edge_ap": 0.7647789190870474
+        "memgrn_additive": {
+          "n_params": 1152,
+          "test_mse": 0.20986541249686871,
+          "single_ko_mse": 0.18333703897951104,
+          "phase_lag_mse": 0.18980530365594528,
+          "cross_combo_mse": 0.25645389485514963,
+          "attribution_rmse": 0.18338289138009922,
+          "spurious_crosstalk_rmse": 0.10149646573461502,
+          "edge_auroc": 0.9014756944444445,
+          "edge_ap": 0.7584705155197856
         },
         "coupled_const": {
           "n_params": 1008,
@@ -95,61 +95,61 @@
       },
       "comparisons": {
         "memgrn_vs_coupled_adaptive_mse": {
-          "mean_diff": -0.0541738055001981,
-          "pct_reduction_vs_b": 20.537548513329007,
+          "mean_diff": -0.058411480367801714,
+          "pct_reduction_vs_b": 22.1440713036987,
           "ci_95": [
-            -0.07985568472567152,
-            -0.028491926274724674
+            -0.0881542777157949,
+            -0.02866868301980853
           ],
-          "wins_a_lt_b": 10,
+          "wins_a_lt_b": 11,
           "n": 12
         },
         "memgrn_vs_coupled_adaptive_attr": {
-          "mean_diff": -0.023761163213731288,
-          "pct_reduction_vs_b": 11.476554418462094,
+          "mean_diff": -0.024785237090652404,
+          "pct_reduction_vs_b": 11.971178333600163,
           "ci_95": [
-            -0.03658611766218624,
-            -0.010936208765276342
+            -0.03821012639834513,
+            -0.011360347782959674
           ],
-          "wins_a_lt_b": 10,
+          "wins_a_lt_b": 11,
           "n": 12
         },
         "memgrn_vs_ltc_coupled_mse": {
-          "mean_diff": -0.22957701635825478,
-          "pct_reduction_vs_b": 52.27371332512083,
+          "mean_diff": -0.2338146912258584,
+          "pct_reduction_vs_b": 53.23861392670587,
           "ci_95": [
-            -0.33477865616501085,
-            -0.12437537655149873
+            -0.33368183501972887,
+            -0.13394754743198795
           ],
           "wins_a_lt_b": 12,
           "n": 12
         },
         "memgrn_vs_ltc_coupled_attr": {
-          "mean_diff": -0.08881833896161222,
-          "pct_reduction_vs_b": 32.64202953485756,
+          "mean_diff": -0.08984241283853334,
+          "pct_reduction_vs_b": 33.01839155791658,
           "ci_95": [
-            -0.13108236816810703,
-            -0.0465543097551174
+            -0.12895008793844537,
+            -0.05073473773862132
           ],
           "wins_a_lt_b": 12,
           "n": 12
         },
         "memgrn_vs_perturb_ode_mse": {
-          "mean_diff": -0.18588674076537529,
-          "pct_reduction_vs_b": 47.00136071107121,
+          "mean_diff": -0.19012441563297897,
+          "pct_reduction_vs_b": 48.072854483076576,
           "ci_95": [
-            -0.25500908386989235,
-            -0.11676439766085822
+            -0.2633332303034889,
+            -0.11691560096246903
           ],
           "wins_a_lt_b": 12,
           "n": 12
         },
         "memgrn_vs_local_const_mse": {
-          "mean_diff": -0.0826219951510792,
-          "pct_reduction_vs_b": 28.273175130084592,
+          "mean_diff": -0.08685967001868283,
+          "pct_reduction_vs_b": 29.7233037968764,
           "ci_95": [
-            -0.11733009141502722,
-            -0.04791389888713117
+            -0.12374793475348805,
+            -0.049971405283877605
           ],
           "wins_a_lt_b": 12,
           "n": 12
@@ -170,26 +170,26 @@
           "edge_ap": 0.6314852963565833
         },
         "memgrn": {
-          "n_params": 984,
-          "test_mse": 0.16372754999274772,
-          "single_ko_mse": 0.156931104324993,
-          "phase_lag_mse": 0.1463745033350919,
-          "cross_combo_mse": 0.1878770423181582,
-          "attribution_rmse": 0.1624161321587813,
-          "spurious_crosstalk_rmse": 0.11124979892787575,
-          "edge_auroc": 0.888816550925926,
-          "edge_ap": 0.7366145007515988
+          "n_params": 1824,
+          "test_mse": 0.14965900165948817,
+          "single_ko_mse": 0.13897465036601883,
+          "phase_lag_mse": 0.13674293817186586,
+          "cross_combo_mse": 0.17325941644057977,
+          "attribution_rmse": 0.157750792405404,
+          "spurious_crosstalk_rmse": 0.10346338855712106,
+          "edge_auroc": 0.8976297260802472,
+          "edge_ap": 0.7615773239845401
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "test_mse": 0.15245052251107555,
-          "single_ko_mse": 0.1419203830415712,
-          "phase_lag_mse": 0.13850664365218898,
-          "cross_combo_mse": 0.17692454083946652,
-          "attribution_rmse": 0.15793290858465367,
-          "spurious_crosstalk_rmse": 0.10451442074009921,
-          "edge_auroc": 0.8983531057098766,
-          "edge_ap": 0.7601241979693034
+        "memgrn_additive": {
+          "n_params": 1152,
+          "test_mse": 0.16077137715121317,
+          "single_ko_mse": 0.15447954400711875,
+          "phase_lag_mse": 0.14451785592381483,
+          "cross_combo_mse": 0.1833167315227059,
+          "attribution_rmse": 0.16128110774141183,
+          "spurious_crosstalk_rmse": 0.10777236084201641,
+          "edge_auroc": 0.8929157021604938,
+          "edge_ap": 0.746110253169006
         },
         "coupled_const": {
           "n_params": 1008,
@@ -248,62 +248,62 @@
         }
       },
       "comparisons": {
-        "memgrn_int_vs_coupled_adaptive_mse": {
-          "mean_diff": -0.04589824785453153,
-          "pct_reduction_vs_b": 23.140172621150825,
+        "memgrn_vs_coupled_adaptive_mse": {
+          "mean_diff": -0.04868976870611893,
+          "pct_reduction_vs_b": 24.54755258445581,
           "ci_95": [
-            -0.09451042821851363,
-            0.0027139325094505604
+            -0.0932084870036934,
+            -0.004171050408544458
           ],
           "wins_a_lt_b": 9,
           "n": 12
         },
-        "memgrn_int_vs_coupled_adaptive_attr": {
-          "mean_diff": -0.021461393100207133,
-          "pct_reduction_vs_b": 11.963252399124736,
+        "memgrn_vs_coupled_adaptive_attr": {
+          "mean_diff": -0.02164350927945687,
+          "pct_reduction_vs_b": 12.064769658892327,
           "ci_95": [
-            -0.041255958572306024,
-            -0.0016668276281082417
+            -0.03957075185610685,
+            -0.0037162667028068815
           ],
-          "wins_a_lt_b": 11,
+          "wins_a_lt_b": 10,
           "n": 12
         },
-        "memgrn_int_vs_ltc_coupled_mse": {
-          "mean_diff": -0.2245568033041101,
-          "pct_reduction_vs_b": 59.56298138731422,
+        "memgrn_vs_ltc_coupled_mse": {
+          "mean_diff": -0.22734832415569747,
+          "pct_reduction_vs_b": 60.30342345844676,
           "ci_95": [
-            -0.34545452693952633,
-            -0.10365907966869388
-          ],
-          "wins_a_lt_b": 12,
-          "n": 12
-        },
-        "memgrn_int_vs_ltc_coupled_attr": {
-          "mean_diff": -0.1130292060650765,
-          "pct_reduction_vs_b": 41.71402567151803,
-          "ci_95": [
-            -0.18430049466885057,
-            -0.04175791746130243
+            -0.34964692422051136,
+            -0.1050497240908836
           ],
           "wins_a_lt_b": 12,
           "n": 12
         },
-        "memgrn_int_vs_perturb_ode_mse": {
-          "mean_diff": -0.1929905469958614,
-          "pct_reduction_vs_b": 55.86786402419528,
+        "memgrn_vs_ltc_coupled_attr": {
+          "mean_diff": -0.11321132224432624,
+          "pct_reduction_vs_b": 41.781236609654194,
           "ci_95": [
-            -0.2823089217526812,
-            -0.10367217223904161
+            -0.18479721241556518,
+            -0.04162543207308729
           ],
           "wins_a_lt_b": 12,
           "n": 12
         },
-        "memgrn_int_vs_local_const_mse": {
-          "mean_diff": -0.08313956013815066,
-          "pct_reduction_vs_b": 35.28992358389657,
+        "memgrn_vs_perturb_ode_mse": {
+          "mean_diff": -0.19578206784744878,
+          "pct_reduction_vs_b": 56.67596737321855,
           "ci_95": [
-            -0.12472403585310259,
-            -0.04155508442319873
+            -0.28311091282483447,
+            -0.1084532228700631
+          ],
+          "wins_a_lt_b": 12,
+          "n": 12
+        },
+        "memgrn_vs_local_const_mse": {
+          "mean_diff": -0.08593108098973806,
+          "pct_reduction_vs_b": 36.47482951040948,
+          "ci_95": [
+            -0.13291737434499865,
+            -0.03894478763447747
           ],
           "wins_a_lt_b": 12,
           "n": 12
@@ -332,34 +332,34 @@
           "edge_ap": 0.6565442226537286
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.013632175512611866,
+          "n_params": 1824,
+          "val_mse": 0.012216588482260704,
           "chosen_reg": 1e-05,
-          "test_mse": 0.2518581089200204,
+          "test_mse": 0.2408010769331617,
           "category_mse": {
-            "single_ko_in_module": 0.17303089268144772,
-            "phase_lag_shift": 0.26446387101881036,
-            "cross_module_combo": 0.318079563059803
+            "single_ko_in_module": 0.178753711095411,
+            "phase_lag_shift": 0.2488113106327815,
+            "cross_module_combo": 0.29483820907129255
           },
-          "attribution_rmse": 0.23304260220378079,
-          "spurious_crosstalk_rmse": 0.11719739906166696,
-          "edge_auroc": 0.8841145833333335,
-          "edge_ap": 0.740251908318211
+          "attribution_rmse": 0.22400510753630934,
+          "spurious_crosstalk_rmse": 0.09778623267705339,
+          "edge_auroc": 0.9199942129629631,
+          "edge_ap": 0.8035530157064418
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.012714174576103687,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.01237375009804964,
           "chosen_reg": 1e-05,
-          "test_mse": 0.2443607446897974,
+          "test_mse": 0.24084555997634108,
           "category_mse": {
-            "single_ko_in_module": 0.1798178743799078,
-            "phase_lag_shift": 0.24784008816893632,
-            "cross_module_combo": 0.305424271520548
+            "single_ko_in_module": 0.1676734452906884,
+            "phase_lag_shift": 0.2522894116957132,
+            "cross_module_combo": 0.30257382294262164
           },
-          "attribution_rmse": 0.22392234636445246,
-          "spurious_crosstalk_rmse": 0.10539562728569474,
-          "edge_auroc": 0.9013310185185186,
-          "edge_ap": 0.7745819818051706
+          "attribution_rmse": 0.22875153338864154,
+          "spurious_crosstalk_rmse": 0.1072312040882148,
+          "edge_auroc": 0.9006076388888888,
+          "edge_ap": 0.7781818807017138
         },
         "coupled_const": {
           "n_params": 1008,
@@ -458,34 +458,34 @@
           "edge_ap": 0.5914212922230381
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.006484974641352892,
+          "n_params": 1824,
+          "val_mse": 0.006087158340960741,
           "chosen_reg": 0.0001,
-          "test_mse": 0.15273085679838608,
+          "test_mse": 0.14579988193336915,
           "category_mse": {
-            "single_ko_in_module": 0.17256313775399146,
-            "phase_lag_shift": 0.12697322400341818,
-            "cross_module_combo": 0.15865620863774854
+            "single_ko_in_module": 0.16680336817219465,
+            "phase_lag_shift": 0.12037733662036842,
+            "cross_module_combo": 0.15021894100754432
           },
-          "attribution_rmse": 0.1638145536085498,
-          "spurious_crosstalk_rmse": 0.10753594660532938,
-          "edge_auroc": 0.8583622685185185,
-          "edge_ap": 0.6481463322957807
+          "attribution_rmse": 0.16026112936720208,
+          "spurious_crosstalk_rmse": 0.10511111823958813,
+          "edge_auroc": 0.8657407407407406,
+          "edge_ap": 0.6664212473029724
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.005779379513114691,
-          "chosen_reg": 1e-05,
-          "test_mse": 0.14355130745633912,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.006190043408423662,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.15041496759763492,
           "category_mse": {
-            "single_ko_in_module": 0.16040053055419393,
-            "phase_lag_shift": 0.11969670400804427,
-            "cross_module_combo": 0.15055668780677914
+            "single_ko_in_module": 0.1722144637867321,
+            "phase_lag_shift": 0.12336778226386959,
+            "cross_module_combo": 0.15566265674230315
           },
-          "attribution_rmse": 0.16051451021638424,
-          "spurious_crosstalk_rmse": 0.11077636217204591,
-          "edge_auroc": 0.8407118055555555,
-          "edge_ap": 0.6882892413332032
+          "attribution_rmse": 0.16218168209604827,
+          "spurious_crosstalk_rmse": 0.10531966810121715,
+          "edge_auroc": 0.8580729166666666,
+          "edge_ap": 0.6581425433746309
         },
         "coupled_const": {
           "n_params": 1008,
@@ -584,34 +584,34 @@
           "edge_ap": 0.6882292124149118
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.017892340198159218,
+          "n_params": 1824,
+          "val_mse": 0.016381951048970222,
           "chosen_reg": 1e-05,
-          "test_mse": 0.2855982900204964,
+          "test_mse": 0.2745575359774732,
           "category_mse": {
-            "single_ko_in_module": 0.2410627161747665,
-            "phase_lag_shift": 0.29261088825441434,
-            "cross_module_combo": 0.32312126563230836
+            "single_ko_in_module": 0.21876416864817483,
+            "phase_lag_shift": 0.28915148344896113,
+            "cross_module_combo": 0.3157569558352835
           },
-          "attribution_rmse": 0.202051778980905,
-          "spurious_crosstalk_rmse": 0.10402218171082289,
-          "edge_auroc": 0.8716724537037037,
-          "edge_ap": 0.6884065861078521
+          "attribution_rmse": 0.19995462596795524,
+          "spurious_crosstalk_rmse": 0.10182555071830662,
+          "edge_auroc": 0.8739872685185185,
+          "edge_ap": 0.7051335228842944
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.01901104301214218,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.016006045043468475,
           "chosen_reg": 1e-05,
-          "test_mse": 0.2751749939905245,
+          "test_mse": 0.28164572675794136,
           "category_mse": {
-            "single_ko_in_module": 0.21640595066703294,
-            "phase_lag_shift": 0.2902385393261122,
-            "cross_module_combo": 0.3188804919784283
+            "single_ko_in_module": 0.24118156473542346,
+            "phase_lag_shift": 0.2876235492237178,
+            "cross_module_combo": 0.31613206631468277
           },
-          "attribution_rmse": 0.20007957832823914,
-          "spurious_crosstalk_rmse": 0.10328869592887974,
-          "edge_auroc": 0.8715277777777777,
-          "edge_ap": 0.690720356777646
+          "attribution_rmse": 0.20119018223407084,
+          "spurious_crosstalk_rmse": 0.1029729272061619,
+          "edge_auroc": 0.8742766203703703,
+          "edge_ap": 0.7046039241473535
         },
         "coupled_const": {
           "n_params": 1008,
@@ -710,34 +710,34 @@
           "edge_ap": 0.5750711306991728
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.017238443717360497,
+          "n_params": 1824,
+          "val_mse": 0.014265675097703934,
           "chosen_reg": 1e-05,
-          "test_mse": 0.18698852717146455,
+          "test_mse": 0.16626768627788377,
           "category_mse": {
-            "single_ko_in_module": 0.2601694428205008,
-            "phase_lag_shift": 0.13254744424942078,
-            "cross_module_combo": 0.16824869444447207
+            "single_ko_in_module": 0.2288739205835605,
+            "phase_lag_shift": 0.11944417151246167,
+            "cross_module_combo": 0.15048496673762912
           },
-          "attribution_rmse": 0.16181728146287921,
-          "spurious_crosstalk_rmse": 0.11032878250056981,
-          "edge_auroc": 0.8914930555555555,
-          "edge_ap": 0.7506453104397727
+          "attribution_rmse": 0.1558667419261634,
+          "spurious_crosstalk_rmse": 0.09400012771131343,
+          "edge_auroc": 0.9150752314814814,
+          "edge_ap": 0.8086793511306865
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.014285392127931118,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.01629794016480446,
           "chosen_reg": 1e-05,
-          "test_mse": 0.16418786772405183,
+          "test_mse": 0.17964075176166847,
           "category_mse": {
-            "single_ko_in_module": 0.2255157390788252,
-            "phase_lag_shift": 0.11729386981104385,
-            "cross_module_combo": 0.14975399428228653
+            "single_ko_in_module": 0.2447012683187955,
+            "phase_lag_shift": 0.13040187326926958,
+            "cross_module_combo": 0.16381911369694035
           },
-          "attribution_rmse": 0.15483154623032808,
-          "spurious_crosstalk_rmse": 0.09431528890044863,
-          "edge_auroc": 0.9116030092592592,
-          "edge_ap": 0.8025330735023893
+          "attribution_rmse": 0.1590925813490783,
+          "spurious_crosstalk_rmse": 0.10447496387817143,
+          "edge_auroc": 0.9039351851851851,
+          "edge_ap": 0.7904164662868141
         },
         "coupled_const": {
           "n_params": 1008,
@@ -836,34 +836,34 @@
           "edge_ap": 0.7348002597240891
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.00806041993200779,
+          "n_params": 1824,
+          "val_mse": 0.009193732403218746,
           "chosen_reg": 1e-05,
-          "test_mse": 0.1528108508817041,
+          "test_mse": 0.15681937976624757,
           "category_mse": {
-            "single_ko_in_module": 0.11645157773437677,
-            "phase_lag_shift": 0.1397309697051473,
-            "cross_module_combo": 0.2022500052055881
+            "single_ko_in_module": 0.11932085410421155,
+            "phase_lag_shift": 0.1516141897162599,
+            "cross_module_combo": 0.19952309547827124
           },
-          "attribution_rmse": 0.15373768009468758,
-          "spurious_crosstalk_rmse": 0.08477438239768562,
-          "edge_auroc": 0.9198495370370371,
-          "edge_ap": 0.8011191210147608
+          "attribution_rmse": 0.1574257666220083,
+          "spurious_crosstalk_rmse": 0.08362535023871458,
+          "edge_auroc": 0.9276620370370371,
+          "edge_ap": 0.8056502785722484
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.009423088282346725,
-          "chosen_reg": 0.0001,
-          "test_mse": 0.15173330727087725,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.006702473387122154,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.17004293683176785,
           "category_mse": {
-            "single_ko_in_module": 0.11469431991127481,
-            "phase_lag_shift": 0.1397571868617636,
-            "cross_module_combo": 0.2007484150395932
+            "single_ko_in_module": 0.13688798854298678,
+            "phase_lag_shift": 0.15730463509807896,
+            "cross_module_combo": 0.21593618685423788
           },
-          "attribution_rmse": 0.15657009969340058,
-          "spurious_crosstalk_rmse": 0.08588485178482823,
-          "edge_auroc": 0.9088541666666669,
-          "edge_ap": 0.7882614373956969
+          "attribution_rmse": 0.1618902889371172,
+          "spurious_crosstalk_rmse": 0.087685252300944,
+          "edge_auroc": 0.9185474537037037,
+          "edge_ap": 0.7781368368909445
         },
         "coupled_const": {
           "n_params": 1008,
@@ -962,34 +962,34 @@
           "edge_ap": 0.7986626170547084
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.010810716077685356,
+          "n_params": 1824,
+          "val_mse": 0.009382846765220165,
           "chosen_reg": 1e-05,
-          "test_mse": 0.1336613555713886,
+          "test_mse": 0.129686548276335,
           "category_mse": {
-            "single_ko_in_module": 0.08979941999897388,
-            "phase_lag_shift": 0.13350247048172406,
-            "cross_module_combo": 0.17768217623346788
+            "single_ko_in_module": 0.0860107536857292,
+            "phase_lag_shift": 0.12168019141027268,
+            "cross_module_combo": 0.18136869973300312
           },
-          "attribution_rmse": 0.15014782723920383,
-          "spurious_crosstalk_rmse": 0.09380422996888138,
-          "edge_auroc": 0.9094328703703703,
-          "edge_ap": 0.7996921921617205
+          "attribution_rmse": 0.14716374143171143,
+          "spurious_crosstalk_rmse": 0.08847413937728833,
+          "edge_auroc": 0.9189814814814815,
+          "edge_ap": 0.814121570872322
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.009833686985075474,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.009195667691528797,
           "chosen_reg": 1e-05,
-          "test_mse": 0.12823834201378384,
+          "test_mse": 0.13133996605126846,
           "category_mse": {
-            "single_ko_in_module": 0.08762340350523155,
-            "phase_lag_shift": 0.12011942728689583,
-            "cross_module_combo": 0.17697219524922414
+            "single_ko_in_module": 0.08365646621405837,
+            "phase_lag_shift": 0.13330985001452222,
+            "cross_module_combo": 0.17705358192522486
           },
-          "attribution_rmse": 0.1457939896382463,
-          "spurious_crosstalk_rmse": 0.09006955987007445,
-          "edge_auroc": 0.919704861111111,
-          "edge_ap": 0.8135421376981405
+          "attribution_rmse": 0.14956636675385865,
+          "spurious_crosstalk_rmse": 0.09163614233734063,
+          "edge_auroc": 0.9199942129629629,
+          "edge_ap": 0.8048025933452645
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1088,34 +1088,34 @@
           "edge_ap": 0.7189987127989627
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.009805908426642418,
-          "chosen_reg": 1e-05,
-          "test_mse": 0.11787633567390488,
+          "n_params": 1824,
+          "val_mse": 0.011637138202786446,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.13189187009690947,
           "category_mse": {
-            "single_ko_in_module": 0.09126523151365544,
-            "phase_lag_shift": 0.12536414062048248,
-            "cross_module_combo": 0.13699963488757666
+            "single_ko_in_module": 0.09932995096294933,
+            "phase_lag_shift": 0.1471498580338044,
+            "cross_module_combo": 0.14919580129397472
           },
-          "attribution_rmse": 0.14642790893344165,
-          "spurious_crosstalk_rmse": 0.09167130311217343,
-          "edge_auroc": 0.9225983796296297,
-          "edge_ap": 0.8240098562339506
+          "attribution_rmse": 0.15205731661486158,
+          "spurious_crosstalk_rmse": 0.089278371895761,
+          "edge_auroc": 0.9305555555555554,
+          "edge_ap": 0.8401867080696617
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.01147752720862627,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.010433866642415524,
           "chosen_reg": 1e-05,
-          "test_mse": 0.10918850313780729,
+          "test_mse": 0.11525219576313729,
           "category_mse": {
-            "single_ko_in_module": 0.08402424059944456,
-            "phase_lag_shift": 0.11622974531653411,
-            "cross_module_combo": 0.1273115234974432
+            "single_ko_in_module": 0.08674078015656847,
+            "phase_lag_shift": 0.12267741871291389,
+            "cross_module_combo": 0.13633838841992954
           },
-          "attribution_rmse": 0.14133187870950195,
-          "spurious_crosstalk_rmse": 0.08732291397494676,
-          "edge_auroc": 0.9322916666666666,
-          "edge_ap": 0.858742187374813
+          "attribution_rmse": 0.1457181431320392,
+          "spurious_crosstalk_rmse": 0.09342565876450475,
+          "edge_auroc": 0.9243344907407408,
+          "edge_ap": 0.8287064179162421
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1214,34 +1214,34 @@
           "edge_ap": 0.6310234092040413
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.028176145628094673,
+          "n_params": 1824,
+          "val_mse": 0.028272904455661774,
           "chosen_reg": 1e-05,
-          "test_mse": 0.32014949961817746,
+          "test_mse": 0.35901550526138803,
           "category_mse": {
-            "single_ko_in_module": 0.263472681948805,
-            "phase_lag_shift": 0.19686183936118073,
-            "cross_module_combo": 0.5001139775445467
+            "single_ko_in_module": 0.2753763119068788,
+            "phase_lag_shift": 0.22470130278962286,
+            "cross_module_combo": 0.5769689010876623
           },
-          "attribution_rmse": 0.24184421223133096,
-          "spurious_crosstalk_rmse": 0.0950821597262711,
-          "edge_auroc": 0.9078414351851851,
-          "edge_ap": 0.7858386639384416
+          "attribution_rmse": 0.2589875784761509,
+          "spurious_crosstalk_rmse": 0.09817188349468742,
+          "edge_auroc": 0.911892361111111,
+          "edge_ap": 0.7720702027534688
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.027806051075458527,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.029318714514374733,
           "chosen_reg": 1e-05,
-          "test_mse": 0.34820144851546925,
+          "test_mse": 0.3320828823864518,
           "category_mse": {
-            "single_ko_in_module": 0.2659026767880827,
-            "phase_lag_shift": 0.21797662842463345,
-            "cross_module_combo": 0.5607250403336916
+            "single_ko_in_module": 0.2679367119028981,
+            "phase_lag_shift": 0.20633450622306182,
+            "cross_module_combo": 0.5219774290333955
           },
-          "attribution_rmse": 0.2547064798994475,
-          "spurious_crosstalk_rmse": 0.09769059834031703,
-          "edge_auroc": 0.9094328703703703,
-          "edge_ap": 0.7689928178527398
+          "attribution_rmse": 0.24678595208293855,
+          "spurious_crosstalk_rmse": 0.09238847137227883,
+          "edge_auroc": 0.9147858796296297,
+          "edge_ap": 0.7974589949319794
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1340,34 +1340,34 @@
           "edge_ap": 0.6083117601778196
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.013417840003967285,
+          "n_params": 1824,
+          "val_mse": 0.012342222966253757,
           "chosen_reg": 1e-05,
-          "test_mse": 0.13268868237535097,
+          "test_mse": 0.14174737752999725,
           "category_mse": {
-            "single_ko_in_module": 0.11165414035280147,
-            "phase_lag_shift": 0.11918467606748893,
-            "cross_module_combo": 0.1672272307057625
+            "single_ko_in_module": 0.11877574976520752,
+            "phase_lag_shift": 0.12498239230071838,
+            "cross_module_combo": 0.1814839905240658
           },
-          "attribution_rmse": 0.16418841135638715,
-          "spurious_crosstalk_rmse": 0.09687606343716833,
-          "edge_auroc": 0.8903356481481483,
-          "edge_ap": 0.7355001944922526
+          "attribution_rmse": 0.166714577864739,
+          "spurious_crosstalk_rmse": 0.09655472101333347,
+          "edge_auroc": 0.898292824074074,
+          "edge_ap": 0.761194568378567
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.012947351671755314,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.012394939549267292,
           "chosen_reg": 1e-05,
-          "test_mse": 0.12717426655647304,
+          "test_mse": 0.1391077419066452,
           "category_mse": {
-            "single_ko_in_module": 0.10461545011931403,
-            "phase_lag_shift": 0.11309942550293345,
-            "cross_module_combo": 0.16380792404717168
+            "single_ko_in_module": 0.11831549102041877,
+            "phase_lag_shift": 0.12284018703995139,
+            "cross_module_combo": 0.17616754765956544
           },
-          "attribution_rmse": 0.15899081921864336,
-          "spurious_crosstalk_rmse": 0.09949661209401746,
-          "edge_auroc": 0.8917824074074073,
-          "edge_ap": 0.7506966036149433
+          "attribution_rmse": 0.16626424047086916,
+          "spurious_crosstalk_rmse": 0.09431592426392481,
+          "edge_auroc": 0.8990162037037037,
+          "edge_ap": 0.7564761883845469
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1466,34 +1466,34 @@
           "edge_ap": 0.6727173069577185
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.005022393073886633,
+          "n_params": 1824,
+          "val_mse": 0.004784326534718275,
           "chosen_reg": 0.0001,
-          "test_mse": 0.16434766784164168,
+          "test_mse": 0.16217221786336308,
           "category_mse": {
-            "single_ko_in_module": 0.11285612988762399,
-            "phase_lag_shift": 0.158563918762929,
-            "cross_module_combo": 0.2216229548743721
+            "single_ko_in_module": 0.10742543941436763,
+            "phase_lag_shift": 0.16036952232841786,
+            "cross_module_combo": 0.2187216918473038
           },
-          "attribution_rmse": 0.15540419247337675,
-          "spurious_crosstalk_rmse": 0.0982369720288876,
-          "edge_auroc": 0.9059606481481483,
-          "edge_ap": 0.7467680458286668
+          "attribution_rmse": 0.15495627601917505,
+          "spurious_crosstalk_rmse": 0.09770712292979208,
+          "edge_auroc": 0.9105902777777777,
+          "edge_ap": 0.748106814743927
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.0047599258832633495,
-          "chosen_reg": 0.0001,
-          "test_mse": 0.16002452976864098,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.004720516037195921,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.16673446609301545,
           "category_mse": {
-            "single_ko_in_module": 0.10832918510868493,
-            "phase_lag_shift": 0.15616024781787444,
-            "cross_module_combo": 0.2155841563793636
+            "single_ko_in_module": 0.11098978665579654,
+            "phase_lag_shift": 0.162138057351994,
+            "cross_module_combo": 0.2270755542712559
           },
-          "attribution_rmse": 0.15317703537235927,
-          "spurious_crosstalk_rmse": 0.09707941711873944,
-          "edge_auroc": 0.9120370370370369,
-          "edge_ap": 0.752929989514545
+          "attribution_rmse": 0.15552646494034858,
+          "spurious_crosstalk_rmse": 0.10162502058637382,
+          "edge_auroc": 0.8919270833333334,
+          "edge_ap": 0.7343997482969864
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1592,34 +1592,34 @@
           "edge_ap": 0.6223216326597978
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.017477447167038918,
+          "n_params": 1824,
+          "val_mse": 0.017741763964295387,
           "chosen_reg": 1e-05,
-          "test_mse": 0.22939891885879393,
+          "test_mse": 0.19593637785426665,
           "category_mse": {
-            "single_ko_in_module": 0.20739422915992597,
-            "phase_lag_shift": 0.24245268648885215,
-            "cross_module_combo": 0.23834984092760372
+            "single_ko_in_module": 0.16272600823383943,
+            "phase_lag_shift": 0.21612798343100892,
+            "cross_module_combo": 0.20895514189795159
           },
-          "attribution_rmse": 0.1997332715819716,
-          "spurious_crosstalk_rmse": 0.1226098652295083,
-          "edge_auroc": 0.8877314814814815,
-          "edge_ap": 0.6914878560889193
+          "attribution_rmse": 0.19198786619556693,
+          "spurious_crosstalk_rmse": 0.11115308674264547,
+          "edge_auroc": 0.9108796296296297,
+          "edge_ap": 0.7371437087612426
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.016801754012703896,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.017896857112646103,
           "chosen_reg": 1e-05,
-          "test_mse": 0.19626942497364835,
+          "test_mse": 0.22399929525909082,
           "category_mse": {
-            "single_ko_in_module": 0.16335706719913887,
-            "phase_lag_shift": 0.2168790916098591,
-            "cross_module_combo": 0.20857211611194704
+            "single_ko_in_module": 0.20131137643391994,
+            "phase_lag_shift": 0.23736743066622593,
+            "cross_module_combo": 0.23331907867712656
           },
-          "attribution_rmse": 0.19176199171377017,
-          "spurious_crosstalk_rmse": 0.11277651757300056,
-          "edge_auroc": 0.9079861111111113,
-          "edge_ap": 0.7324296075688531
+          "attribution_rmse": 0.19818794233436496,
+          "spurious_crosstalk_rmse": 0.11946342491694306,
+          "edge_auroc": 0.8880208333333334,
+          "edge_ap": 0.698649845801986
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1718,34 +1718,34 @@
           "edge_ap": 0.7543164396414511
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.039775550365448,
+          "n_params": 1824,
+          "val_mse": 0.03684601932764053,
           "chosen_reg": 0.0001,
-          "test_mse": 0.3871570619818594,
+          "test_mse": 0.3597185995315502,
           "category_mse": {
-            "single_ko_in_module": 0.36772147003919964,
-            "phase_lag_shift": 0.34243202461251265,
-            "cross_module_combo": 0.4513176912938659
+            "single_ko_in_module": 0.3404400396647538,
+            "phase_lag_shift": 0.31613702359877255,
+            "cross_module_combo": 0.42257873533112433
           },
-          "attribution_rmse": 0.22714729450094684,
-          "spurious_crosstalk_rmse": 0.1216143726628536,
-          "edge_auroc": 0.9168113425925926,
-          "edge_ap": 0.7348995670659741
+          "attribution_rmse": 0.21768740012256454,
+          "spurious_crosstalk_rmse": 0.1177495385915349,
+          "edge_auroc": 0.9237557870370371,
+          "edge_ap": 0.775335258156992
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.037731193006038666,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.03847616910934448,
           "chosen_reg": 0.0001,
-          "test_mse": 0.3611936231189698,
+          "test_mse": 0.38727845957746143,
           "category_mse": {
-            "single_ko_in_module": 0.3399292227545256,
-            "phase_lag_shift": 0.31825360097722605,
-            "cross_module_combo": 0.4253980456251579
+            "single_ko_in_module": 0.3684351246958465,
+            "phase_lag_shift": 0.3420089423120252,
+            "cross_module_combo": 0.4513913117245126
           },
-          "attribution_rmse": 0.2201723268074092,
-          "spurious_crosstalk_rmse": 0.12234483206867072,
-          "edge_auroc": 0.9159432870370372,
-          "edge_ap": 0.7556275946064277
+          "attribution_rmse": 0.22543931884181573,
+          "spurious_crosstalk_rmse": 0.11741893099930492,
+          "edge_auroc": 0.9241898148148149,
+          "edge_ap": 0.7716707461589652
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1844,34 +1844,34 @@
           "edge_ap": 0.4880554673661192
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.0070283859968185425,
+          "n_params": 1824,
+          "val_mse": 0.004994884133338928,
           "chosen_reg": 1e-05,
-          "test_mse": 0.16110326206482845,
+          "test_mse": 0.14934309185002648,
           "category_mse": {
-            "single_ko_in_module": 0.14684744384362627,
-            "phase_lag_shift": 0.12711763997908201,
-            "cross_module_combo": 0.20934470237177713
+            "single_ko_in_module": 0.14040916197161749,
+            "phase_lag_shift": 0.1143707620681309,
+            "cross_module_combo": 0.19324935151033104
           },
-          "attribution_rmse": 0.14581601672777444,
-          "spurious_crosstalk_rmse": 0.1051382631665634,
-          "edge_auroc": 0.8676215277777777,
-          "edge_ap": 0.6841570638749115
+          "attribution_rmse": 0.13930133659668853,
+          "spurious_crosstalk_rmse": 0.09643417230341567,
+          "edge_auroc": 0.8857060185185185,
+          "edge_ap": 0.7410689167707188
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.004801221191883087,
-          "chosen_reg": 1e-05,
-          "test_mse": 0.15057052424063355,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.007054269313812256,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.1553049660154441,
           "category_mse": {
-            "single_ko_in_module": 0.1399983684196281,
-            "phase_lag_shift": 0.11649457452510587,
-            "cross_module_combo": 0.19521862977716678
+            "single_ko_in_module": 0.14460834778768583,
+            "phase_lag_shift": 0.12080047698103676,
+            "cross_module_combo": 0.2005060732776097
           },
-          "attribution_rmse": 0.1399524702885377,
-          "spurious_crosstalk_rmse": 0.09633717672543016,
-          "edge_auroc": 0.8797743055555555,
-          "edge_ap": 0.7433263412915507
+          "attribution_rmse": 0.14329639952211604,
+          "spurious_crosstalk_rmse": 0.10074677716604076,
+          "edge_auroc": 0.8700810185185185,
+          "edge_ap": 0.6708664866240023
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1970,34 +1970,34 @@
           "edge_ap": 0.49688811556560747
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.016382522881031036,
+          "n_params": 1824,
+          "val_mse": 0.01434724684804678,
           "chosen_reg": 1e-05,
-          "test_mse": 0.13897832840395047,
+          "test_mse": 0.11817239702658,
           "category_mse": {
-            "single_ko_in_module": 0.14468886912376475,
-            "phase_lag_shift": 0.13247126759184769,
-            "cross_module_combo": 0.13977484849623895
+            "single_ko_in_module": 0.1078226643051788,
+            "phase_lag_shift": 0.11847548419037635,
+            "cross_module_combo": 0.12821904258418482
           },
-          "attribution_rmse": 0.14978458988149995,
-          "spurious_crosstalk_rmse": 0.11004474759889693,
-          "edge_auroc": 0.8682002314814815,
-          "edge_ap": 0.660516205593552
+          "attribution_rmse": 0.14158070337783746,
+          "spurious_crosstalk_rmse": 0.0974678963277656,
+          "edge_auroc": 0.9027777777777778,
+          "edge_ap": 0.7155301034347694
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.014304593205451965,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.016725191846489906,
           "chosen_reg": 1e-05,
-          "test_mse": 0.11991090799295223,
+          "test_mse": 0.13529960182580078,
           "category_mse": {
-            "single_ko_in_module": 0.11504733315364524,
-            "phase_lag_shift": 0.11887148655512705,
-            "cross_module_combo": 0.1258139042700844
+            "single_ko_in_module": 0.1373263686141999,
+            "phase_lag_shift": 0.13086775077323085,
+            "cross_module_combo": 0.13770468608997158
           },
-          "attribution_rmse": 0.14026265941608673,
-          "spurious_crosstalk_rmse": 0.09902804939700653,
-          "edge_auroc": 0.8940972222222222,
-          "edge_ap": 0.7003651606421263
+          "attribution_rmse": 0.1486725187594352,
+          "spurious_crosstalk_rmse": 0.10383580458131136,
+          "edge_auroc": 0.8839699074074074,
+          "edge_ap": 0.6973075358016666
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2096,34 +2096,34 @@
           "edge_ap": 0.6486094833387431
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.009103003889322281,
+          "n_params": 1824,
+          "val_mse": 0.00744975870475173,
           "chosen_reg": 1e-05,
-          "test_mse": 0.1354411000728788,
+          "test_mse": 0.133687037107215,
           "category_mse": {
-            "single_ko_in_module": 0.13585062712570017,
-            "phase_lag_shift": 0.12443562187208526,
-            "cross_module_combo": 0.14603705122085095
+            "single_ko_in_module": 0.12219823666867663,
+            "phase_lag_shift": 0.12776840289422717,
+            "cross_module_combo": 0.15109447175874113
           },
-          "attribution_rmse": 0.16073116815279248,
-          "spurious_crosstalk_rmse": 0.11265862202481972,
-          "edge_auroc": 0.8535879629629629,
-          "edge_ap": 0.7074246530037348
+          "attribution_rmse": 0.15616553864867216,
+          "spurious_crosstalk_rmse": 0.10205860527107674,
+          "edge_auroc": 0.8803530092592592,
+          "edge_ap": 0.760803891730303
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.007914338260889053,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.00836952030658722,
           "chosen_reg": 1e-05,
-          "test_mse": 0.131285546240199,
+          "test_mse": 0.13607686313710776,
           "category_mse": {
-            "single_ko_in_module": 0.11680157723972699,
-            "phase_lag_shift": 0.1262047717477986,
-            "cross_module_combo": 0.15085028973307152
+            "single_ko_in_module": 0.13681711153672926,
+            "phase_lag_shift": 0.12825744366588887,
+            "cross_module_combo": 0.14315603420870515
           },
-          "attribution_rmse": 0.15531042313360816,
-          "spurious_crosstalk_rmse": 0.10147256009992353,
-          "edge_auroc": 0.8822337962962963,
-          "edge_ap": 0.747030568522255
+          "attribution_rmse": 0.16012206377367563,
+          "spurious_crosstalk_rmse": 0.11067454120759711,
+          "edge_auroc": 0.8522858796296297,
+          "edge_ap": 0.7146722811580469
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2222,34 +2222,34 @@
           "edge_ap": 0.7138176451263379
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.014433571137487888,
+          "n_params": 1824,
+          "val_mse": 0.012924110516905785,
           "chosen_reg": 1e-05,
-          "test_mse": 0.22639165475676648,
+          "test_mse": 0.2190799498090362,
           "category_mse": {
-            "single_ko_in_module": 0.22723218329826578,
-            "phase_lag_shift": 0.22584882200778633,
-            "cross_module_combo": 0.22609395896424742
+            "single_ko_in_module": 0.2178697142729682,
+            "phase_lag_shift": 0.21730452399810452,
+            "cross_module_combo": 0.22206561115603587
           },
-          "attribution_rmse": 0.20197113330430513,
-          "spurious_crosstalk_rmse": 0.12627019072838214,
-          "edge_auroc": 0.9042245370370372,
-          "edge_ap": 0.7205113805292053
+          "attribution_rmse": 0.19877455479256126,
+          "spurious_crosstalk_rmse": 0.11969039645958793,
+          "edge_auroc": 0.9117476851851851,
+          "edge_ap": 0.7342396169715819
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.012880148366093636,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.014270070940256119,
           "chosen_reg": 1e-05,
-          "test_mse": 0.2179452491753532,
+          "test_mse": 0.22393016062187318,
           "category_mse": {
-            "single_ko_in_module": 0.2124281462580371,
-            "phase_lag_shift": 0.21853096414315676,
-            "cross_module_combo": 0.2228766371248658
+            "single_ko_in_module": 0.2236652849798941,
+            "phase_lag_shift": 0.2260080925793599,
+            "cross_module_combo": 0.2221171043063656
           },
-          "attribution_rmse": 0.19861519633782812,
-          "spurious_crosstalk_rmse": 0.11932144817706347,
-          "edge_auroc": 0.9110243055555555,
-          "edge_ap": 0.7514490076934631
+          "attribution_rmse": 0.2013928541339931,
+          "spurious_crosstalk_rmse": 0.12262457339381617,
+          "edge_auroc": 0.9088541666666666,
+          "edge_ap": 0.7161874867716027
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2348,34 +2348,34 @@
           "edge_ap": 0.7716801061187107
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.00618002051487565,
+          "n_params": 1824,
+          "val_mse": 0.005078056827187538,
           "chosen_reg": 1e-05,
-          "test_mse": 0.11631769492358597,
+          "test_mse": 0.10189478299787211,
           "category_mse": {
-            "single_ko_in_module": 0.10440489619502603,
-            "phase_lag_shift": 0.11461268675617085,
-            "cross_module_combo": 0.129935501819561
+            "single_ko_in_module": 0.08453324127915104,
+            "phase_lag_shift": 0.10409582710396006,
+            "cross_module_combo": 0.11705528061050524
           },
-          "attribution_rmse": 0.133004840353529,
-          "spurious_crosstalk_rmse": 0.09511250868549145,
-          "edge_auroc": 0.9461805555555557,
-          "edge_ap": 0.8612959031250146
+          "attribution_rmse": 0.13134058837739493,
+          "spurious_crosstalk_rmse": 0.09103301953649216,
+          "edge_auroc": 0.9327256944444445,
+          "edge_ap": 0.8225781133523179
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.004972272086888552,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.006194483954459429,
           "chosen_reg": 1e-05,
-          "test_mse": 0.09948139376518157,
+          "test_mse": 0.11082904251652928,
           "category_mse": {
-            "single_ko_in_module": 0.08548731706183249,
-            "phase_lag_shift": 0.09800254410161513,
-            "cross_module_combo": 0.11495432013209715
+            "single_ko_in_module": 0.10025578598464947,
+            "phase_lag_shift": 0.10712141086513577,
+            "cross_module_combo": 0.12510993069980259
           },
-          "attribution_rmse": 0.12892355787250737,
-          "spurious_crosstalk_rmse": 0.09000298991499983,
-          "edge_auroc": 0.9369212962962963,
-          "edge_ap": 0.8324081164892841
+          "attribution_rmse": 0.12908226567517053,
+          "spurious_crosstalk_rmse": 0.09156688304782325,
+          "edge_auroc": 0.9506655092592594,
+          "edge_ap": 0.8764224447631009
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2474,34 +2474,34 @@
           "edge_ap": 0.5820996699323409
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.014014524407684803,
-          "chosen_reg": 1e-05,
-          "test_mse": 0.1511069700357718,
-          "category_mse": {
-            "single_ko_in_module": 0.14991064621262998,
-            "phase_lag_shift": 0.1419216139039906,
-            "cross_module_combo": 0.16148864999069484
-          },
-          "attribution_rmse": 0.15342579283967017,
-          "spurious_crosstalk_rmse": 0.11396460431897612,
-          "edge_auroc": 0.8803530092592594,
-          "edge_ap": 0.7066550510600799
-        },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.013962924480438232,
+          "n_params": 1824,
+          "val_mse": 0.013954777270555496,
           "chosen_reg": 0.0001,
-          "test_mse": 0.1433307950060868,
+          "test_mse": 0.13862806277022338,
           "category_mse": {
-            "single_ko_in_module": 0.14806029646315735,
-            "phase_lag_shift": 0.12940710199893798,
-            "cross_module_combo": 0.15252498655616498
+            "single_ko_in_module": 0.14061380845194493,
+            "phase_lag_shift": 0.12709936357753662,
+            "cross_module_combo": 0.14817101628118856
           },
-          "attribution_rmse": 0.14840939357260474,
-          "spurious_crosstalk_rmse": 0.10176452458950491,
-          "edge_auroc": 0.8883101851851852,
-          "edge_ap": 0.7441659829404005
+          "attribution_rmse": 0.14664571426898843,
+          "spurious_crosstalk_rmse": 0.10055998248286714,
+          "edge_auroc": 0.8865740740740743,
+          "edge_ap": 0.7452748243902771
+        },
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.01428708154708147,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.1519881176490638,
+          "category_mse": {
+            "single_ko_in_module": 0.15351470248050847,
+            "phase_lag_shift": 0.14008380850442884,
+            "cross_module_combo": 0.1623658419622541
+          },
+          "attribution_rmse": 0.1536694016686792,
+          "spurious_crosstalk_rmse": 0.11220881038614976,
+          "edge_auroc": 0.8794849537037037,
+          "edge_ap": 0.7142262236535187
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2600,34 +2600,34 @@
           "edge_ap": 0.7206503275687254
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.01317801047116518,
+          "n_params": 1824,
+          "val_mse": 0.014650528319180012,
           "chosen_reg": 1e-05,
-          "test_mse": 0.23112448703953473,
+          "test_mse": 0.226601221186551,
           "category_mse": {
-            "single_ko_in_module": 0.2733355617199968,
-            "phase_lag_shift": 0.2011890757630919,
-            "cross_module_combo": 0.2188488236355155
+            "single_ko_in_module": 0.2637299286751238,
+            "phase_lag_shift": 0.19891482096708038,
+            "cross_module_combo": 0.2171589139174488
           },
-          "attribution_rmse": 0.1861066032588794,
-          "spurious_crosstalk_rmse": 0.1304266879725265,
-          "edge_auroc": 0.9121817129629629,
-          "edge_ap": 0.8129009297741202
+          "attribution_rmse": 0.18216527143452851,
+          "spurious_crosstalk_rmse": 0.12023022657447842,
+          "edge_auroc": 0.9199942129629629,
+          "edge_ap": 0.8272543005789107
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.014427733607590199,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.013897895812988281,
           "chosen_reg": 1e-05,
-          "test_mse": 0.22615624727614633,
+          "test_mse": 0.23449464435696554,
           "category_mse": {
-            "single_ko_in_module": 0.27199799910042904,
-            "phase_lag_shift": 0.19302448340830822,
-            "cross_module_combo": 0.21344625931970176
+            "single_ko_in_module": 0.27434113417280076,
+            "phase_lag_shift": 0.20481823767486243,
+            "cross_module_combo": 0.2243245612232334
           },
-          "attribution_rmse": 0.1794202973501068,
-          "spurious_crosstalk_rmse": 0.1186185503372959,
-          "edge_auroc": 0.9202835648148148,
-          "edge_ap": 0.8349582374117136
+          "attribution_rmse": 0.1886831565972656,
+          "spurious_crosstalk_rmse": 0.13259249477717824,
+          "edge_auroc": 0.9105902777777778,
+          "edge_ap": 0.7812209830667052
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2726,34 +2726,34 @@
           "edge_ap": 0.5804395539464348
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.016065893694758415,
+          "n_params": 1824,
+          "val_mse": 0.013190038502216339,
           "chosen_reg": 1e-05,
-          "test_mse": 0.11271141434136542,
+          "test_mse": 0.09992526621073035,
           "category_mse": {
-            "single_ko_in_module": 0.09339897392029796,
-            "phase_lag_shift": 0.09557279535743397,
-            "cross_module_combo": 0.1491624737463643
+            "single_ko_in_module": 0.07964191858236219,
+            "phase_lag_shift": 0.08706648921708955,
+            "cross_module_combo": 0.13306739083273925
           },
-          "attribution_rmse": 0.14403724763482198,
-          "spurious_crosstalk_rmse": 0.10192803745512032,
-          "edge_auroc": 0.8534432870370369,
-          "edge_ap": 0.6664208747085615
+          "attribution_rmse": 0.139483577051218,
+          "spurious_crosstalk_rmse": 0.10394022406967651,
+          "edge_auroc": 0.8417245370370369,
+          "edge_ap": 0.6859344994938983
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.013284205459058285,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.01625620387494564,
           "chosen_reg": 1e-05,
-          "test_mse": 0.10198656466792884,
+          "test_mse": 0.11294120112981763,
           "category_mse": {
-            "single_ko_in_module": 0.0800384560142024,
-            "phase_lag_shift": 0.09454234085724592,
-            "cross_module_combo": 0.1313788971323382
+            "single_ko_in_module": 0.09377257025897007,
+            "phase_lag_shift": 0.09672762087085461,
+            "cross_module_combo": 0.1483234122596282
           },
-          "attribution_rmse": 0.1422477002139343,
-          "spurious_crosstalk_rmse": 0.10535973325270434,
-          "edge_auroc": 0.8515625,
-          "edge_ap": 0.6689933996726536
+          "attribution_rmse": 0.14419439547374782,
+          "spurious_crosstalk_rmse": 0.10145416164625193,
+          "edge_auroc": 0.8373842592592591,
+          "edge_ap": 0.6746118500612385
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2852,34 +2852,34 @@
           "edge_ap": 0.7876858523843201
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.01152579952031374,
+          "n_params": 1824,
+          "val_mse": 0.010476353578269482,
           "chosen_reg": 1e-05,
-          "test_mse": 0.15058787508132956,
+          "test_mse": 0.14106581961357414,
           "category_mse": {
-            "single_ko_in_module": 0.17104069084694723,
-            "phase_lag_shift": 0.11222210449068563,
-            "cross_module_combo": 0.1685008299063559
+            "single_ko_in_module": 0.15491818235615443,
+            "phase_lag_shift": 0.10743376682504241,
+            "cross_module_combo": 0.16084550965952552
           },
-          "attribution_rmse": 0.164111576231033,
-          "spurious_crosstalk_rmse": 0.09756115012776317,
-          "edge_auroc": 0.8709490740740741,
-          "edge_ap": 0.7129154229151822
+          "attribution_rmse": 0.1614955866653364,
+          "spurious_crosstalk_rmse": 0.09153025485808203,
+          "edge_auroc": 0.880642361111111,
+          "edge_ap": 0.7432050320165836
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.010632377117872238,
-          "chosen_reg": 1e-05,
-          "test_mse": 0.1418699129722171,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.01166479755192995,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.14301012541311608,
           "category_mse": {
-            "single_ko_in_module": 0.15951158358748418,
-            "phase_lag_shift": 0.1056307315443632,
-            "cross_module_combo": 0.16046742378480397
+            "single_ko_in_module": 0.164129905028719,
+            "phase_lag_shift": 0.10812190549310881,
+            "cross_module_combo": 0.1567785657175204
           },
-          "attribution_rmse": 0.16199276869661045,
-          "spurious_crosstalk_rmse": 0.09424724601384492,
-          "edge_auroc": 0.8870081018518516,
-          "edge_ap": 0.7362240171073067
+          "attribution_rmse": 0.1576038047913546,
+          "spurious_crosstalk_rmse": 0.08390797250329886,
+          "edge_auroc": 0.9069733796296297,
+          "edge_ap": 0.7946367119610941
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2978,34 +2978,34 @@
           "edge_ap": 0.5149343314349355
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.008810115046799183,
+          "n_params": 1824,
+          "val_mse": 0.0075025432743132114,
           "chosen_reg": 1e-05,
-          "test_mse": 0.1309524854068588,
+          "test_mse": 0.1208403033280784,
           "category_mse": {
-            "single_ko_in_module": 0.0914229142377718,
-            "phase_lag_shift": 0.1272425405096586,
-            "cross_module_combo": 0.17419200147314598
+            "single_ko_in_module": 0.08766458889911147,
+            "phase_lag_shift": 0.11868554365536532,
+            "cross_module_combo": 0.15617077742975838
           },
-          "attribution_rmse": 0.1574033328088377,
-          "spurious_crosstalk_rmse": 0.12185563724009522,
-          "edge_auroc": 0.8655960648148149,
-          "edge_ap": 0.70035994177994
+          "attribution_rmse": 0.14977531306507222,
+          "spurious_crosstalk_rmse": 0.10527646943750277,
+          "edge_auroc": 0.8846932870370372,
+          "edge_ap": 0.7262819267467623
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.007532836869359016,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.006880206521600485,
           "chosen_reg": 1e-05,
-          "test_mse": 0.12097560683279618,
+          "test_mse": 0.13114232945100482,
           "category_mse": {
-            "single_ko_in_module": 0.09211900085781585,
-            "phase_lag_shift": 0.1186903216271832,
-            "cross_module_combo": 0.15211749801338953
+            "single_ko_in_module": 0.09077537916310158,
+            "phase_lag_shift": 0.13087857903348804,
+            "cross_module_combo": 0.1717730301564248
           },
-          "attribution_rmse": 0.14822351529586714,
-          "spurious_crosstalk_rmse": 0.10738285900268263,
-          "edge_auroc": 0.8784722222222223,
-          "edge_ap": 0.7226411247979435
+          "attribution_rmse": 0.1565411672664956,
+          "spurious_crosstalk_rmse": 0.11412360431658851,
+          "edge_auroc": 0.8778935185185185,
+          "edge_ap": 0.7273475058617439
         },
         "coupled_const": {
           "n_params": 1008,
@@ -3104,34 +3104,34 @@
           "edge_ap": 0.6365272661436939
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.02615544945001602,
+          "n_params": 1824,
+          "val_mse": 0.026416286826133728,
           "chosen_reg": 1e-05,
-          "test_mse": 0.1451748802514983,
+          "test_mse": 0.14521556202873634,
           "category_mse": {
-            "single_ko_in_module": 0.15635877913321033,
-            "phase_lag_shift": 0.11780701889322678,
-            "cross_module_combo": 0.16135884272805778
+            "single_ko_in_module": 0.1527084647249741,
+            "phase_lag_shift": 0.11545962450956575,
+            "cross_module_combo": 0.16747859685166913
           },
-          "attribution_rmse": 0.16039002300554392,
-          "spurious_crosstalk_rmse": 0.1114959051328813,
-          "edge_auroc": 0.9217303240740741,
-          "edge_ap": 0.8136076370488022
+          "attribution_rmse": 0.16702528105422776,
+          "spurious_crosstalk_rmse": 0.10549347619007342,
+          "edge_auroc": 0.9144965277777778,
+          "edge_ap": 0.8049653851088546
         },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.02284470945596695,
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.024587489664554596,
           "chosen_reg": 1e-05,
-          "test_mse": 0.13455204909046323,
+          "test_mse": 0.15430576556523182,
           "category_mse": {
-            "single_ko_in_module": 0.1411247277022748,
-            "phase_lag_shift": 0.10763551239345308,
-            "cross_module_combo": 0.1548959071756618
+            "single_ko_in_module": 0.16178643581266744,
+            "phase_lag_shift": 0.12642190328226116,
+            "cross_module_combo": 0.17470895760076685
           },
-          "attribution_rmse": 0.15850221016013727,
-          "spurious_crosstalk_rmse": 0.10422613030983857,
-          "edge_auroc": 0.9230324074074076,
-          "edge_ap": 0.8229415863466302
+          "attribution_rmse": 0.1684392431544443,
+          "spurious_crosstalk_rmse": 0.11384492054715001,
+          "edge_auroc": 0.9107349537037037,
+          "edge_ap": 0.7893591371458336
         },
         "coupled_const": {
           "n_params": 1008,
@@ -3230,34 +3230,34 @@
           "edge_ap": 0.636435737353031
         },
         "memgrn": {
-          "n_params": 984,
-          "val_mse": 0.008123894222080708,
-          "chosen_reg": 0.0001,
-          "test_mse": 0.2648404475346035,
-          "category_mse": {
-            "single_ko_in_module": 0.18868166624267857,
-            "phase_lag_shift": 0.23605285289604291,
-            "cross_module_combo": 0.3697868234650891
-          },
-          "attribution_rmse": 0.19221126170668854,
-          "spurious_crosstalk_rmse": 0.10854123268299298,
-          "edge_auroc": 0.9217303240740741,
-          "edge_ap": 0.7926089456060813
-        },
-        "memgrn_int": {
-          "n_params": 1656,
-          "val_mse": 0.007311547175049782,
+          "n_params": 1824,
+          "val_mse": 0.007146821357309818,
           "chosen_reg": 1e-05,
-          "test_mse": 0.24134147287294863,
+          "test_mse": 0.2014545259852346,
           "category_mse": {
-            "single_ko_in_module": 0.1404297906406207,
-            "phase_lag_shift": 0.23504489092397293,
-            "cross_module_combo": 0.3485497370542523
+            "single_ko_in_module": 0.11558589420496289,
+            "phase_lag_shift": 0.2042406490559115,
+            "cross_module_combo": 0.2845370346948295
           },
-          "attribution_rmse": 0.19333471067801553,
-          "spurious_crosstalk_rmse": 0.11641178106089575,
-          "edge_auroc": 0.9275173611111112,
-          "edge_ap": 0.8169868327163118
+          "attribution_rmse": 0.17925604353232186,
+          "spurious_crosstalk_rmse": 0.10784593917443443,
+          "edge_auroc": 0.9301215277777778,
+          "edge_ap": 0.8317912772195045
+        },
+        "memgrn_additive": {
+          "n_params": 1152,
+          "val_mse": 0.007654406130313873,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.2399337081326031,
+          "category_mse": {
+            "single_ko_in_module": 0.17276150226549897,
+            "phase_lag_shift": 0.21410704136212194,
+            "cross_module_combo": 0.33293258077018834
+          },
+          "attribution_rmse": 0.18367602208056433,
+          "spurious_crosstalk_rmse": 0.10568778653099085,
+          "edge_auroc": 0.9260706018518517,
+          "edge_ap": 0.7964643911595194
         },
         "coupled_const": {
           "n_params": 1008,

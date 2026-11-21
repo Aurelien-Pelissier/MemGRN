@@ -6,8 +6,10 @@ protocol (16 single-pulse schedules only for training, CV hyperparameter selecti
 readout/rate refitting; zero-shot evaluation on 30-min holdout and 10 pulse trains).
 """
 
+from concurrent.futures import ProcessPoolExecutor
 import hashlib
 import json
+import multiprocessing as mp
 import os
 from pathlib import Path
 import sys
@@ -15,6 +17,9 @@ import time
 
 for _env_var in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
     os.environ[_env_var] = "1"
+os.environ.setdefault(
+    "XLA_FLAGS", "--xla_cpu_multi_thread_eigen=false intra_op_parallelism_threads=1"
+)
 
 import numpy as np  # noqa: E402
 from scipy.optimize import least_squares  # noqa: E402
@@ -78,6 +83,241 @@ def _unpack_memgrn_flat(spec: ModelSpec, theta: np.ndarray) -> dict[str, np.ndar
     _, unpack, _ = build_jax_rollout(spec, dt=2.5 / (60.0 * 4), obs_stride=8)
     tree = unpack(theta)
     return {k: np.asarray(v, dtype=np.float64) for k, v in tree.items()}
+
+
+def _fit_one_cross_readout(args: tuple) -> tuple[str, str, int, float]:
+    (
+        readout_origin,
+        mode_str,
+        g_i,
+        direct_v,
+        delayed_v,
+        decay_v,
+        tanh_train_stages,
+        train_y_g,
+        loss_w_single,
+        rep_fine_stages,
+        rep_truth_g,
+        obs_min,
+        last_off,
+        fine_sub,
+        dt_fine,
+    ) = args
+    mode = RateInputMode(mode_str)
+    froz = FrozenReadoutParams(direct=direct_v, delayed=delayed_v, decay=decay_v)
+    fit_res = fit_frozen_readout_rates(
+        mode=mode,
+        frozen=froz,
+        tanh_stages=tanh_train_stages,
+        targets=train_y_g,
+        loss_weights=loss_w_single,
+        seed=416 + g_i,
+        total_updates=1600,
+        substeps_per_knot=fine_sub,
+    )
+    th_r = fit_res.best_theta
+    if mode == RateInputMode.CONSTANT:
+        r_p = MemGRNParams(
+            direct_weights=np.array([[froz.direct]]),
+            delayed_weights=froz.delayed.reshape(1, 3, 1),
+            relaxation=np.array([froz.decay]),
+            rate_logits=th_r.reshape(1, 3).astype(np.float64),
+        )
+    else:
+        n_in = (
+            1
+            if mode == RateInputMode.ACTIVITY
+            else (2 if mode == RateInputMode.MEMORY else 3)
+        )
+        idx = 0
+        b_v = th_r[idx : idx + 4].astype(np.float64)
+        idx += 4
+        in_v = th_r[idx : idx + n_in * 4].reshape(n_in, 4).astype(np.float64)
+        idx += n_in * 4
+        out_v = th_r[idx : idx + 12].reshape(1, 3, 4).astype(np.float64)
+        idx += 12
+        rt_v = th_r[idx : idx + 3].reshape(1, 3).astype(np.float64)
+        r_p = MemGRNParams(
+            direct_weights=np.array([[froz.direct]]),
+            delayed_weights=froz.delayed.reshape(1, 3, 1),
+            relaxation=np.array([froz.decay]),
+            rate_logits=rt_v,
+            input_proj=in_v,
+            hidden_bias=b_v,
+            output_proj=out_v,
+        )
+    cfg_g = MemGRNConfig(
+        n_sources=1, n_targets=1, n_channels=3, hidden_width=4, rate_mode=mode
+    )
+    _, _, y_sim = rollout_memgrn_rk4(rep_fine_stages, dt_fine, r_p, cfg_g)
+    pred_g = y_sim[16::16, :, 0].T[:, :, None]
+    mse_g, _, _ = _post_shutoff_train_mse(pred_g, rep_truth_g, obs_min, last_off)
+    return readout_origin, mode_str, g_i, mse_g
+
+
+def _run_one_lopo_fold(args: tuple) -> tuple[str, dict[str, float]]:
+    (
+        held_g_idx,
+        held_gene,
+        single_stage_all,
+        single_y_full,
+        single_weights,
+        tr_indices,
+        val_indices,
+        train_y_obs,
+        rep_stage,
+        rep_truth,
+        obs_min,
+        last_off,
+        dt,
+        obs_stride,
+    ) = args
+    src_genes = [i for i in range(7) if i != held_g_idx]
+    spec_6 = ModelSpec(
+        family=DynamicalModelFamily.MEMGRN,
+        n_sources=1,
+        n_targets=6,
+        n_channels=3,
+        hidden_width=4,
+    )
+    fit_6 = fit_dynamical_model(
+        spec=spec_6,
+        train_stage_u=single_stage_all[:, tr_indices, :, :],
+        train_y=single_y_full[tr_indices][:, :, src_genes],
+        train_mask=single_weights[tr_indices][:, :, src_genes],
+        val_stage_u=single_stage_all[:, val_indices, :, :],
+        val_y=single_y_full[val_indices][:, :, src_genes],
+        val_mask=single_weights[val_indices][:, :, src_genes],
+        dt=dt,
+        obs_stride=obs_stride,
+        seeds=(416, 819),
+        reg_grid=(1e-5, 1e-4),
+        total_updates=1400,
+    )
+    p6 = _unpack_memgrn_flat(spec_6, fit_6.theta)
+
+    dummy_cfg = MemGRNConfig(
+        n_sources=1,
+        n_targets=1,
+        n_channels=3,
+        hidden_width=4,
+        use_asymmetric_rates=True,
+    )
+    dummy_params = MemGRNParams(
+        direct_weights=np.zeros((1, 1)),
+        delayed_weights=np.zeros((1, 3, 1)),
+        relaxation=np.array([0.5]),
+        rate_logits=p6["rate"],
+        rate_logits_down=p6["rate_dn"],
+        input_proj=p6["in_proj"],
+        hidden_bias=p6["bias"],
+        output_proj=p6["out_proj"],
+        output_proj_down=p6["out_proj_dn"],
+    )
+    _, h_single, _ = rollout_memgrn_rk4(single_stage_all, dt, dummy_params, dummy_cfg)
+    _, h_rep, _ = rollout_memgrn_rk4(rep_stage, dt, dummy_params, dummy_cfg)
+    a_single = np.tanh(single_stage_all[:, :, 0, :])
+    a_rep = np.tanh(rep_stage[:, :, 0, :])
+    y_target_single = train_y_obs[:, :, held_g_idx]
+
+    def _integrate_linear_readout(
+        a_st: np.ndarray, h_traj: np.ndarray, w_vec: np.ndarray, dec: float
+    ) -> np.ndarray:
+        d_w = w_vec[0]
+        b_w = w_vec[1:4]
+        n_st, b_sz = a_st.shape[:2]
+        y_cur = np.zeros((b_sz,), dtype=np.float64)
+        out_y = []
+        for st in range(n_st):
+            hm = 0.5 * (h_traj[st, :, 0, :] + h_traj[st + 1, :, 0, :])
+            p0 = d_w * a_st[st, :, 0] + h_traj[st, :, 0, :] @ b_w
+            pm = d_w * a_st[st, :, 1] + hm @ b_w
+            p1 = d_w * a_st[st, :, 2] + h_traj[st + 1, :, 0, :] @ b_w
+            ky1 = p0 - dec * y_cur
+            ky2 = pm - dec * (y_cur + 0.5 * dt * ky1)
+            ky3 = pm - dec * (y_cur + 0.5 * dt * ky2)
+            ky4 = p1 - dec * (y_cur + dt * ky3)
+            y_cur = y_cur + (dt / 6.0) * (ky1 + 2 * ky2 + 2 * ky3 + ky4)
+            if (st + 1) % obs_stride == 0:
+                out_y.append(y_cur.copy())
+        return np.stack(out_y, axis=1)
+
+    lsq = least_squares(
+        lambda x_opt: (
+            (
+                _integrate_linear_readout(
+                    a_single, h_single, x_opt[:4], float(0.1 + np.logaddexp(0.0, x_opt[4]))
+                )
+                - y_target_single
+            )
+            * np.sqrt(single_weights[:, 1:, held_g_idx])
+        ).ravel(),
+        np.zeros(5, dtype=np.float64),
+        method="trf",
+    )
+    pred_rep_shared = _integrate_linear_readout(
+        a_rep, h_rep, lsq.x[:4], float(0.1 + np.logaddexp(0.0, lsq.x[4]))
+    )[:, :, None]
+
+    spec_6c = ModelSpec(
+        family=DynamicalModelFamily.LOCAL_CONST,
+        n_sources=1,
+        n_targets=6,
+        n_channels=3,
+    )
+    fit_6c = fit_dynamical_model(
+        spec=spec_6c,
+        train_stage_u=single_stage_all[:, tr_indices, :, :],
+        train_y=single_y_full[tr_indices][:, :, src_genes],
+        train_mask=single_weights[tr_indices][:, :, src_genes],
+        val_stage_u=single_stage_all[:, val_indices, :, :],
+        val_y=single_y_full[val_indices][:, :, src_genes],
+        val_mask=single_weights[val_indices][:, :, src_genes],
+        dt=dt,
+        obs_stride=obs_stride,
+        seeds=(416, 819),
+        reg_grid=(1e-5, 1e-4),
+        total_updates=1400,
+    )
+    p6c = _unpack_memgrn_flat(spec_6c, fit_6c.theta)
+    cfg_c = MemGRNConfig(
+        n_sources=1, n_targets=1, n_channels=3, rate_mode=RateInputMode.CONSTANT
+    )
+    params_c = MemGRNParams(
+        direct_weights=np.zeros((1, 1)),
+        delayed_weights=np.zeros((1, 3, 1)),
+        relaxation=np.array([0.5]),
+        rate_logits=p6c["rate"],
+    )
+    _, h_single_c, _ = rollout_memgrn_rk4(single_stage_all, dt, params_c, cfg_c)
+    _, h_rep_c, _ = rollout_memgrn_rk4(rep_stage, dt, params_c, cfg_c)
+    lsq_c = least_squares(
+        lambda x_o: (
+            (
+                _integrate_linear_readout(
+                    a_single, h_single_c, x_o[:4], float(0.1 + np.logaddexp(0.0, x_o[4]))
+                )
+                - y_target_single
+            )
+            * np.sqrt(single_weights[:, 1:, held_g_idx])
+        ).ravel(),
+        np.zeros(5, dtype=np.float64),
+        method="trf",
+    )
+    pred_rep_const_shared = _integrate_linear_readout(
+        a_rep, h_rep_c, lsq_c.x[:4], float(0.1 + np.logaddexp(0.0, lsq_c.x[4]))
+    )[:, :, None]
+
+    mse_adapt_lopo, _, _ = _post_shutoff_train_mse(
+        pred_rep_shared, rep_truth[:, :, held_g_idx : held_g_idx + 1], obs_min, last_off
+    )
+    mse_const_lopo, _, _ = _post_shutoff_train_mse(
+        pred_rep_const_shared, rep_truth[:, :, held_g_idx : held_g_idx + 1], obs_min, last_off
+    )
+    return held_gene, {
+        "shared_memgrn_filter_mse": mse_adapt_lopo,
+        "shared_const_filter_mse": mse_const_lopo,
+    }
 
 
 def main() -> None:
@@ -154,6 +394,7 @@ def main() -> None:
         "models_joint": [
             "local_const",
             "memgrn",
+            "memgrn_sym",
             "ltc_local",
             "perturb_ode",
             "latent_ode",
@@ -196,6 +437,7 @@ def main() -> None:
     joint_families = (
         DynamicalModelFamily.LOCAL_CONST,
         DynamicalModelFamily.MEMGRN,
+        DynamicalModelFamily.MEMGRN_SYM,
         DynamicalModelFamily.LTC_LOCAL,
         DynamicalModelFamily.PERTURB_ODE,
         DynamicalModelFamily.LATENT_ODE,
@@ -227,6 +469,7 @@ def main() -> None:
             reg_grid=(1e-6, 1e-5, 1e-4),
             total_updates=1800,
             lr_max=0.009,
+            gate_shrinkage_grid=(0.25, 1.0),
         )
         fitted_joint_models[fam.value] = fitted
 
@@ -267,211 +510,65 @@ def main() -> None:
         loss_w_single[i] = 0.25 + 0.75 * mask_p.astype(np.float64)
     loss_w_single /= np.sum(loss_w_single)
 
-    cross_readout: dict[str, dict[str, float]] = {}
+    cross_jobs = []
     for readout_origin in ("local_const", "memgrn"):
         origin_model = fitted_joint_models[readout_origin]
         unpacked = _unpack_memgrn_flat(origin_model.spec, origin_model.theta)
-        origin_scores: dict[str, float] = {}
-
         for mode_str in ("constant", "activity", "memory", "both"):
-            mode = RateInputMode(mode_str)
-            per_gene_mses = []
             for g_i in range(len(MSN2_PROMOTERS)):
-                froz = FrozenReadoutParams(
-                    direct=float(unpacked["direct"][0, g_i]),
-                    delayed=unpacked["delayed"][0, :, g_i],
-                    decay=float(0.1 + np.logaddexp(0.0, unpacked["decay"][g_i])),
-                )
-                fit_res = fit_frozen_readout_rates(
-                    mode=mode,
-                    frozen=froz,
-                    tanh_stages=tanh_train_stages,
-                    targets=train_y_obs[:, :, g_i],
-                    loss_weights=loss_w_single,
-                    seed=416 + g_i,
-                    total_updates=1600,
-                    substeps_per_knot=fine_sub,
-                )
-                # Evaluate fitted rate law on 10 unseen repeated-pulse trains
-                th_r = fit_res.best_theta
-                if mode == RateInputMode.CONSTANT:
-                    r_p = MemGRNParams(
-                        direct_weights=np.array([[froz.direct]]),
-                        delayed_weights=froz.delayed.reshape(1, 3, 1),
-                        relaxation=np.array([froz.decay]),
-                        rate_logits=th_r.reshape(1, 3).astype(np.float64),
+                cross_jobs.append(
+                    (
+                        readout_origin,
+                        mode_str,
+                        g_i,
+                        float(unpacked["direct"][0, g_i]),
+                        unpacked["delayed"][0, :, g_i].copy(),
+                        float(0.1 + np.logaddexp(0.0, unpacked["decay"][g_i])),
+                        tanh_train_stages,
+                        train_y_obs[:, :, g_i],
+                        loss_w_single,
+                        rep_fine_stages,
+                        rep_truth[:, :, g_i : g_i + 1],
+                        obs_min,
+                        last_off,
+                        fine_sub,
+                        dt_fine,
                     )
-                else:
-                    n_in = 1 if mode == RateInputMode.ACTIVITY else (2 if mode == RateInputMode.MEMORY else 3)
-                    idx = 0
-                    b_v = th_r[idx : idx + 4].astype(np.float64)
-                    idx += 4
-                    in_v = th_r[idx : idx + n_in * 4].reshape(n_in, 4).astype(np.float64)
-                    idx += n_in * 4
-                    out_v = th_r[idx : idx + 12].reshape(1, 3, 4).astype(np.float64)
-                    idx += 12
-                    rt_v = th_r[idx : idx + 3].reshape(1, 3).astype(np.float64)
-                    r_p = MemGRNParams(
-                        direct_weights=np.array([[froz.direct]]),
-                        delayed_weights=froz.delayed.reshape(1, 3, 1),
-                        relaxation=np.array([froz.decay]),
-                        rate_logits=rt_v,
-                        input_proj=in_v,
-                        hidden_bias=b_v,
-                        output_proj=out_v,
-                    )
-                cfg_g = MemGRNConfig(
-                    n_sources=1, n_targets=1, n_channels=3, hidden_width=4, rate_mode=mode
                 )
-                _, _, y_sim = rollout_memgrn_rk4(rep_fine_stages, dt_fine, r_p, cfg_g)
-                pred_g = y_sim[16::16, :, 0].T[:, :, None]
-                mse_g, _, _ = _post_shutoff_train_mse(
-                    pred_g, rep_truth[:, :, g_i : g_i + 1], obs_min, last_off
-                )
-                per_gene_mses.append(mse_g)
-            origin_scores[mode_str] = float(np.mean(per_gene_mses))
-        cross_readout[readout_origin] = origin_scores
 
-    # =========================================================================
-    # Part 3: Leave-One-Promoter-Out Shared Msn2 Filter Transfer (7 folds)
-    # =========================================================================
-    shared_transfer_by_gene: dict[str, dict[str, float]] = {}
-    for held_g_idx, held_gene in enumerate(MSN2_PROMOTERS):
-        src_genes = [i for i in range(7) if i != held_g_idx]
-        spec_6 = ModelSpec(
-            family=DynamicalModelFamily.MEMGRN,
-            n_sources=1,
-            n_targets=6,
-            n_channels=3,
-            hidden_width=4,
+    lopo_jobs = [
+        (
+            held_g_idx,
+            held_gene,
+            single_stage_all,
+            single_y_full,
+            single_weights,
+            tr_indices,
+            val_indices,
+            train_y_obs,
+            rep_stage,
+            rep_truth,
+            obs_min,
+            last_off,
+            dt,
+            obs_stride,
         )
-        fit_6 = fit_dynamical_model(
-            spec=spec_6,
-            train_stage_u=single_stage_all[:, tr_indices, :, :],
-            train_y=single_y_full[tr_indices][:, :, src_genes],
-            train_mask=single_weights[tr_indices][:, :, src_genes],
-            val_stage_u=single_stage_all[:, val_indices, :, :],
-            val_y=single_y_full[val_indices][:, :, src_genes],
-            val_mask=single_weights[val_indices][:, :, src_genes],
-            dt=dt,
-            obs_stride=obs_stride,
-            seeds=(416, 819),
-            reg_grid=(1e-5, 1e-4),
-            total_updates=1400,
-        )
-        p6 = _unpack_memgrn_flat(spec_6, fit_6.theta)
+        for held_g_idx, held_gene in enumerate(MSN2_PROMOTERS)
+    ]
 
-        # Roll out the frozen shared 3-channel Msn2 filter bank (z, h) on single & repeated pulses
-        dummy_cfg = MemGRNConfig(n_sources=1, n_targets=1, n_channels=3, hidden_width=4)
-        dummy_params = MemGRNParams(
-            direct_weights=np.zeros((1, 1)),
-            delayed_weights=np.zeros((1, 3, 1)),
-            relaxation=np.array([0.5]),
-            rate_logits=p6["rate"],
-            input_proj=p6["in_proj"],
-            hidden_bias=p6["bias"],
-            output_proj=p6["out_proj"],
-        )
-        _, h_single, _ = rollout_memgrn_rk4(single_stage_all, dt, dummy_params, dummy_cfg)
-        _, h_rep, _ = rollout_memgrn_rk4(rep_stage, dt, dummy_params, dummy_cfg)
-        a_single = np.tanh(single_stage_all[:, :, 0, :])
-        a_rep = np.tanh(rep_stage[:, :, 0, :])
+    with ProcessPoolExecutor(max_workers=18, mp_context=mp.get_context("spawn")) as pool:
+        cross_out = list(pool.map(_fit_one_cross_readout, cross_jobs))
+        lopo_out = dict(pool.map(_run_one_lopo_fold, lopo_jobs))
 
-        # Fit ONLY the 5 readout scalars (D, B_1, B_2, B_3, log_decay) on held-out promoter's single pulses!
-        y_target_single = train_y_obs[:, :, held_g_idx]  # (16, 24)
-
-        def _integrate_linear_readout(
-            a_st: np.ndarray, h_traj: np.ndarray, w_vec: np.ndarray, dec: float
-        ) -> np.ndarray:
-            # Exact step-wise RK4 integration of dy/dt = d*a + h @ b - dec*y
-            d_w = w_vec[0]
-            b_w = w_vec[1:4]
-            n_st, b_sz = a_st.shape[:2]
-            y_cur = np.zeros((b_sz,), dtype=np.float64)
-            out_y = []
-            for st in range(n_st):
-                hm = 0.5 * (h_traj[st, :, 0, :] + h_traj[st + 1, :, 0, :])
-                p0 = d_w * a_st[st, :, 0] + h_traj[st, :, 0, :] @ b_w
-                pm = d_w * a_st[st, :, 1] + hm @ b_w
-                p1 = d_w * a_st[st, :, 2] + h_traj[st + 1, :, 0, :] @ b_w
-                ky1 = p0 - dec * y_cur
-                ky2 = pm - dec * (y_cur + 0.5 * dt * ky1)
-                ky3 = pm - dec * (y_cur + 0.5 * dt * ky2)
-                ky4 = p1 - dec * (y_cur + dt * ky3)
-                y_cur = y_cur + (dt / 6.0) * (ky1 + 2 * ky2 + 2 * ky3 + ky4)
-                if (st + 1) % obs_stride == 0:
-                    out_y.append(y_cur.copy())
-            return np.stack(out_y, axis=1)
-
-        def _resid(x_opt: np.ndarray) -> np.ndarray:
-            dec = 0.1 + np.logaddexp(0.0, x_opt[4])
-            pred = _integrate_linear_readout(a_single, h_single, x_opt[:4], dec)
-            return ((pred - y_target_single) * np.sqrt(single_weights[:, 1:, held_g_idx])).ravel()
-
-        lsq = least_squares(_resid, np.zeros(5, dtype=np.float64), method="trf")
-        dec_fit = float(0.1 + np.logaddexp(0.0, lsq.x[4]))
-        pred_rep_shared = _integrate_linear_readout(a_rep, h_rep, lsq.x[:4], dec_fit)[:, :, None]
-
-        # Compare against Constant-filter LOPO transfer (fixing constant rates from 6 promoters)
-        spec_6c = ModelSpec(
-            family=DynamicalModelFamily.LOCAL_CONST,
-            n_sources=1,
-            n_targets=6,
-            n_channels=3,
-        )
-        fit_6c = fit_dynamical_model(
-            spec=spec_6c,
-            train_stage_u=single_stage_all[:, tr_indices, :, :],
-            train_y=single_y_full[tr_indices][:, :, src_genes],
-            train_mask=single_weights[tr_indices][:, :, src_genes],
-            val_stage_u=single_stage_all[:, val_indices, :, :],
-            val_y=single_y_full[val_indices][:, :, src_genes],
-            val_mask=single_weights[val_indices][:, :, src_genes],
-            dt=dt,
-            obs_stride=obs_stride,
-            seeds=(416, 819),
-            reg_grid=(1e-5, 1e-4),
-            total_updates=1400,
-        )
-        p6c = _unpack_memgrn_flat(spec_6c, fit_6c.theta)
-        cfg_c = MemGRNConfig(
-            n_sources=1, n_targets=1, n_channels=3, rate_mode=RateInputMode.CONSTANT
-        )
-        params_c = MemGRNParams(
-            direct_weights=np.zeros((1, 1)),
-            delayed_weights=np.zeros((1, 3, 1)),
-            relaxation=np.array([0.5]),
-            rate_logits=p6c["rate"],
-        )
-        _, h_single_c, _ = rollout_memgrn_rk4(single_stage_all, dt, params_c, cfg_c)
-        _, h_rep_c, _ = rollout_memgrn_rk4(rep_stage, dt, params_c, cfg_c)
-        lsq_c = least_squares(
-            lambda x_o: (
-                (
-                    _integrate_linear_readout(
-                        a_single, h_single_c, x_o[:4], float(0.1 + np.logaddexp(0.0, x_o[4]))
-                    )
-                    - y_target_single
-                )
-                * np.sqrt(single_weights[:, 1:, held_g_idx])
-            ).ravel(),
-            np.zeros(5, dtype=np.float64),
-            method="trf",
-        )
-        pred_rep_const_shared = _integrate_linear_readout(
-            a_rep, h_rep_c, lsq_c.x[:4], float(0.1 + np.logaddexp(0.0, lsq_c.x[4]))
-        )[:, :, None]
-
-        mse_adapt_lopo, _, _ = _post_shutoff_train_mse(
-            pred_rep_shared, rep_truth[:, :, held_g_idx : held_g_idx + 1], obs_min, last_off
-        )
-        mse_const_lopo, _, _ = _post_shutoff_train_mse(
-            pred_rep_const_shared, rep_truth[:, :, held_g_idx : held_g_idx + 1], obs_min, last_off
-        )
-        shared_transfer_by_gene[held_gene] = {
-            "shared_memgrn_filter_mse": mse_adapt_lopo,
-            "shared_const_filter_mse": mse_const_lopo,
-        }
+    cross_readout: dict[str, dict[str, float]] = {
+        "local_const": {},
+        "memgrn": {},
+    }
+    for r_orig in ("local_const", "memgrn"):
+        for m_str in ("constant", "activity", "memory", "both"):
+            vals_m = [mse_v for ro, ms, _gi, mse_v in cross_out if ro == r_orig and ms == m_str]
+            cross_readout[r_orig][m_str] = float(np.mean(vals_m))
+    shared_transfer_by_gene = lopo_out
 
     # =========================================================================
     # Part 4: Empirical Iso-Expression Non-Markovian Audit on Real Yeast Pulses

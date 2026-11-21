@@ -50,7 +50,7 @@ STIMULUS_FOLDS: tuple[tuple[str, str], ...] = (
 MODELS_TO_RUN: tuple[DynamicalModelFamily, ...] = (
     DynamicalModelFamily.LOCAL_CONST,
     DynamicalModelFamily.MEMGRN,
-    DynamicalModelFamily.MEMGRN_INT,
+    DynamicalModelFamily.MEMGRN_ADDITIVE,
     DynamicalModelFamily.COUPLED_CONST,
     DynamicalModelFamily.COUPLED_ADAPTIVE,
     DynamicalModelFamily.LTC_COUPLED,
@@ -131,6 +131,7 @@ def _run_fold_model(job: tuple[int, str]) -> tuple[int, str, dict]:
         reg_grid=(1e-5, 1e-4, 5e-4),
         total_updates=900,
         lr_max=0.008,
+        gate_shrinkage_grid=(0.5, 4.0, 25.0),
     )
 
     pred_te = fitted.predict_fn(te_u, None)

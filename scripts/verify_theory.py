@@ -23,14 +23,17 @@ from memgrn.identification import (
     template_margin_lower_bound,
 )
 from memgrn.theory import (
+    verify_closed_loop_stability_and_identifiability_theorem,
     verify_coupled_crosstalk_theorem,
+    verify_general_s_covariance_crosstalk_theorem,
     verify_iso_expression_proposition,
+    verify_orthogonal_cofactor_invariance_proposition,
 )
 
 
 def verify_all_theory(output_json: Path | None = None) -> dict:
-    """Run deterministic numerical audits of Proposition 1, Theorem 1, and schedule bounds."""
-    # 1. Theorem 1: 25 (r, theta) pairs against adaptive Gauss-Kronrod quadrature
+    """Run deterministic numerical audits of Theorems 1-2, Proposition 1, and schedule bounds."""
+    # 1. Theorem 2: 25 (r, theta) pairs against adaptive Gauss-Kronrod quadrature
     swap_cases = []
     for r_val in (0.05, 0.25, 0.75, 1.5, 3.0):
         for deg in (5, 20, 45, 70, 90):
@@ -57,7 +60,7 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
             )
     max_swap_err = max(c["abs_error"] for c in swap_cases)
     if max_swap_err >= 1e-11:
-        raise AssertionError(f"Theorem 1 quadrature mismatch: {max_swap_err}")
+        raise AssertionError(f"Theorem 2 quadrature mismatch: {max_swap_err}")
 
     # 2. Algebraic swap inversion check
     t_grid = np.linspace(0.0, 6.0, 61)
@@ -73,7 +76,7 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
     if inversion_err >= 1e-14:
         raise AssertionError(f"Swap inversion error too large: {inversion_err}")
 
-    # 3. Proposition 1: Bounded filters, additive accounting, and DOP853 comparison
+    # 3. Proposition 1(ii): Bounded asymmetric filters, additive accounting, and DOP853 match
     cfg = MemGRNConfig(
         n_sources=2,
         n_targets=1,
@@ -82,15 +85,18 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
         rate_min=0.1,
         rate_max=2.9,
         rate_mode=RateInputMode.BOTH,
+        use_asymmetric_rates=True,
     )
     params = MemGRNParams(
         direct_weights=np.array([[0.6], [-0.4]]),
         delayed_weights=np.array([[[0.8]], [[-0.7]]]),
         relaxation=np.array([0.35]),
         rate_logits=np.array([[0.3], [0.3]]),
+        rate_logits_down=np.array([[-0.2], [-0.1]]),
         input_proj=np.array([[0.5, -0.3], [0.8, 0.2], [-0.4, 0.6]]),
         hidden_bias=np.array([0.1, -0.1]),
         output_proj=np.array([[[0.7, -0.5]], [[-0.4, 0.6]]]),
+        output_proj_down=np.array([[[-0.5, 0.4]], [[0.3, -0.5]]]),
     )
     n_steps = 400
     dt = 12.0 / n_steps
@@ -115,7 +121,6 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
     if identity_err >= 1e-9:
         raise AssertionError(f"Contribution accounting mismatch: {identity_err}")
 
-    # Splice decomposition check
     splice = memory_reset_splice_decomposition(
         raw_u, dt, params, cfg, reset_steps={100, 200}, shutoff_step=250
     )
@@ -127,7 +132,6 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
     if splice_err >= 1e-13:
         raise AssertionError(f"Splice decomposition mismatch: {splice_err}")
 
-    # Compare against adaptive SciPy DOP853 solver on constant-input boundedness
     bound_a = float(np.max(np.abs(np.tanh(raw_u))))
 
     def _dop_rhs(t: float, s: np.ndarray) -> np.ndarray:
@@ -210,27 +214,73 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
     if sched_res.exhaustive_optimum > sched_res.dual_upper_bound + 1e-9:
         raise AssertionError("Minimax dual upper bound violated exhaustive optimum")
 
-    # 6. Theorem 1 (new): Coupled adaptive cross-talk vs. Source-Local MemGRN invariance
+    # 6. Theorem 1(a): 2-TF collinear and general S-regulator correlated covariance separation
     ct_res = verify_coupled_crosstalk_theorem(w_star=2.4, rho=0.85)
     if ct_res.coupled_ko_trajectory_l2_error <= 0.01:
         raise AssertionError("Expected strictly positive coupled cross-talk error")
-    if ct_res.local_ko_trajectory_l2_error >= 1e-13 or ct_res.local_false_source2_attribution_l2 >= 1e-13:
+    if ct_res.local_ko_trajectory_l2_error >= 1e-13:
         raise AssertionError("Source-local MemGRN violated counterfactual invariance")
 
-    # 7. Proposition 2 (new): Iso-expression non-Markovian lower bound over PerturbODE
+    gen_s = verify_general_s_covariance_crosstalk_theorem(n_sources=12, k_active=2)
+    if gen_s.analytical_vs_solve_max_diff >= 1e-12:
+        raise AssertionError("Spectral ridge identity failed")
+    if gen_s.coupled_nonparent_weight_l2 <= 0.1 or gen_s.local_nonparent_weight_l2 != 0.0:
+        raise AssertionError("General-S cross-talk check failed")
+    if gen_s.finite_sample_coupled_risk_s24 <= 3.0 * gen_s.finite_sample_local_l1_risk_s24:
+        raise AssertionError("Expected S=24 sparse local risk << coupled dense risk")
+
+    # 7. Theorem 1(b): Closed-loop absorbing ball, graph identifiability, & GL(M) gauge
+    cl_res = verify_closed_loop_stability_and_identifiability_theorem(n_nodes=5)
+    if not cl_res.within_absorbing_ball or cl_res.max_filter_abs > 1.0 + 1e-9:
+        raise AssertionError("Closed-loop MemGRN violated compact absorbing ball")
+    if cl_res.coupled_gauge_trajectory_max_diff >= 1e-12:
+        raise AssertionError("Coupled GL(M) gauge trajectories failed equivalence")
+    if cl_res.coupled_gauge_attribution_disagreement <= 0.2:
+        raise AssertionError("Expected large coupled gauge attribution ambiguity")
+    if (
+        cl_res.memgrn_direct_weight_recovery_max_error >= 1e-11
+        or cl_res.memgrn_total_weight_recovery_max_error >= 1e-8
+    ):
+        raise AssertionError("Closed-loop MemGRN graph weight identifiability failed")
+
+    # 8. Proposition 1(i) & 1(iii): Iso-expression lower bound & orthogonal cofactor invariance
     iso_res = verify_iso_expression_proposition()
     if iso_res.washout_value_diff >= 1e-11:
         raise AssertionError(f"Iso-expression washout mismatch: {iso_res.washout_value_diff}")
     if iso_res.best_state_only_post_washout_error_l2 + 1e-12 < iso_res.state_only_universal_lower_bound:
         raise AssertionError("State-only lower bound violated")
 
+    ortho_res = verify_orthogonal_cofactor_invariance_proposition()
+    if ortho_res.orthogonality_max_inner_product >= 1e-11:
+        raise AssertionError("Orthogonal cofactor projection failed")
+    if ortho_res.observed_weight_invariance_error >= 1e-12:
+        raise AssertionError("Observed TF weight invariance violated")
+    if ortho_res.mse_memgrn_ortho >= 0.2 * ortho_res.mse_observed_only:
+        raise AssertionError("Expected substantial residual MSE drop from orthogonal cofactor")
+
     summary = {
         "crosstalk_coupled_ko_l2_error": ct_res.coupled_ko_trajectory_l2_error,
         "crosstalk_coupled_false_attr_l2": ct_res.coupled_false_source2_attribution_l2,
         "crosstalk_local_ko_l2_error": ct_res.local_ko_trajectory_l2_error,
+        "general_s12_coupled_nonparent_l2": gen_s.coupled_nonparent_weight_l2,
+        "general_s12_coupled_ko_error": gen_s.coupled_single_ko_l2_error,
+        "general_s12_local_ko_error": gen_s.local_single_ko_l2_error,
+        "finite_sample_s24_coupled_vs_local_risk": [
+            gen_s.finite_sample_coupled_risk_s24,
+            gen_s.finite_sample_local_l1_risk_s24,
+        ],
+        "closed_loop_within_absorbing_ball": cl_res.within_absorbing_ball,
+        "closed_loop_trapping_radius": cl_res.theoretical_y_trapping_radius,
+        "closed_loop_coupled_gauge_traj_diff": cl_res.coupled_gauge_trajectory_max_diff,
+        "closed_loop_coupled_gauge_attr_disagreement": cl_res.coupled_gauge_attribution_disagreement,
+        "closed_loop_memgrn_direct_id_error": cl_res.memgrn_direct_weight_recovery_max_error,
+        "closed_loop_memgrn_total_id_error": cl_res.memgrn_total_weight_recovery_max_error,
         "iso_expr_washout_diff": iso_res.washout_value_diff,
         "iso_expr_memory_diff_at_washout": iso_res.memory_state_diff_at_washout,
         "iso_expr_state_only_lower_bound": iso_res.state_only_universal_lower_bound,
+        "ortho_cofactor_weight_invariance_err": ortho_res.observed_weight_invariance_error,
+        "ortho_unprojected_weight_theft_rel": ortho_res.unprojected_observed_weight_theft_rel_error,
+        "ortho_mse_before_after": [ortho_res.mse_observed_only, ortho_res.mse_memgrn_ortho],
         "max_swap_quadrature_error": max_swap_err,
         "swap_singular_values_4to1": [sv_sum, sv_diff],
         "swap_waveform_inversion_error": inversion_err,
@@ -250,7 +300,8 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
 
 
 if __name__ == "__main__":
-    res = verify_all_theory(
-        Path(__file__).resolve().parents[1] / "results" / "theory_verification.json"
-    )
+    repo_root = Path(__file__).resolve().parents[1]
+    out_file = repo_root / "results" / "theory_verification.json"
+    out_file.parent.mkdir(parents=True, exist_ok=True)
+    res = verify_all_theory(out_file)
     print(json.dumps(res, indent=2))

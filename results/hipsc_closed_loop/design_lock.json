@@ -1,0 +1,121 @@
+{
+  "benchmark": "hipsc_closed_loop_longitudinal_perturbseq_gse213069",
+  "accession": "GSE213069",
+  "reference": "Ishikawa et al., Communications Biology 6, 1290 (2023)",
+  "repo": "masastat/RENGE",
+  "commit": "473b4f9b33072d84bbae3b730d3998434370714b",
+  "n_cells": 14945,
+  "n_genes": 103,
+  "n_ko_tfs": 23,
+  "ko_genes": [
+    "ETS2",
+    "ETV4",
+    "FOXH1",
+    "ID1",
+    "JARID2",
+    "LIN28A",
+    "MYC",
+    "MYCN",
+    "NANOG",
+    "NR5A2",
+    "PDLIM1",
+    "POU5F1",
+    "PRDM14",
+    "RUNX1T1",
+    "SOX2",
+    "TRIM24",
+    "TRIM25",
+    "VENTX",
+    "ZIC2",
+    "ZIC3",
+    "ZNF398",
+    "ZNF649",
+    "ZNF90"
+  ],
+  "obs_days": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "chip_psc_tfs": [
+    "FOXH1",
+    "JARID2",
+    "MYC",
+    "NANOG",
+    "POU5F1",
+    "PRDM14",
+    "RUNX1T1",
+    "SOX2",
+    "ZIC2",
+    "ZNF398"
+  ],
+  "unseen_ko_folds": [
+    [
+      0,
+      5,
+      10,
+      15,
+      20
+    ],
+    [
+      1,
+      6,
+      11,
+      16,
+      21
+    ],
+    [
+      2,
+      7,
+      12,
+      17,
+      22
+    ],
+    [
+      3,
+      8,
+      13,
+      18
+    ],
+    [
+      4,
+      9,
+      14,
+      19
+    ]
+  ],
+  "models": [
+    "cl_memgrn",
+    "cl_local_const",
+    "cl_ltc_local",
+    "cl_coupled_adaptive",
+    "cl_ltc_coupled",
+    "cl_perturb_ode",
+    "cl_latent_ode",
+    "renge"
+  ],
+  "future_tf_traces_supplied": false,
+  "file_sha256": {
+    "X_renge_d2_80.csv": "149b1f59c8f1e81190fc296862674dce3a0f84983e03a0119813a83d08c02498",
+    "E_renge_d2_80.csv": "d4282200b36e03bf4af90a786727b4ca44ecbdbb1a65ee74b7a8fb932b9152d7",
+    "A_renge.csv": "dd6bf4ad99858a0ee70ded522957ee1464b5c6329a9e1eff377de523b9715ba9",
+    "chip_atlas/ETS2.1.tsv": "59522cd5fd262183c90f029f67a52b4afbceca203d963efdb1e86115b19d5424",
+    "chip_atlas/ETV4.1.tsv": "7241ea5019aa6e37055fef73b068ccb2a32a6ca4ebc5a82d65290092683899d6",
+    "chip_atlas/FOXH1.1.tsv": "83a485090f9988b2309298ff081c05bdc7e2498f0a9a7268cd1dfc178fd692a3",
+    "chip_atlas/ID1.1.tsv": "33bec0ad35b90af8b51b44043bc08b7c8a03ab68e8bb2d583f05cb93774a2f62",
+    "chip_atlas/JARID2.1.tsv": "11296f6112d4731792d9a2c004d96671ad86fad40b641be01bd6286a65b94ea5",
+    "chip_atlas/MYC.1.tsv": "e69d233848ab9fd513025ebfcad5f9740fe9a20e1409c068bd6b8573dff86d9a",
+    "chip_atlas/MYCN.1.tsv": "0494ddbc8a25db912edaced560c571351298fd751b39223003dc66652339e5d8",
+    "chip_atlas/NANOG.1.tsv": "98749ab2f21f6f1ebd8c23168ee612f74a084f4ebb7df031e89916abfa44c132",
+    "chip_atlas/NR5A2.1.tsv": "1339a39ae3e5e02562e8667adcaf6ddb03638435640ee5c91200cef10ae62010",
+    "chip_atlas/POU5F1.1.tsv": "3c53586f456abd2c5773226ba5cb81e0c775f58a97bc4115996700e78fa6660f",
+    "chip_atlas/PRDM14.1.tsv": "edd5ffc353ccf0e5328e017d50d22942d7b84878dea804b97096ddc0f97d685e",
+    "chip_atlas/RUNX1T1.1.tsv": "85dbc9d27221b7a5d9437033ea6306c540e34f49ee459a9b3b517d6561a9b097",
+    "chip_atlas/SOX2.1.tsv": "353c8b20bfb5cc55ce8248a030150b2847b5ec3c2d82a3068cdc561e962c7afb",
+    "chip_atlas/TRIM24.1.tsv": "5625f07171a1e4c27abb63bc5bef5931ab8743637ad29c392665e5afecc5b510",
+    "chip_atlas/TRIM25.1.tsv": "7c29d3bf6a7bd5243e1c1350c1ce2575b50028a89230dedc930bedecf03284b0",
+    "chip_atlas/ZIC2.1.tsv": "73a827d71641b3b80209a3556165a8dd4c87d18c7655306ba1d02bfcda38f12b",
+    "chip_atlas/ZNF398.1.tsv": "aff673a0c9d4a794d07c4edc87bdf4a4fd5b163e2f2ce4902574cb412c555d99"
+  }
+}

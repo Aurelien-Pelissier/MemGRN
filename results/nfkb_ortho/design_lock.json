@@ -1,0 +1,35 @@
+{
+  "benchmark": "nfkb_washout_orthogonal_cofactor_177genes",
+  "repo": "biomystery/duration_decode_manuscript",
+  "commit": "37be90e56f6e4a9c726990c09e0adc114dcc8efc",
+  "ligands": [
+    "IL1",
+    "TNF",
+    "LPS"
+  ],
+  "genotypes": [
+    "ifnr",
+    "ifnrikba"
+  ],
+  "n_genes": 177,
+  "washout_hours": 0.5,
+  "post_washout_eval_hours": [
+    1.0,
+    2.0,
+    3.0,
+    5.0,
+    8.0
+  ],
+  "models": [
+    "local_const",
+    "memgrn",
+    "memgrn_ortho",
+    "perturb_ode",
+    "latent_ode"
+  ],
+  "file_sha256": {
+    "mRNA.nfkbgene.rpkm.csv": "a4b91c3411a4fd9fe1ca0ec6d4dbe5db6e2dc7e3d87d039cdfb5665eb9f9724d",
+    "Final_EMSA_ifnar.csv": "2257cf343a9f398fa584a9abe73239ca2c170a93b6ffc02ee04d10ead9ee86c9",
+    "Final_EMSA_ifnarikba.csv": "d72cd809992c07a4a2c3878f4561fe8c66e6d03aea9cc0780e46afbc98876be8"
+  }
+}

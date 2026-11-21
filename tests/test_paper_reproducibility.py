@@ -44,7 +44,7 @@ def test_archived_msn2_and_synthetic_numbers() -> None:
         < mtf["summary"]["additive"]["means"]["coupled_adaptive"]["test_mse"]
     )
     assert (
-        mtf["summary"]["cooperative"]["means"]["memgrn_int"]["attribution_rmse"]
+        mtf["summary"]["cooperative"]["means"]["memgrn"]["attribution_rmse"]
         < mtf["summary"]["cooperative"]["means"]["ltc_coupled"]["attribution_rmse"]
     )
 
@@ -60,6 +60,22 @@ def test_archived_msn2_and_synthetic_numbers() -> None:
     mac = json.loads((mac_dir / "scores.json").read_text())
     assert mac["design_sha256"] in sha256_variants(mac_dir / "design_lock.json")
     assert (
-        mac["summary"]["memgrn_int"]["regulator_attribution_auroc"]
+        mac["summary"]["memgrn"]["regulator_attribution_auroc"]
         > mac["summary"]["ltc_coupled"]["regulator_attribution_auroc"]
+    )
+
+    hipsc_dir = ROOT / "results" / "hipsc_closed_loop"
+    hipsc = json.loads((hipsc_dir / "scores.json").read_text())
+    assert hipsc["design_sha256"] in sha256_variants(hipsc_dir / "design_lock.json")
+    assert (
+        hipsc["summary"]["cl_memgrn"]["unseen_ko_mse"]
+        < hipsc["summary"]["renge"]["unseen_ko_mse"]
+    )
+
+    ortho_dir = ROOT / "results" / "nfkb_ortho"
+    ortho = json.loads((ortho_dir / "scores.json").read_text())
+    assert ortho["design_sha256"] in sha256_variants(ortho_dir / "design_lock.json")
+    assert (
+        ortho["summary"]["memgrn_ortho"]["mean_post_mse"]
+        < ortho["summary"]["memgrn"]["mean_post_mse"]
     )
