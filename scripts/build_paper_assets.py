@@ -223,7 +223,7 @@ def build_fig1_architecture(out_latex_fig: Path) -> None:
     ax.text(
         0.05,
         5.00,
-        "a   Closed- and open-loop source-isolated memory with enhancer readout",
+        "a   Closed- and open-loop source-isolated memory & interaction readout",
         fontsize=8.5,
         fontweight="bold",
         color=PALETTE["ink"],
@@ -263,7 +263,7 @@ def build_fig1_architecture(out_latex_fig: Path) -> None:
         2.74,
         2.66,
         1.02,
-        "Enhancer readout\nDᵢⱼaᵢ + Bᵢᵣⱼhᵢᵣ + Γh̄ᵢh̄ₖ",
+        "Interaction readout\nDᵢⱼaᵢ + Bᵢᵣⱼhᵢᵣ + Γh̄ᵢh̄ₖ",
         PALETTE["light_violet"],
         ec=PALETTE["violet"],
     )
@@ -272,7 +272,7 @@ def build_fig1_architecture(out_latex_fig: Path) -> None:
         2.74,
         1.82,
         1.02,
-        "Gene state\nẏⱼ = pⱼ − δⱼyⱼ",
+        "Node state\nẏⱼ = pⱼ − δⱼyⱼ",
         PALETTE["light_gray"],
         ec=PALETTE["border"],
     )
@@ -344,7 +344,7 @@ def build_fig1_architecture(out_latex_fig: Path) -> None:
         0.08,
         3.44,
         0.84,
-        "1. S-TF & closed-loop ID\nZero cross-TF leakage",
+        "1. S-node & closed-loop ID\nZero cross-node leakage",
         PALETTE["light_teal"],
         ec=PALETTE["teal"],
     )
@@ -362,12 +362,160 @@ def build_fig1_architecture(out_latex_fig: Path) -> None:
         0.08,
         3.44,
         0.84,
-        "3. Iso-expr. & Ortho\nO(SR) genome scaling",
+        "3. Iso-state & Ortho\nO(SR) network scaling",
         PALETTE["light_blue"],
         ec=PALETTE["navy"],
     )
 
     export_figure(fig, "fig1_memgrn_architecture", out_latex_fig, audit_alignment=False)
+
+
+def build_fig2_cross_domain_networks(out_latex_fig: Path) -> None:
+    """Figure 2: Cross-domain real-world & physical benchmarks (Beijing AQ, METR-LA, IEEE 39-Bus)."""
+    bq = load_new_result("beijing_air_quality")["full_8driver_loso"]
+    ml = load_new_result("metr_la_traffic")["summary"]
+    pg = load_new_result("powergrid_n2")["summary"]
+
+    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.26))
+    gs = fig.add_gridspec(
+        1,
+        3,
+        width_ratios=[1.10, 1.00, 1.00],
+        left=0.100,
+        right=0.985,
+        bottom=0.36,
+        top=0.84,
+        wspace=0.43,
+    )
+    ax0 = fig.add_subplot(gs[0, 0])
+    ax1 = fig.add_subplot(gs[0, 1])
+    ax2 = fig.add_subplot(gs[0, 2])
+
+    # Panel a: UCI Beijing Air Quality 4-fold Leave-One-Season-Out MSE (12 stations, 506 episodes)
+    keys_b = [
+        "perturb_ode",
+        "ltc_local",
+        "ltc_coupled",
+        "local_const",
+        "coupled_adaptive",
+        "cfc",
+        "latent_ode",
+        "selective_ssm",
+        "neural_cde",
+        "memgrn",
+    ]
+    lbls_b = ["PertODE", "LTC-Loc", "LTC-Cpl", "Loc-Const", "Cpl-Ad.", "CfC", "Lat-ODE", "Mamba", "N-CDE", "MemGRN"]
+    cols_b = [
+        PALETTE["violet"],
+        PALETTE["teal"],
+        PALETTE["crimson"],
+        PALETTE["slate"],
+        PALETTE["amber"],
+        "#B85C38",
+        "#8C6D9B",
+        "#D97736",
+        PALETTE["steel"],
+        PALETTE["navy"],
+    ]
+    xb = np.arange(len(keys_b))
+    vb = np.array([bq[k]["loso_mse"] for k in keys_b], dtype=np.float64)
+    ax0.bar(xb, vb - 0.50, bottom=0.50, width=0.64, color=cols_b, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax0.set_xticks(xb)
+    ax0.set_xticklabels(lbls_b, rotation=90, ha="center", va="top")
+    ax0.tick_params(axis="x", pad=4.5)
+    ax0.set_xlim(-0.6, len(keys_b) - 0.4)
+    ax0.set_ylim(0.50, float(max(vb) * 1.08))
+    ax0.set_yticks([0.5, 0.6, 0.7, 0.8])
+    ax0.set_ylabel("LOSO test MSE")
+    ax0.set_title("Beijing Air Quality")
+    add_panel_tag(ax0, "a", x_pt=-32.0, y_pt=6.0)
+
+    # Panel b: METR-LA Highway Traffic (S=64) physical road-graph AP enrichment (adj_mx.pkl)
+    keys_m = [
+        "cl_latent_ode",
+        "cl_coupled_adaptive",
+        "cl_perturb_ode",
+        "cl_ltc_coupled",
+        "cl_selective_ssm",
+        "cl_ltc_local",
+        "cl_local_const",
+        "cl_cfc",
+        "cl_memgrn",
+    ]
+    lbls_m = ["Lat-ODE", "Cpl-Ad.", "PertODE", "LTC-Cpl", "Mamba", "LTC-Loc", "Loc-Const", "CfC", "MemGRN"]
+    cols_m = [
+        "#8C6D9B",
+        PALETTE["amber"],
+        PALETTE["violet"],
+        PALETTE["crimson"],
+        "#D97736",
+        PALETTE["teal"],
+        PALETTE["slate"],
+        "#B85C38",
+        PALETTE["navy"],
+    ]
+    xm = np.arange(len(keys_m))
+    vm = np.array([ml[k]["road_graph_colnorm_ap_over_random"] for k in keys_m], dtype=np.float64)
+    ax1.axhline(1.0, color=PALETTE["slate"], lw=0.75, ls="--", zorder=0)
+    ax1.bar(xm, vm - 0.90, bottom=0.90, width=0.64, color=cols_m, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax1.set_xticks(xm)
+    ax1.set_xticklabels(lbls_m, rotation=90, ha="center", va="top")
+    ax1.tick_params(axis="x", pad=4.5)
+    ax1.set_xlim(-0.6, len(keys_m) - 0.4)
+    ax1.set_ylim(0.90, 1.66)
+    ax1.set_yticks([1.0, 1.2, 1.4, 1.6])
+    ax1.set_ylabel("Road-graph AP (×)")
+    ax1.set_title("METR-LA (S=64)")
+    add_panel_tag(ax1, "b", x_pt=-30.0, y_pt=6.0)
+
+    # Panel c: IEEE 39-Bus New England Power Grid zero-shot N-2 double-contingency MSE
+    keys_p = [
+        "cl_ltc_local",
+        "cl_perturb_ode",
+        "cl_ltc_coupled",
+        "cl_selective_ssm",
+        "cl_latent_ode",
+        "cl_coupled_adaptive",
+        "cl_cfc",
+        "cl_memgrn",
+        "cl_local_const",
+    ]
+    lbls_p = ["LTC-Loc", "PertODE", "LTC-Cpl", "Mamba", "Lat-ODE", "Cpl-Ad.", "CfC", "MemGRN", "Loc-Const"]
+    cols_p = [
+        PALETTE["teal"],
+        PALETTE["violet"],
+        PALETTE["crimson"],
+        "#D97736",
+        "#8C6D9B",
+        PALETTE["amber"],
+        "#B85C38",
+        PALETTE["navy"],
+        PALETTE["slate"],
+    ]
+    xp = np.arange(len(keys_p))
+    vp = [pg[k]["double_n2_mse"] for k in keys_p]
+    ax2.bar(xp, vp, width=0.64, color=cols_p, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax2.set_xticks(xp)
+    ax2.set_xticklabels(lbls_p, rotation=90, ha="center", va="top")
+    ax2.tick_params(axis="x", pad=4.5)
+    ax2.set_xlim(-0.6, len(keys_p) - 0.4)
+    ax2.set_ylim(0.0, float(max(vp) * 1.15))
+    ax2.set_ylabel("N−2 double MSE")
+    ax2.set_title("IEEE 39-Bus Grid")
+    add_panel_tag(ax2, "c", x_pt=-30.0, y_pt=6.0)
+
+    export_figure(
+        fig,
+        "fig2_cross_domain_networks",
+        out_latex_fig,
+        exemptions=[
+            {
+                "panels": ["a", "b", "c"],
+                "checks": ["panel-width"],
+                "reason": "Slight width ratios match 10-bar, 9-bar, and 9-bar panel densities",
+            }
+        ],
+    )
 
 
 def build_fig2_human_longitudinal(out_latex_fig: Path) -> None:
@@ -519,18 +667,18 @@ def build_fig2_human_longitudinal(out_latex_fig: Path) -> None:
 
 
 def build_fig3_multitf_ltc_ortho(out_latex_fig: Path) -> None:
-    """Figure 3: Multi-TF cooperative OOD, Source-Local LTC separation, & 6-of-8 MemGRN-Ortho."""
+    """Figure 3: Multi-source cooperative OOD, Source-Local LTC separation, & Cyclic Double-KO."""
     mtf = load_new_result("multitf_factorial")["summary"]
     po = load_new_result("partial_obs_and_ltc_sep")
+    cyc = load_new_result("cyclic_double_ko")["summary"]
     coop_m = mtf["cooperative"]["means"]
     part_b = po["part_b_ltc_separation"]
-    part_a = po["part_a_partial_obs_6of8_summary"]
 
     fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.24))
     gs = fig.add_gridspec(
         1,
         3,
-        width_ratios=[1.12, 0.92, 1.06],
+        width_ratios=[1.10, 0.88, 1.12],
         left=0.105,
         right=0.985,
         bottom=0.35,
@@ -574,7 +722,7 @@ def build_fig3_multitf_ltc_ortho(out_latex_fig: Path) -> None:
     ax0.set_xlim(-0.6, len(k_c) - 0.4)
     ax0.set_ylim(0.0, float(max(vc) * 1.16))
     ax0.set_ylabel("OOD test MSE")
-    ax0.set_title("Cooperative (8-TF)")
+    ax0.set_title("Cooperative (8-src)")
     add_panel_tag(ax0, "a", x_pt=-32.0, y_pt=6.0)
 
     # Panel b: Parameter-matched MemGRN (252) vs Source-Local LTC (288) on Theorem 1(iii)
@@ -616,28 +764,41 @@ def build_fig3_multitf_ltc_ortho(out_latex_fig: Path) -> None:
     ax1.legend(loc="upper left", ncol=1, handlelength=1.0, labelspacing=0.14)
     add_panel_tag(ax1, "b", x_pt=-28.0, y_pt=6.0)
 
-    # Panel c: Ground-truth 6-of-8 partially observed multi-TF OOD MSE
-    k_p = ["perturb_ode", "latent_ode", "local_const", "memgrn_unproj", "memgrn", "memgrn_ortho"]
-    l_p = ["PertODE", "Lat-ODE", "Loc-Const", "Unproj", "MemGRN", "Mem-Ortho"]
+    # Panel c: Cyclic closed-loop zero-shot combinatorial double-KO MSE (12 worlds)
+    k_p = [
+        "cl_perturb_ode",
+        "cl_ltc_local",
+        "cl_selective_ssm",
+        "cl_cfc",
+        "cl_ltc_coupled",
+        "cl_latent_ode",
+        "cl_local_const",
+        "cl_coupled_adaptive",
+        "cl_memgrn",
+    ]
+    l_p = ["PertODE", "LTC-Loc", "Mamba", "CfC", "LTC-Cpl", "Lat-ODE", "Loc-Const", "Cpl-Ad.", "MemGRN"]
     c_p = [
         PALETTE["violet"],
-        PALETTE["amber"],
-        PALETTE["slate"],
+        PALETTE["teal"],
+        "#D97736",
+        "#B85C38",
         PALETTE["crimson"],
-        PALETTE["steel"],
+        "#8C6D9B",
+        PALETTE["slate"],
+        PALETTE["amber"],
         PALETTE["navy"],
     ]
     xp = np.arange(len(k_p))
-    vp = [part_a[k]["test_mse"] for k in k_p]
+    vp = [cyc[k]["double_ko_mse"] for k in k_p]
     ax2.bar(xp, vp, width=0.64, color=c_p, edgecolor=PALETTE["ink"], linewidth=0.55)
     ax2.set_xticks(xp)
     ax2.set_xticklabels(l_p, rotation=90, ha="center", va="top")
     ax2.tick_params(axis="x", pad=4.5)
     ax2.set_xlim(-0.6, len(k_p) - 0.4)
     ax2.set_ylim(0.0, float(max(vp) * 1.16))
-    ax2.set_ylabel("6-of-8 OOD MSE")
-    ax2.set_title("Partial obs. (GT)")
-    add_panel_tag(ax2, "c", x_pt=-28.0, y_pt=6.0)
+    ax2.set_ylabel("Double-KO MSE")
+    ax2.set_title("Cyclic 0-shot 2-KO")
+    add_panel_tag(ax2, "c", x_pt=-30.0, y_pt=6.0)
 
     export_figure(
         fig,
@@ -647,7 +808,7 @@ def build_fig3_multitf_ltc_ortho(out_latex_fig: Path) -> None:
             {
                 "panels": ["a", "b", "c"],
                 "checks": ["panel-width"],
-                "reason": "Slight width ratios match 7-bar, 2-group, and 6-bar panel densities",
+                "reason": "Slight width ratios match 9-bar, 2-group, and 9-bar panel densities",
             }
         ],
     )
@@ -845,27 +1006,29 @@ def build_fig5_mammalian_and_scaling(out_latex_fig: Path) -> None:
     ax0.set_title("Macrophage GRS")
     add_panel_tag(ax0, "a", x_pt=-32.0, y_pt=6.0)
 
-    # Panel b: 177-gene fibroblast NF-kB washout 3-ligand MSE
-    o_keys = ["local_const", "memgrn", "memgrn_ortho", "perturb_ode", "latent_ode"]
-    o_lbls = ["Const gW", "MemGRN", "Mem-Ortho", "PertODE", "Lat-ODE"]
+    # Panel b: Cross-domain MemGRN-Ortho under hidden macro factors (Binance 14-altcoin, BTC+ETH hidden)
+    fin_po = load_new_result("financial_contagion")["partial_14alt_hidden_btc_eth"]
+    o_keys = ["local_const", "perturb_ode", "latent_ode", "memgrn", "memgrn_ortho"]
+    o_lbls = ["Loc-Const", "PertODE", "Lat-ODE", "MemGRN", "Mem-Ortho"]
     o_cols = [
         PALETTE["slate"],
-        PALETTE["steel"],
-        PALETTE["navy"],
         PALETTE["violet"],
         PALETTE["amber"],
+        PALETTE["steel"],
+        PALETTE["navy"],
     ]
     ox = np.arange(len(o_keys))
-    o_vals = [ortho[k]["mean_post_mse"] for k in o_keys]
+    o_vals = [fin_po[k]["idio_shock_mse"] for k in o_keys]
     ax1.bar(ox, o_vals, width=0.60, color=o_cols, edgecolor=PALETTE["ink"], linewidth=0.55)
     ax1.set_xticks(ox)
     ax1.set_xticklabels(o_lbls, rotation=90, ha="center", va="top")
     ax1.tick_params(axis="x", pad=4.5)
     ax1.set_xlim(-0.6, len(o_keys) - 0.4)
-    ax1.set_ylim(0.0, float(max(o_vals) * 1.15))
-    ax1.set_ylabel("3-ligand MSE")
-    ax1.set_title("Fibroblast Ortho")
-    add_panel_tag(ax1, "b", x_pt=-28.0, y_pt=6.0)
+    ax1.set_ylim(0.65, float(max(o_vals) * 1.04))
+    ax1.set_yticks([0.65, 0.70, 0.75, 0.80])
+    ax1.set_ylabel("Idio. shock MSE")
+    ax1.set_title("Finance Ortho")
+    add_panel_tag(ax1, "b", x_pt=-32.0, y_pt=6.0)
 
     # Panel c: Genome-scale memory parameter scaling S = 8 -> 512 TFs (up to 2,048 genes)
     # Note: plot S=8..256 for matched-state Coupled LTC (M=3S) and S=8..512 for MemGRN & Coupled Adaptive
@@ -909,9 +1072,9 @@ def build_fig5_mammalian_and_scaling(out_latex_fig: Path) -> None:
     ax2.set_ylim(100.0, 1.2e8)
     ax2.set_yticks([1e2, 1e3, 1e4, 1e5, 1e6, 1e7])
     ax2.set_yticklabels(["100", "1k", "10k", "100k", "1M", "10M"])
-    ax2.set_xlabel("Regulators S (N=4S)")
+    ax2.set_xlabel("Sources S (N=4S)")
     ax2.set_ylabel("Memory params")
-    ax2.set_title("Genome scaling")
+    ax2.set_title("Network scaling")
     ax2.legend(loc="upper left", ncol=1, handlelength=1.0, labelspacing=0.14)
     add_panel_tag(ax2, "c", x_pt=-32.0, y_pt=6.0)
 
@@ -1136,6 +1299,41 @@ def build_all_tables(out_tab_dir: Path) -> None:
         t1_rows,
     )
 
+    # Compact standalone Cyclic Zero-Shot Double-KO table for Main Table 4
+    t4_cy_rows: list[list[str]] = []
+    for k, lbl in t1_cy_order:
+        d = cyc[k]
+        s1 = f"{d['unseen_single_ko_mse']:.4f}"
+        s2 = f"{d['double_ko_mse']:.3f}$\\pm${d['double_ko_mse_se']:.3f}"
+        se = f"{d['horizon_extrap_mse']:.4f}"
+        sau = f"{d['graph_auroc']:.3f}"
+        sg = f"{d['graph_ap']:.3f}"
+        if np.isclose(d["unseen_single_ko_mse"], b_1k):
+            s1 = f"\\textbf{{{s1}}}"
+        if np.isclose(d["double_ko_mse"], b_2k):
+            s2 = f"\\textbf{{{d['double_ko_mse']:.3f}}}$\\pm${d['double_ko_mse_se']:.3f}"
+        if np.isclose(d["horizon_extrap_mse"], b_ex):
+            se = f"\\textbf{{{se}}}"
+        if np.isclose(d["graph_ap"], b_gap):
+            sg = f"\\textbf{{{sg}}}"
+        if np.isclose(d["graph_auroc"], max(cyc[kk]["graph_auroc"] for kk, _ in t1_cy_order)):
+            sau = f"\\textbf{{{sau}}}"
+        t4_cy_rows.append([lbl, s1, s2, se, sau, sg])
+    write_tex_table(
+        out_tab_dir,
+        "tab4_cyclic_double_ko.tex",
+        "lrrrrr",
+        [
+            "Closed-loop model ($12$ worlds)",
+            r"1-KO $\downarrow$",
+            r"Double-KO $\downarrow$",
+            r"$[5,9]\,\mathrm{h}$ Ext.\ $\downarrow$",
+            r"AUROC $\uparrow$",
+            r"Graph AP $\uparrow$",
+        ],
+        t4_cy_rows,
+    )
+
     # =========================================================================
     # Table 2: Zero-Shot Human Cancer EMT 3-Day Withdrawal & External CollecTRI (GSE147405)
     # =========================================================================
@@ -1304,13 +1502,15 @@ def build_all_tables(out_tab_dir: Path) -> None:
     )
 
     # =========================================================================
-    # Table 5: Partially Observed Cofactors (6-of-8 Ground Truth + Fibroblast 177 Genes)
+    # Table 5: Cross-Domain Partially Observed Cofactors (MemGRN-Ortho: 6/8 GT, Fibro, Finance)
     # =========================================================================
     pa = po["part_a_partial_obs_6of8_summary"]
+    fin_all = load_new_result("financial_contagion")
+    fin_po = fin_all["partial_14alt_hidden_btc_eth"]
     t5_rows: list[list[str]] = []
     pa_order = [
         ("memgrn_ortho", "\\textbf{MemGRN-Ortho (ours)}"),
-        ("memgrn", "MemGRN (6 obs.\\ TFs)"),
+        ("memgrn", "MemGRN (obs.\\ only)"),
         ("memgrn_unproj", "MemGRN + Unproj."),
         ("local_const", "Local Const.\\ ($gW$)"),
         ("latent_ode", "Latent Neural ODE"),
@@ -1345,6 +1545,26 @@ def build_all_tables(out_tab_dir: Path) -> None:
         s_tn = f"\\textbf{{{d['TNF_post_mse']:.3f}}}" if np.isclose(d["TNF_post_mse"], b_tn) else f"{d['TNF_post_mse']:.3f}"
         s_dr = f"{100.0 * d['mean_nfkb_attr_drift']:.1f}\\%"
         t5_rows.append(["Fibro." if i_o == 0 else "", lbl, s_mn, s_il, s_tn, s_dr])
+
+    t5_rows.append(["\\midrule"])
+    f_po_order = [
+        ("memgrn_ortho", "\\textbf{MemGRN-Ortho (ours)}"),
+        ("memgrn", "MemGRN (14 altcoins)"),
+        ("latent_ode", "Latent Neural ODE"),
+        ("perturb_ode", "PerturbODE"),
+        ("local_const", "Local Const.\\ ($gW$)"),
+    ]
+    bf_a = min(fin_po[k]["aug_test_mse"] for k, _ in f_po_order)
+    bf_i = min(fin_po[k]["idio_shock_mse"] for k, _ in f_po_order)
+    bf_s = max(fin_po[k]["self_vs_cross_specificity"] for k, _ in f_po_order)
+    for i_f, (k, lbl) in enumerate(f_po_order):
+        d = fin_po[k]
+        s_a = f"\\textbf{{{d['aug_test_mse']:.3f}}}" if np.isclose(d["aug_test_mse"], bf_a) else f"{d['aug_test_mse']:.3f}"
+        s_i = f"\\textbf{{{d['idio_shock_mse']:.3f}}}" if np.isclose(d["idio_shock_mse"], bf_i) else f"{d['idio_shock_mse']:.3f}"
+        s_sp = f"\\textbf{{{d['self_vs_cross_specificity']:.2f}$\\times$}}" if np.isclose(d["self_vs_cross_specificity"], bf_s) else f"{d['self_vs_cross_specificity']:.2f}$\\times$"
+        s_dr = f"{100.0 * d['obs_asset_attr_drift_vs_memgrn']:.1f}\\%"
+        t5_rows.append(["Finance" if i_f == 0 else "", lbl, s_a, s_i, s_sp, s_dr])
+
     write_tex_table(
         out_tab_dir,
         "tab5_ortho_ground_truth_and_fibroblast.tex",
@@ -1353,8 +1573,8 @@ def build_all_tables(out_tab_dir: Path) -> None:
             "Suite",
             "Model",
             r"MSE $\downarrow$",
-            r"RMSE / IL-1 $\downarrow$",
-            r"AUROC / TNF",
+            r"Sec.\ MSE $\downarrow$",
+            r"AUC/TNF/Sp.",
             r"Drift $\downarrow$",
         ],
         t5_rows,
@@ -1837,6 +2057,218 @@ def build_all_tables(out_tab_dir: Path) -> None:
         ta10_rows,
     )
 
+    # =========================================================================
+    # Main Table 1 (Cross-Domain Open-Loop): UCI Beijing Air Quality & Binance 16-Asset
+    # =========================================================================
+    bq = load_new_result("beijing_air_quality")
+    bq_full = bq["full_8driver_loso"]
+    fin_full = fin_all["full_16asset"]
+    cd_open_order = [
+        ("memgrn_additive", "\\textbf{MemGRN ($\\Gamma = 0$, ours)}"),
+        ("memgrn", "\\textbf{MemGRN (ours)}"),
+        ("memgrn_ortho", "\\textbf{MemGRN-Ortho (ours)}"),
+        ("local_const", "Local Constant ($gW$)"),
+        ("ltc_local", "Source-Local LTC"),
+        ("perturb_ode", "PerturbODE"),
+        ("neural_cde", "Neural CDE"),
+        ("selective_ssm", "Selective SSM (Mamba)"),
+        ("latent_ode", "Latent Neural ODE"),
+        ("cfc", "CfC"),
+        ("coupled_adaptive", "Coupled Adaptive ($gW$)"),
+        ("ltc_coupled", "Coupled LTC"),
+    ]
+    b_bq = min(bq_full[k]["loso_mse"] for k, _ in cd_open_order)
+    b_ws = min(bq_full[k]["washout_storm_mse"] for k, _ in cd_open_order)
+    b_fm = min(fin_full[k]["aug_test_mse"] for k, _ in cd_open_order)
+    b_fi = min(fin_full[k]["idio_shock_mse"] for k, _ in cd_open_order)
+    b_fs = max(fin_full[k]["self_vs_cross_specificity"] for k, _ in cd_open_order)
+    t_cd_open: list[list[str]] = []
+    for i_m, (k, lbl) in enumerate(cd_open_order):
+        if i_m == 6:
+            t_cd_open.append(["\\midrule"])
+        db = bq_full[k]
+        df = fin_full[k]
+        sb = f"\\textbf{{{db['loso_mse']:.3f}}}$\\pm${db['loso_mse_se']:.3f}" if np.isclose(db["loso_mse"], b_bq) else f"{db['loso_mse']:.3f}$\\pm${db['loso_mse_se']:.3f}"
+        sw = f"\\textbf{{{db['washout_storm_mse']:.3f}}}" if np.isclose(db["washout_storm_mse"], b_ws) else f"{db['washout_storm_mse']:.3f}"
+        sf = f"\\textbf{{{df['aug_test_mse']:.3f}}}" if np.isclose(df["aug_test_mse"], b_fm) else f"{df['aug_test_mse']:.3f}"
+        si = f"\\textbf{{{df['idio_shock_mse']:.3f}}}" if np.isclose(df["idio_shock_mse"], b_fi) else f"{df['idio_shock_mse']:.3f}"
+        ss = f"\\textbf{{{df['self_vs_cross_specificity']:.2f}$\\times$}}" if np.isclose(df["self_vs_cross_specificity"], b_fs) else f"{df['self_vs_cross_specificity']:.2f}$\\times$"
+        t_cd_open.append([lbl, sb, sw, sf, si, ss])
+    write_tex_table(
+        out_tab_dir,
+        "tab1_cross_domain_open_loop.tex",
+        "lrrrrr",
+        [
+            "Architecture (Open-loop)",
+            r"Beijing LOSO $\downarrow$",
+            r"Storm $\downarrow$",
+            r"Fin.\ Aug $\downarrow$",
+            r"Idio.\ $\downarrow$",
+            r"Self-Sp.\ $\uparrow$",
+        ],
+        t_cd_open,
+    )
+
+    # =========================================================================
+    # Main Table 2 (Cross-Domain Closed-Loop): METR-LA (S=64), IEEE 39-Bus, & SNAP Reddit
+    # =========================================================================
+    metr = load_new_result("metr_la_traffic")["summary"]
+    pgrid = load_new_result("powergrid_n2")["summary"]
+    red = load_new_result("reddit_temporal")["summary"]
+    cd_cl_order = [
+        ("cl_memgrn", "\\textbf{MemGRN (ours)}"),
+        ("cl_local_const", "Local Constant"),
+        ("cl_ltc_local", "Source-Local LTC"),
+        ("cl_selective_ssm", "Selective SSM (Mamba)"),
+        ("cl_ltc_coupled", "Coupled LTC"),
+        ("cl_coupled_adaptive", "Coupled Adaptive"),
+        ("cl_cfc", "CfC"),
+        ("cl_perturb_ode", "PerturbODE"),
+        ("cl_latent_ode", "Latent Neural ODE"),
+        ("persistence", "Persistence ($y_t = y_0$)"),
+    ]
+    bm_m = min(metr[k]["test_mse"] for k, _ in cd_cl_order)
+    bm_a = max(metr[k]["road_graph_colnorm_ap_over_random"] for k, _ in cd_cl_order)
+    bp_m = min(pgrid[k]["double_n2_mse"] for k, _ in cd_cl_order if k in pgrid)
+    bp_a = max(pgrid[k]["graph_ap"] for k, _ in cd_cl_order if k in pgrid)
+    br_m = min(red[k]["test_mse"] for k, _ in cd_cl_order)
+    t_cd_cl: list[list[str]] = []
+    for k, lbl in cd_cl_order:
+        dm = metr[k]
+        dr = red[k]
+        sm = f"\\textbf{{{dm['test_mse']:.4f}}}" if np.isclose(dm["test_mse"], bm_m) else f"{dm['test_mse']:.4f}"
+        sa = f"\\textbf{{{dm['road_graph_colnorm_ap_over_random']:.2f}$\\times$}}" if np.isclose(dm["road_graph_colnorm_ap_over_random"], bm_a) else f"{dm['road_graph_colnorm_ap_over_random']:.2f}$\\times$"
+        if k in pgrid:
+            dp = pgrid[k]
+            sp = f"\\textbf{{{dp['double_n2_mse']:.4f}}}" if np.isclose(dp["double_n2_mse"], bp_m) else f"{dp['double_n2_mse']:.4f}"
+            sg = f"\\textbf{{{dp['graph_ap']:.3f}}}" if np.isclose(dp["graph_ap"], bp_a) else f"{dp['graph_ap']:.3f}"
+        else:
+            sp, sg = "--", "--"
+        sr = f"\\textbf{{{dr['test_mse']:.4f}}}" if np.isclose(dr["test_mse"], br_m) else f"{dr['test_mse']:.4f}"
+        t_cd_cl.append([lbl, sm, sa, sp, sg, sr])
+    write_tex_table(
+        out_tab_dir,
+        "tab2_cross_domain_closed_loop.tex",
+        "lrrrrr",
+        [
+            "Closed-loop model",
+            r"METR MSE $\downarrow$",
+            r"Road AP $\uparrow$",
+            r"Grid $N{-}2$ $\downarrow$",
+            r"Grid AP $\uparrow$",
+            r"Reddit $\downarrow$",
+        ],
+        t_cd_cl,
+    )
+
+    # =========================================================================
+    # Appendix Table A11: Primary Human CD4+ T-Cell Perturb-seq (GSE314342, S=128 TFs)
+    # =========================================================================
+    cd4t = load_new_result("cd4t_closed_loop")["summary"]
+    cd4t_order = [
+        ("cl_memgrn", "\\textbf{MemGRN (ours)}"),
+        ("cl_local_const", "Local Constant"),
+        ("cl_ltc_local", "Source-Local LTC"),
+        ("cl_selective_ssm", "Selective SSM (Mamba)"),
+        ("cl_cfc", "CfC"),
+        ("cl_ltc_coupled", "Coupled LTC ($M{=}48$)"),
+        ("cl_coupled_adaptive", "Coupled Adaptive ($O(S^2R^2)$)"),
+        ("cl_perturb_ode", "PerturbODE"),
+        ("cl_latent_ode", "Latent Neural ODE"),
+        ("renge", "RENGE (static)"),
+        ("persistence", "Persistence ($y_{48}=y_8$)"),
+    ]
+    bc_m = min(cd4t[k]["unseen_tf_48h_mse"] for k, _ in cd4t_order)
+    bc_50 = min(cd4t[k]["unseen_tf_top50_mse"] for k, _ in cd4t_order)
+    bc_ap = max(cd4t[k]["collectri_ap_over_random"] for k, _ in cd4t_order)
+    ta11_rows: list[list[str]] = []
+    for k, lbl in cd4t_order:
+        d = cd4t[k]
+        sm = f"\\textbf{{{d['unseen_tf_48h_mse']:.4f}}}" if np.isclose(d["unseen_tf_48h_mse"], bc_m) else f"{d['unseen_tf_48h_mse']:.4f}"
+        s5 = f"\\textbf{{{d['unseen_tf_top50_mse']:.4f}}}" if np.isclose(d["unseen_tf_top50_mse"], bc_50) else f"{d['unseen_tf_top50_mse']:.4f}"
+        sa = f"\\textbf{{{d['collectri_ap_over_random']:.2f}$\\times$}}" if np.isclose(d["collectri_ap_over_random"], bc_ap) else f"{d['collectri_ap_over_random']:.2f}$\\times$"
+        ta11_rows.append([lbl, f"{d['n_params']:,}", f"{d['mem_params']:,}", sm, s5, sa])
+    write_tex_table(
+        out_tab_dir,
+        "tab_a11_cd4t_closed_loop.tex",
+        "lrrrrr",
+        [
+            r"Model ($S{=}128$ TFs, $256$ genes)",
+            "Params",
+            "Mem.\\ p.",
+            r"48h MSE $\downarrow$",
+            r"Top-50 $\downarrow$",
+            r"CollecTRI $\uparrow$",
+        ],
+        ta11_rows,
+    )
+
+    # =========================================================================
+    # Appendix Table A12: Detailed Cross-Domain Breakdowns (METR-LA, Power Grid, Beijing PO)
+    # =========================================================================
+    ta12_rows: list[list[str]] = []
+    for i_k, (k, lbl) in enumerate(cd_cl_order):
+        d = metr[k]
+        ta12_rows.append(
+            [
+                "METR-LA" if i_k == 0 else "",
+                lbl,
+                f"{d['mem_params']:,}",
+                f"{d['mae_15min_mph']:.2f} / {d['mae_30min_mph']:.2f}",
+                f"{d['shockwave_mse']:.4f}",
+                f"{d['road_graph_auroc']:.3f}",
+            ]
+        )
+    ta12_rows.append(["\\midrule"])
+    for i_k, (k, lbl) in enumerate(cd_cl_order[:-1]):
+        d = pgrid[k]
+        ta12_rows.append(
+            [
+                "IEEE-39" if i_k == 0 else "",
+                lbl,
+                f"{d['n_params']:,}",
+                f"{d['single_n1_mse']:.4f}",
+                f"{d['horizon_extrap_mse']:.4f}",
+                f"{d['graph_auroc']:.3f}",
+            ]
+        )
+    ta12_rows.append(["\\midrule"])
+    bq_po = bq["partial_6driver_ortho"]
+    for i_k, (k, lbl) in enumerate(
+        [
+            ("memgrn_ortho", "\\textbf{MemGRN-Ortho (ours)}"),
+            ("memgrn", "MemGRN (6 drivers)"),
+            ("local_const", "Local Constant ($gW$)"),
+            ("perturb_ode", "PerturbODE"),
+            ("latent_ode", "Latent Neural ODE"),
+        ]
+    ):
+        d = bq_po[k]
+        ta12_rows.append(
+            [
+                "Beijing PO" if i_k == 0 else "",
+                lbl,
+                f"{d['n_params']:,}",
+                f"{d['loso_mse']:.3f}",
+                f"{d['washout_storm_mse']:.3f}",
+                f"{100.0 * d['obs_driver_attr_drift_vs_memgrn']:.1f}\\%",
+            ]
+        )
+    write_tex_table(
+        out_tab_dir,
+        "tab_a12_cross_domain_details.tex",
+        "llrrrr",
+        [
+            "Domain",
+            "Model",
+            "Params",
+            r"15/30m / $N{-}1$ / MSE",
+            r"Shock / Ext.\ / Storm",
+            r"AUROC / Drift",
+        ],
+        ta12_rows,
+    )
+
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -1854,6 +2286,7 @@ def main() -> None:
     out_latex_tab.mkdir(parents=True, exist_ok=True)
 
     build_fig1_architecture(out_latex_fig)
+    build_fig2_cross_domain_networks(out_latex_fig)
     build_fig2_human_longitudinal(out_latex_fig)
     build_fig3_multitf_ltc_ortho(out_latex_fig)
     build_fig4_yeast_chromatin_portraits(out_latex_fig)
@@ -1866,7 +2299,7 @@ def main() -> None:
         json.dumps({"source_sha256": SOURCE_HASHES}, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(f"Built 6 figures and 15 tables from {len(SOURCE_HASHES)} verified artifacts.")
+    print(f"Built 7 figures and 19 tables from {len(SOURCE_HASHES)} verified artifacts.")
 
 
 if __name__ == "__main__":

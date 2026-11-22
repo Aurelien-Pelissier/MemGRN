@@ -131,3 +131,46 @@ def test_archived_msn2_and_synthetic_numbers() -> None:
     interp = json.loads((interp_dir / "scores.json").read_text())
     assert interp["design_sha256"] in sha256_variants(interp_dir / "design_lock.json")
     assert interp["chromatin_summary"]["slow_over_fast_tau_ratio"] > 1.4
+
+    # Verify primary human CD4+ T-cell Perturb-seq (GSE314342, S=128 TFs)
+    cd4t_dir = ROOT / "results" / "cd4t_closed_loop"
+    cd4t = json.loads((cd4t_dir / "scores.json").read_text())
+    assert cd4t["design_sha256"] in sha256_variants(cd4t_dir / "design_lock.json")
+    assert cd4t["summary"]["cl_memgrn"]["unseen_tf_48h_mse"] < cd4t["summary"]["renge"]["unseen_tf_48h_mse"]
+    assert cd4t["summary"]["cl_memgrn"]["mem_params"] < 0.1 * cd4t["summary"]["cl_coupled_adaptive"]["mem_params"]
+    assert cd4t["summary"]["cl_memgrn"]["collectri_ap_over_random"] > 1.2
+
+    # Verify cross-domain non-biology benchmarks (Beijing AQ, METR-LA, IEEE 39-Bus, Binance, Reddit)
+    bq_dir = ROOT / "results" / "beijing_air_quality"
+    bq = json.loads((bq_dir / "scores.json").read_text())
+    assert bq["design_sha256"] in sha256_variants(bq_dir / "design_lock.json")
+    for rival in ("local_const", "ltc_local", "coupled_adaptive", "ltc_coupled", "selective_ssm", "cfc", "neural_cde", "perturb_ode", "latent_ode"):
+        assert bq["full_8driver_loso"]["memgrn"]["loso_mse"] < bq["full_8driver_loso"][rival]["loso_mse"]
+        assert bq["full_wilcoxon_vs_memgrn"][rival]["wilcoxon_p"] < 0.05
+
+    metr_dir = ROOT / "results" / "metr_la_traffic"
+    metr = json.loads((metr_dir / "scores.json").read_text())
+    assert metr["design_sha256"] in sha256_variants(metr_dir / "design_lock.json")
+    for rival in ("cl_local_const", "cl_ltc_local", "cl_selective_ssm", "cl_cfc", "cl_coupled_adaptive", "cl_ltc_coupled", "cl_perturb_ode", "cl_latent_ode", "persistence"):
+        assert metr["summary"]["cl_memgrn"]["test_mse"] < metr["summary"][rival]["test_mse"]
+        assert metr["summary"]["cl_memgrn"]["road_graph_colnorm_ap_over_random"] > metr["summary"][rival]["road_graph_colnorm_ap_over_random"]
+
+    pg_dir = ROOT / "results" / "powergrid_n2"
+    pg = json.loads((pg_dir / "scores.json").read_text())
+    assert pg["design_sha256"] in sha256_variants(pg_dir / "design_lock.json")
+    assert pg["summary"]["cl_memgrn"]["double_n2_mse"] < pg["summary"]["cl_selective_ssm"]["double_n2_mse"]
+    assert pg["summary"]["cl_memgrn"]["double_n2_mse"] < pg["summary"]["cl_ltc_local"]["double_n2_mse"]
+    assert pg["summary"]["cl_memgrn"]["graph_auroc"] > 0.84
+
+    fin_dir = ROOT / "results" / "financial_contagion"
+    fin = json.loads((fin_dir / "scores.json").read_text())
+    assert fin["design_sha256"] in sha256_variants(fin_dir / "design_lock.json")
+    assert fin["partial_14alt_hidden_btc_eth"]["memgrn_ortho"]["obs_asset_attr_drift_vs_memgrn"] == 0.0
+    assert fin["partial_14alt_hidden_btc_eth"]["memgrn_ortho"]["aug_test_mse"] < fin["partial_14alt_hidden_btc_eth"]["latent_ode"]["aug_test_mse"]
+    assert fin["partial_14alt_hidden_btc_eth"]["memgrn_ortho"]["idio_shock_mse"] < fin["partial_14alt_hidden_btc_eth"]["latent_ode"]["idio_shock_mse"]
+
+    red_dir = ROOT / "results" / "reddit_temporal"
+    red = json.loads((red_dir / "scores.json").read_text())
+    assert red["design_sha256"] in sha256_variants(red_dir / "design_lock.json")
+    assert red["summary"]["cl_memgrn"]["test_mse"] < red["summary"]["cl_local_const"]["test_mse"]
+    assert red["summary"]["cl_memgrn"]["test_mse"] < red["summary"]["cl_cfc"]["test_mse"]

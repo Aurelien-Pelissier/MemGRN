@@ -1,0 +1,37 @@
+{
+  "benchmark": "uci_beijing_multisite_air_quality_loso",
+  "source": "Zhang et al., Proc. R. Soc. A (2017) \u2014 UCI Beijing Multi-Site Air Quality (12 stations)",
+  "total_station_hours": 420768,
+  "n_episodes": 506,
+  "n_washout_storms": 343,
+  "seasons": [
+    "Spring",
+    "Summer",
+    "Autumn",
+    "Winter"
+  ],
+  "n_drivers_full": 8,
+  "n_drivers_partial": 6,
+  "hidden_drivers_partial": [
+    "Pressure",
+    "Dewpoint"
+  ],
+  "models_full": [
+    "memgrn_ortho",
+    "memgrn",
+    "memgrn_additive",
+    "local_const",
+    "ltc_local",
+    "coupled_adaptive",
+    "ltc_coupled",
+    "selective_ssm",
+    "cfc",
+    "neural_cde",
+    "perturb_ode",
+    "latent_ode"
+  ],
+  "file_sha256": {
+    "beijing_aq.zip": "b04da438b2f331ac0ffd45aebdfec0d20d2367feb5f6948c4b1f7ce1191e33c4",
+    "beijing_aq_12st_48h_cache.npz": "c2a9938ddd3d6010a6d26841f0b54d6eb60e87cdce18e3e26621f5b3cd646153"
+  }
+}

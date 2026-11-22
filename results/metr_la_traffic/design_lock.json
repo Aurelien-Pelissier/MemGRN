@@ -1,0 +1,30 @@
+{
+  "benchmark": "metr_la_closed_loop_traffic_s64",
+  "source": "Li et al. (ICLR 2018) METR-LA Highway Loop Detectors + adj_mx.pkl",
+  "n_sensors": 64,
+  "n_physical_road_edges": 622,
+  "n_train_eps": 180,
+  "n_val_eps": 60,
+  "n_test_eps": 160,
+  "n_test_shockwaves": 93,
+  "total_raw_observations": 7089543,
+  "models": [
+    "cl_memgrn",
+    "cl_local_const",
+    "cl_ltc_local",
+    "cl_selective_ssm",
+    "cl_cfc",
+    "cl_coupled_adaptive",
+    "cl_ltc_coupled",
+    "cl_perturb_ode",
+    "cl_latent_ode",
+    "persistence"
+  ],
+  "file_sha256": {
+    "adj_mx.pkl": "a35687c6e15aa228dc45027b0ed2a0ea0f4ec78f573deb992c595092d12f61b3",
+    "train.parquet": "bf9729fb89854e838e4891a7e7bec6665c1249324d9cbaf2d8eccb988de3299a",
+    "val.parquet": "40ed97e9cf42f3863be80a82ae47291eb92eb67f279e42ed322d6c48d47071f6",
+    "test.parquet": "d5ef7e33df010a83c96f4972d81cdfda79e36000eae99077709e9cad8ab68144",
+    "metr_la_s64_tr180_te160_cache.npz": "98be85c3ce9f4805f34204eb04118aeefb7281a2fe18724028f0b9186c06c419"
+  }
+}

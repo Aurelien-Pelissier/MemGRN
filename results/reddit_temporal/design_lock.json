@@ -1,0 +1,51 @@
+{
+  "benchmark": "snap_reddit_temporal_community_cascades_s24",
+  "source": "Kumar et al. (WWW 2018) SNAP soc-redditHyperlinks-title.tsv (571,927 links)",
+  "n_subreddits": 24,
+  "subreddits": [
+    "subredditdrama",
+    "bestof",
+    "askreddit",
+    "iama",
+    "pics",
+    "funny",
+    "todayilearned",
+    "titlegore",
+    "videos",
+    "worldnews",
+    "shitredditsays",
+    "gaming",
+    "switcharoo",
+    "bitcoin",
+    "news",
+    "shitpost",
+    "wtf",
+    "adviceanimals",
+    "conspiracy",
+    "circlebroke2",
+    "shitstatistssay",
+    "shitamericanssay",
+    "science",
+    "dogecoin"
+  ],
+  "n_train_eps": 118,
+  "n_val_eps": 27,
+  "n_test_eps": 47,
+  "n_heldout_directed_edges": 143,
+  "models": [
+    "cl_memgrn",
+    "cl_local_const",
+    "cl_ltc_local",
+    "cl_selective_ssm",
+    "cl_cfc",
+    "cl_coupled_adaptive",
+    "cl_ltc_coupled",
+    "cl_perturb_ode",
+    "cl_latent_ode",
+    "persistence"
+  ],
+  "file_sha256": {
+    "soc-redditHyperlinks-title.tsv": "b6ea49dcbc83f948b177b341cace8c37fb8f12fc1b0e18bbfd1ba4630b699893",
+    "reddit_s24_24d_cache.npz": "f0e2f4638a37b83fa93e543fff0908e04c8a81538306919b88f7adba330ecee3"
+  }
+}

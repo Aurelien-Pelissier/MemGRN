@@ -1,5 +1,8 @@
 {
   "source_sha256": {
+    "beijing_air_quality/scores.json": "7f7ab7a309c0edbe00c432f7b27f7d0b72768152d72c7a5592f3a8f7d6df1ca1",
+    "metr_la_traffic/scores.json": "e4651d660b28b61830fbcaff194c51140291e343b02387c1eb668dfb8829b423",
+    "powergrid_n2/scores.json": "9b75f68dd1a11a171e7fc7dbfbd17cf779a7d57333a01b96cd747ea07223f067",
     "hipsc_closed_loop/scores.json": "6fc6193776bc7e16eab02320990b2a54ea1eacf1844e3703836309445c35938e",
     "cyclic_double_ko/scores.json": "6d2bab11d1a25ff1dc13fc58b6353062b068e2bcb59cc5a2ec07c49fd989e0c8",
     "emt_withdrawal_forecast/scores.json": "a81097f50c4db289c190834e8898635735cdae86a5e0533707f245e153a7b59b",
@@ -9,6 +12,7 @@
     "interpretability_and_scaling/scores.json": "d991f844515298554a6b7035670976fa682c7f33506a197fcf2d3bf26747489e",
     "macrophage_multitf/scores.json": "53d61c25e4f992c68924073c05192eadb3c5984b3f122de3b2cf5c378b32e627",
     "nfkb_ortho/scores.json": "871a28512ea51ccffaf5fc5f44e0f5842f2320037cdb0b2e63bf314dffb5b663",
+    "financial_contagion/scores.json": "babb3244ee1c56ac89126252e415c7ea038633c99929dfc4198ad3b0b1b50dd9",
     "sensitivity_ablations/scores.json": "01dcf2c39aa1cd3d3b623fd471d8d38a6ba1a0024ceb9b8e45dcc481e31cfc3a",
     "stage3/neural_rate_pulse/test_scores.json": "cd327da5ad64b89f471b9b4917f9b347ef0ccbc18ffd543b1fa33ab9754f2382",
     "stage3/neural_rate_buffer/test_scores.json": "d985808065db994c558780f18a79a1e1a0e695d51f2ac208704c71f41b361c3c",
@@ -19,6 +23,8 @@
     "stage3/multiscale_gw/scores.json": "2190459bb321728af4d550c710efd0f577ab412751ee9da6c109eed41d7b33eb",
     "stage3/mixed_directed_memory/scores.json": "cf7a826ddff746fcb6ce5dd7448697bfd94b7ba5d047a4bfa920fff2770ae161",
     "stage3/msn2_rtn2_switch_neural/scores.json": "62dc3bdf8eb7c37dc4960396b7bf4174b339aa40a26207b6afd28f90167f560b",
-    "stage3/msn2_memory_reset/scores.json": "5720a049e694d9b4b3e4fb37355bf1ebbf0e5b0203cacb72ec13193fdfbdcbdb"
+    "stage3/msn2_memory_reset/scores.json": "5720a049e694d9b4b3e4fb37355bf1ebbf0e5b0203cacb72ec13193fdfbdcbdb",
+    "reddit_temporal/scores.json": "24dd6bddeec0b5a65827fbd041771043118c2e289ffda4600f34a1b7fc6a5226",
+    "cd4t_closed_loop/scores.json": "ecd4da06700cd5d462c9624bf1c987fb2eedb0912f34749db883385639766288"
   }
 }

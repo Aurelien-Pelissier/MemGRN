@@ -916,3 +916,205 @@ def fetch_emt_collectri_and_chip_masks(
                 chip_mask[tf_to_i[tf], tgt_to_j[parts[0]]] = True
 
     return collectri_mask, chip_mask, hashes
+
+
+# =============================================================================
+# Zhu, Dann, Pritchard, Marson et al. (Cell 2026 / bioRxiv Dec 2025; GSE314342)
+# Genome-Scale Primary Human CD4+ T-Cell Longitudinal CRISPRi Perturb-seq
+# =============================================================================
+
+MARSON_CD4T_S3_BASE = "https://genome-scale-tcell-perturb-seq.s3.amazonaws.com/marson2025_data"
+
+
+@dataclass(frozen=True, kw_only=True)
+class MarsonCD4TPerturbSeqData:
+    """Longitudinal primary human CD4+ T-cell CRISPRi Perturb-seq panel (GSE314342, 22M cells)."""
+
+    genes: tuple[str, ...]
+    ko_genes: tuple[str, ...]
+    ko_gene_indices: np.ndarray
+    obs_hours: np.ndarray  # (0.0, 8.0, 48.0) -> Rest, Stim8hr, Stim48hr
+    basal_expression: np.ndarray  # (N,) log1p(median baseMean at Rest)
+    ko_delta_trajectories: np.ndarray  # (S, 3, N) DESeq2 log2FC across Rest, Stim8hr, Stim48hr
+    ko_binary_masks: np.ndarray  # (S, N)
+    eval_target_masks: np.ndarray  # (S, 3, N) off-diagonal mask (edited gene j == k masked)
+    sig_de_masks: np.ndarray  # (S, 3, N) bool DESeq2 FDR < 0.10
+    cell_counts: np.ndarray  # (S, 3) primary CD4+ T cells per (TF, timepoint)
+    collectri_edge_mask: np.ndarray  # (S, N) curated human CollecTRI TF->target edges
+    file_sha256: dict[str, str]
+
+
+def fetch_and_prepare_marson_cd4t_perturbseq(
+    raw_dir: Path,
+    n_tfs: int = 128,
+    n_downstream_targets: int = 128,
+) -> MarsonCD4TPerturbSeqData:
+    """Extract leakage-free S-TF x N-gene longitudinal panel from GSE314342 (Rest, 8h, 48h).
+
+    TFs and downstream targets are selected strictly from Rest + Stim8hr statistics (zero
+    Stim48hr leakage) using Marson et al.'s QC flags (no neighboring/distal off-target KD,
+    significant on-target knockdown, present across all 3 timepoints, in CollecTRI).
+    Caches a compact (<2 MB) deterministic ``.npz`` matrix for instant subsequent runs.
+    """
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    cache_npz = raw_dir / f"marson_cd4t_{n_tfs}tf_{n_tfs + n_downstream_targets}g_cache.npz"
+    col_path = raw_dir / "collectri_human_tfs.tsv"
+
+    if not col_path.exists():
+        r = requests.get(
+            "https://omnipathdb.org/interactions?datasets=collectri&genesymbols=yes&fields=sources",
+            timeout=90,
+        )
+        r.raise_for_status()
+        col_path.write_bytes(r.content)
+
+    hashes: dict[str, str] = {"collectri_human_tfs.tsv": sha256_file(col_path)}
+
+    if cache_npz.exists():
+        z = np.load(cache_npz, allow_pickle=False)
+        genes = tuple(str(x) for x in z["genes"])
+        ko_genes = tuple(str(x) for x in z["ko_genes"])
+        ko_indices = np.asarray(z["ko_gene_indices"], dtype=np.int64)
+        basal = np.asarray(z["basal_expression"], dtype=np.float64)
+        traj = np.asarray(z["ko_delta_trajectories"], dtype=np.float64)
+        sig_de = np.asarray(z["sig_de_masks"], dtype=bool)
+        counts = np.asarray(z["cell_counts"], dtype=np.int64)
+        col_mask = np.asarray(z["collectri_edge_mask"], dtype=bool)
+        hashes[cache_npz.name] = sha256_file(cache_npz)
+    else:
+        import anndata as ad
+
+        h5_path = raw_dir / "GWCD4i.DE_stats.h5ad"
+        if not h5_path.exists():
+            raise FileNotFoundError(
+                f"Missing {h5_path}. Download from {MARSON_CD4T_S3_BASE}/GWCD4i.DE_stats.h5ad"
+            )
+        col_df = pd.read_csv(col_path, sep="\t")
+        col_tfs = set(col_df["source_genesymbol"].dropna().unique())
+
+        adata = ad.read_h5ad(h5_path, backed="r")
+        obs = adata.obs.copy()
+        var_names = adata.var["gene_name"].astype(str).to_numpy()
+        var_set = set(var_names)
+
+        # Zero-leakage TF ranking strictly using Rest + Stim8hr n_downstream (never Stim48hr!)
+        clean = obs[
+            (obs["neighboring_gene_KD"] == False) & (obs["distal_offtarget_flag"] == False)  # noqa: E712
+        ].copy()
+        clean["gene"] = clean["target_contrast_gene_name"].astype(str)
+        piv_de = clean.pivot_table(
+            index="gene",
+            columns="culture_condition",
+            values="n_downstream",
+            aggfunc="max",
+            observed=False,
+        )
+        piv_on = clean.pivot_table(
+            index="gene",
+            columns="culture_condition",
+            values="ontarget_significant",
+            aggfunc="max",
+            observed=False,
+        )
+        full3 = piv_de.dropna(subset=["Rest", "Stim8hr", "Stim48hr"]).copy()
+        full3["early_de"] = full3["Rest"] + full3["Stim8hr"]
+        full3["ontarget_early"] = piv_on.reindex(full3.index)[["Rest", "Stim8hr"]].any(axis=1)
+        cands = full3[
+            full3.index.isin(col_tfs) & full3.index.isin(var_set) & full3["ontarget_early"]
+        ].sort_values("early_de", ascending=False)
+        ko_genes = tuple(str(g) for g in cands.head(n_tfs).index)
+        tf_set = set(ko_genes)
+
+        cond_order = ("Rest", "Stim8hr", "Stim48hr")
+        obs_idx_map: dict[tuple[str, str], tuple[int, float]] = {}
+        for idx_i, (g, c, nc) in enumerate(
+            zip(
+                obs["target_contrast_gene_name"].astype(str),
+                obs["culture_condition"].astype(str),
+                obs["n_cells_target"].fillna(0.0),
+            )
+        ):
+            if g in tf_set and c in cond_order:
+                key = (g, c)
+                if key not in obs_idx_map or float(nc) > obs_idx_map[key][1]:
+                    obs_idx_map[key] = (idx_i, float(nc))
+
+        rows_needed = [obs_idx_map[(g, c)][0] for g in ko_genes for c in cond_order]
+        counts = np.array(
+            [[int(round(obs_idx_map[(g, c)][1])) for c in cond_order] for g in ko_genes],
+            dtype=np.int64,
+        )
+        lfc_sub = np.asarray(adata.layers["log_fc"][rows_needed, :], dtype=np.float64).reshape(
+            n_tfs, 3, -1
+        )
+        lfc_sub = np.nan_to_num(lfc_sub, nan=0.0, posinf=0.0, neginf=0.0)
+        bm_sub = np.asarray(adata.layers["baseMean"][rows_needed, :], dtype=np.float64).reshape(
+            n_tfs, 3, -1
+        )
+        bm_sub = np.nan_to_num(bm_sub, nan=0.0, posinf=0.0, neginf=0.0)
+        padj_sub = np.asarray(
+            adata.layers["adj_p_value"][rows_needed, :], dtype=np.float64
+        ).reshape(n_tfs, 3, -1)
+        padj_sub = np.nan_to_num(padj_sub, nan=1.0, posinf=1.0, neginf=1.0)
+        adata.file.close()
+
+        # Select top downstream targets strictly from Rest + Stim8hr RMS (zero Stim48hr leakage!)
+        early_rms = np.sqrt(np.mean(lfc_sub[:, :2, :] ** 2, axis=(0, 1)))
+        name_to_col: dict[str, int] = {}
+        for j, gn in enumerate(var_names):
+            if gn not in name_to_col or early_rms[j] > early_rms[name_to_col[gn]]:
+                name_to_col[gn] = j
+        non_tf = sorted([gn for gn in name_to_col if gn not in tf_set], key=lambda g: -early_rms[name_to_col[g]])
+        downstream_genes = tuple(non_tf[:n_downstream_targets])
+        genes = ko_genes + downstream_genes
+        ko_indices = np.arange(n_tfs, dtype=np.int64)
+        col_idx = np.array([name_to_col[g] for g in genes], dtype=np.int64)
+
+        traj = lfc_sub[:, :, col_idx]
+        sig_de = padj_sub[:, :, col_idx] < 0.10
+        basal = np.log1p(np.maximum(0.0, np.median(bm_sub[:, 0, col_idx], axis=0)))
+
+        # Build independent curated human CollecTRI edge mask (S, N)
+        tf_to_i = {g: i for i, g in enumerate(ko_genes)}
+        gene_to_j = {g: j for j, g in enumerate(genes)}
+        col_mask = np.zeros((n_tfs, len(genes)), dtype=bool)
+        for src_g, tgt_g in zip(
+            col_df["source_genesymbol"].astype(str), col_df["target_genesymbol"].astype(str)
+        ):
+            if src_g in tf_to_i and tgt_g in gene_to_j and src_g != tgt_g:
+                col_mask[tf_to_i[src_g], gene_to_j[tgt_g]] = True
+
+        np.savez(
+            cache_npz,
+            genes=np.asarray(genes),
+            ko_genes=np.asarray(ko_genes),
+            ko_gene_indices=ko_indices,
+            basal_expression=basal,
+            ko_delta_trajectories=traj,
+            sig_de_masks=sig_de,
+            cell_counts=counts,
+            collectri_edge_mask=col_mask,
+        )
+        hashes[cache_npz.name] = sha256_file(cache_npz)
+
+    n_genes = len(genes)
+    ko_masks = np.zeros((n_tfs, n_genes), dtype=np.float64)
+    eval_masks = np.ones((n_tfs, 3, n_genes), dtype=np.float64)
+    for k_i in range(n_tfs):
+        ko_masks[k_i, k_i] = 1.0
+        eval_masks[k_i, :, k_i] = 0.0
+
+    return MarsonCD4TPerturbSeqData(
+        genes=genes,
+        ko_genes=ko_genes,
+        ko_gene_indices=ko_indices,
+        obs_hours=np.array([0.0, 8.0, 48.0], dtype=np.float64),
+        basal_expression=basal,
+        ko_delta_trajectories=traj,
+        ko_binary_masks=ko_masks,
+        eval_target_masks=eval_masks,
+        sig_de_masks=sig_de,
+        cell_counts=counts,
+        collectri_edge_mask=col_mask,
+        file_sha256=hashes,
+    )

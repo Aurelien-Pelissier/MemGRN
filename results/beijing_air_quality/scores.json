@@ -1,0 +1,255 @@
+{
+  "design_sha256": "0b093c52bac55fb45c0cefc7ef9115dfacc40c33ee043f755dcfbb4c97b3dd39",
+  "elapsed_seconds": 16225.822231769562,
+  "full_8driver_loso": {
+    "memgrn_ortho": {
+      "n_params": 1532,
+      "loso_mse": 0.6352167483160392,
+      "loso_mse_se": 0.03134015930520839,
+      "loso_r2": 0.34524884643025466,
+      "washout_storm_mse": 0.7930678128627978,
+      "washout_storm_mse_se": 0.04238442601059315,
+      "obs_driver_attr_drift_vs_memgrn": 0.0
+    },
+    "memgrn": {
+      "n_params": 872,
+      "loso_mse": 0.6349920438488974,
+      "loso_mse_se": 0.03144171174819653,
+      "loso_r2": 0.34613774157361,
+      "washout_storm_mse": 0.7931309965541312,
+      "washout_storm_mse_se": 0.04255067905330608,
+      "obs_driver_attr_drift_vs_memgrn": 0.0
+    },
+    "memgrn_additive": {
+      "n_params": 704,
+      "loso_mse": 0.6241868084301465,
+      "loso_mse_se": 0.029785478958181583,
+      "loso_r2": 0.3670457835926382,
+      "washout_storm_mse": 0.783659681564563,
+      "washout_storm_mse_se": 0.04002332154758494,
+      "obs_driver_attr_drift_vs_memgrn": 0.2060327952147778
+    },
+    "local_const": {
+      "n_params": 420,
+      "loso_mse": 0.7450438497900093,
+      "loso_mse_se": 0.03393877888019814,
+      "loso_r2": 0.26102228430196306,
+      "washout_storm_mse": 0.9469161243419898,
+      "washout_storm_mse_se": 0.044895875715903,
+      "obs_driver_attr_drift_vs_memgrn": 0.23359859430917915
+    },
+    "ltc_local": {
+      "n_params": 564,
+      "loso_mse": 0.778115521383451,
+      "loso_mse_se": 0.035480344095169515,
+      "loso_r2": 0.22694535135321348,
+      "washout_storm_mse": 0.991475109019931,
+      "washout_storm_mse_se": 0.04673159183871937,
+      "obs_driver_attr_drift_vs_memgrn": 0.4905547358728306
+    },
+    "coupled_adaptive": {
+      "n_params": 1260,
+      "loso_mse": 0.739265314686403,
+      "loso_mse_se": 0.04136023783669387,
+      "loso_r2": 0.2830919365273316,
+      "washout_storm_mse": 0.9061241671266899,
+      "washout_storm_mse_se": 0.05496948652075839,
+      "obs_driver_attr_drift_vs_memgrn": 0.5915391606001503
+    },
+    "ltc_coupled": {
+      "n_params": 1236,
+      "loso_mse": 0.777481582404524,
+      "loso_mse_se": 0.04313650268557028,
+      "loso_r2": 0.22200894113171632,
+      "washout_storm_mse": 0.9994552867978376,
+      "washout_storm_mse_se": 0.0590228521118167,
+      "obs_driver_attr_drift_vs_memgrn": 0.36138283054603193
+    },
+    "selective_ssm": {
+      "n_params": 1044,
+      "loso_mse": 0.6980029916528906,
+      "loso_mse_se": 0.03446872013914322,
+      "loso_r2": 0.28290502592112704,
+      "washout_storm_mse": 0.8580012933902295,
+      "washout_storm_mse_se": 0.04661797751671084,
+      "obs_driver_attr_drift_vs_memgrn": 0.6664815653402744
+    },
+    "cfc": {
+      "n_params": 2772,
+      "loso_mse": 0.7314315221612963,
+      "loso_mse_se": 0.03294628540993305,
+      "loso_r2": 0.27676209427022624,
+      "washout_storm_mse": 0.9321369330134963,
+      "washout_storm_mse_se": 0.04362899777152053,
+      "obs_driver_attr_drift_vs_memgrn": 0.27544822524541057
+    },
+    "neural_cde": {
+      "n_params": 5820,
+      "loso_mse": 0.6581391304577199,
+      "loso_mse_se": 0.027864126260422995,
+      "loso_r2": 0.30467992505595165,
+      "washout_storm_mse": 0.7902639563148602,
+      "washout_storm_mse_se": 0.03727771248791362,
+      "obs_driver_attr_drift_vs_memgrn": 0.4821602445557412
+    },
+    "perturb_ode": {
+      "n_params": 708,
+      "loso_mse": 0.78490598547004,
+      "loso_mse_se": 0.03623919943283017,
+      "loso_r2": 0.2234537893726925,
+      "washout_storm_mse": 1.001581068896008,
+      "washout_storm_mse_se": 0.04769471030483888,
+      "obs_driver_attr_drift_vs_memgrn": 0.3032270181919128
+    },
+    "latent_ode": {
+      "n_params": 1788,
+      "loso_mse": 0.7076680843140518,
+      "loso_mse_se": 0.03887550208177228,
+      "loso_r2": 0.2773445324383519,
+      "washout_storm_mse": 0.8764179030399886,
+      "washout_storm_mse_se": 0.05284749968674569,
+      "obs_driver_attr_drift_vs_memgrn": 0.4509580889707855
+    }
+  },
+  "full_wilcoxon_vs_memgrn": {
+    "memgrn_ortho": {
+      "pct_reduction": 0.03537445568579933,
+      "wins": 244,
+      "total": 506,
+      "wilcoxon_p": 0.3405303299754469
+    },
+    "memgrn_additive": {
+      "pct_reduction": -1.731089999470914,
+      "wins": 253,
+      "total": 506,
+      "wilcoxon_p": 0.7812129982323561
+    },
+    "local_const": {
+      "pct_reduction": 14.771185074828818,
+      "wins": 287,
+      "total": 506,
+      "wilcoxon_p": 3.576617671055393e-05
+    },
+    "ltc_local": {
+      "pct_reduction": 18.39360269797563,
+      "wins": 298,
+      "total": 506,
+      "wilcoxon_p": 2.1335517377024556e-07
+    },
+    "coupled_adaptive": {
+      "pct_reduction": 14.104986229705418,
+      "wins": 275,
+      "total": 506,
+      "wilcoxon_p": 0.0016281291901824534
+    },
+    "ltc_coupled": {
+      "pct_reduction": 18.327062888737245,
+      "wins": 300,
+      "total": 506,
+      "wilcoxon_p": 4.7134938375499795e-08
+    },
+    "selective_ssm": {
+      "pct_reduction": 9.027317727504503,
+      "wins": 285,
+      "total": 506,
+      "wilcoxon_p": 0.0007532988122725476
+    },
+    "cfc": {
+      "pct_reduction": 13.185031734403685,
+      "wins": 292,
+      "total": 506,
+      "wilcoxon_p": 3.167117656008474e-05
+    },
+    "neural_cde": {
+      "pct_reduction": 3.517050656557108,
+      "wins": 267,
+      "total": 506,
+      "wilcoxon_p": 0.04217693367872305
+    },
+    "perturb_ode": {
+      "pct_reduction": 19.099604843931317,
+      "wins": 296,
+      "total": 506,
+      "wilcoxon_p": 1.0511958755471098e-06
+    },
+    "latent_ode": {
+      "pct_reduction": 10.269792022004198,
+      "wins": 273,
+      "total": 506,
+      "wilcoxon_p": 0.005388929421443292
+    }
+  },
+  "partial_6driver_ortho": {
+    "memgrn_ortho": {
+      "n_params": 1292,
+      "loso_mse": 0.7084665128060185,
+      "loso_mse_se": 0.033194558404343884,
+      "loso_r2": 0.2730075432148644,
+      "washout_storm_mse": 0.8740926264968801,
+      "washout_storm_mse_se": 0.04407957642555524,
+      "obs_driver_attr_drift_vs_memgrn": 0.0
+    },
+    "memgrn": {
+      "n_params": 680,
+      "loso_mse": 0.7089658088988136,
+      "loso_mse_se": 0.03324110615873486,
+      "loso_r2": 0.27259504980048854,
+      "washout_storm_mse": 0.874802982825965,
+      "washout_storm_mse_se": 0.044155661885737364,
+      "obs_driver_attr_drift_vs_memgrn": 0.0
+    },
+    "local_const": {
+      "n_params": 318,
+      "loso_mse": 0.7421616161588377,
+      "loso_mse_se": 0.033818196518968904,
+      "loso_r2": 0.2660548999404527,
+      "washout_storm_mse": 0.9420554152097474,
+      "washout_storm_mse_se": 0.04488423404415783,
+      "obs_driver_attr_drift_vs_memgrn": 0.39208324957126406
+    },
+    "perturb_ode": {
+      "n_params": 684,
+      "loso_mse": 0.7840323424392215,
+      "loso_mse_se": 0.03526288952922157,
+      "loso_r2": 0.2184529175331932,
+      "washout_storm_mse": 0.993808514244061,
+      "washout_storm_mse_se": 0.04637082921503969,
+      "obs_driver_attr_drift_vs_memgrn": 0.3819426903955803
+    },
+    "latent_ode": {
+      "n_params": 1716,
+      "loso_mse": 0.6557672490547153,
+      "loso_mse_se": 0.032568374489927214,
+      "loso_r2": 0.3028510978757246,
+      "washout_storm_mse": 0.7969313328794341,
+      "washout_storm_mse_se": 0.04261191499468274,
+      "obs_driver_attr_drift_vs_memgrn": 0.34968924405011353
+    }
+  },
+  "partial_wilcoxon_vs_memgrn_ortho": {
+    "memgrn": {
+      "pct_reduction": 0.07042597633454273,
+      "wins": 281,
+      "total": 506,
+      "wilcoxon_p": 0.0002753350251784221
+    },
+    "local_const": {
+      "pct_reduction": 4.540130157527278,
+      "wins": 284,
+      "total": 506,
+      "wilcoxon_p": 0.008231619234963131
+    },
+    "perturb_ode": {
+      "pct_reduction": 9.638101076048521,
+      "wins": 302,
+      "total": 506,
+      "wilcoxon_p": 5.766095792557991e-06
+    },
+    "latent_ode": {
+      "pct_reduction": -8.036275649213787,
+      "wins": 237,
+      "total": 506,
+      "wilcoxon_p": 0.9895404106124177
+    }
+  }
+}

@@ -224,6 +224,12 @@ def main() -> None:
         (ROOT / "results" / "interpretability_and_scaling" / "scores.json").read_text()
     )
     nfkb_ortho = json.loads((ROOT / "results" / "nfkb_ortho" / "scores.json").read_text())
+    cd4t = json.loads((ROOT / "results" / "cd4t_closed_loop" / "scores.json").read_text())
+    bq = json.loads((ROOT / "results" / "beijing_air_quality" / "scores.json").read_text())
+    metr = json.loads((ROOT / "results" / "metr_la_traffic" / "scores.json").read_text())
+    pgrid = json.loads((ROOT / "results" / "powergrid_n2" / "scores.json").read_text())
+    fin = json.loads((ROOT / "results" / "financial_contagion" / "scores.json").read_text())
+    red = json.loads((ROOT / "results" / "reddit_temporal" / "scores.json").read_text())
 
     six_means = {
         m: float(
@@ -292,6 +298,27 @@ def main() -> None:
         "nfkb_memgrn_ortho_mean_mse": nfkb_ortho["summary"]["memgrn_ortho"][
             "mean_post_mse"
         ],
+        "cd4t_128tf_memgrn_48h_mse": cd4t["summary"]["cl_memgrn"]["unseen_tf_48h_mse"],
+        "cd4t_128tf_memgrn_collectri_ap_x": cd4t["summary"]["cl_memgrn"][
+            "collectri_ap_over_random"
+        ],
+        "beijing_aq_loso_memgrn_mse": bq["full_8driver_loso"]["memgrn"]["loso_mse"],
+        "beijing_aq_loso_memgrn_additive_mse": bq["full_8driver_loso"]["memgrn_additive"][
+            "loso_mse"
+        ],
+        "metr_la_s64_memgrn_mse": metr["summary"]["cl_memgrn"]["test_mse"],
+        "metr_la_s64_memgrn_road_ap_x": metr["summary"]["cl_memgrn"][
+            "road_graph_colnorm_ap_over_random"
+        ],
+        "ieee39_powergrid_n2_memgrn_mse": pgrid["summary"]["cl_memgrn"]["double_n2_mse"],
+        "ieee39_powergrid_memgrn_graph_ap": pgrid["summary"]["cl_memgrn"]["graph_ap"],
+        "binance_14alt_hidden_btc_eth_ortho_mse": fin["partial_14alt_hidden_btc_eth"][
+            "memgrn_ortho"
+        ]["aug_test_mse"],
+        "binance_14alt_hidden_btc_eth_ortho_idio_mse": fin["partial_14alt_hidden_btc_eth"][
+            "memgrn_ortho"
+        ]["idio_shock_mse"],
+        "reddit_s24_memgrn_mse": red["summary"]["cl_memgrn"]["test_mse"],
     }
     print(json.dumps(report, indent=2))
 
