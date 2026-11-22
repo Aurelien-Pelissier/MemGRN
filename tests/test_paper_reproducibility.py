@@ -80,16 +80,33 @@ def test_archived_msn2_and_synthetic_numbers() -> None:
         < ortho["summary"]["memgrn"]["mean_post_mse"]
     )
 
-    emt_dir = ROOT / "results" / "emt_ligand_shift"
+    emt_dir = ROOT / "results" / "emt_withdrawal_forecast"
     emt = json.loads((emt_dir / "scores.json").read_text())
     assert emt["design_sha256"] in sha256_variants(emt_dir / "design_lock.json")
     assert (
         emt["summary"]["memgrn"]["top30_withdrawal_mse"]
-        < emt["summary"]["ltc_coupled"]["top30_withdrawal_mse"]
+        < emt["summary"]["local_const"]["top30_withdrawal_mse"]
     )
     assert (
         emt["summary"]["memgrn"]["top30_withdrawal_mse"]
-        < emt["summary"]["local_const"]["top30_withdrawal_mse"]
+        < emt["summary"]["ltc_local_coop"]["top30_withdrawal_mse"]
+    )
+
+    cyc_dir = ROOT / "results" / "cyclic_double_ko"
+    cyc = json.loads((cyc_dir / "scores.json").read_text())
+    assert cyc["design_sha256"] in sha256_variants(cyc_dir / "design_lock.json")
+    assert (
+        cyc["summary"]["cl_memgrn"]["double_ko_mse"]
+        < 0.35 * cyc["summary"]["cl_selective_ssm"]["double_ko_mse"]
+    )
+    assert cyc["summary"]["cl_memgrn"]["graph_ap"] > 0.88
+
+    sens_dir = ROOT / "results" / "sensitivity_ablations"
+    sens = json.loads((sens_dir / "scores.json").read_text())
+    assert sens["design_sha256"] in sha256_variants(sens_dir / "design_lock.json")
+    assert (
+        sens["summary"]["channels"]["R=5"]["memgrn"]["test_mse"]
+        < sens["summary"]["channels"]["R=1"]["memgrn"]["test_mse"]
     )
 
     po_dir = ROOT / "results" / "partial_obs_and_ltc_sep"

@@ -91,6 +91,8 @@
     "cl_ltc_local",
     "cl_coupled_adaptive",
     "cl_ltc_coupled",
+    "cl_selective_ssm",
+    "cl_cfc",
     "cl_perturb_ode",
     "cl_latent_ode",
     "renge"

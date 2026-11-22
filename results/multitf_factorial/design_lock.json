@@ -38,6 +38,9 @@
     "coupled_adaptive",
     "ltc_coupled",
     "ltc_local",
+    "selective_ssm",
+    "cfc",
+    "neural_cde",
     "perturb_ode"
   ],
   "train_schedules": 28,

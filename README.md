@@ -16,8 +16,8 @@ Clean, standalone, and reproducible reference implementation for **MemGRN** (inc
 MemGRN/
 ├── src/memgrn/
 │   ├── dynamics.py           # Unified asymmetric MemGRN, closed-loop network RK4, & orthogonal cofactor projection
-│   ├── baselines.py          # Open-loop & closed-loop JAX suites: MemGRN, MemGRN-Ortho, LTC, PerturbODE, Latent ODE
-│   ├── theory.py             # General-S covariance, closed-loop ID, vs. Source-Local LTC, iso-expr., & ortho audits
+│   ├── baselines.py          # Open-loop & closed-loop JAX suites: MemGRN, MemGRN-Ortho, LTC, Selective SSM, CfC, Neural CDE, PerturbODE, Latent ODE
+│   ├── theory.py             # General-S covariance, Selective-SSM corollary, closed-loop ID, vs. Local LTC, iso-expr., & Ortho OOD audits
 │   ├── identification.py     # 4:1 strength-swap algebra, Theorem 2 closed form, margin & AR(1) DP bounds
 │   ├── multitf_benchmark.py  # Out-of-class 8-TF, 24-target additive & cooperative correlation-shift generator
 │   ├── simulators.py         # Occupancy-gated & reversible mass-action buffer synthetic generators
@@ -26,10 +26,11 @@ MemGRN/
 ├── scripts/
 │   ├── verify_theory.py                  # Deterministic numerical verification of all theorems and propositions
 │   ├── run_hipsc_closed_loop.py          # Closed-loop longitudinal hiPSC CRISPR Perturb-seq (GSE213069, 14,945 cells)
-│   ├── run_emt_ligand_shift.py           # Human EMT multi-ligand induction & withdrawal (GSE147405, 53,290 cells)
-│   ├── run_emt_withdrawal_closed_loop.py # Closed-loop human EMT lineage holdout (GSE147405)
-│   ├── run_multitf_factorial.py          # Locked 2x2 multi-TF correlation-shift benchmark (24 worlds)
+│   ├── run_cyclic_double_ko.py           # Cyclic closed-loop feedback & zero-shot combinatorial double-KO benchmark (12 worlds)
+│   ├── run_emt_withdrawal_forecast.py    # Zero-shot human cancer EMT 3-day withdrawal benchmark (GSE147405, 53,290 cells)
+│   ├── run_multitf_factorial.py          # Locked 2x2 multi-TF correlation-shift benchmark (24 worlds, 11 models)
 │   ├── run_partial_obs_ortho.py          # Ground-truth 6-of-8 MemGRN-Ortho & parameter-matched Local-LTC separation
+│   ├── run_sensitivity_ablations.py      # Channel count R, noise sigma, & irregular time-point dropout ablations
 │   ├── run_msn2_joint_and_transfer.py    # Source-CV joint training, cross-readout 2x2, & LOPO shared-filter transfer
 │   ├── run_interpretability_and_scaling.py # Yeast chromatin-memory phase portraits & S=8..512 (2,048-gene) scaling
 │   ├── run_macrophage_multitf.py         # 4-TF mammalian macrophage 14-stimulus, 477-gene benchmark

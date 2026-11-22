@@ -49,6 +49,8 @@ CLOSED_LOOP_FAMILIES: tuple[ClosedLoopModelFamily, ...] = (
     ClosedLoopModelFamily.LTC_LOCAL,
     ClosedLoopModelFamily.COUPLED_ADAPTIVE,
     ClosedLoopModelFamily.LTC_COUPLED,
+    ClosedLoopModelFamily.SELECTIVE_SSM,
+    ClosedLoopModelFamily.CFC,
     ClosedLoopModelFamily.PERTURB_ODE,
     ClosedLoopModelFamily.LATENT_ODE,
 )
@@ -183,6 +185,10 @@ def _run_unseen_ko_fold(job: tuple[int, str, list[list[int]]]) -> tuple[int, str
         regulator_indices=reg_tuple,
         use_cooperativity=(fam == ClosedLoopModelFamily.MEMGRN),
         coop_rank=6,
+        readout_rank=(
+            16 if fam in (ClosedLoopModelFamily.MEMGRN, ClosedLoopModelFamily.LOCAL_CONST) else None
+        ),
+        base_rates=(0.8, 2.0, 4.5),
         n_channels=3,
         hidden_width=6,
         module_dim=20,
@@ -190,6 +196,7 @@ def _run_unseen_ko_fold(job: tuple[int, str, list[list[int]]]) -> tuple[int, str
     )
     # Warm-start ramp t=0->Day 2 (steps 0..8, clamp_steps=8) loads pre-Day-2 intracellular memory,
     # then releases y(t) from y(Day 2) for autonomous closed-loop integration across Days 3, 4, 5!
+    use_grp = 0.02 if fam == ClosedLoopModelFamily.MEMGRN else 0.0
     fitted = fit_closed_loop_network(
         spec=spec,
         basal_levels=basal_scaled,
@@ -207,6 +214,7 @@ def _run_unseen_ko_fold(job: tuple[int, str, list[list[int]]]) -> tuple[int, str
         clamp_steps=8,
         seeds=(101, 202),
         reg_grid=(1e-3, 5e-3, 2e-2),
+        group_l21_scale=use_grp,
         total_updates=800,
         lr_max=0.006,
     )
@@ -283,11 +291,16 @@ def _run_day5_and_chip_model(fam_val: str) -> tuple[str, dict]:
             regulator_indices=reg_tuple,
             use_cooperativity=(fam == ClosedLoopModelFamily.MEMGRN),
             coop_rank=6,
+            readout_rank=(
+            16 if fam in (ClosedLoopModelFamily.MEMGRN, ClosedLoopModelFamily.LOCAL_CONST) else None
+        ),
+            base_rates=(0.8, 2.0, 4.5),
             n_channels=3,
             hidden_width=6,
             module_dim=20,
             latent_dim=20,
         )
+        use_grp = 0.02 if fam == ClosedLoopModelFamily.MEMGRN else 0.0
         fitted_d5 = fit_closed_loop_network(
             spec=spec,
             basal_levels=basal_scaled,
@@ -302,6 +315,7 @@ def _run_day5_and_chip_model(fam_val: str) -> tuple[str, dict]:
             obs_step_indices=(0, 8, 12, 16, 20),
             seeds=(101, 202),
             reg_grid=(1e-3, 5e-3, 2e-2),
+            group_l21_scale=use_grp,
             total_updates=850,
             lr_max=0.006,
         )
@@ -330,6 +344,7 @@ def _run_day5_and_chip_model(fam_val: str) -> tuple[str, dict]:
             obs_step_indices=(0, 8, 12, 16, 20),
             seeds=(101, 202),
             reg_grid=(1e-3, 5e-3, 2e-2),
+            group_l21_scale=use_grp,
             total_updates=900,
             lr_max=0.006,
         )
@@ -428,11 +443,16 @@ def main() -> None:
     for m_key in all_model_keys:
         ko_list = by_model_ko[m_key]
         extra = d5_chip_raw[m_key]
+        mses = np.array([x["mse"] for x in ko_list], dtype=np.float64)
+        t25s = np.array([x["top25_mse"] for x in ko_list], dtype=np.float64)
+        rs = np.array([x["pearson_r"] for x in ko_list], dtype=np.float64)
         summary[m_key] = {
             "n_params": extra["n_params"],
-            "unseen_ko_mse": float(np.mean([x["mse"] for x in ko_list])),
-            "unseen_ko_top25_mse": float(np.mean([x["top25_mse"] for x in ko_list])),
-            "unseen_ko_pearson_r": float(np.mean([x["pearson_r"] for x in ko_list])),
+            "unseen_ko_mse": float(np.mean(mses)),
+            "unseen_ko_mse_se": float(np.std(mses, ddof=1) / np.sqrt(len(mses))),
+            "unseen_ko_top25_mse": float(np.mean(t25s)),
+            "unseen_ko_top25_mse_se": float(np.std(t25s, ddof=1) / np.sqrt(len(t25s))),
+            "unseen_ko_pearson_r": float(np.mean(rs)),
             "day5_extrapolation_mse": extra["day5_extrapolation_mse"],
             "chip_psc_pooled_auroc": extra["chip_psc_pooled_auroc"],
             "chip_psc_mean_tf_auroc": extra["chip_psc_mean_tf_auroc"],

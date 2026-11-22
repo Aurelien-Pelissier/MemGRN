@@ -1,0 +1,12 @@
+{
+  "benchmark": "sensitivity_and_robustness_ablations",
+  "seeds": [
+    6001,
+    6002,
+    6003,
+    6004,
+    6005,
+    6006
+  ],
+  "n_jobs": 150
+}

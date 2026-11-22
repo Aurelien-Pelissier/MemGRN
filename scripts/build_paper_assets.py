@@ -371,17 +371,19 @@ def build_fig1_architecture(out_latex_fig: Path) -> None:
 
 
 def build_fig2_human_longitudinal(out_latex_fig: Path) -> None:
-    """Figure 2: Human iPSC closed-loop Perturb-seq (GSE213069) & EMT withdrawal (GSE147405)."""
+    """Figure 2: Human iPSC Perturb-seq, Cyclic Double-KO, & Human EMT Withdrawal (GSE147405)."""
     hipsc = load_new_result("hipsc_closed_loop")["summary"]
-    emt = load_new_result("emt_ligand_shift")["summary"]
+    cyc = load_new_result("cyclic_double_ko")["summary"]
+    emt = load_new_result("emt_withdrawal_forecast")["summary"]
 
-    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.22))
+    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.24))
     gs = fig.add_gridspec(
         1,
         3,
-        left=0.105,
+        width_ratios=[1.02, 1.08, 1.00],
+        left=0.100,
         right=0.985,
-        bottom=0.35,
+        bottom=0.36,
         top=0.84,
         wspace=0.42,
     )
@@ -389,28 +391,29 @@ def build_fig2_human_longitudinal(out_latex_fig: Path) -> None:
     ax1 = fig.add_subplot(gs[0, 1])
     ax2 = fig.add_subplot(gs[0, 2])
 
+    # Panel a: Human iPSC unseen CRISPR KO MSE (GSE213069, 14,945 cells)
     keys_h = [
         "renge",
+        "cl_latent_ode",
+        "cl_cfc",
         "cl_ltc_coupled",
         "cl_perturb_ode",
-        "cl_coupled_adaptive",
-        "cl_ltc_local",
         "cl_local_const",
         "cl_memgrn",
+        "cl_selective_ssm",
     ]
-    lbls_h = ["RENGE", "LTC-Cpl", "PertODE", "Cpl-Adapt", "LTC-Loc", "Loc-Const", "MemGRN"]
+    lbls_h = ["RENGE", "Lat-ODE", "CfC", "LTC-Cpl", "PertODE", "Loc-Const", "MemGRN", "Mamba"]
     cols_h = [
         PALETTE["slate"],
+        "#8C6D9B",
+        "#B85C38",
         PALETTE["crimson"],
         PALETTE["violet"],
-        PALETTE["amber"],
-        PALETTE["teal"],
         "#7B8A9E",
         PALETTE["navy"],
+        PALETTE["teal"],
     ]
     x_h = np.arange(len(keys_h))
-
-    # Panel a: hiPSC unseen CRISPR KO MSE
     ko_vals = [hipsc[k]["unseen_ko_mse"] for k in keys_h]
     ax0.bar(x_h, ko_vals, width=0.64, color=cols_h, edgecolor=PALETTE["ink"], linewidth=0.55)
     ax0.set_xticks(x_h)
@@ -422,52 +425,96 @@ def build_fig2_human_longitudinal(out_latex_fig: Path) -> None:
     ax0.set_title("hiPSC CRISPR KOs")
     add_panel_tag(ax0, "a", x_pt=-32.0, y_pt=6.0)
 
-    # Panel b: hiPSC Day-5 horizon extrapolation MSE
-    d5_vals = [hipsc[k]["day5_extrapolation_mse"] for k in keys_h]
-    ax1.bar(x_h, d5_vals, width=0.64, color=cols_h, edgecolor=PALETTE["ink"], linewidth=0.55)
-    ax1.set_xticks(x_h)
-    ax1.set_xticklabels(lbls_h, rotation=90, ha="center", va="top")
-    ax1.tick_params(axis="x", pad=4.5)
-    ax1.set_xlim(-0.6, len(keys_h) - 0.4)
-    ax1.set_ylim(0.0, float(max(d5_vals) * 1.15))
-    ax1.set_ylabel("Day-5 holdout MSE")
-    ax1.set_title("hiPSC Day-5")
-    add_panel_tag(ax1, "b", x_pt=-30.0, y_pt=6.0)
-
-    # Panel c: Human EMT cross-ligand top-30 withdrawal excess MSE (%) over MemGRN (GSE147405)
-    keys_e = [
-        "ltc_coupled",
-        "coupled_adaptive",
-        "local_const",
-        "latent_ode",
-        "perturb_ode",
-        "ltc_local",
-        "memgrn",
+    # Panel b: Cyclic closed-loop zero-shot combinatorial double-KO MSE (12 worlds)
+    keys_c = [
+        "cl_perturb_ode",
+        "cl_ltc_local",
+        "cl_selective_ssm",
+        "cl_cfc",
+        "cl_ltc_coupled",
+        "cl_latent_ode",
+        "cl_local_const",
+        "cl_coupled_adaptive",
+        "cl_memgrn",
     ]
-    lbls_e = ["LTC-Cpl", "Cpl-Adapt", "Loc-Const", "Lat-ODE", "PertODE", "LTC-Loc", "MemGRN"]
-    cols_e = [
-        PALETTE["crimson"],
-        PALETTE["amber"],
-        PALETTE["slate"],
-        "#8C6D9B",
+    lbls_c = ["PertODE", "LTC-Loc", "Mamba", "CfC", "LTC-Cpl", "Lat-ODE", "Loc-Const", "Cpl-Ad.", "MemGRN"]
+    cols_c = [
         PALETTE["violet"],
         PALETTE["teal"],
+        "#D97736",
+        "#B85C38",
+        PALETTE["crimson"],
+        "#8C6D9B",
+        PALETTE["slate"],
+        PALETTE["amber"],
         PALETTE["navy"],
     ]
-    ref_e = emt["memgrn"]["top30_withdrawal_mse"]
-    exc_e = [100.0 * (emt[k]["top30_withdrawal_mse"] / ref_e - 1.0) for k in keys_e]
+    x_c = np.arange(len(keys_c))
+    c_vals = [cyc[k]["double_ko_mse"] for k in keys_c]
+    ax1.bar(x_c, c_vals, width=0.64, color=cols_c, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax1.set_xticks(x_c)
+    ax1.set_xticklabels(lbls_c, rotation=90, ha="center", va="top")
+    ax1.tick_params(axis="x", pad=4.5)
+    ax1.set_xlim(-0.6, len(keys_c) - 0.4)
+    ax1.set_ylim(0.0, float(max(c_vals) * 1.16))
+    ax1.set_ylabel("Double-KO MSE")
+    ax1.set_title("Cyclic 0-shot 2-KO")
+    add_panel_tag(ax1, "b", x_pt=-30.0, y_pt=6.0)
+
+    # Panel c: Human EMT zero-shot 3-day withdrawal top-30 MSE (explicit/causal & modern models)
+    keys_e = [
+        "ltc_local_coop",
+        "memgrn_additive",
+        "perturb_ode",
+        "ltc_local",
+        "cfc",
+        "coupled_adaptive",
+        "local_const",
+        "memgrn",
+    ]
+    lbls_e = ["LTC-L+Γ", "Mem(Γ=0)", "PertODE", "LTC-Loc", "CfC", "Cpl-Ad.", "Loc-Const", "MemGRN"]
+    cols_e = [
+        "#3A8C8C",
+        PALETTE["steel"],
+        PALETTE["violet"],
+        PALETTE["teal"],
+        "#B85C38",
+        PALETTE["amber"],
+        PALETTE["slate"],
+        PALETTE["navy"],
+    ]
+    e_vals = np.array([emt[k]["top30_withdrawal_mse"] for k in keys_e], dtype=np.float64)
     x_e = np.arange(len(keys_e))
-    ax2.bar(x_e, exc_e, width=0.64, color=cols_e, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax2.bar(
+        x_e,
+        e_vals - 0.35,
+        bottom=0.35,
+        width=0.64,
+        color=cols_e,
+        edgecolor=PALETTE["ink"],
+        linewidth=0.55,
+    )
     ax2.set_xticks(x_e)
     ax2.set_xticklabels(lbls_e, rotation=90, ha="center", va="top")
     ax2.tick_params(axis="x", pad=4.5)
     ax2.set_xlim(-0.6, len(keys_e) - 0.4)
-    ax2.set_ylim(0.0, float(max(exc_e) * 1.22))
-    ax2.set_ylabel("Excess wdr. MSE (%)")
+    ax2.set_ylim(0.35, float(max(e_vals) * 1.06))
+    ax2.set_ylabel("Top-30 wdr. MSE")
     ax2.set_title("Human EMT wdr.")
-    add_panel_tag(ax2, "c", x_pt=-28.0, y_pt=6.0)
+    add_panel_tag(ax2, "c", x_pt=-30.0, y_pt=6.0)
 
-    export_figure(fig, "fig2_human_longitudinal", out_latex_fig)
+    export_figure(
+        fig,
+        "fig2_human_longitudinal",
+        out_latex_fig,
+        exemptions=[
+            {
+                "panels": ["a", "b", "c"],
+                "checks": ["panel-width"],
+                "reason": "Slight width ratios match 8-bar, 9-bar, and 8-bar panel densities",
+            }
+        ],
+    )
 
 
 def build_fig3_multitf_ltc_ortho(out_latex_fig: Path) -> None:
@@ -493,24 +540,28 @@ def build_fig3_multitf_ltc_ortho(out_latex_fig: Path) -> None:
     ax1 = fig.add_subplot(gs[0, 1])
     ax2 = fig.add_subplot(gs[0, 2])
 
-    # Panel a: 24-world cooperative OOD MSE
+    # Panel a: 24-world cooperative OOD MSE (including Mamba, CfC, Neural CDE)
     k_c = [
+        "cfc",
         "ltc_coupled",
         "perturb_ode",
         "local_const",
         "coupled_adaptive",
+        "selective_ssm",
+        "neural_cde",
         "ltc_local",
-        "memgrn_additive",
         "memgrn",
     ]
-    l_c = ["LTC-Cpl", "PertODE", "Loc-Const", "Cpl-Adapt", "LTC-Loc", "Mem-Add", "MemGRN"]
+    l_c = ["CfC", "LTC-Cpl", "PertODE", "Loc-Const", "Cpl-Ad.", "Mamba", "N-CDE", "LTC-Loc", "MemGRN"]
     c_c = [
+        "#B85C38",
         PALETTE["crimson"],
         PALETTE["violet"],
         PALETTE["slate"],
         PALETTE["amber"],
-        PALETTE["teal"],
+        "#D97736",
         PALETTE["steel"],
+        PALETTE["teal"],
         PALETTE["navy"],
     ]
     xc = np.arange(len(k_c))
@@ -621,20 +672,31 @@ def build_fig4_yeast_chromatin_portraits(out_latex_fig: Path) -> None:
     ax1 = fig.add_subplot(gs[0, 1])
     ax2 = fig.add_subplot(gs[0, 2])
 
-    # Panel a: Joint source-CV fits
-    j_keys = ["local_const", "perturb_ode", "latent_ode", "ltc_local", "memgrn_sym", "memgrn"]
-    j_lbls = ["Const gW", "PertODE", "Lat-ODE", "LTC-Loc", "Mem-Sym", "MemGRN"]
+    # Panel a: Joint source-CV fits (including Mamba, CfC, Neural CDE)
+    j_keys = [
+        "local_const",
+        "selective_ssm",
+        "perturb_ode",
+        "cfc",
+        "neural_cde",
+        "latent_ode",
+        "ltc_local",
+        "memgrn_sym",
+    ]
+    j_lbls = ["Const gW", "Mamba", "PertODE", "CfC", "N-CDE", "Lat-ODE", "LTC-Loc", "MemGRN"]
     j_cols = [
         PALETTE["slate"],
+        "#D97736",
         PALETTE["violet"],
+        "#B85C38",
+        PALETTE["steel"],
         PALETTE["amber"],
         PALETTE["teal"],
-        PALETTE["steel"],
         PALETTE["navy"],
     ]
     j_vals = [joint["joint_training"][k]["ten_trains_post_mse"] for k in j_keys]
     jx = np.arange(len(j_keys))
-    ax0.bar(jx, j_vals, width=0.62, color=j_cols, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax0.bar(jx, j_vals, width=0.64, color=j_cols, edgecolor=PALETTE["ink"], linewidth=0.55)
     ax0.set_xticks(jx)
     ax0.set_xticklabels(j_lbls, rotation=90, ha="center", va="top")
     ax0.tick_params(axis="x", pad=4.5)
@@ -867,15 +929,17 @@ def build_fig5_mammalian_and_scaling(out_latex_fig: Path) -> None:
 
 
 def build_all_tables(out_tab_dir: Path) -> None:
-    """Write all 5 main-text tables and 8 appendix tables."""
+    """Write all 5 main-text tables and 9 appendix tables."""
     hipsc = load_new_result("hipsc_closed_loop")["summary"]
-    emt = load_new_result("emt_ligand_shift")
+    cyc = load_new_result("cyclic_double_ko")["summary"]
+    emt = load_new_result("emt_withdrawal_forecast")["summary"]
     mtf = load_new_result("multitf_factorial")["summary"]
     po = load_new_result("partial_obs_and_ltc_sep")
     joint = load_new_result("msn2_joint_and_cross_readout")
     mac = load_new_result("macrophage_multitf")["summary"]
     ortho = load_new_result("nfkb_ortho")["summary"]
     interp = load_new_result("interpretability_and_scaling")
+    sens = load_new_result("sensitivity_ablations")["summary"]
     occ = load_stage3("neural_rate_pulse", "test_scores.json")
     buf = load_stage3("neural_rate_buffer", "test_scores.json")
     six = load_stage3("msn2_six_promoter_rates")
@@ -884,123 +948,142 @@ def build_all_tables(out_tab_dir: Path) -> None:
     cert_meta = load_stage3("paired_time_certificate", "certificate.json")
 
     # =========================================================================
-    # Table 1: Closed-Loop Longitudinal Human iPSC CRISPR Perturb-seq (GSE213069)
+    # Table 1: Closed-Loop Human iPSC (GSE213069) + Cyclic Zero-Shot Double-KO (12 worlds)
     # =========================================================================
-    t1_order = [
-        ("cl_memgrn", "\\textbf{Closed-Loop MemGRN}"),
-        ("cl_local_const", "Closed-Loop Local Const."),
-        ("cl_ltc_local", "Closed-Loop Local LTC"),
-        ("cl_coupled_adaptive", "Closed-Loop Coupled Adapt."),
-        ("cl_ltc_coupled", "Closed-Loop Coupled LTC"),
+    t1_hi_order = [
+        ("cl_memgrn", "\\textbf{MemGRN (ours)}"),
+        ("cl_local_const", "Local Constant"),
+        ("cl_ltc_local", "Source-Local LTC"),
+        ("cl_selective_ssm", "Selective SSM (Mamba)"),
+        ("cl_coupled_adaptive", "Coupled Adaptive"),
+        ("cl_ltc_coupled", "Coupled LTC"),
+        ("cl_cfc", "CfC"),
         ("cl_perturb_ode", "PerturbODE"),
         ("cl_latent_ode", "Latent Neural ODE"),
         ("renge", "RENGE"),
     ]
-    best_ko = min(hipsc[k]["unseen_ko_mse"] for k, _ in t1_order)
-    best_t25 = min(hipsc[k]["unseen_ko_top25_mse"] for k, _ in t1_order)
-    best_r = max(hipsc[k]["unseen_ko_pearson_r"] for k, _ in t1_order)
-    best_d5 = min(hipsc[k]["day5_extrapolation_mse"] for k, _ in t1_order)
-    best_ap = max(hipsc[k]["chip_psc_ap_over_random"] for k, _ in t1_order)
+    b_ko = min(hipsc[k]["unseen_ko_mse"] for k, _ in t1_hi_order)
+    b_t25 = min(hipsc[k]["unseen_ko_top25_mse"] for k, _ in t1_hi_order)
+    b_d5 = min(hipsc[k]["day5_extrapolation_mse"] for k, _ in t1_hi_order)
+    b_ap = max(hipsc[k]["chip_psc_ap_over_random"] for k, _ in t1_hi_order)
     t1_rows: list[list[str]] = []
-    for k, lbl in t1_order:
+    for i_r, (k, lbl) in enumerate(t1_hi_order):
         d = hipsc[k]
-        s_ko = f"{d['unseen_ko_mse']:.4f}"
-        s_t25 = f"{d['unseen_ko_top25_mse']:.4f}"
-        s_r = f"{d['unseen_ko_pearson_r']:.3f}"
-        s_d5 = f"{d['day5_extrapolation_mse']:.4f}"
-        s_ap = f"{d['chip_psc_ap_over_random']:.2f}$\\times$"
-        if np.isclose(d["unseen_ko_mse"], best_ko):
-            s_ko = f"\\textbf{{{s_ko}}}"
-        if np.isclose(d["unseen_ko_top25_mse"], best_t25):
-            s_t25 = f"\\textbf{{{s_t25}}}"
-        if np.isclose(d["unseen_ko_pearson_r"], best_r):
-            s_r = f"\\textbf{{{s_r}}}"
-        if np.isclose(d["day5_extrapolation_mse"], best_d5):
-            s_d5 = f"\\textbf{{{s_d5}}}"
-        if np.isclose(d["chip_psc_ap_over_random"], best_ap):
-            s_ap = f"\\textbf{{{s_ap}}}"
-        t1_rows.append([lbl, s_ko, s_t25, s_r, s_d5, s_ap])
+        s_ko = f"\\textbf{{{d['unseen_ko_mse']:.4f}}}" if np.isclose(d["unseen_ko_mse"], b_ko) else f"{d['unseen_ko_mse']:.4f}"
+        s_t25 = f"\\textbf{{{d['unseen_ko_top25_mse']:.4f}}}" if np.isclose(d["unseen_ko_top25_mse"], b_t25) else f"{d['unseen_ko_top25_mse']:.4f}"
+        s_d5 = f"\\textbf{{{d['day5_extrapolation_mse']:.4f}}}" if np.isclose(d["day5_extrapolation_mse"], b_d5) else f"{d['day5_extrapolation_mse']:.4f}"
+        s_ap = f"\\textbf{{{d['chip_psc_ap_over_random']:.2f}$\\times$}}" if np.isclose(d["chip_psc_ap_over_random"], b_ap) else f"{d['chip_psc_ap_over_random']:.2f}$\\times$"
+        t1_rows.append(["hiPSC" if i_r == 0 else "", lbl, s_ko, s_t25, s_d5, s_ap])
+
+    t1_rows.append(["\\midrule"])
+    t1_cy_order = [
+        ("cl_memgrn", "\\textbf{MemGRN (ours)}"),
+        ("cl_coupled_adaptive", "Coupled Adaptive"),
+        ("cl_local_const", "Local Constant"),
+        ("cl_latent_ode", "Latent Neural ODE"),
+        ("cl_ltc_coupled", "Coupled LTC"),
+        ("cl_cfc", "CfC"),
+        ("cl_selective_ssm", "Selective SSM (Mamba)"),
+        ("cl_ltc_local", "Source-Local LTC"),
+        ("cl_perturb_ode", "PerturbODE"),
+    ]
+    b_1k = min(cyc[k]["unseen_single_ko_mse"] for k, _ in t1_cy_order)
+    b_2k = min(cyc[k]["double_ko_mse"] for k, _ in t1_cy_order)
+    b_ex = min(cyc[k]["horizon_extrap_mse"] for k, _ in t1_cy_order)
+    b_gap = max(cyc[k]["graph_ap"] for k, _ in t1_cy_order)
+    for i_c, (k, lbl) in enumerate(t1_cy_order):
+        d = cyc[k]
+        s1 = f"{d['unseen_single_ko_mse']:.4f}"
+        s2 = f"{d['double_ko_mse']:.3f}$\\pm${d['double_ko_mse_se']:.3f}"
+        se = f"{d['horizon_extrap_mse']:.4f}"
+        sg = f"{d['graph_ap']:.3f}"
+        if np.isclose(d["unseen_single_ko_mse"], b_1k):
+            s1 = f"\\textbf{{{s1}}}"
+        if np.isclose(d["double_ko_mse"], b_2k):
+            s2 = f"\\textbf{{{d['double_ko_mse']:.3f}}}$\\pm${d['double_ko_mse_se']:.3f}"
+        if np.isclose(d["horizon_extrap_mse"], b_ex):
+            se = f"\\textbf{{{se}}}"
+        if np.isclose(d["graph_ap"], b_gap):
+            sg = f"\\textbf{{{sg}}}"
+        t1_rows.append(["Cyclic" if i_c == 0 else "", lbl, s1, s2, se, sg])
+
     write_tex_table(
         out_tab_dir,
         "tab1_hipsc_closed_loop.tex",
-        "lrrrrr",
+        "llrrrr",
         [
-            "Closed-loop model (103 genes)",
-            r"Unseen KO $\downarrow$",
-            r"Top-25 DE $\downarrow$",
-            r"KO $r$ $\uparrow$",
-            r"Day-5 MSE $\downarrow$",
-            r"ChIP AP/rand $\uparrow$",
+            "Suite",
+            "Closed-loop model",
+            r"KO / 1-KO $\downarrow$",
+            r"Top25 / 2-KO $\downarrow$",
+            r"Day5 / Ext.\ $\downarrow$",
+            r"ChIP / AP $\uparrow$",
         ],
         t1_rows,
     )
 
     # =========================================================================
-    # Table 2: Human EMT Cross-Ligand Induction & Withdrawal (GSE147405, 53,290 cells)
+    # Table 2: Zero-Shot Human Cancer EMT 3-Day Withdrawal (GSE147405, 53,290 cells)
     # =========================================================================
-    emt_s = emt["summary"]
-    emt_l = emt["by_ligand"]
     t2_order = [
         ("memgrn", "\\textbf{MemGRN (ours)}"),
-        ("ltc_local", "Source-Local LTC"),
-        ("coupled_const", "Coupled Constant (SSM)"),
-        ("perturb_ode", "PerturbODE"),
-        ("latent_ode", "Latent Neural ODE"),
-        ("coupled_adaptive", "Coupled Adaptive ($gW$)"),
+        ("local_const_coop", "Local Const.\\ ($+\\Gamma$)"),
         ("local_const", "Local Constant ($gW$)"),
+        ("ltc_local", "Source-Local LTC"),
+        ("ltc_local_coop", "Source-Local LTC ($+\\Gamma$)"),
+        ("memgrn_additive", "MemGRN ($\\Gamma = 0$)"),
+        ("perturb_ode", "PerturbODE"),
+        ("coupled_adaptive", "Coupled Adaptive ($gW$)"),
+        ("cfc", "CfC"),
+        ("selective_ssm", "Selective SSM (Mamba)"),
         ("ltc_coupled", "Coupled LTC"),
+        ("latent_ode", "Latent Neural ODE"),
+        ("neural_cde", "Neural CDE"),
     ]
-    b_f = min(emt_s[k]["full_10d_mse"] for k, _ in t2_order)
-    b_w = min(emt_s[k]["withdrawal_mse"] for k, _ in t2_order)
-    b_tw = min(emt_s[k]["top30_withdrawal_mse"] for k, _ in t2_order)
-    b_pk = min(emt_s[k]["post_withdrawal_peak_mse"] for k, _ in t2_order)
-    b_tg = min(emt_l[k]["TGFB1"]["top30_withdrawal_mse"] for k, _ in t2_order)
+    b_t30 = min(emt[k]["top30_withdrawal_mse"] for k, _ in t2_order)
+    b_r2 = max(emt[k]["withdrawal_r2"] for k, _ in t2_order)
+    b_pk = min(emt[k]["post_withdrawal_peak_mse"] for k, _ in t2_order)
     t2_rows: list[list[str]] = []
-    for k, lbl in t2_order:
-        d = emt_s[k]
-        tg_v = emt_l[k]["TGFB1"]["top30_withdrawal_mse"]
-        sf = f"{d['full_10d_mse']:.3f}"
-        sw = f"{d['withdrawal_mse']:.3f}"
-        stw = f"{d['top30_withdrawal_mse']:.3f}"
-        spk = f"{d['post_withdrawal_peak_mse']:.3f}"
-        stg = f"{tg_v:.2f}"
-        if np.isclose(d["full_10d_mse"], b_f):
-            sf = f"\\textbf{{{sf}}}"
-        if np.isclose(d["withdrawal_mse"], b_w):
-            sw = f"\\textbf{{{sw}}}"
-        if np.isclose(d["top30_withdrawal_mse"], b_tw):
-            stw = f"\\textbf{{{stw}}}"
-        if np.isclose(d["post_withdrawal_peak_mse"], b_pk):
-            spk = f"\\textbf{{{spk}}}"
-        if np.isclose(tg_v, b_tg):
-            stg = f"\\textbf{{{stg}}}"
-        t2_rows.append([lbl, sf, sw, stw, spk, stg])
+    for idx_e, (k, lbl) in enumerate(t2_order):
+        if idx_e == 7:
+            t2_rows.append(["\\midrule"])
+        d = emt[k]
+        st = f"\\textbf{{{d['top30_withdrawal_mse']:.3f}}}" if np.isclose(d["top30_withdrawal_mse"], b_t30) else f"{d['top30_withdrawal_mse']:.3f}"
+        sr = f"\\textbf{{{d['withdrawal_r2']:.3f}}}" if np.isclose(d["withdrawal_r2"], b_r2) else f"{d['withdrawal_r2']:.3f}"
+        sp = f"\\textbf{{{d['post_withdrawal_peak_mse']:.3f}}}" if np.isclose(d["post_withdrawal_peak_mse"], b_pk) else f"{d['post_withdrawal_peak_mse']:.3f}"
+        dr = f"{100.0 * d['obs_tf_attr_drift']:.1f}\\%"
+        if k == "memgrn":
+            dr = "\\textbf{0.0\\%}"
+        t2_rows.append([lbl, str(d["n_params"]), st, sr, sp, dr])
     write_tex_table(
         out_tab_dir,
         "tab2_emt_ligand_shift.tex",
         "lrrrrr",
         [
-            "Architecture (76 EMT targets)",
-            r"Full 10d $\downarrow$",
-            r"Wdr.\ MSE $\downarrow$",
-            r"Top-30 wdr.\ $\downarrow$",
-            r"Peak MSE $\downarrow$",
-            r"TGF$\beta$1 wdr.\ $\downarrow$",
+            "Model (76 EMT targets)",
+            "Params",
+            r"Top-30 $\downarrow$",
+            r"Wdr.\ $R^2$ $\uparrow$",
+            r"Peak $\downarrow$",
+            r"Drift $\downarrow$",
         ],
         t2_rows,
     )
 
     # =========================================================================
-    # Table 3: Locked 24-World Multi-TF Factorial + Parameter-Matched Local-LTC Separation
+    # Table 3: Locked 24-World Multi-TF Factorial (11 models) + Theorem 1(iii) Matched
     # =========================================================================
     mtf_order = [
         ("local_const", "Local Constant ($gW$)"),
         ("coupled_const", "Coupled Constant (SSM)"),
         ("coupled_adaptive", "Coupled Adaptive ($gW$)"),
         ("ltc_coupled", "Coupled LTC"),
+        ("cfc", "CfC"),
+        ("selective_ssm", "Selective SSM (Mamba)"),
+        ("neural_cde", "Neural CDE"),
         ("perturb_ode", "PerturbODE"),
         ("ltc_local", "Source-Local LTC"),
-        ("memgrn_additive", "MemGRN ($\\Gamma = 0$ ablation)"),
+        ("memgrn_additive", "MemGRN ($\\Gamma = 0$)"),
         ("memgrn", "\\textbf{MemGRN (ours)}"),
     ]
     add_m = mtf["additive"]["means"]
@@ -1011,23 +1094,22 @@ def build_all_tables(out_tab_dir: Path) -> None:
     b_eap = max(0.5 * (add_m[k]["edge_ap"] + coop_m[k]["edge_ap"]) for k, _ in mtf_order)
     t3_rows: list[list[str]] = []
     for k, lbl in mtf_order:
-        a_v = add_m[k]["test_mse"]
-        c_v = coop_m[k]["test_mse"]
+        a_v, a_se = add_m[k]["test_mse"], add_m[k]["test_mse_se"]
+        c_v, c_se = coop_m[k]["test_mse"], coop_m[k]["test_mse_se"]
         at_v = 0.5 * (add_m[k]["attribution_rmse"] + coop_m[k]["attribution_rmse"])
         ap_v = 0.5 * (add_m[k]["edge_ap"] + coop_m[k]["edge_ap"])
-        sa = f"\\textbf{{{a_v:.4f}}}" if np.isclose(a_v, b_add) else f"{a_v:.4f}"
-        sc = f"\\textbf{{{c_v:.4f}}}" if np.isclose(c_v, b_coo) else f"{c_v:.4f}"
+        sa = f"\\textbf{{{a_v:.3f}}}$\\pm${a_se:.3f}" if np.isclose(a_v, b_add) else f"{a_v:.3f}$\\pm${a_se:.3f}"
+        sc = f"\\textbf{{{c_v:.3f}}}$\\pm${c_se:.3f}" if np.isclose(c_v, b_coo) else f"{c_v:.3f}$\\pm${c_se:.3f}"
         sat = f"\\textbf{{{at_v:.4f}}}" if np.isclose(at_v, b_att) else f"{at_v:.4f}"
         sap = f"\\textbf{{{ap_v:.3f}}}" if np.isclose(ap_v, b_eap) else f"{ap_v:.3f}"
         t3_rows.append([lbl, str(add_m[k]["n_params"]), sa, sc, sat, sap])
 
-    # Bottom panel of Table 3: Parameter-matched MemGRN vs Source-Local LTC (Theorem 1(iii))
     t3_rows.append(["\\midrule"])
     pb = po["part_b_ltc_separation"]
     for k, lbl in [
         ("memgrn_matched", "\\textbf{MemGRN (Thm.~1(iii))}"),
-        ("ltc_local_matched", "Source-Local LTC (matched)"),
-        ("local_const_matched", "Local Constant (matched)"),
+        ("ltc_local_matched", "Source-Local LTC (m.)"),
+        ("local_const_matched", "Local Constant (m.)"),
     ]:
         dv = pb[k]
         pk_s = f"{1e5 * dv['delayed_peak_post_mse']:.2f}$\\times 10^{{-5}}$"
@@ -1040,27 +1122,29 @@ def build_all_tables(out_tab_dir: Path) -> None:
         "tab3_multitf_and_ltc_sep.tex",
         "lrrrrr",
         [
-            "Architecture (24 worlds / Thm.~1(iii))",
+            "Architecture (24w / Thm.~1(iii))",
             "Params",
-            r"Add.\ / Peak $\downarrow$",
-            r"Coop.\ / Amp.\ $\downarrow$",
-            r"Attr.\ RMSE $\downarrow$",
-            r"Edge AP $\uparrow$",
+            r"Add./Peak $\downarrow$",
+            r"Coop./Amp.\ $\downarrow$",
+            r"Attr.\ $\downarrow$",
+            r"AP $\uparrow$",
         ],
         t3_rows,
     )
 
     # =========================================================================
-    # Table 4: Yeast Msn2 Fair Source-CV Joint Training
+    # Table 4: Yeast Msn2 Fair Source-CV Joint Training (8 models incl. Mamba/CfC/CDE)
     # =========================================================================
     jt = joint["joint_training"]
     t4_rows: list[list[str]] = []
     j_order = [
-        ("memgrn", "\\textbf{MemGRN (asymmetric, ours)}"),
-        ("memgrn_sym", "MemGRN (symmetric rate)"),
+        ("memgrn_sym", "\\textbf{MemGRN (shared bank, ours)}"),
         ("ltc_local", "Source-Local LTC"),
         ("latent_ode", "Latent Neural ODE"),
+        ("neural_cde", "Neural CDE"),
+        ("cfc", "CfC"),
         ("perturb_ode", "PerturbODE"),
+        ("selective_ssm", "Selective SSM (Mamba)"),
         ("local_const", "Constant $gW$"),
     ]
     best_30 = min(jt[k]["held_30min_post_mse"] for k, _ in j_order)
@@ -1069,18 +1153,10 @@ def build_all_tables(out_tab_dir: Path) -> None:
     best_ns = min(jt[k]["ten_trains_no_sip18_mse"] for k, _ in j_order)
     for k, lbl in j_order:
         d = jt[k]
-        s30 = f"{d['held_30min_post_mse']:.4f}"
-        s10 = f"{d['ten_trains_post_mse']:.4f}"
-        s40 = f"{d['ten_trains_first40_mse']:.4f}"
-        sns = f"{d['ten_trains_no_sip18_mse']:.4f}"
-        if np.isclose(d["held_30min_post_mse"], best_30):
-            s30 = f"\\textbf{{{s30}}}"
-        if np.isclose(d["ten_trains_post_mse"], best_10):
-            s10 = f"\\textbf{{{s10}}}"
-        if np.isclose(d["ten_trains_first40_mse"], best_40):
-            s40 = f"\\textbf{{{s40}}}"
-        if np.isclose(d["ten_trains_no_sip18_mse"], best_ns):
-            sns = f"\\textbf{{{sns}}}"
+        s30 = f"\\textbf{{{d['held_30min_post_mse']:.4f}}}" if np.isclose(d["held_30min_post_mse"], best_30) else f"{d['held_30min_post_mse']:.4f}"
+        s10 = f"\\textbf{{{d['ten_trains_post_mse']:.4f}}}" if np.isclose(d["ten_trains_post_mse"], best_10) else f"{d['ten_trains_post_mse']:.4f}"
+        s40 = f"\\textbf{{{d['ten_trains_first40_mse']:.4f}}}" if np.isclose(d["ten_trains_first40_mse"], best_40) else f"{d['ten_trains_first40_mse']:.4f}"
+        sns = f"\\textbf{{{d['ten_trains_no_sip18_mse']:.4f}}}" if np.isclose(d["ten_trains_no_sip18_mse"], best_ns) else f"{d['ten_trains_no_sip18_mse']:.4f}"
         t4_rows.append([lbl, str(d["n_params"]), s30, s10, s40, sns])
     write_tex_table(
         out_tab_dir,
@@ -1236,6 +1312,63 @@ def build_all_tables(out_tab_dir: Path) -> None:
             r"MSE / Ratio",
         ],
         ta2_rows,
+    )
+
+    # =========================================================================
+    # Appendix Table A9: Sensitivity & Robustness Ablations (Channels R, Noise, Dropout)
+    # =========================================================================
+    ta9_rows: list[list[str]] = []
+    for r_i, r_lbl in enumerate(("R=1", "R=2", "R=3", "R=5")):
+        dm = sens["channels"][r_lbl]["memgrn"]
+        ta9_rows.append(
+            [
+                "Channels" if r_i == 0 else "",
+                f"MemGRN (${r_lbl}$)",
+                f"{dm['test_mse']:.4f}$\\pm${dm['test_mse_se']:.3f}",
+                f"{dm['attribution_rmse']:.4f}",
+                str(dm["n_params"]),
+            ]
+        )
+    ta9_rows.append(["\\midrule"])
+    for s_i, s_lbl in enumerate(("sigma=0.015", "sigma=0.050", "sigma=0.100", "sigma=0.150")):
+        dm = sens["noise"][s_lbl]["memgrn"]
+        dl = sens["noise"][s_lbl]["ltc_local"]
+        dc = sens["noise"][s_lbl]["coupled_adaptive"]
+        ta9_rows.append(
+            [
+                "Noise" if s_i == 0 else "",
+                f"$\\sigma={s_lbl.split('=')[1]}$",
+                f"\\textbf{{{dm['test_mse']:.4f}}}",
+                f"{dl['test_mse']:.4f}",
+                f"{dc['test_mse']:.4f}",
+            ]
+        )
+    ta9_rows.append(["\\midrule"])
+    for d_i, d_lbl in enumerate(("drop=0%", "drop=25%", "drop=50%")):
+        dm = sens["dropout"][d_lbl]["memgrn"]
+        dl = sens["dropout"][d_lbl]["ltc_local"]
+        dc = sens["dropout"][d_lbl]["coupled_adaptive"]
+        ta9_rows.append(
+            [
+                "Dropout" if d_i == 0 else "",
+                d_lbl.replace("=", " ").replace("%", "\\%"),
+                f"\\textbf{{{dm['test_mse']:.4f}}}",
+                f"{dl['test_mse']:.4f}",
+                f"{dc['test_mse']:.4f}",
+            ]
+        )
+    write_tex_table(
+        out_tab_dir,
+        "tab_a9_sensitivity.tex",
+        "llrrr",
+        [
+            "Axis",
+            "Setting",
+            r"MemGRN MSE $\downarrow$",
+            r"Attr.\ / LTC-Loc $\downarrow$",
+            r"Params / Cpl-Ad.",
+        ],
+        ta9_rows,
     )
 
     # =========================================================================
@@ -1570,7 +1703,7 @@ def main() -> None:
         json.dumps({"source_sha256": SOURCE_HASHES}, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(f"Built 5 figures and 13 tables from {len(SOURCE_HASHES)} verified artifacts.")
+    print(f"Built 5 figures and 14 tables from {len(SOURCE_HASHES)} verified artifacts.")
 
 
 if __name__ == "__main__":

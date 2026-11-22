@@ -1,0 +1,990 @@
+{
+  "design_sha256": "78e7612db8b9081fd831de932f741749fcba3ae457264ac72c0fc9e5d4e3a737",
+  "elapsed_seconds": 974.5724940299988,
+  "summary": {
+    "memgrn_ortho": {
+      "n_params": 7416,
+      "withdrawal_mse": 0.49999681658842,
+      "withdrawal_mse_se": 0.12038702431786884,
+      "withdrawal_r2": 0.26567662350299937,
+      "withdrawal_r": 0.5015887668723389,
+      "top30_withdrawal_mse": 0.44970594169462264,
+      "post_withdrawal_peak_mse": 0.9266724001417758,
+      "obs_tf_attr_drift": 0.0
+    },
+    "memgrn": {
+      "n_params": 4776,
+      "withdrawal_mse": 0.47842083564602533,
+      "withdrawal_mse_se": 0.12174489029618464,
+      "withdrawal_r2": 0.28792265740827616,
+      "withdrawal_r": 0.5132971324960303,
+      "top30_withdrawal_mse": 0.4270016253784985,
+      "post_withdrawal_peak_mse": 0.9217060604997173,
+      "obs_tf_attr_drift": 0.0
+    },
+    "memgrn_additive": {
+      "n_params": 4176,
+      "withdrawal_mse": 0.49061642667603667,
+      "withdrawal_mse_se": 0.12453692416550495,
+      "withdrawal_r2": 0.2481108996974581,
+      "withdrawal_r": 0.527637351229234,
+      "top30_withdrawal_mse": 0.4614966939911582,
+      "post_withdrawal_peak_mse": 0.8793111938825324,
+      "obs_tf_attr_drift": 0.5928655965708445
+    },
+    "local_const": {
+      "n_params": 3760,
+      "withdrawal_mse": 0.47866039200760413,
+      "withdrawal_mse_se": 0.12194019517913984,
+      "withdrawal_r2": 0.2650386564911158,
+      "withdrawal_r": 0.4994253222281398,
+      "top30_withdrawal_mse": 0.44517659516979485,
+      "post_withdrawal_peak_mse": 0.9913698444882497,
+      "obs_tf_attr_drift": 0.46941780171163827
+    },
+    "local_const_coop": {
+      "n_params": 4360,
+      "withdrawal_mse": 0.46161020003560715,
+      "withdrawal_mse_se": 0.12414359391531868,
+      "withdrawal_r2": 0.29526017882373723,
+      "withdrawal_r": 0.52648245556996,
+      "top30_withdrawal_mse": 0.4275900907909902,
+      "post_withdrawal_peak_mse": 0.908965198923456,
+      "obs_tf_attr_drift": 0.4088167160394772
+    },
+    "ltc_local": {
+      "n_params": 3976,
+      "withdrawal_mse": 0.47342075775277703,
+      "withdrawal_mse_se": 0.11181307193540786,
+      "withdrawal_r2": 0.2579684681346056,
+      "withdrawal_r": 0.5558471191689965,
+      "top30_withdrawal_mse": 0.4533553322571609,
+      "post_withdrawal_peak_mse": 0.8869318866722619,
+      "obs_tf_attr_drift": 0.8826360614853533
+    },
+    "ltc_local_coop": {
+      "n_params": 4576,
+      "withdrawal_mse": 0.5111508159937757,
+      "withdrawal_mse_se": 0.12387075269366976,
+      "withdrawal_r2": 0.2615641316503138,
+      "withdrawal_r": 0.5315968245041791,
+      "top30_withdrawal_mse": 0.4635919282101598,
+      "post_withdrawal_peak_mse": 1.0413876134646463,
+      "obs_tf_attr_drift": 0.8261273479906216
+    },
+    "coupled_adaptive": {
+      "n_params": 5160,
+      "withdrawal_mse": 0.46211970122628454,
+      "withdrawal_mse_se": 0.12474252532668134,
+      "withdrawal_r2": 0.301735684561688,
+      "withdrawal_r": 0.5119269155089561,
+      "top30_withdrawal_mse": 0.4492560070247029,
+      "post_withdrawal_peak_mse": 0.8994350157791197,
+      "obs_tf_attr_drift": 0.8438688634971738
+    },
+    "ltc_coupled": {
+      "n_params": 5560,
+      "withdrawal_mse": 0.450740108666022,
+      "withdrawal_mse_se": 0.15845619693319166,
+      "withdrawal_r2": 0.38336099215338676,
+      "withdrawal_r": 0.6704697007565052,
+      "top30_withdrawal_mse": 0.4121615796312988,
+      "post_withdrawal_peak_mse": 0.8331143576787673,
+      "obs_tf_attr_drift": 2.243080148264791
+    },
+    "selective_ssm": {
+      "n_params": 5128,
+      "withdrawal_mse": 0.4435524689140139,
+      "withdrawal_mse_se": 0.12136482027088409,
+      "withdrawal_r2": 0.31885238751987266,
+      "withdrawal_r": 0.509356759262592,
+      "top30_withdrawal_mse": 0.413804196109418,
+      "post_withdrawal_peak_mse": 0.8846028566568847,
+      "obs_tf_attr_drift": 0.7395401766480787
+    },
+    "cfc": {
+      "n_params": 9016,
+      "withdrawal_mse": 0.46873083306793406,
+      "withdrawal_mse_se": 0.12080704511851967,
+      "withdrawal_r2": 0.2868301538450037,
+      "withdrawal_r": 0.5464208115916498,
+      "top30_withdrawal_mse": 0.4524465948969864,
+      "post_withdrawal_peak_mse": 0.9236407038867833,
+      "obs_tf_attr_drift": 0.9730719828970913
+    },
+    "neural_cde": {
+      "n_params": 6820,
+      "withdrawal_mse": 0.3717605025165853,
+      "withdrawal_mse_se": 0.10681701508593715,
+      "withdrawal_r2": 0.4567223289335878,
+      "withdrawal_r": 0.6898252935144894,
+      "top30_withdrawal_mse": 0.33933485975747835,
+      "post_withdrawal_peak_mse": 0.6685201478550747,
+      "obs_tf_attr_drift": 2.604108957607268
+    },
+    "perturb_ode": {
+      "n_params": 3742,
+      "withdrawal_mse": 0.47391984862064296,
+      "withdrawal_mse_se": 0.1205579151907897,
+      "withdrawal_r2": 0.2647222370222,
+      "withdrawal_r": 0.5288622232885736,
+      "top30_withdrawal_mse": 0.4598465562141233,
+      "post_withdrawal_peak_mse": 0.9166303515535833,
+      "obs_tf_attr_drift": 0.9127489003657663
+    },
+    "latent_ode": {
+      "n_params": 3256,
+      "withdrawal_mse": 0.4065162255338255,
+      "withdrawal_mse_se": 0.08440435071118706,
+      "withdrawal_r2": 0.3908408095370205,
+      "withdrawal_r": 0.67586104506247,
+      "top30_withdrawal_mse": 0.3528419625766708,
+      "post_withdrawal_peak_mse": 0.7614056212661736,
+      "obs_tf_attr_drift": 3.067533020668476
+    }
+  },
+  "wilcoxon_12_conditions": {
+    "memgrn_ortho": {
+      "ortho_wins_12": 0,
+      "ortho_wilcoxon_p": 1.0,
+      "memgrn_wins_12": 4,
+      "memgrn_wilcoxon_p": 0.078125
+    },
+    "memgrn": {
+      "ortho_wins_12": 2,
+      "ortho_wilcoxon_p": 0.953125,
+      "memgrn_wins_12": 0,
+      "memgrn_wilcoxon_p": 1.0
+    },
+    "memgrn_additive": {
+      "ortho_wins_12": 8,
+      "ortho_wilcoxon_p": 0.31103515625,
+      "memgrn_wins_12": 7,
+      "memgrn_wilcoxon_p": 0.23486328125
+    },
+    "local_const": {
+      "ortho_wins_12": 6,
+      "ortho_wilcoxon_p": 0.76513671875,
+      "memgrn_wins_12": 6,
+      "memgrn_wilcoxon_p": 0.454833984375
+    },
+    "local_const_coop": {
+      "ortho_wins_12": 5,
+      "ortho_wilcoxon_p": 0.849365234375,
+      "memgrn_wins_12": 6,
+      "memgrn_wilcoxon_p": 0.76513671875
+    },
+    "ltc_local": {
+      "ortho_wins_12": 4,
+      "ortho_wilcoxon_p": 0.849365234375,
+      "memgrn_wins_12": 5,
+      "memgrn_wilcoxon_p": 0.545166015625
+    },
+    "ltc_local_coop": {
+      "ortho_wins_12": 5,
+      "ortho_wilcoxon_p": 0.545166015625,
+      "memgrn_wins_12": 6,
+      "memgrn_wilcoxon_p": 0.25927734375
+    },
+    "coupled_adaptive": {
+      "ortho_wins_12": 4,
+      "ortho_wilcoxon_p": 0.92431640625,
+      "memgrn_wins_12": 4,
+      "memgrn_wilcoxon_p": 0.898193359375
+    },
+    "ltc_coupled": {
+      "ortho_wins_12": 4,
+      "ortho_wilcoxon_p": 0.953857421875,
+      "memgrn_wins_12": 4,
+      "memgrn_wilcoxon_p": 0.953857421875
+    },
+    "selective_ssm": {
+      "ortho_wins_12": 3,
+      "ortho_wilcoxon_p": 0.978759765625,
+      "memgrn_wins_12": 3,
+      "memgrn_wilcoxon_p": 0.96142578125
+    },
+    "cfc": {
+      "ortho_wins_12": 2,
+      "ortho_wilcoxon_p": 0.953857421875,
+      "memgrn_wins_12": 3,
+      "memgrn_wilcoxon_p": 0.830322265625
+    },
+    "neural_cde": {
+      "ortho_wins_12": 2,
+      "ortho_wilcoxon_p": 0.96142578125,
+      "memgrn_wins_12": 2,
+      "memgrn_wilcoxon_p": 0.953857421875
+    },
+    "perturb_ode": {
+      "ortho_wins_12": 4,
+      "ortho_wilcoxon_p": 0.830322265625,
+      "memgrn_wins_12": 4,
+      "memgrn_wilcoxon_p": 0.71533203125
+    },
+    "latent_ode": {
+      "ortho_wins_12": 9,
+      "ortho_wilcoxon_p": 0.28466796875,
+      "memgrn_wins_12": 9,
+      "memgrn_wilcoxon_p": 0.23486328125
+    }
+  },
+  "by_cell_line": {
+    "memgrn_ortho": {
+      "A549": {
+        "n_params": 7416,
+        "withdrawal_mse": 0.45686672591284944,
+        "withdrawal_r2": 0.5293649657864923,
+        "withdrawal_r": 0.7434933886555252,
+        "top30_withdrawal_mse": 0.4038645576273253,
+        "post_withdrawal_peak_mse": 0.7292237349924537,
+        "per_ligand_wdr_mse": [
+          0.5614339819205595,
+          0.4949745219647798,
+          0.314191673853209
+        ]
+      },
+      "DU145": {
+        "n_params": 7416,
+        "withdrawal_mse": 0.6522249604941897,
+        "withdrawal_r2": -0.005853372845229909,
+        "withdrawal_r": 0.03558130033766258,
+        "top30_withdrawal_mse": 0.6267521774433511,
+        "post_withdrawal_peak_mse": 1.5049794641142245,
+        "per_ligand_wdr_mse": [
+          1.525889828147916,
+          0.19513647050505967,
+          0.23564858282959344
+        ]
+      },
+      "MCF7": {
+        "n_params": 7416,
+        "withdrawal_mse": 0.34012105496150985,
+        "withdrawal_r2": -0.16129576012211988,
+        "withdrawal_r": 0.3800397702588383,
+        "top30_withdrawal_mse": 0.3414326969194515,
+        "post_withdrawal_peak_mse": 0.7699563152940571,
+        "per_ligand_wdr_mse": [
+          0.3825545542926659,
+          0.09925873507050188,
+          0.5385498755213618
+        ]
+      },
+      "OVCA420": {
+        "n_params": 7416,
+        "withdrawal_mse": 0.5507745249851311,
+        "withdrawal_r2": 0.7004906611928549,
+        "withdrawal_r": 0.8472406082373295,
+        "top30_withdrawal_mse": 0.42677433478836246,
+        "post_withdrawal_peak_mse": 0.7025300861663678,
+        "per_ligand_wdr_mse": [
+          1.0996741909850547,
+          0.16691791248957744,
+          0.38573147148076153
+        ]
+      }
+    },
+    "memgrn": {
+      "A549": {
+        "n_params": 4776,
+        "withdrawal_mse": 0.370717716646705,
+        "withdrawal_r2": 0.6181101941513303,
+        "withdrawal_r": 0.7891684458502545,
+        "top30_withdrawal_mse": 0.3135517135756581,
+        "post_withdrawal_peak_mse": 0.7092762564881413,
+        "per_ligand_wdr_mse": [
+          0.5303720477930611,
+          0.272394893104222,
+          0.30938620904283193
+        ]
+      },
+      "DU145": {
+        "n_params": 4776,
+        "withdrawal_mse": 0.6520700459907555,
+        "withdrawal_r2": -0.0056144655889607264,
+        "withdrawal_r": 0.03673970563769876,
+        "top30_withdrawal_mse": 0.6262477562305221,
+        "post_withdrawal_peak_mse": 1.505061584050303,
+        "per_ligand_wdr_mse": [
+          1.525119431168021,
+          0.19522489597639828,
+          0.23586581082784702
+        ]
+      },
+      "MCF7": {
+        "n_params": 4776,
+        "withdrawal_mse": 0.34012105496150985,
+        "withdrawal_r2": -0.16129576012211988,
+        "withdrawal_r": 0.3800397702588383,
+        "top30_withdrawal_mse": 0.3414326969194515,
+        "post_withdrawal_peak_mse": 0.7699563152940571,
+        "per_ligand_wdr_mse": [
+          0.3825545542926659,
+          0.09925873507050188,
+          0.5385498755213618
+        ]
+      },
+      "OVCA420": {
+        "n_params": 4776,
+        "withdrawal_mse": 0.5507745249851311,
+        "withdrawal_r2": 0.7004906611928549,
+        "withdrawal_r": 0.8472406082373295,
+        "top30_withdrawal_mse": 0.42677433478836246,
+        "post_withdrawal_peak_mse": 0.7025300861663678,
+        "per_ligand_wdr_mse": [
+          1.0996741909850547,
+          0.16691791248957744,
+          0.38573147148076153
+        ]
+      }
+    },
+    "memgrn_additive": {
+      "A549": {
+        "n_params": 4176,
+        "withdrawal_mse": 0.35049743845539755,
+        "withdrawal_r2": 0.6389398382873928,
+        "withdrawal_r": 0.8223880541477567,
+        "top30_withdrawal_mse": 0.3366791908152571,
+        "post_withdrawal_peak_mse": 0.5872949637658932,
+        "per_ligand_wdr_mse": [
+          0.5148500937209973,
+          0.20196040470814228,
+          0.33468181693705307
+        ]
+      },
+      "DU145": {
+        "n_params": 4176,
+        "withdrawal_mse": 0.6520774602439734,
+        "withdrawal_r2": -0.005625899759773123,
+        "withdrawal_r": 0.036762174195978534,
+        "top30_withdrawal_mse": 0.6263253576086384,
+        "post_withdrawal_peak_mse": 1.5049607755033514,
+        "per_ligand_wdr_mse": [
+          1.525147712602006,
+          0.19522237663705305,
+          0.2358622914928611
+        ]
+      },
+      "MCF7": {
+        "n_params": 4176,
+        "withdrawal_mse": 0.3897788553811897,
+        "withdrawal_r2": -0.3308453726590168,
+        "withdrawal_r": 0.39911784165840763,
+        "top30_withdrawal_mse": 0.4018346917311139,
+        "post_withdrawal_peak_mse": 0.6740389279756419,
+        "per_ligand_wdr_mse": [
+          0.5191728834537453,
+          0.10373283283886552,
+          0.5464308498509585
+        ]
+      },
+      "OVCA420": {
+        "n_params": 4176,
+        "withdrawal_mse": 0.570111952623586,
+        "withdrawal_r2": 0.6899750329212295,
+        "withdrawal_r": 0.8522813349147934,
+        "top30_withdrawal_mse": 0.48114753580962355,
+        "post_withdrawal_peak_mse": 0.7509501082852432,
+        "per_ligand_wdr_mse": [
+          1.1651533850071538,
+          0.19218718186201506,
+          0.3529952910015894
+        ]
+      }
+    },
+    "local_const": {
+      "A549": {
+        "n_params": 3760,
+        "withdrawal_mse": 0.40260279307831376,
+        "withdrawal_r2": 0.585264217007105,
+        "withdrawal_r": 0.7641324552117565,
+        "top30_withdrawal_mse": 0.3342260503979443,
+        "post_withdrawal_peak_mse": 0.8219771770876465,
+        "per_ligand_wdr_mse": [
+          0.48807824947530815,
+          0.29605462804804167,
+          0.4236755017115913
+        ]
+      },
+      "DU145": {
+        "n_params": 3760,
+        "withdrawal_mse": 0.6520774602439734,
+        "withdrawal_r2": -0.005625899759773123,
+        "withdrawal_r": 0.036762174195978534,
+        "top30_withdrawal_mse": 0.6263253576086384,
+        "post_withdrawal_peak_mse": 1.5049607755033514,
+        "per_ligand_wdr_mse": [
+          1.525147712602006,
+          0.19522237663705305,
+          0.2358622914928611
+        ]
+      },
+      "MCF7": {
+        "n_params": 3760,
+        "withdrawal_mse": 0.3664227003064827,
+        "withdrawal_r2": -0.25109904862129606,
+        "withdrawal_r": 0.34611956444664654,
+        "top30_withdrawal_mse": 0.38752118111580164,
+        "post_withdrawal_peak_mse": 0.7950158995894437,
+        "per_ligand_wdr_mse": [
+          0.39347075973911955,
+          0.10383305909905657,
+          0.6019642820812721
+        ]
+      },
+      "OVCA420": {
+        "n_params": 3760,
+        "withdrawal_mse": 0.4935386144016466,
+        "withdrawal_r2": 0.7316153573384275,
+        "withdrawal_r": 0.8506870950581775,
+        "top30_withdrawal_mse": 0.43263379155679504,
+        "post_withdrawal_peak_mse": 0.8435255257725572,
+        "per_ligand_wdr_mse": [
+          1.0837249761714753,
+          0.1446821017098401,
+          0.2522087653236243
+        ]
+      }
+    },
+    "local_const_coop": {
+      "A549": {
+        "n_params": 4360,
+        "withdrawal_mse": 0.3775041007100162,
+        "withdrawal_r2": 0.6111192930533331,
+        "withdrawal_r": 0.7855590456432607,
+        "top30_withdrawal_mse": 0.3299023535657064,
+        "post_withdrawal_peak_mse": 0.7376558477042944,
+        "per_ligand_wdr_mse": [
+          0.6193987608898525,
+          0.1953942469054803,
+          0.31771929433471585
+        ]
+      },
+      "DU145": {
+        "n_params": 4360,
+        "withdrawal_mse": 0.6521319268299348,
+        "withdrawal_r2": -0.005709897463809233,
+        "withdrawal_r": 0.03635656440232287,
+        "top30_withdrawal_mse": 0.6263976809132765,
+        "post_withdrawal_peak_mse": 1.5050854317924138,
+        "per_ligand_wdr_mse": [
+          1.525255812423534,
+          0.1952550690425897,
+          0.2358848990236806
+        ]
+      },
+      "MCF7": {
+        "n_params": 4360,
+        "withdrawal_mse": 0.3414636184954728,
+        "withdrawal_r2": -0.16587975548771738,
+        "withdrawal_r": 0.4170465040966042,
+        "top30_withdrawal_mse": 0.3438795321910512,
+        "post_withdrawal_peak_mse": 0.6723891793210282,
+        "per_ligand_wdr_mse": [
+          0.4373728277112197,
+          0.0830177447548203,
+          0.5040002830203784
+        ]
+      },
+      "OVCA420": {
+        "n_params": 4360,
+        "withdrawal_mse": 0.4753411541070048,
+        "withdrawal_r2": 0.7415110751931424,
+        "withdrawal_r": 0.8669677081376521,
+        "top30_withdrawal_mse": 0.41018079649392647,
+        "post_withdrawal_peak_mse": 0.7207303368760878,
+        "per_ligand_wdr_mse": [
+          1.0606998059156096,
+          0.13589464433596676,
+          0.22942901206943775
+        ]
+      }
+    },
+    "ltc_local": {
+      "A549": {
+        "n_params": 3976,
+        "withdrawal_mse": 0.42467011459747006,
+        "withdrawal_r2": 0.5625318663474735,
+        "withdrawal_r": 0.7758559119868075,
+        "top30_withdrawal_mse": 0.41496045752190647,
+        "post_withdrawal_peak_mse": 0.6433802515021081,
+        "per_ligand_wdr_mse": [
+          0.5049512782850978,
+          0.4225274799756077,
+          0.34653158553170477
+        ]
+      },
+      "DU145": {
+        "n_params": 3976,
+        "withdrawal_mse": 0.6370113083584067,
+        "withdrawal_r2": 0.017608935776747048,
+        "withdrawal_r": 0.15376161429048654,
+        "top30_withdrawal_mse": 0.6313606710953868,
+        "post_withdrawal_peak_mse": 1.4591742699565777,
+        "per_ligand_wdr_mse": [
+          1.4912424603942873,
+          0.18895520089692275,
+          0.23083626378401007
+        ]
+      },
+      "MCF7": {
+        "n_params": 3976,
+        "withdrawal_mse": 0.38174639324095344,
+        "withdrawal_r2": -0.30341965440157614,
+        "withdrawal_r": 0.4350049821460972,
+        "top30_withdrawal_mse": 0.38563317128753777,
+        "post_withdrawal_peak_mse": 0.5888263089768698,
+        "per_ligand_wdr_mse": [
+          0.4983942790408315,
+          0.11003867510124944,
+          0.5368062255807794
+        ]
+      },
+      "OVCA420": {
+        "n_params": 3976,
+        "withdrawal_mse": 0.4502552148142781,
+        "withdrawal_r2": 0.755152724815778,
+        "withdrawal_r": 0.8587659682525949,
+        "top30_withdrawal_mse": 0.38146702912381253,
+        "post_withdrawal_peak_mse": 0.8563467162534918,
+        "per_ligand_wdr_mse": [
+          0.9095364878551336,
+          0.21154091663620936,
+          0.22968823995149124
+        ]
+      }
+    },
+    "ltc_local_coop": {
+      "A549": {
+        "n_params": 4576,
+        "withdrawal_mse": 0.5313983808773053,
+        "withdrawal_r2": 0.4525871967027414,
+        "withdrawal_r": 0.6676388134255703,
+        "top30_withdrawal_mse": 0.38084127653613015,
+        "post_withdrawal_peak_mse": 1.2212815241333759,
+        "per_ligand_wdr_mse": [
+          0.8062691969681588,
+          0.3482271319988971,
+          0.4396988136648601
+        ]
+      },
+      "DU145": {
+        "n_params": 4576,
+        "withdrawal_mse": 0.636973620288969,
+        "withdrawal_r2": 0.017667057857403412,
+        "withdrawal_r": 0.15403415185295233,
+        "top30_withdrawal_mse": 0.6312496754681906,
+        "post_withdrawal_peak_mse": 1.4591155789257024,
+        "per_ligand_wdr_mse": [
+          1.4911619175932957,
+          0.18895474172977667,
+          0.23080420154383413
+        ]
+      },
+      "MCF7": {
+        "n_params": 4576,
+        "withdrawal_mse": 0.33007669783945226,
+        "withdrawal_r2": -0.12700070790808415,
+        "withdrawal_r": 0.4580769516298812,
+        "top30_withdrawal_mse": 0.3450459200335397,
+        "post_withdrawal_peak_mse": 0.6876700357223494,
+        "per_ligand_wdr_mse": [
+          0.41072578303533286,
+          0.08515828488025357,
+          0.4943460256027703
+        ]
+      },
+      "OVCA420": {
+        "n_params": 4576,
+        "withdrawal_mse": 0.5461545649693762,
+        "withdrawal_r2": 0.7030029799491945,
+        "withdrawal_r": 0.8466373811083124,
+        "top30_withdrawal_mse": 0.4972308408027791,
+        "post_withdrawal_peak_mse": 0.7974833150771571,
+        "per_ligand_wdr_mse": [
+          1.1575334028325956,
+          0.1786454079668755,
+          0.3022848841086579
+        ]
+      }
+    },
+    "coupled_adaptive": {
+      "A549": {
+        "n_params": 5160,
+        "withdrawal_mse": 0.3702549694908421,
+        "withdrawal_r2": 0.618586886830353,
+        "withdrawal_r": 0.803300840657496,
+        "top30_withdrawal_mse": 0.3640845932190368,
+        "post_withdrawal_peak_mse": 0.5632173355872795,
+        "per_ligand_wdr_mse": [
+          0.4986401807094036,
+          0.25576162872902836,
+          0.3563630990340942
+        ]
+      },
+      "DU145": {
+        "n_params": 5160,
+        "withdrawal_mse": 0.6515538798541991,
+        "withdrawal_r2": -0.004818440473622676,
+        "withdrawal_r": 0.02015731832372805,
+        "top30_withdrawal_mse": 0.6580395351491667,
+        "post_withdrawal_peak_mse": 1.4784020257427937,
+        "per_ligand_wdr_mse": [
+          1.535719238060135,
+          0.18924122657191908,
+          0.22970117493054334
+        ]
+      },
+      "MCF7": {
+        "n_params": 5160,
+        "withdrawal_mse": 0.33348343414615,
+        "withdrawal_r2": -0.13863253243382512,
+        "withdrawal_r": 0.36394616335471114,
+        "top30_withdrawal_mse": 0.35349444000833685,
+        "post_withdrawal_peak_mse": 0.7886439492066217,
+        "per_ligand_wdr_mse": [
+          0.36918541246522957,
+          0.10191231999479913,
+          0.5293525699784213
+        ]
+      },
+      "OVCA420": {
+        "n_params": 5160,
+        "withdrawal_mse": 0.49318652141394675,
+        "withdrawal_r2": 0.7318068243238467,
+        "withdrawal_r": 0.8603033396998891,
+        "top30_withdrawal_mse": 0.4214054597222715,
+        "post_withdrawal_peak_mse": 0.7674767525797835,
+        "per_ligand_wdr_mse": [
+          1.1095910430073908,
+          0.15273842513155836,
+          0.21723009610289143
+        ]
+      }
+    },
+    "ltc_coupled": {
+      "A549": {
+        "n_params": 5560,
+        "withdrawal_mse": 0.29013345620920966,
+        "withdrawal_r2": 0.7011229723139173,
+        "withdrawal_r": 0.8372098242142675,
+        "top30_withdrawal_mse": 0.26626584641558576,
+        "post_withdrawal_peak_mse": 0.5213038804604612,
+        "per_ligand_wdr_mse": [
+          0.45030600958532385,
+          0.2124834738956553,
+          0.2076108851466496
+        ]
+      },
+      "DU145": {
+        "n_params": 5560,
+        "withdrawal_mse": 0.34702825903216855,
+        "withdrawal_r2": 0.4648172548385252,
+        "withdrawal_r": 0.6736936118167874,
+        "top30_withdrawal_mse": 0.23182354688798093,
+        "post_withdrawal_peak_mse": 0.6898074733399258,
+        "per_ligand_wdr_mse": [
+          0.7259385055786912,
+          0.14958668461219848,
+          0.16555958690561595
+        ]
+      },
+      "MCF7": {
+        "n_params": 5560,
+        "withdrawal_mse": 0.3478546428112362,
+        "withdrawal_r2": -0.18770101392634397,
+        "withdrawal_r": 0.34995703935103284,
+        "top30_withdrawal_mse": 0.33991743215782433,
+        "post_withdrawal_peak_mse": 0.8335327458016363,
+        "per_ligand_wdr_mse": [
+          0.3930505744681621,
+          0.10916370849178417,
+          0.5413496454737624
+        ]
+      },
+      "OVCA420": {
+        "n_params": 5560,
+        "withdrawal_mse": 0.8179440766114735,
+        "withdrawal_r2": 0.5552047553874484,
+        "withdrawal_r": 0.8210183276439332,
+        "top30_withdrawal_mse": 0.8106394930638041,
+        "post_withdrawal_peak_mse": 1.2878133311130457,
+        "per_ligand_wdr_mse": [
+          2.086372753945732,
+          0.13590286599164986,
+          0.2315566098970385
+        ]
+      }
+    },
+    "selective_ssm": {
+      "A549": {
+        "n_params": 5128,
+        "withdrawal_mse": 0.33641638199581997,
+        "withdrawal_r2": 0.6534452467856245,
+        "withdrawal_r": 0.8181542076171903,
+        "top30_withdrawal_mse": 0.28910761586394124,
+        "post_withdrawal_peak_mse": 0.5318600938905168,
+        "per_ligand_wdr_mse": [
+          0.40687123614444026,
+          0.2642623420848161,
+          0.3381155677582035
+        ]
+      },
+      "DU145": {
+        "n_params": 5128,
+        "withdrawal_mse": 0.6564206060698712,
+        "withdrawal_r2": -0.012323846238895708,
+        "withdrawal_r": -0.01077156465657966,
+        "top30_withdrawal_mse": 0.6518713421706895,
+        "post_withdrawal_peak_mse": 1.473367307760788,
+        "per_ligand_wdr_mse": [
+          1.5424646773142674,
+          0.19484794516606757,
+          0.23194919572927836
+        ]
+      },
+      "MCF7": {
+        "n_params": 5128,
+        "withdrawal_mse": 0.32774189096202466,
+        "withdrawal_r2": -0.11902883645846907,
+        "withdrawal_r": 0.36302121252606856,
+        "top30_withdrawal_mse": 0.33546755241611603,
+        "post_withdrawal_peak_mse": 0.7786213994005569,
+        "per_ligand_wdr_mse": [
+          0.3518026047170375,
+          0.08080250706772656,
+          0.5506205611013101
+        ]
+      },
+      "OVCA420": {
+        "n_params": 5128,
+        "withdrawal_mse": 0.4536309966283398,
+        "withdrawal_r2": 0.7533169859912308,
+        "withdrawal_r": 0.8670231815636891,
+        "top30_withdrawal_mse": 0.37877027398692503,
+        "post_withdrawal_peak_mse": 0.7545626255756768,
+        "per_ligand_wdr_mse": [
+          0.9892060868692516,
+          0.14459322366407165,
+          0.22709367935169641
+        ]
+      }
+    },
+    "cfc": {
+      "A549": {
+        "n_params": 9016,
+        "withdrawal_mse": 0.3710842192649231,
+        "withdrawal_r2": 0.6177326464717093,
+        "withdrawal_r": 0.7913351896439913,
+        "top30_withdrawal_mse": 0.33521359855628413,
+        "post_withdrawal_peak_mse": 0.6458693470503548,
+        "per_ligand_wdr_mse": [
+          0.4282985363168708,
+          0.3072097707284937,
+          0.3777443507494048
+        ]
+      },
+      "DU145": {
+        "n_params": 9016,
+        "withdrawal_mse": 0.6463627956534199,
+        "withdrawal_r2": 0.003187186217083915,
+        "withdrawal_r": 0.041271410279601954,
+        "top30_withdrawal_mse": 0.6264915054711035,
+        "post_withdrawal_peak_mse": 1.4985133564499857,
+        "per_ligand_wdr_mse": [
+          1.5169986783071934,
+          0.19374096834508628,
+          0.22834874030798016
+        ]
+      },
+      "MCF7": {
+        "n_params": 9016,
+        "withdrawal_mse": 0.35090897228532586,
+        "withdrawal_r2": -0.19812959462293667,
+        "withdrawal_r": 0.4935175528012212,
+        "top30_withdrawal_mse": 0.4207194888380258,
+        "post_withdrawal_peak_mse": 0.748568760448983,
+        "per_ligand_wdr_mse": [
+          0.47327226252592547,
+          0.08794100069219758,
+          0.49151365363785443
+        ]
+      },
+      "OVCA420": {
+        "n_params": 9016,
+        "withdrawal_mse": 0.5065673450680673,
+        "withdrawal_r2": 0.7245303773141583,
+        "withdrawal_r": 0.859559093641785,
+        "top30_withdrawal_mse": 0.4273617867225321,
+        "post_withdrawal_peak_mse": 0.8016113515978096,
+        "per_ligand_wdr_mse": [
+          1.0817341243165401,
+          0.14113240020771473,
+          0.29683551067994723
+        ]
+      }
+    },
+    "neural_cde": {
+      "A549": {
+        "n_params": 6820,
+        "withdrawal_mse": 0.2499442809923051,
+        "withdrawal_r2": 0.7425233037025258,
+        "withdrawal_r": 0.8588353100587595,
+        "top30_withdrawal_mse": 0.2503953295321074,
+        "post_withdrawal_peak_mse": 0.5359282099179132,
+        "per_ligand_wdr_mse": [
+          0.4018265604546318,
+          0.12595766305989634,
+          0.22204861946238713
+        ]
+      },
+      "DU145": {
+        "n_params": 6820,
+        "withdrawal_mse": 0.25681653649382913,
+        "withdrawal_r2": 0.6039406721892095,
+        "withdrawal_r": 0.7917848923793829,
+        "top30_withdrawal_mse": 0.18387875428866493,
+        "post_withdrawal_peak_mse": 0.40441019317791466,
+        "per_ligand_wdr_mse": [
+          0.39118108712261734,
+          0.15099929034055137,
+          0.2282692320183186
+        ]
+      },
+      "MCF7": {
+        "n_params": 6820,
+        "withdrawal_mse": 0.3436611142988517,
+        "withdrawal_r2": -0.17338279748445262,
+        "withdrawal_r": 0.2711738536017077,
+        "top30_withdrawal_mse": 0.3484855592853801,
+        "post_withdrawal_peak_mse": 0.9352418163332252,
+        "per_ligand_wdr_mse": [
+          0.35078254451398366,
+          0.07738115316534688,
+          0.6028196452172246
+        ]
+      },
+      "OVCA420": {
+        "n_params": 6820,
+        "withdrawal_mse": 0.6366200782813554,
+        "withdrawal_r2": 0.6538081373270682,
+        "withdrawal_r": 0.8375071180181078,
+        "top30_withdrawal_mse": 0.574579795923761,
+        "post_withdrawal_peak_mse": 0.7985003719912459,
+        "per_ligand_wdr_mse": [
+          1.44303912436935,
+          0.1188298222102186,
+          0.34799128826449793
+        ]
+      }
+    },
+    "perturb_ode": {
+      "A549": {
+        "n_params": 3742,
+        "withdrawal_mse": 0.3332255118970405,
+        "withdrawal_r2": 0.656732278151521,
+        "withdrawal_r": 0.810608127223712,
+        "top30_withdrawal_mse": 0.33013017478673695,
+        "post_withdrawal_peak_mse": 0.538910565230036,
+        "per_ligand_wdr_mse": [
+          0.4713281634844088,
+          0.24260483195067659,
+          0.28574354025603615
+        ]
+      },
+      "DU145": {
+        "n_params": 3742,
+        "withdrawal_mse": 0.6390402057933783,
+        "withdrawal_r2": 0.014479994917787953,
+        "withdrawal_r": 0.13329958472661196,
+        "top30_withdrawal_mse": 0.6316729806988645,
+        "post_withdrawal_peak_mse": 1.4528517027368237,
+        "per_ligand_wdr_mse": [
+          1.500826002555263,
+          0.18879616000644692,
+          0.22749845481842476
+        ]
+      },
+      "MCF7": {
+        "n_params": 3742,
+        "withdrawal_mse": 0.38674430369294943,
+        "withdrawal_r2": -0.32048432044534647,
+        "withdrawal_r": 0.31416858010748777,
+        "top30_withdrawal_mse": 0.38550371219561,
+        "post_withdrawal_peak_mse": 0.8993071494881953,
+        "per_ligand_wdr_mse": [
+          0.4094033138049051,
+          0.12354237501361229,
+          0.6272872222603311
+        ]
+      },
+      "OVCA420": {
+        "n_params": 3742,
+        "withdrawal_mse": 0.5366693730992037,
+        "withdrawal_r2": 0.7081609954648376,
+        "withdrawal_r": 0.8573726010964824,
+        "top30_withdrawal_mse": 0.4920793571752816,
+        "post_withdrawal_peak_mse": 0.775451988759278,
+        "per_ligand_wdr_mse": [
+          1.0920500134166893,
+          0.19532140068676607,
+          0.32263670519415566
+        ]
+      }
+    },
+    "latent_ode": {
+      "A549": {
+        "n_params": 3256,
+        "withdrawal_mse": 0.39494878199167627,
+        "withdrawal_r2": 0.5931488922642769,
+        "withdrawal_r": 0.7860123034301773,
+        "top30_withdrawal_mse": 0.3166729207220041,
+        "post_withdrawal_peak_mse": 0.7640899941042453,
+        "per_ligand_wdr_mse": [
+          0.6507782239278099,
+          0.2096740808095881,
+          0.32439404123763077
+        ]
+      },
+      "DU145": {
+        "n_params": 3256,
+        "withdrawal_mse": 0.2767609374706837,
+        "withdrawal_r2": 0.5731826604492931,
+        "withdrawal_r": 0.7610728298236268,
+        "top30_withdrawal_mse": 0.22074124429544265,
+        "post_withdrawal_peak_mse": 0.48842545778232155,
+        "per_ligand_wdr_mse": [
+          0.4404655148536312,
+          0.20016737539838206,
+          0.1896499221600378
+        ]
+      },
+      "MCF7": {
+        "n_params": 3256,
+        "withdrawal_mse": 0.3776238303473916,
+        "withdrawal_r2": -0.2893437401372507,
+        "withdrawal_r": 0.30193231269078435,
+        "top30_withdrawal_mse": 0.3687502131511648,
+        "post_withdrawal_peak_mse": 0.9961044319419587,
+        "per_ligand_wdr_mse": [
+          0.41209372597598476,
+          0.14129454194768112,
+          0.579483223118509
+        ]
+      },
+      "OVCA420": {
+        "n_params": 3256,
+        "withdrawal_mse": 0.5767313523255505,
+        "withdrawal_r2": 0.6863754255717627,
+        "withdrawal_r": 0.8544267343052917,
+        "top30_withdrawal_mse": 0.5052034721380715,
+        "post_withdrawal_peak_mse": 0.797002601236169,
+        "per_ligand_wdr_mse": [
+          1.1734129487948615,
+          0.17066853012886235,
+          0.3861125780529276
+        ]
+      }
+    }
+  }
+}

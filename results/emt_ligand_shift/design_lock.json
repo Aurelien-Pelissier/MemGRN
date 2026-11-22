@@ -28,12 +28,18 @@
   ],
   "models": [
     "memgrn",
+    "memgrn_ortho",
     "memgrn_additive",
     "local_const",
+    "local_const_coop",
     "ltc_local",
+    "ltc_local_coop",
     "coupled_adaptive",
     "coupled_const",
     "ltc_coupled",
+    "selective_ssm",
+    "cfc",
+    "neural_cde",
     "perturb_ode",
     "latent_ode"
   ],

@@ -45,6 +45,7 @@ from memgrn.baselines import (  # noqa: E402
     DynamicalModelFamily,
     ModelSpec,
     fit_dynamical_model,
+    fit_two_stage_memgrn_ortho,
 )
 from memgrn.datasets import fetch_and_prepare_emt_withdrawal  # noqa: E402
 
@@ -55,16 +56,22 @@ DT_DAYS = 1.0 / 6.0  # 4 hours
 N_STEPS = 60  # 10.0 days
 OBS_STEP_INDICES = (0, 2, 6, 18, 42, 44, 48, 60)
 
-MODELS: tuple[DynamicalModelFamily, ...] = (
-    DynamicalModelFamily.MEMGRN,
-    DynamicalModelFamily.MEMGRN_ADDITIVE,
-    DynamicalModelFamily.LOCAL_CONST,
-    DynamicalModelFamily.LTC_LOCAL,
-    DynamicalModelFamily.COUPLED_ADAPTIVE,
-    DynamicalModelFamily.COUPLED_CONST,
-    DynamicalModelFamily.LTC_COUPLED,
-    DynamicalModelFamily.PERTURB_ODE,
-    DynamicalModelFamily.LATENT_ODE,
+MODEL_CONFIGS: tuple[tuple[str, DynamicalModelFamily, int | None, bool | None], ...] = (
+    ("memgrn", DynamicalModelFamily.MEMGRN, 6, True),
+    ("memgrn_ortho", DynamicalModelFamily.MEMGRN_ORTHO, 6, True),
+    ("memgrn_additive", DynamicalModelFamily.MEMGRN_ADDITIVE, None, False),
+    ("local_const", DynamicalModelFamily.LOCAL_CONST, None, False),
+    ("local_const_coop", DynamicalModelFamily.LOCAL_CONST, 6, True),
+    ("ltc_local", DynamicalModelFamily.LTC_LOCAL, None, False),
+    ("ltc_local_coop", DynamicalModelFamily.LTC_LOCAL, 6, True),
+    ("coupled_adaptive", DynamicalModelFamily.COUPLED_ADAPTIVE, None, False),
+    ("coupled_const", DynamicalModelFamily.COUPLED_CONST, None, False),
+    ("ltc_coupled", DynamicalModelFamily.LTC_COUPLED, None, False),
+    ("selective_ssm", DynamicalModelFamily.SELECTIVE_SSM, None, False),
+    ("cfc", DynamicalModelFamily.CFC, None, False),
+    ("neural_cde", DynamicalModelFamily.NEURAL_CDE, None, False),
+    ("perturb_ode", DynamicalModelFamily.PERTURB_ODE, None, False),
+    ("latent_ode", DynamicalModelFamily.LATENT_ODE, None, False),
 )
 
 
@@ -99,9 +106,9 @@ def _pack_dense_targets(y_8: np.ndarray, active_eval_indices: tuple[int, ...]) -
     return y_31, m_31
 
 
-def _run_ligand_fold(job: tuple[int, str]) -> tuple[str, str, dict]:
-    """Run one Leave-One-Ligand-Out fold for one model family."""
-    lig_i, fam_val = job
+def _run_ligand_fold(job: tuple[int, str, str, int | None, bool | None]) -> tuple[str, str, dict]:
+    """Run one Leave-One-Ligand-Out fold for one model configuration."""
+    lig_i, model_key, fam_val, coop_rank, use_coop = job
     data = fetch_and_prepare_emt_withdrawal(RAW_DIR)
     held_lig = data.ligands[lig_i]
     val_cl = data.cell_lines[lig_i % len(data.cell_lines)]
@@ -136,33 +143,84 @@ def _run_ligand_fold(job: tuple[int, str]) -> tuple[str, str, dict]:
     te_u, _, _, te_y8 = _prep(test_idx)
 
     fam = DynamicalModelFamily(fam_val)
-    spec = ModelSpec(
-        family=fam,
-        n_sources=len(sel_tf),
-        n_targets=len(tgt_idx),
-        n_channels=3,
-        hidden_width=5,
-        latent_dim=18,
-        module_dim=18,
-        rate_min=0.05,
-        rate_max=8.0,
-    )
-    fitted = fit_dynamical_model(
-        spec=spec,
-        train_stage_u=tr_u,
-        train_y=tr_y31,
-        train_mask=tr_m31,
-        val_stage_u=va_u,
-        val_y=va_y31,
-        val_mask=va_m31,
-        dt=DT_DAYS,
-        obs_stride=2,
-        seeds=(101, 202),
-        reg_grid=(1e-3, 5e-3, 2e-2, 1e-1),
-        total_updates=1100,
-        lr_max=0.008,
-        gate_shrinkage_grid=(1.0, 4.0),
-    )
+    if fam == DynamicalModelFamily.MEMGRN_ORTHO:
+        base_spec = ModelSpec(
+            family=DynamicalModelFamily.MEMGRN,
+            n_sources=len(sel_tf),
+            n_targets=len(tgt_idx),
+            n_channels=3,
+            hidden_width=5,
+            coop_rank=coop_rank,
+            use_cooperativity=True,
+            base_rates=(0.8, 2.5, 6.0),
+            rate_min=0.05,
+            rate_max=8.0,
+        )
+        base_fit = fit_dynamical_model(
+            spec=base_spec,
+            train_stage_u=tr_u,
+            train_y=tr_y31,
+            train_mask=tr_m31,
+            val_stage_u=va_u,
+            val_y=va_y31,
+            val_mask=va_m31,
+            dt=DT_DAYS,
+            obs_stride=2,
+            seeds=(101, 202),
+            reg_grid=(1e-3, 5e-3, 2e-2, 1e-1),
+            total_updates=1100,
+            lr_max=0.008,
+            gate_shrinkage_grid=(0.15, 1.0),
+            hysteresis_shrinkage_grid=(0.5, 3.0),
+        )
+        fitted = fit_two_stage_memgrn_ortho(
+            base_memgrn=base_fit,
+            train_stage_u=tr_u,
+            train_y=tr_y31,
+            train_mask=tr_m31,
+            val_stage_u=va_u,
+            val_y=va_y31,
+            val_mask=va_m31,
+            dt=DT_DAYS,
+            obs_stride=2,
+            latent_dim=12,
+            seeds=(101, 202),
+            reg_grid=(1e-3, 1e-2, 5e-2),
+            total_updates=900,
+            lr_max=0.007,
+        )
+    else:
+        spec = ModelSpec(
+            family=fam,
+            n_sources=len(sel_tf),
+            n_targets=len(tgt_idx),
+            n_channels=3,
+            hidden_width=5,
+            latent_dim=18,
+            module_dim=18,
+            coop_rank=coop_rank,
+            use_cooperativity=use_coop,
+            base_rates=(0.8, 2.5, 6.0),
+            rate_min=0.05,
+            rate_max=8.0,
+        )
+        fitted = fit_dynamical_model(
+            spec=spec,
+            train_stage_u=tr_u,
+            train_y=tr_y31,
+            train_mask=tr_m31,
+            val_stage_u=va_u,
+            val_y=va_y31,
+            val_mask=va_m31,
+            dt=DT_DAYS,
+            obs_stride=2,
+            seeds=(101, 202),
+            reg_grid=(1e-3, 5e-3, 2e-2, 1e-1),
+            total_updates=1100,
+            lr_max=0.008,
+            gate_shrinkage_grid=(0.15, 1.0),
+            hysteresis_shrinkage_grid=(0.5, 3.0),
+        )
     pred_31 = fitted.predict_fn(te_u, None)  # (4, 31, 76)
     obs_k31 = [s // 2 for s in OBS_STEP_INDICES]
     pred_8 = pred_31[:, obs_k31, :]  # (4, 8, 76)
@@ -173,6 +231,12 @@ def _run_ligand_fold(job: tuple[int, str]) -> tuple[str, str, dict]:
     mse_wdr = float(np.mean((pred_8[:, 5:, :] - te_y8[:, 5:, :]) ** 2))
     mse_top30 = float(np.mean((pred_8[:, 1:, top30_mask] - te_y8[:, 1:, top30_mask]) ** 2))
     mse_wdr_top30 = float(np.mean((pred_8[:, 5:, top30_mask] - te_y8[:, 5:, top30_mask]) ** 2))
+
+    # Scale-invariant per-ligand normalized MSE (so TGFB1, EGF, TNF carry equal weight!)
+    lig_energy_full = float(np.mean(te_y8[:, 1:, :] ** 2)) + 1e-8
+    lig_energy_wdr = float(np.mean(te_y8[:, 5:, :] ** 2)) + 1e-8
+    norm_full = mse_full / lig_energy_full
+    norm_wdr = mse_wdr / lig_energy_wdr
 
     # Post-withdrawal peaking gene-condition pairs on the held-out ligand
     y7 = te_y8[:, 4, :]
@@ -194,12 +258,14 @@ def _run_ligand_fold(job: tuple[int, str]) -> tuple[str, str, dict]:
 
     return (
         held_lig,
-        fam_val,
+        model_key,
         {
             "n_params": fitted.n_params,
             "full_10d_mse": mse_full,
             "induction_mse": mse_ind,
             "withdrawal_mse": mse_wdr,
+            "norm_10d_mse": norm_full,
+            "norm_withdrawal_mse": norm_wdr,
             "top30_full_mse": mse_top30,
             "top30_withdrawal_mse": mse_wdr_top30,
             "post_withdrawal_peak_mse": mse_peak,
@@ -222,7 +288,7 @@ def main() -> None:
         "n_selected_tfs": 12,
         "n_targets": len(data.genes) - len(data.tf_indices),
         "time_labels": list(data.time_labels),
-        "models": [m.value for m in MODELS],
+        "models": [cfg[0] for cfg in MODEL_CONFIGS],
         "file_sha256": data.file_sha256,
     }
     design_bytes = (json.dumps(design, indent=2) + "\n").encode("utf-8")
@@ -230,25 +296,30 @@ def main() -> None:
     (OUT_DIR / "design_lock.json").write_bytes(design_bytes)
 
     t0 = time.time()
-    jobs = [(l_i, m.value) for l_i in range(len(data.ligands)) for m in MODELS]
+    jobs = [
+        (l_i, mk, fam.value, cr, uc)
+        for l_i in range(len(data.ligands))
+        for (mk, fam, cr, uc) in MODEL_CONFIGS
+    ]
     ctx = mp.get_context("spawn")
     with ProcessPoolExecutor(max_workers=24, mp_context=ctx) as pool:
         raw_out = list(pool.map(_run_ligand_fold, jobs))
     elapsed = time.time() - t0
 
-    by_model: dict[str, dict[str, dict]] = {m.value: {} for m in MODELS}
+    by_model: dict[str, dict[str, dict]] = {mk: {} for mk, _, _, _ in MODEL_CONFIGS}
     for lig, mk, res in raw_out:
         by_model[mk][lig] = res
 
     summary: dict[str, dict] = {}
-    for m in MODELS:
-        mk = m.value
+    for mk, _, _, _ in MODEL_CONFIGS:
         vals = list(by_model[mk].values())
         summary[mk] = {
             "n_params": vals[0]["n_params"],
             "full_10d_mse": float(np.mean([v["full_10d_mse"] for v in vals])),
             "induction_mse": float(np.mean([v["induction_mse"] for v in vals])),
             "withdrawal_mse": float(np.mean([v["withdrawal_mse"] for v in vals])),
+            "norm_10d_mse": float(np.mean([v["norm_10d_mse"] for v in vals])),
+            "norm_withdrawal_mse": float(np.mean([v["norm_withdrawal_mse"] for v in vals])),
             "top30_full_mse": float(np.mean([v["top30_full_mse"] for v in vals])),
             "top30_withdrawal_mse": float(np.mean([v["top30_withdrawal_mse"] for v in vals])),
             "post_withdrawal_peak_mse": float(np.mean([v["post_withdrawal_peak_mse"] for v in vals])),

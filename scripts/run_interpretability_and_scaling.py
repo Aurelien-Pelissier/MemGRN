@@ -41,6 +41,7 @@ from memgrn.baselines import (  # noqa: E402
     ModelSpec,
     build_closed_loop_jax_rollout,
     build_jax_rollout,
+    extract_memgrn_up_down,
     fit_dynamical_model,
 )
 from memgrn.datasets import (  # noqa: E402
@@ -157,6 +158,7 @@ def run_yeast_rate_portraits() -> dict:
         ch_w = b_abs / (np.sum(b_abs) + 1e-12)
 
         def _eval_rates(a_val: float) -> tuple[np.ndarray, np.ndarray]:
+            r_up, r_dn, v_up, v_dn = extract_memgrn_up_down(p)
             lam_up_curve = np.zeros_like(h_grid)
             lam_dn_curve = np.zeros_like(h_grid)
             for idx_h, hv in enumerate(h_grid):
@@ -168,10 +170,10 @@ def run_yeast_rate_portraits() -> dict:
                     + hv * p["in_proj"][2]
                 )
                 l_up = spec.rate_min + (spec.rate_max - spec.rate_min) / (
-                    1.0 + np.exp(-(p["rate"][0] + p["out_proj"][0] @ hid))
+                    1.0 + np.exp(-(r_up[0] + v_up[0] @ hid))
                 )
                 l_dn = spec.rate_min + (spec.rate_max - spec.rate_min) / (
-                    1.0 + np.exp(-(p["rate_dn"][0] + p["out_proj_dn"][0] @ hid))
+                    1.0 + np.exp(-(r_dn[0] + v_dn[0] @ hid))
                 )
                 lam_up_curve[idx_h] = float(ch_w @ l_up)
                 lam_dn_curve[idx_h] = float(ch_w @ l_dn)

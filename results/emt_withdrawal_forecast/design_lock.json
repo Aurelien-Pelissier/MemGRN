@@ -1,0 +1,61 @@
+{
+  "benchmark": "emt_zero_shot_human_cancer_withdrawal_gse147405",
+  "accession": "GSE147405",
+  "reference": "Cook & Vanderhyden, Nature Communications 11, 2142 (2020)",
+  "total_singlet_cells": 53290,
+  "cell_lines": [
+    "A549",
+    "DU145",
+    "MCF7",
+    "OVCA420"
+  ],
+  "ligands": [
+    "TGFB1",
+    "EGF",
+    "TNF"
+  ],
+  "n_selected_tfs": 12,
+  "n_targets": 76,
+  "models": [
+    "memgrn_ortho",
+    "memgrn",
+    "memgrn_additive",
+    "local_const",
+    "local_const_coop",
+    "ltc_local",
+    "ltc_local_coop",
+    "coupled_adaptive",
+    "ltc_coupled",
+    "selective_ssm",
+    "cfc",
+    "neural_cde",
+    "perturb_ode",
+    "latent_ode"
+  ],
+  "file_sha256": {
+    "GSE147405_A549_EGF_TimeCourse_UMI_matrix.csv.gz": "5a31be01fa8f856b35bc46c70e757f10be039c32075db2501282a1a357552e60",
+    "GSE147405_A549_EGF_TimeCourse_metadata.csv.gz": "a376240d132b9330aefb82ad0361f61f965b1315b690437dddb7315475394c36",
+    "GSE147405_A549_TGFB1_TimeCourse_UMI_matrix.csv.gz": "8c8d8bc4480b6e12b8e7982bf71e43ff7cb0b1158f48dfe6932af84f9aab9a31",
+    "GSE147405_A549_TGFB1_TimeCourse_metadata.csv.gz": "e253a4fd1ee5b6479a719419b22f156638a633eb2992f9ba0290c6a3163e3100",
+    "GSE147405_A549_TNF_TimeCourse_UMI_matrix.csv.gz": "b1466e9271b956ce0bdf0a2f8c72adbf79de018106c97052c36c7f3699e6b88c",
+    "GSE147405_A549_TNF_TimeCourse_metadata.csv.gz": "f3424dc76e386e929cf4cd8413a45319be90ed4f09b83aa0befc0a0694ef319f",
+    "GSE147405_DU145_EGF_TimeCourse_UMI_matrix.csv.gz": "d1a98372b02e77dd864ca5b61b1aea026278d13b9475b838c91de15075c07576",
+    "GSE147405_DU145_EGF_TimeCourse_metadata.csv.gz": "513db590e0d4dcb70956f6657bd7b4297091f56ab46b3784122c6ceb0182be2b",
+    "GSE147405_DU145_TGFB1_TimeCourse_UMI_matrix.csv.gz": "a8d9c18319616bf04a48648de9e0cbcee86e6579919bf625132a9cd12e88719e",
+    "GSE147405_DU145_TGFB1_TimeCourse_metadata.csv.gz": "79434ebea01b1d8b46587ea16106e44e813bfb127de5ddb4e265cd29aa19a2be",
+    "GSE147405_DU145_TNF_TimeCourse_UMI_matrix.csv.gz": "e2282c40e03177342dce38897a4c18757bff3c18f2dcbc1d0722394c385939f2",
+    "GSE147405_DU145_TNF_TimeCourse_metadata.csv.gz": "ba0a2bd247abf1aa5c5e05c30cb9f548a3ef4abd5c421fd09f2440d3fc4d602e",
+    "GSE147405_MCF7_EGF_TimeCourse_UMI_matrix.csv.gz": "0f78930fb1b8e7c9409114bcbfcb3dc9e040eb77041a8a0d32a12cb11e8ee1fb",
+    "GSE147405_MCF7_EGF_TimeCourse_metadata.csv.gz": "29cc6d2bc5f7b8daa26ea7283aa77fa78e8dc33ef000d8c90e029d21ffc8a0b3",
+    "GSE147405_MCF7_TGFB1_TimeCourse_UMI_matrix.csv.gz": "e48bd278c2eb0eb8efcbf1858fe4f91e392b9881f2d6a35baef7adb46c24c910",
+    "GSE147405_MCF7_TGFB1_TimeCourse_metadata.csv.gz": "bedc881a7ad9ebaed0c00f05c0524b85cf63fc6c58c35acb7b4f86bc2474ba58",
+    "GSE147405_MCF7_TNF_TimeCourse_UMI_matrix.csv.gz": "a485a6d3d86bba8ff26038b08e659d21b27da66ea5de9c8407a7f20acd0ff0d0",
+    "GSE147405_MCF7_TNF_TimeCourse_metadata.csv.gz": "086bb76700d0354bc1a18c99e30db4b457a4bb4fc9606d9f0505af9587a9b91a",
+    "GSE147405_OVCA420_EGF_TimeCourse_UMI_matrix.csv.gz": "6da0febf3820456cc9afdce381dc7a87f8c2a2aaa2e8296831df64213ec987a9",
+    "GSE147405_OVCA420_EGF_TimeCourse_metadata.csv.gz": "6be1e9fdc5aeea24b19c94ddd5ad82c74ef34384b988e3cfa33bb31e16e03b6e",
+    "GSE147405_OVCA420_TGFB1_TimeCourse_UMI_matrix.csv.gz": "51c22a51691b618110c80c51e039171f34e9464fdef7a0d3c3e44c58cfb0511e",
+    "GSE147405_OVCA420_TGFB1_TimeCourse_metadata.csv.gz": "9026a5d52d5a6ec92de98a9c80d234daa7ccf74b62d702fa4f4e7f2e0f6ae5a5",
+    "GSE147405_OVCA420_TNF_TimeCourse_UMI_matrix.csv.gz": "48ab105e8d53b7d52622161507e28a4c2cf5aac155269b1f9f26d3f041b20330",
+    "GSE147405_OVCA420_TNF_TimeCourse_metadata.csv.gz": "0595779b67a285f76300680723fc88498b17accc99cc6044e346452e1a85a57c"
+  }
+}

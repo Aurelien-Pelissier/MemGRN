@@ -31,6 +31,7 @@ from memgrn.baselines import (  # noqa: E402
     DynamicalModelFamily,
     ModelSpec,
     build_jax_rollout,
+    extract_memgrn_up_down,
     fit_dynamical_model,
 )
 from memgrn.datasets import (  # noqa: E402
@@ -203,16 +204,17 @@ def _run_one_lopo_fold(args: tuple) -> tuple[str, dict[str, float]]:
         hidden_width=4,
         use_asymmetric_rates=True,
     )
+    r_up6, r_dn6, v_up6, v_dn6 = extract_memgrn_up_down(p6)
     dummy_params = MemGRNParams(
         direct_weights=np.zeros((1, 1)),
         delayed_weights=np.zeros((1, 3, 1)),
         relaxation=np.array([0.5]),
-        rate_logits=p6["rate"],
-        rate_logits_down=p6["rate_dn"],
+        rate_logits=r_up6,
+        rate_logits_down=r_dn6,
         input_proj=p6["in_proj"],
         hidden_bias=p6["bias"],
-        output_proj=p6["out_proj"],
-        output_proj_down=p6["out_proj_dn"],
+        output_proj=v_up6,
+        output_proj_down=v_dn6,
     )
     _, h_single, _ = rollout_memgrn_rk4(single_stage_all, dt, dummy_params, dummy_cfg)
     _, h_rep, _ = rollout_memgrn_rk4(rep_stage, dt, dummy_params, dummy_cfg)
@@ -396,6 +398,9 @@ def main() -> None:
             "memgrn",
             "memgrn_sym",
             "ltc_local",
+            "selective_ssm",
+            "cfc",
+            "neural_cde",
             "perturb_ode",
             "latent_ode",
         ],
@@ -439,6 +444,9 @@ def main() -> None:
         DynamicalModelFamily.MEMGRN,
         DynamicalModelFamily.MEMGRN_SYM,
         DynamicalModelFamily.LTC_LOCAL,
+        DynamicalModelFamily.SELECTIVE_SSM,
+        DynamicalModelFamily.CFC,
+        DynamicalModelFamily.NEURAL_CDE,
         DynamicalModelFamily.PERTURB_ODE,
         DynamicalModelFamily.LATENT_ODE,
     )
@@ -470,6 +478,7 @@ def main() -> None:
             total_updates=1800,
             lr_max=0.009,
             gate_shrinkage_grid=(0.25, 1.0),
+            hysteresis_shrinkage_grid=(0.5, 4.0, 25.0),
         )
         fitted_joint_models[fam.value] = fitted
 

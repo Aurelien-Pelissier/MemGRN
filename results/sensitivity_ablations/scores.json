@@ -1,0 +1,1561 @@
+{
+  "design_sha256": "dc6929dfc474ae9d82d3a4dfeda1f9af859037510eb10bfb09322f0c02da1498",
+  "elapsed_seconds": 1185.4020397663116,
+  "summary": {
+    "channels": {
+      "R=1": {
+        "memgrn": {
+          "n_params": 1216,
+          "test_mse": 0.2078088619615184,
+          "test_mse_se": 0.020207126693774436,
+          "attribution_rmse": 0.18056198729076192,
+          "attribution_rmse_se": 0.011485221677572498
+        }
+      },
+      "R=2": {
+        "memgrn": {
+          "n_params": 1520,
+          "test_mse": 0.17756168305996148,
+          "test_mse_se": 0.018725334748484167,
+          "attribution_rmse": 0.1682520666979004,
+          "attribution_rmse_se": 0.0105918192870919
+        }
+      },
+      "R=3": {
+        "memgrn": {
+          "n_params": 1824,
+          "test_mse": 0.16004917802087612,
+          "test_mse_se": 0.01726391467315327,
+          "attribution_rmse": 0.16025106617678792,
+          "attribution_rmse_se": 0.010071202213745327
+        }
+      },
+      "R=5": {
+        "memgrn": {
+          "n_params": 2432,
+          "test_mse": 0.1329461715142001,
+          "test_mse_se": 0.014622724327900615,
+          "attribution_rmse": 0.14734110299597455,
+          "attribution_rmse_se": 0.009214760447031964
+        }
+      }
+    },
+    "noise": {
+      "sigma=0.015": {
+        "coupled_adaptive": {
+          "n_params": 1656,
+          "test_mse": 0.2187018778983043,
+          "test_mse_se": 0.035064731267163765,
+          "attribution_rmse": 0.18443726171139493,
+          "attribution_rmse_se": 0.01659818388411676
+        },
+        "ltc_local": {
+          "n_params": 960,
+          "test_mse": 0.1863891463076853,
+          "test_mse_se": 0.023129878539762803,
+          "attribution_rmse": 0.17687573553050165,
+          "attribution_rmse_se": 0.014416353900302931
+        },
+        "memgrn": {
+          "n_params": 1824,
+          "test_mse": 0.16004917802087612,
+          "test_mse_se": 0.01726391467315327,
+          "attribution_rmse": 0.16025106617678792,
+          "attribution_rmse_se": 0.010071202213745327
+        }
+      },
+      "sigma=0.050": {
+        "coupled_adaptive": {
+          "n_params": 1656,
+          "test_mse": 0.21189647632275666,
+          "test_mse_se": 0.03390196885954798,
+          "attribution_rmse": 0.18174462390647642,
+          "attribution_rmse_se": 0.01635964339954231
+        },
+        "ltc_local": {
+          "n_params": 960,
+          "test_mse": 0.18658306558775664,
+          "test_mse_se": 0.02298193252768618,
+          "attribution_rmse": 0.1769002914392158,
+          "attribution_rmse_se": 0.014182645686373936
+        },
+        "memgrn": {
+          "n_params": 1824,
+          "test_mse": 0.16044528065532623,
+          "test_mse_se": 0.017295083218320136,
+          "attribution_rmse": 0.16034555585813623,
+          "attribution_rmse_se": 0.010038692427163248
+        }
+      },
+      "sigma=0.100": {
+        "coupled_adaptive": {
+          "n_params": 1656,
+          "test_mse": 0.19531362378269065,
+          "test_mse_se": 0.016267862568522327,
+          "attribution_rmse": 0.17854224344373174,
+          "attribution_rmse_se": 0.01248197575485389
+        },
+        "ltc_local": {
+          "n_params": 960,
+          "test_mse": 0.18847136181182625,
+          "test_mse_se": 0.02379593661676733,
+          "attribution_rmse": 0.17736125935443844,
+          "attribution_rmse_se": 0.01470164562498081
+        },
+        "memgrn": {
+          "n_params": 1824,
+          "test_mse": 0.16067779319678985,
+          "test_mse_se": 0.017260342132773512,
+          "attribution_rmse": 0.16056197040763973,
+          "attribution_rmse_se": 0.010174096651206893
+        }
+      },
+      "sigma=0.150": {
+        "coupled_adaptive": {
+          "n_params": 1656,
+          "test_mse": 0.19839337812316574,
+          "test_mse_se": 0.01993493832933869,
+          "attribution_rmse": 0.17886052945476352,
+          "attribution_rmse_se": 0.013504188042077175
+        },
+        "ltc_local": {
+          "n_params": 960,
+          "test_mse": 0.18874824425051073,
+          "test_mse_se": 0.02240638912457071,
+          "attribution_rmse": 0.17826826448488273,
+          "attribution_rmse_se": 0.013752210315902503
+        },
+        "memgrn": {
+          "n_params": 1824,
+          "test_mse": 0.1616011885808303,
+          "test_mse_se": 0.01685085833709919,
+          "attribution_rmse": 0.16110645040775215,
+          "attribution_rmse_se": 0.010074752999679535
+        }
+      }
+    },
+    "dropout": {
+      "drop=0%": {
+        "coupled_adaptive": {
+          "n_params": 1656,
+          "test_mse": 0.2187018778983043,
+          "test_mse_se": 0.035064731267163765,
+          "attribution_rmse": 0.18443726171139493,
+          "attribution_rmse_se": 0.01659818388411676
+        },
+        "ltc_local": {
+          "n_params": 960,
+          "test_mse": 0.1863891463076853,
+          "test_mse_se": 0.023129878539762803,
+          "attribution_rmse": 0.17687573553050165,
+          "attribution_rmse_se": 0.014416353900302931
+        },
+        "memgrn": {
+          "n_params": 1824,
+          "test_mse": 0.16004917802087612,
+          "test_mse_se": 0.01726391467315327,
+          "attribution_rmse": 0.16025106617678792,
+          "attribution_rmse_se": 0.010071202213745327
+        }
+      },
+      "drop=25%": {
+        "coupled_adaptive": {
+          "n_params": 1656,
+          "test_mse": 0.1906520824675628,
+          "test_mse_se": 0.015329896846292636,
+          "attribution_rmse": 0.17639425990087762,
+          "attribution_rmse_se": 0.011890978689302873
+        },
+        "ltc_local": {
+          "n_params": 960,
+          "test_mse": 0.18356028792025816,
+          "test_mse_se": 0.02208291200980928,
+          "attribution_rmse": 0.17727615352076975,
+          "attribution_rmse_se": 0.014704087880503766
+        },
+        "memgrn": {
+          "n_params": 1824,
+          "test_mse": 0.15822301633213956,
+          "test_mse_se": 0.016211982419598005,
+          "attribution_rmse": 0.1596798957180613,
+          "attribution_rmse_se": 0.00983991717678542
+        }
+      },
+      "drop=50%": {
+        "coupled_adaptive": {
+          "n_params": 1656,
+          "test_mse": 0.1968248034880539,
+          "test_mse_se": 0.018747233499719435,
+          "attribution_rmse": 0.17652214433867539,
+          "attribution_rmse_se": 0.011444542151896026
+        },
+        "ltc_local": {
+          "n_params": 960,
+          "test_mse": 0.2046185402690106,
+          "test_mse_se": 0.02998426302049078,
+          "attribution_rmse": 0.1834632440711487,
+          "attribution_rmse_se": 0.01575347847339344
+        },
+        "memgrn": {
+          "n_params": 1824,
+          "test_mse": 0.17153703917396243,
+          "test_mse_se": 0.019399395482229142,
+          "attribution_rmse": 0.16478708785465515,
+          "attribution_rmse_se": 0.010500848873469448
+        }
+      }
+    }
+  },
+  "rows": [
+    {
+      "axis": "channels",
+      "label": "R=1",
+      "seed": 6001,
+      "model": "memgrn",
+      "n_params": 1216,
+      "test_mse": 0.19172437261762024,
+      "attribution_rmse": 0.1588435080295641
+    },
+    {
+      "axis": "channels",
+      "label": "R=1",
+      "seed": 6002,
+      "model": "memgrn",
+      "n_params": 1216,
+      "test_mse": 0.2135800519858959,
+      "attribution_rmse": 0.18295841310267147
+    },
+    {
+      "axis": "channels",
+      "label": "R=1",
+      "seed": 6003,
+      "model": "memgrn",
+      "n_params": 1216,
+      "test_mse": 0.23368840349238706,
+      "attribution_rmse": 0.20574773167028387
+    },
+    {
+      "axis": "channels",
+      "label": "R=1",
+      "seed": 6004,
+      "model": "memgrn",
+      "n_params": 1216,
+      "test_mse": 0.2886729262682549,
+      "attribution_rmse": 0.22199892791522008
+    },
+    {
+      "axis": "channels",
+      "label": "R=1",
+      "seed": 6005,
+      "model": "memgrn",
+      "n_params": 1216,
+      "test_mse": 0.16665317295829077,
+      "attribution_rmse": 0.15913176952887884
+    },
+    {
+      "axis": "channels",
+      "label": "R=1",
+      "seed": 6006,
+      "model": "memgrn",
+      "n_params": 1216,
+      "test_mse": 0.1525342444466615,
+      "attribution_rmse": 0.1546915734979532
+    },
+    {
+      "axis": "channels",
+      "label": "R=2",
+      "seed": 6001,
+      "model": "memgrn",
+      "n_params": 1520,
+      "test_mse": 0.177139906455877,
+      "attribution_rmse": 0.15136899500500697
+    },
+    {
+      "axis": "channels",
+      "label": "R=2",
+      "seed": 6002,
+      "model": "memgrn",
+      "n_params": 1520,
+      "test_mse": 0.16160973965411346,
+      "attribution_rmse": 0.16150163781102672
+    },
+    {
+      "axis": "channels",
+      "label": "R=2",
+      "seed": 6003,
+      "model": "memgrn",
+      "n_params": 1520,
+      "test_mse": 0.1853042890773515,
+      "attribution_rmse": 0.1843656132388891
+    },
+    {
+      "axis": "channels",
+      "label": "R=2",
+      "seed": 6004,
+      "model": "memgrn",
+      "n_params": 1520,
+      "test_mse": 0.26236836479510534,
+      "attribution_rmse": 0.21351984854793654
+    },
+    {
+      "axis": "channels",
+      "label": "R=2",
+      "seed": 6005,
+      "model": "memgrn",
+      "n_params": 1520,
+      "test_mse": 0.13202330612380345,
+      "attribution_rmse": 0.14675851862096123
+    },
+    {
+      "axis": "channels",
+      "label": "R=2",
+      "seed": 6006,
+      "model": "memgrn",
+      "n_params": 1520,
+      "test_mse": 0.14692449225351825,
+      "attribution_rmse": 0.151997786963582
+    },
+    {
+      "axis": "channels",
+      "label": "R=3",
+      "seed": 6001,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.16431927005335575,
+      "attribution_rmse": 0.14519797954211425
+    },
+    {
+      "axis": "channels",
+      "label": "R=3",
+      "seed": 6002,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.14038544711192302,
+      "attribution_rmse": 0.152451937873561
+    },
+    {
+      "axis": "channels",
+      "label": "R=3",
+      "seed": 6003,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.15047842533394828,
+      "attribution_rmse": 0.16637452717508222
+    },
+    {
+      "axis": "channels",
+      "label": "R=3",
+      "seed": 6004,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.238929518938207,
+      "attribution_rmse": 0.20647939622504988
+    },
+    {
+      "axis": "channels",
+      "label": "R=3",
+      "seed": 6005,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.11347980094077463,
+      "attribution_rmse": 0.13696360184494114
+    },
+    {
+      "axis": "channels",
+      "label": "R=3",
+      "seed": 6006,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.15270260574704797,
+      "attribution_rmse": 0.15403895439997892
+    },
+    {
+      "axis": "channels",
+      "label": "R=5",
+      "seed": 6001,
+      "model": "memgrn",
+      "n_params": 2432,
+      "test_mse": 0.1489864447589417,
+      "attribution_rmse": 0.1388981871090608
+    },
+    {
+      "axis": "channels",
+      "label": "R=5",
+      "seed": 6002,
+      "model": "memgrn",
+      "n_params": 2432,
+      "test_mse": 0.10684919512480888,
+      "attribution_rmse": 0.1341232868404038
+    },
+    {
+      "axis": "channels",
+      "label": "R=5",
+      "seed": 6003,
+      "model": "memgrn",
+      "n_params": 2432,
+      "test_mse": 0.1303427364386799,
+      "attribution_rmse": 0.1536565509567104
+    },
+    {
+      "axis": "channels",
+      "label": "R=5",
+      "seed": 6004,
+      "model": "memgrn",
+      "n_params": 2432,
+      "test_mse": 0.1967894364276506,
+      "attribution_rmse": 0.1905732341642309
+    },
+    {
+      "axis": "channels",
+      "label": "R=5",
+      "seed": 6005,
+      "model": "memgrn",
+      "n_params": 2432,
+      "test_mse": 0.10088224837351233,
+      "attribution_rmse": 0.13205219779503058
+    },
+    {
+      "axis": "channels",
+      "label": "R=5",
+      "seed": 6006,
+      "model": "memgrn",
+      "n_params": 2432,
+      "test_mse": 0.11382696796160732,
+      "attribution_rmse": 0.1347431611104109
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6001,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.16431927005335575,
+      "attribution_rmse": 0.14519797954211425
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6002,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.14038544711192302,
+      "attribution_rmse": 0.152451937873561
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6003,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.15047842533394828,
+      "attribution_rmse": 0.16637452717508222
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6004,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.238929518938207,
+      "attribution_rmse": 0.20647939622504988
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6005,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.11347980094077463,
+      "attribution_rmse": 0.13696360184494114
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6006,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.15270260574704797,
+      "attribution_rmse": 0.15403895439997892
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6001,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.23387136556565283,
+      "attribution_rmse": 0.1736715513090067
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6002,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.16547042977384174,
+      "attribution_rmse": 0.1646663232529614
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6003,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.2555986950181136,
+      "attribution_rmse": 0.22897002970813296
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6004,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.2110443381824471,
+      "attribution_rmse": 0.20837640576741587
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6005,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.10735663499723885,
+      "attribution_rmse": 0.13803404788827794
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6006,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.14499341430881765,
+      "attribution_rmse": 0.1475360552572151
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6001,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.17631215295365715,
+      "attribution_rmse": 0.15073889732600668
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6002,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.20704115732407513,
+      "attribution_rmse": 0.17973451594737108
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6003,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.3862855374037231,
+      "attribution_rmse": 0.25619491389453747
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6004,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.22166863660427,
+      "attribution_rmse": 0.20582950656058374
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6005,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.16653439805981954,
+      "attribution_rmse": 0.15800945383315615
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.015",
+      "seed": 6006,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.15436938504428083,
+      "attribution_rmse": 0.15611628270671452
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6001,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.16400818906450287,
+      "attribution_rmse": 0.14502926612681735
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6002,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.13958837143807895,
+      "attribution_rmse": 0.15201393316797224
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6003,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.15111412033721286,
+      "attribution_rmse": 0.1665076476872734
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6004,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.2401234024993012,
+      "attribution_rmse": 0.20660328227480906
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6005,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.11544029719820205,
+      "attribution_rmse": 0.13797224448719123
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6006,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.1523973033946594,
+      "attribution_rmse": 0.15394696140475403
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6001,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.23578082298530714,
+      "attribution_rmse": 0.17399450769420294
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6002,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.16499481773159563,
+      "attribution_rmse": 0.164658157439375
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6003,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.25293138561075396,
+      "attribution_rmse": 0.22769911728943876
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6004,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.21266158540716198,
+      "attribution_rmse": 0.20845749706422365
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6005,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.1082338577794861,
+      "attribution_rmse": 0.13875384942436053
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6006,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.14489592401223508,
+      "attribution_rmse": 0.14783861972369378
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6001,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.17606682468688314,
+      "attribution_rmse": 0.1505968465907975
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6002,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.17899671509203904,
+      "attribution_rmse": 0.16751087698122108
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6003,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.37504205263671336,
+      "attribution_rmse": 0.25303543886153096
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6004,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.22085913207078875,
+      "attribution_rmse": 0.20523353993223836
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6005,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.16627946959535406,
+      "attribution_rmse": 0.15808318473730437
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.050",
+      "seed": 6006,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.15413466385476154,
+      "attribution_rmse": 0.15600785633576636
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6001,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.16523705183480425,
+      "attribution_rmse": 0.14553187641974677
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6002,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.14248071696137016,
+      "attribution_rmse": 0.15310713274284038
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6003,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.15203150553835543,
+      "attribution_rmse": 0.16745423931394615
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6004,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.23941358568182808,
+      "attribution_rmse": 0.20705036524926015
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6005,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.11350225183611978,
+      "attribution_rmse": 0.13680923850703966
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6006,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.15140164732826142,
+      "attribution_rmse": 0.15341897021300524
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6001,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.23624144601286157,
+      "attribution_rmse": 0.17480671092237732
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6002,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.16507289592540494,
+      "attribution_rmse": 0.16402256573796378
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6003,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.2620534842402868,
+      "attribution_rmse": 0.23108276439843467
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6004,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.21395130210616412,
+      "attribution_rmse": 0.20885518497390937
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6005,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.11132021003603108,
+      "attribution_rmse": 0.13961352568590027
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6006,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.14218883255020906,
+      "attribution_rmse": 0.1457868044080451
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6001,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.17738505123989748,
+      "attribution_rmse": 0.1513855840938684
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6002,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.19637132340505342,
+      "attribution_rmse": 0.17524088507788604
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6003,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.2602988060094255,
+      "attribution_rmse": 0.2249531308503802
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6004,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.22052261773277693,
+      "attribution_rmse": 0.20674644380870316
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6005,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.16456921176874117,
+      "attribution_rmse": 0.15725036023748182
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.100",
+      "seed": 6006,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.15273473254024933,
+      "attribution_rmse": 0.1556770565940708
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6001,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.16773348720919795,
+      "attribution_rmse": 0.14657624120182733
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6002,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.13763645443956088,
+      "attribution_rmse": 0.15144925068087842
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6003,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.15421109814251355,
+      "attribution_rmse": 0.16694344018799898
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6004,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.23821388987198125,
+      "attribution_rmse": 0.2079118866294602
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6005,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.11771221821045853,
+      "attribution_rmse": 0.13943019546180366
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6006,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.1540999836112698,
+      "attribution_rmse": 0.15432768828454418
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6001,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.24243436707085556,
+      "attribution_rmse": 0.1774712085927167
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6002,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.16691014766827444,
+      "attribution_rmse": 0.16482731592141112
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6003,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.250251586954527,
+      "attribution_rmse": 0.2261216099531436
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6004,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.2109365725297483,
+      "attribution_rmse": 0.21005940720119065
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6005,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.11158004429703164,
+      "attribution_rmse": 0.14042786503092852
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6006,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.15037674698262743,
+      "attribution_rmse": 0.15070218020990578
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6001,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.17631580291806348,
+      "attribution_rmse": 0.15068361344909767
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6002,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.17259212795810186,
+      "attribution_rmse": 0.16481613110765758
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6003,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.28246953838567135,
+      "attribution_rmse": 0.2322795211331637
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6004,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.2191146130297921,
+      "attribution_rmse": 0.20540159396059388
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6005,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.19866471325090268,
+      "attribution_rmse": 0.1702280043716255
+    },
+    {
+      "axis": "noise",
+      "label": "sigma=0.150",
+      "seed": 6006,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.1412034731964631,
+      "attribution_rmse": 0.14975431270644285
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6001,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.16431927005335575,
+      "attribution_rmse": 0.14519797954211425
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6002,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.14038544711192302,
+      "attribution_rmse": 0.152451937873561
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6003,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.15047842533394828,
+      "attribution_rmse": 0.16637452717508222
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6004,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.238929518938207,
+      "attribution_rmse": 0.20647939622504988
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6005,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.11347980094077463,
+      "attribution_rmse": 0.13696360184494114
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6006,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.15270260574704797,
+      "attribution_rmse": 0.15403895439997892
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6001,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.23387136556565283,
+      "attribution_rmse": 0.1736715513090067
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6002,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.16547042977384174,
+      "attribution_rmse": 0.1646663232529614
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6003,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.2555986950181136,
+      "attribution_rmse": 0.22897002970813296
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6004,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.2110443381824471,
+      "attribution_rmse": 0.20837640576741587
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6005,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.10735663499723885,
+      "attribution_rmse": 0.13803404788827794
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6006,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.14499341430881765,
+      "attribution_rmse": 0.1475360552572151
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6001,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.17631215295365715,
+      "attribution_rmse": 0.15073889732600668
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6002,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.20704115732407513,
+      "attribution_rmse": 0.17973451594737108
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6003,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.3862855374037231,
+      "attribution_rmse": 0.25619491389453747
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6004,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.22166863660427,
+      "attribution_rmse": 0.20582950656058374
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6005,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.16653439805981954,
+      "attribution_rmse": 0.15800945383315615
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=0%",
+      "seed": 6006,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.15436938504428083,
+      "attribution_rmse": 0.15611628270671452
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6001,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.16519879428971415,
+      "attribution_rmse": 0.14563965750245433
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6002,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.13792090531504417,
+      "attribution_rmse": 0.14985952592056473
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6003,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.14769626976785538,
+      "attribution_rmse": 0.1647454151828548
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6004,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.23096548727921537,
+      "attribution_rmse": 0.20515375477944336
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6005,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.11344794604727106,
+      "attribution_rmse": 0.13734769650142062
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6006,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.15410869529373733,
+      "attribution_rmse": 0.15533332442162992
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6001,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.23422010019411185,
+      "attribution_rmse": 0.17405483102683436
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6002,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.16292767337116748,
+      "attribution_rmse": 0.16261204480437422
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6003,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.2430820753648588,
+      "attribution_rmse": 0.23190198680488622
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6004,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.2078542383171582,
+      "attribution_rmse": 0.20746611297811307
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6005,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.10400717717228135,
+      "attribution_rmse": 0.13588503282648998
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6006,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.14927046310197134,
+      "attribution_rmse": 0.15173691268392075
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6001,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.17574602197627645,
+      "attribution_rmse": 0.15115819235232394
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6002,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.2043771474796516,
+      "attribution_rmse": 0.17875964412998585
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6003,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.23878260979726312,
+      "attribution_rmse": 0.21544693652486893
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6004,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.22307095785162334,
+      "attribution_rmse": 0.20735481962479707
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6005,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.15879095033484567,
+      "attribution_rmse": 0.15432782804306652
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=25%",
+      "seed": 6006,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.14314480736571658,
+      "attribution_rmse": 0.1513181387302234
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6001,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.173679944514098,
+      "attribution_rmse": 0.14909662081275032
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6002,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.1617783358934711,
+      "attribution_rmse": 0.16313203836561815
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6003,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.16420632164644133,
+      "attribution_rmse": 0.17511261415582674
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6004,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.2597489431579697,
+      "attribution_rmse": 0.21013572588912038
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6005,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.11658380974218124,
+      "attribution_rmse": 0.13663814429275148
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6006,
+      "model": "memgrn",
+      "n_params": 1824,
+      "test_mse": 0.1532248800896133,
+      "attribution_rmse": 0.15460738361186385
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6001,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.27492651447843336,
+      "attribution_rmse": 0.18684530422268067
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6002,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.1793440091173704,
+      "attribution_rmse": 0.17149612136109596
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6003,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.30331451969817835,
+      "attribution_rmse": 0.2467463957101521
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6004,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.20982058089502478,
+      "attribution_rmse": 0.20408517608880367
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6005,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.11385219876305885,
+      "attribution_rmse": 0.1423436083323919
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6006,
+      "model": "ltc_local",
+      "n_params": 960,
+      "test_mse": 0.1464534186619979,
+      "attribution_rmse": 0.14926285871176795
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6001,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.1832365734869676,
+      "attribution_rmse": 0.15356198358562775
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6002,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.16577260036907615,
+      "attribution_rmse": 0.16333805931639137
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6003,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.27667239931003296,
+      "attribution_rmse": 0.22061823610854261
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6004,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.2154608843366741,
+      "attribution_rmse": 0.20120554260437573
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6005,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.19462558145186742,
+      "attribution_rmse": 0.16863281471157324
+    },
+    {
+      "axis": "dropout",
+      "label": "drop=50%",
+      "seed": 6006,
+      "model": "coupled_adaptive",
+      "n_params": 1656,
+      "test_mse": 0.1451807819737051,
+      "attribution_rmse": 0.15177622970554167
+    }
+  ]
+}

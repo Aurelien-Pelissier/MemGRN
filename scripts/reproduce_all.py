@@ -216,8 +216,10 @@ def main() -> None:
     )
     mac = json.loads((ROOT / "results" / "macrophage_multitf" / "scores.json").read_text())
     hipsc = json.loads((ROOT / "results" / "hipsc_closed_loop" / "scores.json").read_text())
-    emt = json.loads((ROOT / "results" / "emt_ligand_shift" / "scores.json").read_text())
+    cyc = json.loads((ROOT / "results" / "cyclic_double_ko" / "scores.json").read_text())
+    emt = json.loads((ROOT / "results" / "emt_withdrawal_forecast" / "scores.json").read_text())
     po = json.loads((ROOT / "results" / "partial_obs_and_ltc_sep" / "scores.json").read_text())
+    sens = json.loads((ROOT / "results" / "sensitivity_ablations" / "scores.json").read_text())
     interp = json.loads(
         (ROOT / "results" / "interpretability_and_scaling" / "scores.json").read_text()
     )
@@ -248,8 +250,11 @@ def main() -> None:
         "multitf_cooperative_memgrn_vs_ltc_mse_reduction_pct": mtf["summary"][
             "cooperative"
         ]["comparisons"]["memgrn_vs_ltc_coupled_mse"]["pct_reduction_vs_b"],
-        "msn2_joint_memgrn_10train_mse": msn2_joint["joint_training"]["memgrn"][
+        "msn2_joint_memgrn_10train_mse": msn2_joint["joint_training"]["memgrn_sym"][
             "ten_trains_post_mse"
+        ],
+        "msn2_lopo_shared_memgrn_mse": msn2_joint["shared_filter_lopo_transfer"][
+            "mean_memgrn_shared"
         ],
         "msn2_const_readout_memory_reduction_pct": 100.0
         * (
@@ -266,7 +271,9 @@ def main() -> None:
         "hipsc_closed_loop_memgrn_chip_psc_auroc": hipsc["summary"]["cl_memgrn"][
             "chip_psc_pooled_auroc"
         ],
-        "emt_cross_ligand_memgrn_top30_withdrawal_mse": emt["summary"]["memgrn"][
+        "cyclic_double_ko_memgrn_mse": cyc["summary"]["cl_memgrn"]["double_ko_mse"],
+        "cyclic_double_ko_memgrn_graph_ap": cyc["summary"]["cl_memgrn"]["graph_ap"],
+        "emt_withdrawal_memgrn_top30_mse": emt["summary"]["memgrn"][
             "top30_withdrawal_mse"
         ],
         "partial_obs_6of8_memgrn_ortho_ood_mse": po["part_a_partial_obs_6of8_summary"][
@@ -276,6 +283,9 @@ def main() -> None:
             po["part_b_ltc_separation"]["ltc_local_matched"]["delayed_peak_post_mse"]
             / po["part_b_ltc_separation"]["memgrn_matched"]["delayed_peak_post_mse"]
         ),
+        "sensitivity_r5_memgrn_mse": sens["summary"]["channels"]["R=5"]["memgrn"][
+            "test_mse"
+        ],
         "yeast_slow_over_fast_chromatin_tau_ratio": interp["chromatin_summary"][
             "slow_over_fast_tau_ratio"
         ],

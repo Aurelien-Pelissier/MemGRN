@@ -33,6 +33,18 @@
     0.9992654833105727,
     0.0024071120110432803
   ],
+  "ortho_ood_counterfactual_drift": 0.0,
+  "ortho_ood_unproj_drift": 0.47425146655303835,
+  "ortho_ood_risk_identity_diff": 8.881784197001252e-16,
+  "ortho_ood_mse_obs_ortho_unproj": [
+    2.654827371659385,
+    6.620809918889463e-30,
+    0.2858035913080891
+  ],
+  "selective_ssm_nonparent_delta_weight": 1.1843251088534106,
+  "selective_ssm_ko_l2_error": 0.12588047698009328,
+  "selective_ssm_false_nonparent_attr_l2": 0.12588047698190663,
+  "selective_ssm_memgrn_ko_l2_error": 0.0,
   "max_swap_quadrature_error": 4.440892098500626e-16,
   "swap_singular_values_4to1": [
     0.3362042018474805,

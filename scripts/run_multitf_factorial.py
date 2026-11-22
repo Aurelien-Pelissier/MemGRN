@@ -20,7 +20,7 @@ os.environ.setdefault(
 )
 
 import numpy as np  # noqa: E402
-from scipy.stats import t as student_t  # noqa: E402
+from scipy.stats import t as student_t, wilcoxon  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -43,6 +43,9 @@ MODELS_TO_RUN: tuple[DynamicalModelFamily, ...] = (
     DynamicalModelFamily.COUPLED_ADAPTIVE,
     DynamicalModelFamily.LTC_COUPLED,
     DynamicalModelFamily.LTC_LOCAL,
+    DynamicalModelFamily.SELECTIVE_SSM,
+    DynamicalModelFamily.CFC,
+    DynamicalModelFamily.NEURAL_CDE,
     DynamicalModelFamily.PERTURB_ODE,
 )
 
@@ -152,11 +155,13 @@ def _paired_ci(vals_a: list[float], vals_b: list[float]) -> dict[str, float | li
     mean_d = float(np.mean(diff))
     se_d = float(np.std(diff, ddof=1) / np.sqrt(n))
     crit = float(student_t.ppf(0.975, df=n - 1))
+    w_p = float(wilcoxon(arr_a, arr_b, alternative="less").pvalue) if np.any(diff != 0.0) else 1.0
     return {
         "mean_diff": mean_d,
         "pct_reduction_vs_b": float(100.0 * (1.0 - np.mean(arr_a) / np.mean(arr_b))),
         "ci_95": [mean_d - crit * se_d, mean_d + crit * se_d],
         "wins_a_lt_b": int(np.sum(arr_a < arr_b)),
+        "wilcoxon_p": w_p,
         "n": n,
     }
 
@@ -206,9 +211,13 @@ def main() -> None:
         reg_means: dict[str, dict] = {}
         for fam in MODELS_TO_RUN:
             m_key = fam.value
+            tm = np.array([w["models"][m_key]["test_mse"] for w in sub])
+            ar = np.array([w["models"][m_key]["attribution_rmse"] for w in sub])
+            ap_arr = np.array([w["models"][m_key]["edge_ap"] for w in sub])
             reg_means[m_key] = {
                 "n_params": sub[0]["models"][m_key]["n_params"],
-                "test_mse": float(np.mean([w["models"][m_key]["test_mse"] for w in sub])),
+                "test_mse": float(np.mean(tm)),
+                "test_mse_se": float(np.std(tm, ddof=1) / np.sqrt(len(tm))),
                 "single_ko_mse": float(
                     np.mean(
                         [w["models"][m_key]["category_mse"]["single_ko_in_module"] for w in sub]
@@ -222,14 +231,14 @@ def main() -> None:
                         [w["models"][m_key]["category_mse"]["cross_module_combo"] for w in sub]
                     )
                 ),
-                "attribution_rmse": float(
-                    np.mean([w["models"][m_key]["attribution_rmse"] for w in sub])
-                ),
+                "attribution_rmse": float(np.mean(ar)),
+                "attribution_rmse_se": float(np.std(ar, ddof=1) / np.sqrt(len(ar))),
                 "spurious_crosstalk_rmse": float(
                     np.mean([w["models"][m_key]["spurious_crosstalk_rmse"] for w in sub])
                 ),
                 "edge_auroc": float(np.mean([w["models"][m_key]["edge_auroc"] for w in sub])),
-                "edge_ap": float(np.mean([w["models"][m_key]["edge_ap"] for w in sub])),
+                "edge_ap": float(np.mean(ap_arr)),
+                "edge_ap_se": float(np.std(ap_arr, ddof=1) / np.sqrt(len(ap_arr))),
             }
 
         hero = "memgrn"
@@ -249,6 +258,18 @@ def main() -> None:
             f"{hero}_vs_ltc_coupled_attr": _paired_ci(
                 [w["models"][hero]["attribution_rmse"] for w in sub],
                 [w["models"]["ltc_coupled"]["attribution_rmse"] for w in sub],
+            ),
+            f"{hero}_vs_selective_ssm_mse": _paired_ci(
+                [w["models"][hero]["test_mse"] for w in sub],
+                [w["models"]["selective_ssm"]["test_mse"] for w in sub],
+            ),
+            f"{hero}_vs_cfc_mse": _paired_ci(
+                [w["models"][hero]["test_mse"] for w in sub],
+                [w["models"]["cfc"]["test_mse"] for w in sub],
+            ),
+            f"{hero}_vs_neural_cde_mse": _paired_ci(
+                [w["models"][hero]["test_mse"] for w in sub],
+                [w["models"]["neural_cde"]["test_mse"] for w in sub],
             ),
             f"{hero}_vs_perturb_ode_mse": _paired_ci(
                 [w["models"][hero]["test_mse"] for w in sub],

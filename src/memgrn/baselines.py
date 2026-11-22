@@ -12,6 +12,9 @@ optimization, validation selection, and counterfactual attribution across both o
   - coupled_adaptive: Source-coupled adaptive-rate filter cascade + explicit readout
   - ltc_coupled:      Liquid Time-Constant Network (Hasani et al., 2021), coupled state
   - ltc_local:        Source-isolated Liquid Time-Constant Network ablation
+  - selective_ssm:    Mamba/S6-style input-selective diagonal SSM with coupled Delta(a) gate
+  - cfc:              Closed-form Continuous-time Network (Hasani et al., 2022)
+  - neural_cde:       Neural Controlled Differential Equation (Kidger et al., 2020)
   - perturb_ode:      PerturbODE (Lin et al., 2025) module-structured state-only ODE
   - latent_ode:       Unconstrained Latent Neural ODE (Rubanova et al., 2019)
 """
@@ -38,6 +41,9 @@ class DynamicalModelFamily(StrEnum):
     COUPLED_ADAPTIVE = "coupled_adaptive"
     LTC_COUPLED = "ltc_coupled"
     LTC_LOCAL = "ltc_local"
+    SELECTIVE_SSM = "selective_ssm"
+    CFC = "cfc"
+    NEURAL_CDE = "neural_cde"
     PERTURB_ODE = "perturb_ode"
     LATENT_ODE = "latent_ode"
 
@@ -50,6 +56,8 @@ class ClosedLoopModelFamily(StrEnum):
     COUPLED_ADAPTIVE = "cl_coupled_adaptive"
     LTC_COUPLED = "cl_ltc_coupled"
     LTC_LOCAL = "cl_ltc_local"
+    SELECTIVE_SSM = "cl_selective_ssm"
+    CFC = "cl_cfc"
     PERTURB_ODE = "cl_perturb_ode"
     LATENT_ODE = "cl_latent_ode"
 
@@ -66,6 +74,10 @@ class ModelSpec:
     latent_dim: int = 16
     ortho_dim: int = 6
     module_dim: int = 12
+    coop_rank: int | None = None
+    use_cooperativity: bool | None = None
+    readout_rank: int | None = None
+    base_rates: tuple[float, ...] | None = None
     rate_min: float = 0.05
     rate_max: float = 14.0
 
@@ -81,6 +93,8 @@ class ClosedLoopSpec:
     hollow: bool = True
     use_cooperativity: bool = False
     coop_rank: int = 8
+    readout_rank: int | None = None
+    base_rates: tuple[float, ...] | None = None
     n_channels: int = 3
     hidden_width: int = 6
     module_dim: int = 20
@@ -117,12 +131,62 @@ class TrainedClosedLoopModel:
     interaction_matrix: np.ndarray
 
 
+def extract_memgrn_up_down(
+    p: dict[str, np.ndarray],
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Decode symmetric-base + hysteresis-residual parameters into (rate_up, rate_dn, out_up, out_dn)."""
+    r_base = np.asarray(p["rate"], dtype=np.float64)
+    v_base = np.asarray(p["out_proj"], dtype=np.float64)
+    if "rate_asym" in p:
+        r_asym = np.asarray(p["rate_asym"], dtype=np.float64)
+        v_asym = np.asarray(p["out_proj_asym"], dtype=np.float64)
+        return r_base + r_asym, r_base - r_asym, v_base + v_asym, v_base - v_asym
+    if "rate_dn" in p:
+        return (
+            r_base,
+            np.asarray(p["rate_dn"], dtype=np.float64),
+            v_base,
+            np.asarray(p["out_proj_dn"], dtype=np.float64),
+        )
+    return r_base, r_base, v_base, v_base
+
+
+def _spec_uses_coop(spec: ModelSpec) -> bool:
+    if spec.n_sources < 2:
+        return False
+    if spec.use_cooperativity is not None:
+        return spec.use_cooperativity
+    return spec.family == DynamicalModelFamily.MEMGRN
+
+
+def _add_coop_params(
+    tree: dict[str, np.ndarray], spec: ModelSpec, rng: np.random.Generator
+) -> None:
+    if not _spec_uses_coop(spec):
+        return
+    s_dim, g_dim = spec.n_sources, spec.n_targets
+    if spec.coop_rank is not None:
+        k_c = spec.coop_rank
+        tree["coop_u"] = rng.normal(0.0, 0.25 / np.sqrt(s_dim), size=(s_dim, k_c)).astype(
+            np.float32
+        )
+        tree["coop_v"] = rng.normal(0.0, 0.25 / np.sqrt(s_dim), size=(s_dim, k_c)).astype(
+            np.float32
+        )
+        tree["coop_w"] = rng.normal(0.0, 0.015, size=(k_c, g_dim)).astype(np.float32)
+    else:
+        n_pairs = s_dim * (s_dim - 1) // 2
+        tree["interact"] = np.zeros((n_pairs, g_dim), dtype=np.float32)
+
+
 def _init_tree(spec: ModelSpec, seed: int) -> dict[str, np.ndarray]:
     rng = np.random.default_rng(seed)
     s_dim, g_dim, r_dim = spec.n_sources, spec.n_targets, spec.n_channels
     h_dim = spec.hidden_width
 
-    base_rates = np.resize(np.array([0.45, 1.2, 3.2], dtype=np.float32), r_dim)
+    default_rates = (0.45, 1.2, 3.2) if spec.base_rates is None else spec.base_rates
+    base_rates = np.resize(np.array(default_rates, dtype=np.float32), r_dim)
+    base_rates = np.clip(base_rates, spec.rate_min + 1e-3, spec.rate_max - 1e-3)
     base_logits = np.log((base_rates - spec.rate_min) / (spec.rate_max - base_rates))
 
     fam = spec.family
@@ -135,20 +199,30 @@ def _init_tree(spec: ModelSpec, seed: int) -> dict[str, np.ndarray]:
     ):
         tree: dict[str, np.ndarray] = {
             "direct": rng.normal(0.0, 0.02, size=(s_dim, g_dim)).astype(np.float32),
-            "delayed": rng.normal(0.0, 0.02, size=(s_dim, r_dim, g_dim)).astype(np.float32),
             "decay": np.zeros((g_dim,), dtype=np.float32),
             "rate": np.broadcast_to(base_logits, (s_dim, r_dim)).copy(),
         }
+        if spec.readout_rank is not None and fam != DynamicalModelFamily.MEMGRN_ORTHO:
+            k_r = spec.readout_rank
+            tree["delayed_u"] = rng.normal(
+                0.0, 0.15 / np.sqrt(s_dim * r_dim), size=(s_dim, r_dim, k_r)
+            ).astype(np.float32)
+            tree["delayed_v"] = rng.normal(
+                0.0, 0.15 / np.sqrt(k_r), size=(k_r, g_dim)
+            ).astype(np.float32)
+        else:
+            tree["delayed"] = rng.normal(0.0, 0.02, size=(s_dim, r_dim, g_dim)).astype(np.float32)
         if fam != DynamicalModelFamily.LOCAL_CONST:
             tree["in_proj"] = rng.normal(0.0, 0.7, size=(3, h_dim)).astype(np.float32)
             tree["bias"] = rng.normal(0.0, 0.25, size=(h_dim,)).astype(np.float32)
             tree["out_proj"] = np.zeros((s_dim, r_dim, h_dim), dtype=np.float32)
             if fam != DynamicalModelFamily.MEMGRN_SYM:
-                tree["rate_dn"] = np.broadcast_to(base_logits, (s_dim, r_dim)).copy()
-                tree["out_proj_dn"] = np.zeros((s_dim, r_dim, h_dim), dtype=np.float32)
-        if fam == DynamicalModelFamily.MEMGRN and s_dim >= 2:
-            n_pairs = s_dim * (s_dim - 1) // 2
-            tree["interact"] = np.zeros((n_pairs, g_dim), dtype=np.float32)
+                # Symmetric-base + zero-initialized hysteresis-residual decomposition:
+                # lambda_up uses (rate + rate_asym, out_proj + out_proj_asym);
+                # lambda_dn uses (rate - rate_asym, out_proj - out_proj_asym).
+                tree["rate_asym"] = np.zeros((s_dim, r_dim), dtype=np.float32)
+                tree["out_proj_asym"] = np.zeros((s_dim, r_dim, h_dim), dtype=np.float32)
+        _add_coop_params(tree, spec, rng)
         if fam == DynamicalModelFamily.MEMGRN_ORTHO:
             k_dim = spec.ortho_dim
             # Pulse-clock + weak input driven latent cofactor ODE
@@ -202,7 +276,7 @@ def _init_tree(spec: ModelSpec, seed: int) -> dict[str, np.ndarray]:
         }
 
     if fam == DynamicalModelFamily.LTC_LOCAL:
-        return {
+        tree = {
             "tau_log": np.broadcast_to(base_logits, (s_dim, r_dim)).copy(),
             "w_x": rng.normal(0.0, 0.35, size=(s_dim, r_dim, r_dim)).astype(np.float32),
             "w_a": rng.normal(0.0, 0.7, size=(s_dim, r_dim)).astype(np.float32),
@@ -210,6 +284,81 @@ def _init_tree(spec: ModelSpec, seed: int) -> dict[str, np.ndarray]:
             "e_rev": np.ones((s_dim, r_dim), dtype=np.float32),
             "direct": rng.normal(0.0, 0.02, size=(s_dim, g_dim)).astype(np.float32),
             "delayed": rng.normal(0.0, 0.02, size=(s_dim, r_dim, g_dim)).astype(np.float32),
+            "decay": np.zeros((g_dim,), dtype=np.float32),
+        }
+        _add_coop_params(tree, spec, rng)
+        return tree
+
+    if fam == DynamicalModelFamily.SELECTIVE_SSM:
+        # Mamba/S6-style input-selective diagonal SSM: diagonal A = -diag(alpha),
+        # but coupled input-dependent step-size Delta(a) = softplus(a @ w_dt + b_dt)
+        # and input-dependent B(a) mixing all S sources.
+        m_dim = s_dim * r_dim
+        eye_mix = np.repeat(np.eye(s_dim, dtype=np.float32), r_dim, axis=1)
+        return {
+            "alpha_log": np.tile(base_logits, s_dim).astype(np.float32),
+            "w_dt": rng.normal(0.0, 0.45 / np.sqrt(s_dim), size=(s_dim, m_dim)).astype(
+                np.float32
+            ),
+            "b_dt": np.zeros((m_dim,), dtype=np.float32),
+            "w_b": eye_mix + rng.normal(0.0, 0.12, size=(s_dim, m_dim)).astype(np.float32),
+            "w_gate": rng.normal(0.0, 0.35 / np.sqrt(s_dim), size=(s_dim, m_dim)).astype(
+                np.float32
+            ),
+            "b_gate": np.zeros((m_dim,), dtype=np.float32),
+            "direct": rng.normal(0.0, 0.02, size=(s_dim, g_dim)).astype(np.float32),
+            "readout": rng.normal(0.0, 0.03, size=(m_dim, g_dim)).astype(np.float32),
+            "decay": np.zeros((g_dim,), dtype=np.float32),
+        }
+
+    if fam == DynamicalModelFamily.CFC:
+        # Closed-form Continuous-time network (Hasani et al., Nature Machine Intelligence 2022)
+        m_dim = s_dim * r_dim
+        return {
+            "w_f_x": rng.normal(0.0, 0.25 / np.sqrt(m_dim), size=(m_dim, m_dim)).astype(
+                np.float32
+            ),
+            "w_f_a": rng.normal(0.0, 0.45 / np.sqrt(s_dim), size=(s_dim, m_dim)).astype(
+                np.float32
+            ),
+            "b_f": np.zeros((m_dim,), dtype=np.float32),
+            "w_g_x": rng.normal(0.0, 0.25 / np.sqrt(m_dim), size=(m_dim, m_dim)).astype(
+                np.float32
+            ),
+            "w_g_a": rng.normal(0.0, 0.45 / np.sqrt(s_dim), size=(s_dim, m_dim)).astype(
+                np.float32
+            ),
+            "b_g": np.zeros((m_dim,), dtype=np.float32),
+            "w_h_x": rng.normal(0.0, 0.25 / np.sqrt(m_dim), size=(m_dim, m_dim)).astype(
+                np.float32
+            ),
+            "w_h_a": rng.normal(0.0, 0.45 / np.sqrt(s_dim), size=(s_dim, m_dim)).astype(
+                np.float32
+            ),
+            "b_h": np.zeros((m_dim,), dtype=np.float32),
+            "direct": rng.normal(0.0, 0.02, size=(s_dim, g_dim)).astype(np.float32),
+            "readout": rng.normal(0.0, 0.03, size=(m_dim, g_dim)).astype(np.float32),
+            "decay": np.zeros((g_dim,), dtype=np.float32),
+        }
+
+    if fam == DynamicalModelFamily.NEURAL_CDE:
+        # Neural Controlled Differential Equation (Kidger et al., NeurIPS 2020):
+        # dx/dt = -gamma_x * x + f_theta(x) @ da/dt + g_theta(x) @ a(t)
+        lat_d = spec.latent_dim
+        return {
+            "rate": np.zeros((lat_d,), dtype=np.float32),
+            "w_x": rng.normal(0.0, 0.25 / np.sqrt(lat_d), size=(lat_d, lat_d)).astype(
+                np.float32
+            ),
+            "b_x": np.zeros((lat_d,), dtype=np.float32),
+            "w_cde": rng.normal(
+                0.0, 0.3 / np.sqrt(lat_d * s_dim), size=(lat_d, s_dim, lat_d)
+            ).astype(np.float32),
+            "w_a": rng.normal(0.0, 0.45 / np.sqrt(s_dim), size=(s_dim, lat_d)).astype(
+                np.float32
+            ),
+            "direct": rng.normal(0.0, 0.02, size=(s_dim, g_dim)).astype(np.float32),
+            "readout": rng.normal(0.0, 0.05, size=(lat_d, g_dim)).astype(np.float32),
             "decay": np.zeros((g_dim,), dtype=np.float32),
         }
 
@@ -302,8 +451,12 @@ def build_jax_rollout(
                     + h[..., None] * p["in_proj"][2]
                 )
                 th_hid = jnp.tanh(hid)
-                logits_up = p["rate"][None] + jnp.sum(th_hid * p["out_proj"][None], axis=-1)
-                logits_dn = p["rate_dn"][None] + jnp.sum(th_hid * p["out_proj_dn"][None], axis=-1)
+                r_up = p["rate"] + p["rate_asym"]
+                r_dn = p["rate"] - p["rate_asym"]
+                v_up = p["out_proj"] + p["out_proj_asym"]
+                v_dn = p["out_proj"] - p["out_proj_asym"]
+                logits_up = r_up[None] + jnp.sum(th_hid * v_up[None], axis=-1)
+                logits_dn = r_dn[None] + jnp.sum(th_hid * v_dn[None], axis=-1)
                 lam_up = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(logits_up)
                 lam_dn = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(logits_dn)
                 dz = lam_up * (act[:, :, None] - z)
@@ -409,10 +562,90 @@ def build_jax_rollout(
             )
         return jax.jit(forward), unpack, np.asarray(flat0, dtype=np.float32)
 
+    def _coop_term(h_state: jnp.ndarray, p: dict[str, jnp.ndarray]) -> jnp.ndarray:
+        if "coop_w" in p:
+            h_bar = jnp.mean(h_state, axis=-1)
+            return ((h_bar @ p["coop_u"]) * (h_bar @ p["coop_v"])) @ p["coop_w"]
+        if "interact" in p:
+            h_bar = jnp.mean(h_state, axis=-1)
+            return (h_bar[:, idx_i] * h_bar[:, idx_k]) @ p["interact"]
+        return jnp.asarray(0.0, dtype=h_state.dtype)
+
     def forward(theta: jnp.ndarray, stage_u: jnp.ndarray, y0: jnp.ndarray) -> jnp.ndarray:
         p = unpack(theta)
         decay = 0.1 + jnp.logaddexp(0.0, p["decay"])
         batch = stage_u.shape[1]
+
+        if fam == DynamicalModelFamily.CFC:
+            # Closed-form Continuous-time cell (Hasani et al., Nature Machine Intelligence 2022)
+            # Zero-equilibrium centered so a == 0 => x == 0.
+            m_dim = s_dim * r_dim
+            init_state = (jnp.zeros((batch, m_dim), dtype=theta.dtype), y0)
+            sig_rest = jax.nn.sigmoid(-p["b_f"])
+            rest_x = sig_rest * jnp.tanh(p["b_g"]) + (1.0 - sig_rest) * jnp.tanh(p["b_h"])
+
+            def cfc_step(carry, u_step):
+                x, y = carry
+                a0 = jnp.tanh(u_step[..., 0])
+                am = jnp.tanh(u_step[..., 1])
+                a1 = jnp.tanh(u_step[..., 2])
+                f_gate = jax.nn.softplus(x @ p["w_f_x"] + am @ p["w_f_a"] + p["b_f"])
+                t_interp = jax.nn.sigmoid(-(f_gate * dt + p["b_f"]))
+                g_val = jnp.tanh(x @ p["w_g_x"] + am @ p["w_g_a"] + p["b_g"])
+                h_val = jnp.tanh(x @ p["w_h_x"] + am @ p["w_h_a"] + p["b_h"])
+                x_nxt = t_interp * g_val + (1.0 - t_interp) * h_val - rest_x[None]
+                xm = 0.5 * (x + x_nxt)
+                p0 = a0 @ p["direct"] + x @ p["readout"]
+                pm = am @ p["direct"] + xm @ p["readout"]
+                p1 = a1 @ p["direct"] + x_nxt @ p["readout"]
+                k1 = p0 - decay * y
+                k2 = pm - decay * (y + 0.5 * dt * k1)
+                k3 = pm - decay * (y + 0.5 * dt * k2)
+                k4 = p1 - decay * (y + dt * k3)
+                y_nxt = y + (dt / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4)
+                return (x_nxt, y_nxt), y_nxt
+
+            _, ys = jax.lax.scan(cfc_step, init_state, stage_u)
+            sampled = ys[obs_stride - 1 :: obs_stride]
+            with_init = jnp.concatenate([y0[None, :, :], sampled], axis=0)
+            return jnp.transpose(with_init, (1, 0, 2))
+
+        if fam == DynamicalModelFamily.NEURAL_CDE:
+            lat_d = spec.latent_dim
+            init_state = (jnp.zeros((batch, lat_d), dtype=theta.dtype), y0)
+            lat_decay = 0.12 + jnp.logaddexp(0.0, p["rate"])
+
+            def cde_rhs(state, raw_u, da_dt):
+                x, y = state
+                act = jnp.tanh(raw_u)
+                hid = jnp.tanh(x @ p["w_x"] + p["b_x"])
+                # Controlled vector field f_theta(x) dA/dt: (batch, lat_d)
+                ctrl = jnp.einsum("bl,lsd,bs->bd", hid, p["w_cde"], da_dt)
+                dx = -lat_decay[None] * x + ctrl + act @ p["w_a"]
+                dy = act @ p["direct"] + x @ p["readout"] - decay * y
+                return dx, dy
+
+            def cde_step(carry, u_step):
+                u0, um, u1 = u_step[..., 0], u_step[..., 1], u_step[..., 2]
+                da_dt = (jnp.tanh(u1) - jnp.tanh(u0)) / dt
+                k1 = cde_rhs(carry, u0, da_dt)
+                k2 = cde_rhs(jax.tree.map(lambda c, d: c + 0.5 * dt * d, carry, k1), um, da_dt)
+                k3 = cde_rhs(jax.tree.map(lambda c, d: c + 0.5 * dt * d, carry, k2), um, da_dt)
+                k4 = cde_rhs(jax.tree.map(lambda c, d: c + dt * d, carry, k3), u1, da_dt)
+                nxt = jax.tree.map(
+                    lambda c, d1, d2, d3, d4: c + (dt / 6.0) * (d1 + 2 * d2 + 2 * d3 + d4),
+                    carry,
+                    k1,
+                    k2,
+                    k3,
+                    k4,
+                )
+                return nxt, nxt[-1]
+
+            _, ys = jax.lax.scan(cde_step, init_state, stage_u)
+            sampled = ys[obs_stride - 1 :: obs_stride]
+            with_init = jnp.concatenate([y0[None, :, :], sampled], axis=0)
+            return jnp.transpose(with_init, (1, 0, 2))
 
         if fam in (
             DynamicalModelFamily.LOCAL_CONST,
@@ -443,31 +676,38 @@ def build_jax_rollout(
                         + h[..., None] * p["in_proj"][2]
                     )
                     th_hid = jnp.tanh(hid)
-                    logits_up = p["rate"][None, :, :] + jnp.sum(
-                        th_hid * p["out_proj"][None], axis=-1
-                    )
-                    lam_up = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
-                        logits_up
-                    )
                     if fam == DynamicalModelFamily.MEMGRN_SYM:
+                        logits_up = p["rate"][None, :, :] + jnp.sum(
+                            th_hid * p["out_proj"][None], axis=-1
+                        )
+                        lam_up = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
+                            logits_up
+                        )
                         lam_dn = lam_up
                     else:
-                        logits_dn = p["rate_dn"][None, :, :] + jnp.sum(
-                            th_hid * p["out_proj_dn"][None], axis=-1
+                        r_up = p["rate"] + p["rate_asym"]
+                        r_dn = p["rate"] - p["rate_asym"]
+                        v_up = p["out_proj"] + p["out_proj_asym"]
+                        v_dn = p["out_proj"] - p["out_proj_asym"]
+                        logits_up = r_up[None, :, :] + jnp.sum(th_hid * v_up[None], axis=-1)
+                        logits_dn = r_dn[None, :, :] + jnp.sum(th_hid * v_dn[None], axis=-1)
+                        lam_up = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
+                            logits_up
                         )
-                        lam_dn = spec.rate_min + (
-                            spec.rate_max - spec.rate_min
-                        ) * jax.nn.sigmoid(logits_dn)
+                        lam_dn = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
+                            logits_dn
+                        )
 
                 dz = lam_up * (act[:, :, None] - z)
                 dh = lam_dn * (z - h)
-                prod = act @ p["direct"] + h.reshape(batch, s_dim * r_dim) @ p[
-                    "delayed"
-                ].reshape(s_dim * r_dim, g_dim)
-                if fam == DynamicalModelFamily.MEMGRN and s_dim >= 2 and "interact" in p:
-                    mean_h = jnp.mean(h, axis=-1)
-                    pairs = mean_h[:, idx_i] * mean_h[:, idx_k]
-                    prod = prod + pairs @ p["interact"]
+                h_flat = h.reshape(batch, s_dim * r_dim)
+                if "delayed_u" in p:
+                    del_prod = (
+                        h_flat @ p["delayed_u"].reshape(s_dim * r_dim, -1)
+                    ) @ p["delayed_v"]
+                else:
+                    del_prod = h_flat @ p["delayed"].reshape(s_dim * r_dim, g_dim)
+                prod = act @ p["direct"] + del_prod + _coop_term(h, p)
                 return dz, dh, prod - decay * y
 
         elif fam in (
@@ -531,9 +771,30 @@ def build_jax_rollout(
                 dx = -(base_tau_inv[None] + gate) * x + gate * (
                     act[:, :, None] * p["e_rev"][None]
                 )
-                prod = act @ p["direct"] + x.reshape(batch, s_dim * r_dim) @ p[
-                    "delayed"
-                ].reshape(s_dim * r_dim, g_dim)
+                prod = (
+                    act @ p["direct"]
+                    + x.reshape(batch, s_dim * r_dim) @ p["delayed"].reshape(s_dim * r_dim, g_dim)
+                    + _coop_term(x, p)
+                )
+                return dx, prod - decay * y
+
+        elif fam == DynamicalModelFamily.SELECTIVE_SSM:
+            # Mamba/S6-style diagonal selective SSM:
+            # dx/dt = -Delta(a) * alpha * x + Delta(a) * sigma(a W_g + b_g) * (a W_b)
+            m_dim = s_dim * r_dim
+            init_state = (jnp.zeros((batch, m_dim), dtype=theta.dtype), y0)
+
+            def rhs(state, raw_u):
+                x, y = state
+                act = jnp.tanh(raw_u)
+                alpha = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
+                    p["alpha_log"]
+                )
+                delta_t = 0.25 + jax.nn.softplus(act @ p["w_dt"] + p["b_dt"])
+                sel_gate = jax.nn.sigmoid(act @ p["w_gate"] + p["b_gate"])
+                drive = sel_gate * (act @ p["w_b"])
+                dx = delta_t * (alpha[None] * (drive - x))
+                prod = act @ p["direct"] + x @ p["readout"]
                 return dx, prod - decay * y
 
         elif fam == DynamicalModelFamily.PERTURB_ODE:
@@ -603,6 +864,7 @@ def fit_dynamical_model(
     lr_max: float = 0.008,
     l1_interact_scale: float = 5.0,
     gate_shrinkage_grid: tuple[float, ...] = (1.0,),
+    hysteresis_shrinkage_grid: tuple[float, ...] = (1.0,),
     stimulus_window_steps: int | None = None,
 ) -> TrainedModel:
     """Train an open-loop dynamical model with validation-locked regularization & multi-start."""
@@ -643,28 +905,39 @@ def fit_dynamical_model(
             pred_va = forward(theta, va_u, va_y0)
         return jnp.sum(((pred_va - va_y) ** 2) * va_w) / va_denom
 
-    def penalty(theta: jnp.ndarray, gate_scale: jnp.ndarray) -> jnp.ndarray:
+    def penalty(
+        theta: jnp.ndarray, gate_scale: jnp.ndarray, hyst_scale: jnp.ndarray
+    ) -> jnp.ndarray:
         p = unpack(theta)
-        gate_keys = {"out_proj", "out_proj_dn", "in_proj"}
-        skip_keys = {"decay", "rate", "rate_dn", "tau_log", "c_rate"}
+        gate_keys = {"out_proj", "in_proj"}
+        hyst_keys = {"rate_asym", "out_proj_asym"}
+        skip_keys = {"decay", "rate", "tau_log", "alpha_log", "c_rate"}
         l2 = jnp.asarray(0.0, dtype=theta.dtype)
         for k, v in p.items():
             if k in skip_keys:
                 continue
-            mult = gate_scale if k in gate_keys else 1.0
+            if k in hyst_keys:
+                mult = hyst_scale * gate_scale
+            elif k in gate_keys:
+                mult = gate_scale
+            else:
+                mult = 1.0
             l2 = l2 + mult * jnp.sum(v**2)
         if "interact" in p:
             l2 = l2 + l1_interact_scale * jnp.sum(jnp.abs(p["interact"]))
-        if "rate_dn" in p:
-            l2 = l2 + 0.25 * gate_scale * jnp.sum((p["rate_dn"] - p["rate"]) ** 2)
+        if "coop_w" in p:
+            l2 = l2 + 0.15 * jnp.sum(jnp.abs(p["coop_w"]))
         return l2
 
     @jax.jit
     def run_single(
-        theta0: jnp.ndarray, reg_val: jnp.ndarray, gate_scale: jnp.ndarray
+        theta0: jnp.ndarray,
+        reg_val: jnp.ndarray,
+        gate_scale: jnp.ndarray,
+        hyst_scale: jnp.ndarray,
     ) -> tuple[jnp.ndarray, jnp.ndarray]:
         def obj(th: jnp.ndarray) -> jnp.ndarray:
-            return train_mse(th) + reg_val * penalty(th, gate_scale)
+            return train_mse(th) + reg_val * penalty(th, gate_scale, hyst_scale)
 
         val_every = max(1, total_updates // 12)
         n_chunks = total_updates // val_every
@@ -724,23 +997,36 @@ def fit_dynamical_model(
         else (1.0,)
     )
 
+    h_grid = (
+        hysteresis_shrinkage_grid
+        if spec.family
+        in (
+            DynamicalModelFamily.MEMGRN,
+            DynamicalModelFamily.MEMGRN_ADDITIVE,
+            DynamicalModelFamily.MEMGRN_ORTHO,
+        )
+        else (1.0,)
+    )
+
     for seed in seeds:
         init_dict = _init_tree(spec, seed=seed)
         th0 = ravel_pytree({k: jnp.asarray(v) for k, v in init_dict.items()})[0]
         for reg in reg_grid:
             for g_sc in g_grid:
-                th_opt, val_l = run_single(
-                    th0,
-                    jnp.asarray(reg, dtype=jnp.float32),
-                    jnp.asarray(g_sc, dtype=jnp.float32),
-                )
-                v_float = float(val_l)
-                th_np = np.asarray(th_opt, dtype=np.float32)
-                if np.all(np.isfinite(th_np)) and v_float < best_overall_val:
-                    best_overall_val = v_float
-                    best_theta_np = th_np
-                    best_reg = reg
-                    best_seed = seed
+                for h_sc in h_grid:
+                    th_opt, val_l = run_single(
+                        th0,
+                        jnp.asarray(reg, dtype=jnp.float32),
+                        jnp.asarray(g_sc, dtype=jnp.float32),
+                        jnp.asarray(h_sc, dtype=jnp.float32),
+                    )
+                    v_float = float(val_l)
+                    th_np = np.asarray(th_opt, dtype=np.float32)
+                    if np.all(np.isfinite(th_np)) and v_float < best_overall_val:
+                        best_overall_val = v_float
+                        best_theta_np = th_np
+                        best_reg = reg
+                        best_seed = seed
 
     th_j = jnp.asarray(best_theta_np, dtype=jnp.float32)
 
@@ -923,7 +1209,9 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
     rng = np.random.default_rng(seed)
     n_g, r_dim, h_dim = spec.n_genes, spec.n_channels, spec.hidden_width
     s_reg = n_g if spec.regulator_indices is None else len(spec.regulator_indices)
-    base_rates = np.resize(np.array([0.35, 1.0, 2.8], dtype=np.float32), r_dim)
+    default_rates = (0.35, 1.0, 2.8) if spec.base_rates is None else spec.base_rates
+    base_rates = np.resize(np.array(default_rates, dtype=np.float32), r_dim)
+    base_rates = np.clip(base_rates, spec.rate_min + 1e-3, spec.rate_max - 1e-3)
     base_logits = np.log((base_rates - spec.rate_min) / (spec.rate_max - base_rates))
     fam = spec.family
 
@@ -937,17 +1225,26 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
     if fam in (ClosedLoopModelFamily.LOCAL_CONST, ClosedLoopModelFamily.MEMGRN):
         tree: dict[str, np.ndarray] = {
             "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
-            "delayed": rng.normal(0.0, 0.015, size=(s_reg, r_dim, n_g)).astype(np.float32),
             "decay": np.zeros((n_g,), dtype=np.float32),
             "in_gain": np.zeros((s_reg,), dtype=np.float32),
             "rate": np.broadcast_to(base_logits, (s_reg, r_dim)).copy(),
         }
+        if spec.readout_rank is not None:
+            k_r = spec.readout_rank
+            tree["delayed_u"] = rng.normal(
+                0.0, 0.15 / np.sqrt(s_reg * r_dim), size=(s_reg, r_dim, k_r)
+            ).astype(np.float32)
+            tree["delayed_v"] = rng.normal(
+                0.0, 0.15 / np.sqrt(k_r), size=(k_r, n_g)
+            ).astype(np.float32)
+        else:
+            tree["delayed"] = rng.normal(0.0, 0.015, size=(s_reg, r_dim, n_g)).astype(np.float32)
         if fam == ClosedLoopModelFamily.MEMGRN:
-            tree["rate_dn"] = np.broadcast_to(base_logits, (s_reg, r_dim)).copy()
+            tree["rate_asym"] = np.zeros((s_reg, r_dim), dtype=np.float32)
             tree["in_proj"] = rng.normal(0.0, 0.6, size=(3, h_dim)).astype(np.float32)
             tree["bias"] = rng.normal(0.0, 0.2, size=(h_dim,)).astype(np.float32)
             tree["out_proj"] = np.zeros((s_reg, r_dim, h_dim), dtype=np.float32)
-            tree["out_proj_dn"] = np.zeros((s_reg, r_dim, h_dim), dtype=np.float32)
+            tree["out_proj_asym"] = np.zeros((s_reg, r_dim, h_dim), dtype=np.float32)
             if spec.use_cooperativity:
                 k_c = spec.coop_rank
                 tree["coop_u"] = rng.normal(0.0, 0.25 / np.sqrt(s_reg), size=(s_reg, k_c)).astype(
@@ -1011,6 +1308,61 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
                 "e_rev": np.ones((s_reg, r_dim), dtype=np.float32),
                 "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
                 "delayed": rng.normal(0.0, 0.015, size=(s_reg, r_dim, n_g)).astype(np.float32),
+                "decay": np.zeros((n_g,), dtype=np.float32),
+                "in_gain": np.zeros((s_reg,), dtype=np.float32),
+            }
+        )
+
+    if fam == ClosedLoopModelFamily.SELECTIVE_SSM:
+        m_dim = spec.latent_dim
+        return _with_ext(
+            {
+                "alpha_log": np.zeros((m_dim,), dtype=np.float32),
+                "w_dt": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, m_dim)).astype(
+                    np.float32
+                ),
+                "b_dt": np.zeros((m_dim,), dtype=np.float32),
+                "w_b": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, m_dim)).astype(
+                    np.float32
+                ),
+                "w_gate": rng.normal(0.0, 0.35 / np.sqrt(s_reg), size=(s_reg, m_dim)).astype(
+                    np.float32
+                ),
+                "b_gate": np.zeros((m_dim,), dtype=np.float32),
+                "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
+                "readout": rng.normal(0.0, 0.02, size=(m_dim, n_g)).astype(np.float32),
+                "decay": np.zeros((n_g,), dtype=np.float32),
+                "in_gain": np.zeros((s_reg,), dtype=np.float32),
+            }
+        )
+
+    if fam == ClosedLoopModelFamily.CFC:
+        m_dim = spec.latent_dim
+        return _with_ext(
+            {
+                "w_f_x": rng.normal(0.0, 0.25 / np.sqrt(m_dim), size=(m_dim, m_dim)).astype(
+                    np.float32
+                ),
+                "w_f_a": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, m_dim)).astype(
+                    np.float32
+                ),
+                "b_f": np.zeros((m_dim,), dtype=np.float32),
+                "w_g_x": rng.normal(0.0, 0.25 / np.sqrt(m_dim), size=(m_dim, m_dim)).astype(
+                    np.float32
+                ),
+                "w_g_a": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, m_dim)).astype(
+                    np.float32
+                ),
+                "b_g": np.zeros((m_dim,), dtype=np.float32),
+                "w_h_x": rng.normal(0.0, 0.25 / np.sqrt(m_dim), size=(m_dim, m_dim)).astype(
+                    np.float32
+                ),
+                "w_h_a": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, m_dim)).astype(
+                    np.float32
+                ),
+                "b_h": np.zeros((m_dim,), dtype=np.float32),
+                "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
+                "readout": rng.normal(0.0, 0.02, size=(m_dim, n_g)).astype(np.float32),
                 "decay": np.zeros((n_g,), dtype=np.float32),
                 "in_gain": np.zeros((s_reg,), dtype=np.float32),
             }
@@ -1111,7 +1463,11 @@ def build_closed_loop_jax_rollout(
 
         if fam in (ClosedLoopModelFamily.LOCAL_CONST, ClosedLoopModelFamily.MEMGRN):
             d_hol = p["direct"] * off_diag
-            b_hol = p["delayed"] * off_diag[:, None, :]
+            if "delayed_u" in p:
+                b_full = jnp.einsum("srk,kg->srg", p["delayed_u"], p["delayed_v"])
+            else:
+                b_full = p["delayed"]
+            b_hol = b_full * off_diag[:, None, :]
             init_state = (
                 jnp.zeros((batch, s_reg, r_dim), dtype=theta.dtype),
                 jnp.zeros((batch, s_reg, r_dim), dtype=theta.dtype),
@@ -1135,11 +1491,15 @@ def build_closed_loop_jax_rollout(
                         + h[..., None] * p["in_proj"][2]
                     )
                     th_h = jnp.tanh(hid)
+                    r_up = p["rate"] + p["rate_asym"]
+                    r_dn = p["rate"] - p["rate_asym"]
+                    v_up = p["out_proj"] + p["out_proj_asym"]
+                    v_dn = p["out_proj"] - p["out_proj_asym"]
                     lam_up = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
-                        p["rate"][None] + jnp.sum(th_h * p["out_proj"][None], axis=-1)
+                        r_up[None] + jnp.sum(th_h * v_up[None], axis=-1)
                     )
                     lam_dn = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
-                        p["rate_dn"][None] + jnp.sum(th_h * p["out_proj_dn"][None], axis=-1)
+                        r_dn[None] + jnp.sum(th_h * v_dn[None], axis=-1)
                     )
                 dz = lam_up * (act[:, :, None] - z)
                 dh = lam_dn * (z - h)
@@ -1215,6 +1575,42 @@ def build_closed_loop_jax_rollout(
                     s_reg * r_dim, n_g
                 )
                 return dx, prod - decay[None] * y
+
+        elif fam == ClosedLoopModelFamily.SELECTIVE_SSM:
+            m_dim = spec.latent_dim
+            d_hol = p["direct"] * off_diag
+            init_state = (jnp.zeros((batch, m_dim), dtype=theta.dtype), y_start)
+
+            def rhs(state, u_step):
+                x, y = state
+                act = _gene_activity(y, u_step)
+                alpha = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
+                    p["alpha_log"]
+                )
+                delta_t = 0.25 + jax.nn.softplus(act @ p["w_dt"] + p["b_dt"])
+                sel_gate = jax.nn.sigmoid(act @ p["w_gate"] + p["b_gate"])
+                drive = sel_gate * (act @ p["w_b"])
+                dx = delta_t * (alpha[None] * (drive - x))
+                return dx, act @ d_hol + x @ p["readout"] - decay[None] * y
+
+        elif fam == ClosedLoopModelFamily.CFC:
+            m_dim = spec.latent_dim
+            d_hol = p["direct"] * off_diag
+            init_state = (jnp.zeros((batch, m_dim), dtype=theta.dtype), y_start)
+            sig_rest = jax.nn.sigmoid(-p["b_f"])
+            rest_x = sig_rest * jnp.tanh(p["b_g"]) + (1.0 - sig_rest) * jnp.tanh(p["b_h"])
+
+            def rhs(state, u_step):
+                x, y = state
+                act = _gene_activity(y, u_step)
+                f_gate = jax.nn.softplus(x @ p["w_f_x"] + act @ p["w_f_a"] + p["b_f"])
+                t_interp = jax.nn.sigmoid(-(f_gate * dt + p["b_f"]))
+                g_val = jnp.tanh(x @ p["w_g_x"] + act @ p["w_g_a"] + p["b_g"])
+                h_val = jnp.tanh(x @ p["w_h_x"] + act @ p["w_h_a"] + p["b_h"])
+                x_target = t_interp * g_val + (1.0 - t_interp) * h_val - rest_x[None]
+                # Continuous relaxation rate matching CfC step interpolation over dt
+                dx = (x_target - x) / dt
+                return dx, act @ d_hol + x @ p["readout"] - decay[None] * y
 
         elif fam == ClosedLoopModelFamily.PERTURB_ODE:
             d_hol = p["direct"] * off_diag
@@ -1303,9 +1699,11 @@ def fit_closed_loop_network(
     seeds: tuple[int, ...] = (101, 202),
     reg_grid: tuple[float, ...] = (1e-3, 5e-3, 2e-2),
     l1_graph_ratio: float = 0.25,
+    group_l21_scale: float = 0.0,
     total_updates: int = 900,
     lr_max: float = 0.006,
     gate_shrinkage: float = 3.0,
+    hysteresis_shrinkage: float = 4.0,
 ) -> TrainedClosedLoopModel:
     """Fit a closed-loop N-gene network with validation regularization selection."""
     forward, unpack, flat_template = build_closed_loop_jax_rollout(
@@ -1347,20 +1745,33 @@ def fit_closed_loop_network(
 
     def reg_penalty(theta):
         p = unpack(theta)
-        skip = {"decay", "rate", "rate_dn", "tau_log", "in_gain"}
+        skip = {"decay", "rate", "tau_log", "alpha_log", "in_gain"}
         l2 = sum(jnp.sum(v**2) for k, v in p.items() if k not in skip)
         l1 = jnp.asarray(0.0, dtype=theta.dtype)
         if "direct" in p:
             l1 = l1 + jnp.sum(jnp.abs(p["direct"]))
         if "delayed" in p:
             l1 = l1 + jnp.sum(jnp.abs(p["delayed"])) / float(spec.n_channels)
+        if "delayed_u" in p and "delayed_v" in p:
+            l1 = l1 + 0.5 * (jnp.sum(jnp.abs(p["delayed_u"])) + jnp.sum(jnp.abs(p["delayed_v"])))
         if "coop_w" in p:
             l1 = l1 + jnp.sum(jnp.abs(p["coop_w"]))
         if "out_proj" in p:
             l2 = l2 + gate_shrinkage * jnp.sum(p["out_proj"] ** 2)
-        if "out_proj_dn" in p:
-            l2 = l2 + gate_shrinkage * jnp.sum(p["out_proj_dn"] ** 2)
-        return (1.0 - l1_graph_ratio) * l2 + l1_graph_ratio * 0.2 * l1
+        if "out_proj_asym" in p:
+            l2 = l2 + gate_shrinkage * hysteresis_shrinkage * jnp.sum(p["out_proj_asym"] ** 2)
+        if "rate_asym" in p:
+            l2 = l2 + hysteresis_shrinkage * jnp.sum(p["rate_asym"] ** 2)
+        pen = (1.0 - l1_graph_ratio) * l2 + l1_graph_ratio * 0.2 * l1
+        if group_l21_scale > 0.0 and "direct" in p:
+            if "delayed" in p and p["delayed"].ndim == 3:
+                edge_sq = p["direct"] ** 2 + jnp.mean(p["delayed"] ** 2, axis=1)
+                pen = pen + group_l21_scale * jnp.sum(jnp.sqrt(edge_sq + 1e-6))
+            elif "delayed_u" in p and "delayed_v" in p:
+                b_eff = jnp.einsum("srk,kg->srg", p["delayed_u"], p["delayed_v"])
+                edge_sq = p["direct"] ** 2 + jnp.mean(b_eff**2, axis=1)
+                pen = pen + group_l21_scale * jnp.sum(jnp.sqrt(edge_sq + 1e-6))
+        return pen
 
     @jax.jit
     def run_single(theta0: jnp.ndarray, reg_val: jnp.ndarray):

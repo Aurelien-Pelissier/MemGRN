@@ -27,7 +27,9 @@ from memgrn.theory import (
     verify_coupled_crosstalk_theorem,
     verify_general_s_covariance_crosstalk_theorem,
     verify_iso_expression_proposition,
+    verify_ortho_ood_generalization_theorem,
     verify_orthogonal_cofactor_invariance_proposition,
+    verify_selective_ssm_crosstalk_corollary,
     verify_unit_dc_gain_and_second_order_vs_local_ltc,
 )
 
@@ -280,6 +282,23 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
     ):
         raise AssertionError("Expected strict 2nd-order post-shutoff peak separation")
 
+    # 10. Upgraded Proposition 1(iii) OOD generalization + Mamba/S6 Delta(a) cross-talk corollary
+    ortho_ood = verify_ortho_ood_generalization_theorem()
+    if ortho_ood.ood_counterfactual_drift_ortho >= 1e-13:
+        raise AssertionError("MemGRN-Ortho violated zero OOD counterfactual drift")
+    if ortho_ood.analytical_vs_empirical_ood_risk_diff >= 1e-12:
+        raise AssertionError("MemGRN-Ortho analytical OOD risk identity mismatch")
+    if ortho_ood.ood_mse_memgrn_ortho >= 0.5 * ortho_ood.ood_mse_observed_only:
+        raise AssertionError("Expected substantial OOD MSE reduction from MemGRN-Ortho")
+    if ortho_ood.ood_counterfactual_drift_unproj <= 0.05:
+        raise AssertionError("Expected unprojected cofactor attribution drift under OOD shift")
+
+    ssm_ct = verify_selective_ssm_crosstalk_corollary()
+    if ssm_ct.ssm_nonparent_delta_weight <= 0.5 or ssm_ct.ssm_ko_trajectory_l2_error <= 0.01:
+        raise AssertionError("Expected selective SSM Delta(a) cross-talk under knockout")
+    if ssm_ct.memgrn_ko_trajectory_l2_error >= 1e-13:
+        raise AssertionError("MemGRN violated selective SSM counterfactual invariance")
+
     summary = {
         "crosstalk_coupled_ko_l2_error": ct_res.coupled_ko_trajectory_l2_error,
         "crosstalk_coupled_false_attr_l2": ct_res.coupled_false_source2_attribution_l2,
@@ -312,6 +331,18 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
         "ortho_cofactor_weight_invariance_err": ortho_res.observed_weight_invariance_error,
         "ortho_unprojected_weight_theft_rel": ortho_res.unprojected_observed_weight_theft_rel_error,
         "ortho_mse_before_after": [ortho_res.mse_observed_only, ortho_res.mse_memgrn_ortho],
+        "ortho_ood_counterfactual_drift": ortho_ood.ood_counterfactual_drift_ortho,
+        "ortho_ood_unproj_drift": ortho_ood.ood_counterfactual_drift_unproj,
+        "ortho_ood_risk_identity_diff": ortho_ood.analytical_vs_empirical_ood_risk_diff,
+        "ortho_ood_mse_obs_ortho_unproj": [
+            ortho_ood.ood_mse_observed_only,
+            ortho_ood.ood_mse_memgrn_ortho,
+            ortho_ood.ood_mse_unproj_ridge,
+        ],
+        "selective_ssm_nonparent_delta_weight": ssm_ct.ssm_nonparent_delta_weight,
+        "selective_ssm_ko_l2_error": ssm_ct.ssm_ko_trajectory_l2_error,
+        "selective_ssm_false_nonparent_attr_l2": ssm_ct.ssm_false_nonparent_attribution_l2,
+        "selective_ssm_memgrn_ko_l2_error": ssm_ct.memgrn_ko_trajectory_l2_error,
         "max_swap_quadrature_error": max_swap_err,
         "swap_singular_values_4to1": [sv_sum, sv_diff],
         "swap_waveform_inversion_error": inversion_err,

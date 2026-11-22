@@ -23,6 +23,9 @@
     "memgrn",
     "memgrn_sym",
     "ltc_local",
+    "selective_ssm",
+    "cfc",
+    "neural_cde",
     "perturb_ode",
     "latent_ode"
   ],

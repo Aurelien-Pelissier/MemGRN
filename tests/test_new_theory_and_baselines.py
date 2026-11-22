@@ -200,3 +200,42 @@ def test_closed_loop_external_pulse_and_cooperativity_zero_equilibrium() -> None
     assert out_pulse.shape == (2, 4, 6)
     assert np.all(np.isfinite(out_pulse))
     assert float(np.max(np.abs(out_pulse[0]))) > 1e-4
+
+
+def test_ortho_ood_generalization_and_selective_ssm_corollary() -> None:
+    from memgrn.theory import (
+        verify_ortho_ood_generalization_theorem,
+        verify_selective_ssm_crosstalk_corollary,
+    )
+
+    ortho_ood = verify_ortho_ood_generalization_theorem()
+    assert ortho_ood.ood_counterfactual_drift_ortho < 1e-13
+    assert ortho_ood.analytical_vs_empirical_ood_risk_diff < 1e-12
+    assert ortho_ood.ood_mse_memgrn_ortho < 0.25 * ortho_ood.ood_mse_observed_only
+    assert ortho_ood.ood_counterfactual_drift_unproj > 0.1
+
+    ssm_ct = verify_selective_ssm_crosstalk_corollary()
+    assert ssm_ct.ssm_nonparent_delta_weight > 0.5
+    assert ssm_ct.ssm_ko_trajectory_l2_error > 0.05
+    assert ssm_ct.memgrn_ko_trajectory_l2_error < 1e-13
+
+
+def test_factorized_coop_and_hysteresis_extraction() -> None:
+    from memgrn.baselines import extract_memgrn_up_down
+
+    spec = ModelSpec(
+        family=DynamicalModelFamily.MEMGRN,
+        n_sources=6,
+        n_targets=10,
+        n_channels=3,
+        coop_rank=4,
+        use_cooperativity=True,
+    )
+    fwd, unpack, th0 = build_jax_rollout(spec, dt=0.2, obs_stride=2)
+    p = {k: np.asarray(v) for k, v in unpack(th0).items()}
+    r_up, r_dn, v_up, v_dn = extract_memgrn_up_down(p)
+    np.testing.assert_allclose(r_up, r_dn, atol=1e-7)
+    np.testing.assert_allclose(v_up, v_dn, atol=1e-7)
+    u_zero = np.zeros((8, 2, 6, 3), dtype=np.float32)
+    y0 = np.zeros((2, 10), dtype=np.float32)
+    np.testing.assert_allclose(np.asarray(fwd(th0, u_zero, y0)), 0.0, atol=1e-6)

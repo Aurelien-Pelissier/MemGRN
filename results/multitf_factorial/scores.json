@@ -1,157 +1,262 @@
 {
-  "design_sha256": "2a0b6b889d0f1879a443d7dd92f4939ce166ca12e48ff051820cd87f7c82e69f",
-  "elapsed_seconds": 1693.2511546611786,
+  "design_sha256": "262b18d79bc462f827b2a2d0360a021c0365476e6d57d38db3d5583c60b4bd0d",
+  "elapsed_seconds": 1882.3493249416351,
   "summary": {
     "additive": {
       "means": {
         "local_const": {
           "n_params": 816,
           "test_mse": 0.2922275081271783,
+          "test_mse_se": 0.035009335787381135,
           "single_ko_mse": 0.2779397914506468,
           "phase_lag_mse": 0.25352010005832143,
           "cross_combo_mse": 0.34522263287256655,
           "attribution_rmse": 0.21199675934104154,
+          "attribution_rmse_se": 0.012504235932910428,
           "spurious_crosstalk_rmse": 0.10619992099325441,
           "edge_auroc": 0.862401138117284,
-          "edge_ap": 0.6710348330174534
+          "edge_ap": 0.6710348330174534,
+          "edge_ap_se": 0.020142507007571493
         },
         "memgrn": {
           "n_params": 1824,
-          "test_mse": 0.20536783810849543,
-          "single_ko_mse": 0.17521668968643986,
-          "phase_lag_mse": 0.1867122304852875,
-          "cross_combo_mse": 0.2541745941537589,
-          "attribution_rmse": 0.18225567734536732,
-          "spurious_crosstalk_rmse": 0.09845310363583491,
-          "edge_auroc": 0.9089506172839505,
-          "edge_ap": 0.7697996872777355
+          "test_mse": 0.20161493257216132,
+          "test_mse_se": 0.02239299805493506,
+          "single_ko_mse": 0.1755450433668403,
+          "phase_lag_mse": 0.18221418662230093,
+          "cross_combo_mse": 0.2470855677273426,
+          "attribution_rmse": 0.17967135419989247,
+          "attribution_rmse_se": 0.009129427699715205,
+          "spurious_crosstalk_rmse": 0.09738429743918602,
+          "edge_auroc": 0.9066358024691357,
+          "edge_ap": 0.7717891096008597,
+          "edge_ap_se": 0.01403363258005844
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "test_mse": 0.20986541249686871,
-          "single_ko_mse": 0.18333703897951104,
-          "phase_lag_mse": 0.18980530365594528,
-          "cross_combo_mse": 0.25645389485514963,
-          "attribution_rmse": 0.18338289138009922,
-          "spurious_crosstalk_rmse": 0.10149646573461502,
-          "edge_auroc": 0.9014756944444445,
-          "edge_ap": 0.7584705155197856
+          "test_mse": 0.21154396788808746,
+          "test_mse_se": 0.02569311059985617,
+          "single_ko_mse": 0.18783605049370644,
+          "phase_lag_mse": 0.18930933234761108,
+          "cross_combo_mse": 0.25748652082294493,
+          "attribution_rmse": 0.18246167123089774,
+          "attribution_rmse_se": 0.009899156443237918,
+          "spurious_crosstalk_rmse": 0.10170230849998439,
+          "edge_auroc": 0.8987991898148148,
+          "edge_ap": 0.754633781221918,
+          "edge_ap_se": 0.013688925571218218
         },
         "coupled_const": {
           "n_params": 1008,
           "test_mse": 0.25320694531318866,
+          "test_mse_se": 0.02207639824534247,
           "single_ko_mse": 0.23542242478173306,
           "phase_lag_mse": 0.22326320362740895,
           "cross_combo_mse": 0.30093520753042385,
           "attribution_rmse": 0.19856305050059264,
+          "attribution_rmse_se": 0.007019845975082235,
           "spurious_crosstalk_rmse": 0.11395424391403498,
           "edge_auroc": 0.8457875192901234,
-          "edge_ap": 0.6456729820995786
+          "edge_ap": 0.6456729820995786,
+          "edge_ap_se": 0.01885493047450804
         },
         "coupled_adaptive": {
           "n_params": 1656,
           "test_mse": 0.26377931847629715,
+          "test_mse_se": 0.030965436669615654,
           "single_ko_mse": 0.22172633275637302,
           "phase_lag_mse": 0.24811924713096198,
           "cross_combo_mse": 0.32149237554155635,
           "attribution_rmse": 0.20704091443601977,
+          "attribution_rmse_se": 0.01250866757028937,
           "spurious_crosstalk_rmse": 0.09238692742317957,
           "edge_auroc": 0.8843436535493826,
-          "edge_ap": 0.7187261022800379
+          "edge_ap": 0.7187261022800379,
+          "edge_ap_se": 0.01912339115451508
         },
         "ltc_coupled": {
           "n_params": 1632,
           "test_mse": 0.4391825293343538,
+          "test_mse_se": 0.06390995931686766,
           "single_ko_mse": 0.36479766657731333,
           "phase_lag_mse": 0.4546097767233362,
           "cross_combo_mse": 0.49814014470241214,
           "attribution_rmse": 0.27209809018390063,
+          "attribution_rmse_se": 0.025121603743667256,
           "spurious_crosstalk_rmse": 0.1481274072814551,
           "edge_auroc": 0.7467447916666666,
-          "edge_ap": 0.4901777732981825
+          "edge_ap": 0.4901777732981825,
+          "edge_ap_se": 0.029819938620960263
         },
         "ltc_local": {
           "n_params": 960,
           "test_mse": 0.2068431990778823,
+          "test_mse_se": 0.02315655506906505,
           "single_ko_mse": 0.17713437588658365,
           "phase_lag_mse": 0.18591471962003137,
           "cross_combo_mse": 0.2574805017270319,
           "attribution_rmse": 0.18254655926840038,
+          "attribution_rmse_se": 0.011018835145367778,
           "spurious_crosstalk_rmse": 0.11812951578928509,
           "edge_auroc": 0.8932412229938271,
-          "edge_ap": 0.7421752625405063
+          "edge_ap": 0.7421752625405063,
+          "edge_ap_se": 0.02242450789057507
+        },
+        "selective_ssm": {
+          "n_params": 1440,
+          "test_mse": 0.2526250355520795,
+          "test_mse_se": 0.02680012478512523,
+          "single_ko_mse": 0.2152101867017947,
+          "phase_lag_mse": 0.23675800822009627,
+          "cross_combo_mse": 0.3059069117343476,
+          "attribution_rmse": 0.20248469671723465,
+          "attribution_rmse_se": 0.009445709399826994,
+          "spurious_crosstalk_rmse": 0.09549015618126909,
+          "edge_auroc": 0.8723476080246914,
+          "edge_ap": 0.6976011759621183,
+          "edge_ap_se": 0.017725482591200686
+        },
+        "cfc": {
+          "n_params": 3168,
+          "test_mse": 0.5086337951463232,
+          "test_mse_se": 0.04229698689729723,
+          "single_ko_mse": 0.47582413401429013,
+          "phase_lag_mse": 0.4297465948688742,
+          "cross_combo_mse": 0.6203306565558054,
+          "attribution_rmse": 0.28345371167363953,
+          "attribution_rmse_se": 0.012660014084487607,
+          "spurious_crosstalk_rmse": 0.1850892540654818,
+          "edge_auroc": 0.681688850308642,
+          "edge_ap": 0.4443921849023045,
+          "edge_ap_se": 0.011014219814315027
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "test_mse": 0.2324457388100991,
+          "test_mse_se": 0.02867478579671177,
+          "single_ko_mse": 0.19418036708518235,
+          "phase_lag_mse": 0.22119646460218265,
+          "cross_combo_mse": 0.2819603847429322,
+          "attribution_rmse": 0.19401174849280323,
+          "attribution_rmse_se": 0.011278854793340771,
+          "spurious_crosstalk_rmse": 0.09562707421448079,
+          "edge_auroc": 0.8850670331790124,
+          "edge_ap": 0.7309321227938143,
+          "edge_ap_se": 0.02233652227581011
         },
         "perturb_ode": {
           "n_params": 902,
           "test_mse": 0.3954922537414744,
+          "test_mse_se": 0.04442189761122733,
           "single_ko_mse": 0.3568218733680057,
           "phase_lag_mse": 0.3527322356691592,
           "cross_combo_mse": 0.47692265218725827,
           "attribution_rmse": 0.24984076079638318,
+          "attribution_rmse_se": 0.01465261949132704,
           "spurious_crosstalk_rmse": 0.14923178393602357,
           "edge_auroc": 0.7402343750000001,
-          "edge_ap": 0.5270802714504708
+          "edge_ap": 0.5270802714504708,
+          "edge_ap_se": 0.019755560283944533
         }
       },
       "comparisons": {
         "memgrn_vs_coupled_adaptive_mse": {
-          "mean_diff": -0.058411480367801714,
-          "pct_reduction_vs_b": 22.1440713036987,
+          "mean_diff": -0.06216438590413587,
+          "pct_reduction_vs_b": 23.566815724304725,
           "ci_95": [
-            -0.0881542777157949,
-            -0.02866868301980853
+            -0.09011341503685266,
+            -0.034215356771419084
           ],
-          "wins_a_lt_b": 11,
+          "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
           "n": 12
         },
         "memgrn_vs_coupled_adaptive_attr": {
-          "mean_diff": -0.024785237090652404,
-          "pct_reduction_vs_b": 11.971178333600163,
+          "mean_diff": -0.027369560236127244,
+          "pct_reduction_vs_b": 13.219396905525693,
           "ci_95": [
-            -0.03821012639834513,
-            -0.011360347782959674
+            -0.04088341237868488,
+            -0.013855708093569605
           ],
-          "wins_a_lt_b": 11,
+          "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
           "n": 12
         },
         "memgrn_vs_ltc_coupled_mse": {
-          "mean_diff": -0.2338146912258584,
-          "pct_reduction_vs_b": 53.23861392670587,
+          "mean_diff": -0.23756759676219255,
+          "pct_reduction_vs_b": 54.0931346067571,
           "ci_95": [
-            -0.33368183501972887,
-            -0.13394754743198795
+            -0.3438420364719805,
+            -0.13129315705240463
           ],
           "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
           "n": 12
         },
         "memgrn_vs_ltc_coupled_attr": {
-          "mean_diff": -0.08984241283853334,
-          "pct_reduction_vs_b": 33.01839155791658,
+          "mean_diff": -0.09242673598400815,
+          "pct_reduction_vs_b": 33.96816784768334,
           "ci_95": [
-            -0.12895008793844537,
-            -0.05073473773862132
+            -0.13426658851097711,
+            -0.05058688345703919
           ],
           "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
+          "n": 12
+        },
+        "memgrn_vs_selective_ssm_mse": {
+          "mean_diff": -0.05101010297991826,
+          "pct_reduction_vs_b": 20.192022088563853,
+          "ci_95": [
+            -0.0735390072080946,
+            -0.028481198751741914
+          ],
+          "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
+          "n": 12
+        },
+        "memgrn_vs_cfc_mse": {
+          "mean_diff": -0.30701886257416205,
+          "pct_reduction_vs_b": 60.36147529006386,
+          "ci_95": [
+            -0.3772083555761643,
+            -0.23682936957215983
+          ],
+          "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
+          "n": 12
+        },
+        "memgrn_vs_neural_cde_mse": {
+          "mean_diff": -0.030830806237937824,
+          "pct_reduction_vs_b": 13.263657314503662,
+          "ci_95": [
+            -0.05172400601822245,
+            -0.009937606457653202
+          ],
+          "wins_a_lt_b": 10,
+          "wilcoxon_p": 0.00341796875,
           "n": 12
         },
         "memgrn_vs_perturb_ode_mse": {
-          "mean_diff": -0.19012441563297897,
-          "pct_reduction_vs_b": 48.072854483076576,
+          "mean_diff": -0.1938773211693131,
+          "pct_reduction_vs_b": 49.021774594869036,
           "ci_95": [
-            -0.2633332303034889,
-            -0.11691560096246903
+            -0.2649747194010607,
+            -0.12277992293756552
           ],
           "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
           "n": 12
         },
         "memgrn_vs_local_const_mse": {
-          "mean_diff": -0.08685967001868283,
-          "pct_reduction_vs_b": 29.7233037968764,
+          "mean_diff": -0.09061257555501696,
+          "pct_reduction_vs_b": 31.007544818669885,
           "ci_95": [
-            -0.12374793475348805,
-            -0.049971405283877605
+            -0.12915755114712266,
+            -0.052067599962911264
           ],
           "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
           "n": 12
         }
       }
@@ -161,151 +266,256 @@
         "local_const": {
           "n_params": 816,
           "test_mse": 0.23559008264922623,
+          "test_mse_se": 0.025958330556400188,
           "single_ko_mse": 0.23277995632329726,
           "phase_lag_mse": 0.21387611618818894,
           "cross_combo_mse": 0.2601141754361925,
           "attribution_rmse": 0.19151133743763846,
+          "attribution_rmse_se": 0.008147963630918837,
           "spurious_crosstalk_rmse": 0.11666486649766934,
           "edge_auroc": 0.8471137152777778,
-          "edge_ap": 0.6314852963565833
+          "edge_ap": 0.6314852963565833,
+          "edge_ap_se": 0.02970086153206762
         },
         "memgrn": {
           "n_params": 1824,
-          "test_mse": 0.14965900165948817,
-          "single_ko_mse": 0.13897465036601883,
-          "phase_lag_mse": 0.13674293817186586,
-          "cross_combo_mse": 0.17325941644057977,
-          "attribution_rmse": 0.157750792405404,
-          "spurious_crosstalk_rmse": 0.10346338855712106,
-          "edge_auroc": 0.8976297260802472,
-          "edge_ap": 0.7615773239845401
+          "test_mse": 0.15420187594789728,
+          "test_mse_se": 0.013315601812099238,
+          "single_ko_mse": 0.1461481852607264,
+          "phase_lag_mse": 0.13832344361805995,
+          "cross_combo_mse": 0.17813399896490542,
+          "attribution_rmse": 0.15886163142670937,
+          "attribution_rmse_se": 0.005978876861635486,
+          "spurious_crosstalk_rmse": 0.1038076693462735,
+          "edge_auroc": 0.8966652199074074,
+          "edge_ap": 0.7586351871613007,
+          "edge_ap_se": 0.014197847863129942
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "test_mse": 0.16077137715121317,
-          "single_ko_mse": 0.15447954400711875,
-          "phase_lag_mse": 0.14451785592381483,
-          "cross_combo_mse": 0.1833167315227059,
-          "attribution_rmse": 0.16128110774141183,
-          "spurious_crosstalk_rmse": 0.10777236084201641,
-          "edge_auroc": 0.8929157021604938,
-          "edge_ap": 0.746110253169006
+          "test_mse": 0.1628676887067819,
+          "test_mse_se": 0.014327706344711469,
+          "single_ko_mse": 0.1542345993245484,
+          "phase_lag_mse": 0.14691705770269745,
+          "cross_combo_mse": 0.18745140909309976,
+          "attribution_rmse": 0.16289181427714397,
+          "attribution_rmse_se": 0.0063769169256867484,
+          "spurious_crosstalk_rmse": 0.10890807323815777,
+          "edge_auroc": 0.8930724344135803,
+          "edge_ap": 0.7459460137957473,
+          "edge_ap_se": 0.018214315188925464
         },
         "coupled_const": {
           "n_params": 1008,
           "test_mse": 0.24341542880791076,
+          "test_mse_se": 0.03332430805147172,
           "single_ko_mse": 0.24840408915009862,
           "phase_lag_mse": 0.2158075367770612,
           "cross_combo_mse": 0.26603466049657243,
           "attribution_rmse": 0.1889432105880203,
+          "attribution_rmse_se": 0.00869507071230306,
           "spurious_crosstalk_rmse": 0.12119438877989296,
           "edge_auroc": 0.8299696180555555,
-          "edge_ap": 0.6156561630458067
+          "edge_ap": 0.6156561630458067,
+          "edge_ap_se": 0.0338946728377119
         },
         "coupled_adaptive": {
           "n_params": 1656,
           "test_mse": 0.19834877036560708,
+          "test_mse_se": 0.02247647251282776,
           "single_ko_mse": 0.18601724627423377,
           "phase_lag_mse": 0.1846480908738556,
           "cross_combo_mse": 0.2243809739487319,
           "attribution_rmse": 0.17939430168486084,
+          "attribution_rmse_se": 0.009978022477805108,
           "spurious_crosstalk_rmse": 0.0946709622596257,
           "edge_auroc": 0.8882257908950618,
-          "edge_ap": 0.7338951358200677
+          "edge_ap": 0.7338951358200677,
+          "edge_ap_se": 0.019205692147566282
         },
         "ltc_coupled": {
           "n_params": 1632,
           "test_mse": 0.37700732581518565,
+          "test_mse_se": 0.054702532954279064,
           "single_ko_mse": 0.3161459983222518,
           "phase_lag_mse": 0.40278962396272594,
           "cross_combo_mse": 0.4120863551605792,
           "attribution_rmse": 0.27096211464973025,
+          "attribution_rmse_se": 0.031769799875090335,
           "spurious_crosstalk_rmse": 0.18720958573821847,
           "edge_auroc": 0.7559076003086419,
-          "edge_ap": 0.477354836555484
+          "edge_ap": 0.477354836555484,
+          "edge_ap_se": 0.028079317011608887
         },
         "ltc_local": {
           "n_params": 960,
           "test_mse": 0.1606348768392621,
+          "test_mse_se": 0.01341471403616022,
           "single_ko_mse": 0.1502739851014058,
           "phase_lag_mse": 0.14946223028714975,
           "cross_combo_mse": 0.18216841512923065,
           "attribution_rmse": 0.1620530372203463,
+          "attribution_rmse_se": 0.005469322065498521,
           "spurious_crosstalk_rmse": 0.12510077283248902,
           "edge_auroc": 0.8888044945987654,
-          "edge_ap": 0.7366225142548136
+          "edge_ap": 0.7366225142548136,
+          "edge_ap_se": 0.024599285522527416
+        },
+        "selective_ssm": {
+          "n_params": 1440,
+          "test_mse": 0.1850607398971512,
+          "test_mse_se": 0.01593725272447361,
+          "single_ko_mse": 0.17564455432302942,
+          "phase_lag_mse": 0.1749573105724017,
+          "cross_combo_mse": 0.20458035479602246,
+          "attribution_rmse": 0.17235187086759385,
+          "attribution_rmse_se": 0.006863313135440747,
+          "spurious_crosstalk_rmse": 0.09583578125921492,
+          "edge_auroc": 0.8743007330246914,
+          "edge_ap": 0.7070679793540103,
+          "edge_ap_se": 0.020404279804256967
+        },
+        "cfc": {
+          "n_params": 3168,
+          "test_mse": 0.44315484182601733,
+          "test_mse_se": 0.03999461505485115,
+          "single_ko_mse": 0.4199124200883475,
+          "phase_lag_mse": 0.38561361295584046,
+          "cross_combo_mse": 0.5239384924338639,
+          "attribution_rmse": 0.2695263139647313,
+          "attribution_rmse_se": 0.012275618456623468,
+          "spurious_crosstalk_rmse": 0.18651390202997487,
+          "edge_auroc": 0.6583960262345679,
+          "edge_ap": 0.420855759785133,
+          "edge_ap_se": 0.022545403792592858
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "test_mse": 0.17707579192399958,
+          "test_mse_se": 0.0217425541180097,
+          "single_ko_mse": 0.16703168720608072,
+          "phase_lag_mse": 0.16517531001860644,
+          "cross_combo_mse": 0.1990203785473115,
+          "attribution_rmse": 0.16819345814368025,
+          "attribution_rmse_se": 0.008810570813234022,
+          "spurious_crosstalk_rmse": 0.09716600199359177,
+          "edge_auroc": 0.8857663001543209,
+          "edge_ap": 0.7402489722077221,
+          "edge_ap_se": 0.01859016370337968
         },
         "perturb_ode": {
           "n_params": 902,
           "test_mse": 0.345441069506937,
+          "test_mse_se": 0.04179803290283772,
           "single_ko_mse": 0.3488543312912822,
           "phase_lag_mse": 0.2797978794507418,
           "cross_combo_mse": 0.40767099777878707,
           "attribution_rmse": 0.2325305914216055,
+          "attribution_rmse_se": 0.013341274682347682,
           "spurious_crosstalk_rmse": 0.1489789358415688,
           "edge_auroc": 0.744972511574074,
-          "edge_ap": 0.5134921836227148
+          "edge_ap": 0.5134921836227148,
+          "edge_ap_se": 0.018059799430237826
         }
       },
       "comparisons": {
         "memgrn_vs_coupled_adaptive_mse": {
-          "mean_diff": -0.04868976870611893,
-          "pct_reduction_vs_b": 24.54755258445581,
+          "mean_diff": -0.044146894417709824,
+          "pct_reduction_vs_b": 22.257205999480554,
           "ci_95": [
-            -0.0932084870036934,
-            -0.004171050408544458
+            -0.08947141428946725,
+            0.0011776254540475997
           ],
           "wins_a_lt_b": 9,
+          "wilcoxon_p": 0.021240234375,
           "n": 12
         },
         "memgrn_vs_coupled_adaptive_attr": {
-          "mean_diff": -0.02164350927945687,
-          "pct_reduction_vs_b": 12.064769658892327,
+          "mean_diff": -0.02053267025815148,
+          "pct_reduction_vs_b": 11.445553211729598,
           "ci_95": [
-            -0.03957075185610685,
-            -0.0037162667028068815
+            -0.03792724536831536,
+            -0.003138095147987595
           ],
           "wins_a_lt_b": 10,
+          "wilcoxon_p": 0.004638671875,
           "n": 12
         },
         "memgrn_vs_ltc_coupled_mse": {
-          "mean_diff": -0.22734832415569747,
-          "pct_reduction_vs_b": 60.30342345844676,
+          "mean_diff": -0.22280544986728834,
+          "pct_reduction_vs_b": 59.0984404309721,
           "ci_95": [
-            -0.34964692422051136,
-            -0.1050497240908836
+            -0.34447166069492385,
+            -0.10113923903965286
           ],
           "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
           "n": 12
         },
         "memgrn_vs_ltc_coupled_attr": {
-          "mean_diff": -0.11321132224432624,
-          "pct_reduction_vs_b": 41.781236609654194,
+          "mean_diff": -0.11210048322302085,
+          "pct_reduction_vs_b": 41.3712755998867,
           "ci_95": [
-            -0.18479721241556518,
-            -0.04162543207308729
+            -0.18393230473850056,
+            -0.04026866170754115
           ],
           "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
+          "n": 12
+        },
+        "memgrn_vs_selective_ssm_mse": {
+          "mean_diff": -0.030858863949253912,
+          "pct_reduction_vs_b": 16.674992203318727,
+          "ci_95": [
+            -0.04821527351727596,
+            -0.013502454381231863
+          ],
+          "wins_a_lt_b": 11,
+          "wilcoxon_p": 0.000732421875,
+          "n": 12
+        },
+        "memgrn_vs_cfc_mse": {
+          "mean_diff": -0.28895296587811997,
+          "pct_reduction_vs_b": 65.20361250877701,
+          "ci_95": [
+            -0.37567311563862216,
+            -0.20223281611761781
+          ],
+          "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
+          "n": 12
+        },
+        "memgrn_vs_neural_cde_mse": {
+          "mean_diff": -0.022873915976102305,
+          "pct_reduction_vs_b": 12.917585022530764,
+          "ci_95": [
+            -0.058516004582392186,
+            0.012768172630187577
+          ],
+          "wins_a_lt_b": 8,
+          "wilcoxon_p": 0.11669921875,
           "n": 12
         },
         "memgrn_vs_perturb_ode_mse": {
-          "mean_diff": -0.19578206784744878,
-          "pct_reduction_vs_b": 56.67596737321855,
+          "mean_diff": -0.1912391935590397,
+          "pct_reduction_vs_b": 55.360873515127686,
           "ci_95": [
-            -0.28311091282483447,
-            -0.1084532228700631
+            -0.27831315557042,
+            -0.10416523154765936
           ],
           "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
           "n": 12
         },
         "memgrn_vs_local_const_mse": {
-          "mean_diff": -0.08593108098973806,
-          "pct_reduction_vs_b": 36.47482951040948,
+          "mean_diff": -0.08138820670132894,
+          "pct_reduction_vs_b": 34.54653344746652,
           "ci_95": [
-            -0.13291737434499865,
-            -0.03894478763447747
+            -0.12700692669877223,
+            -0.035769486703885675
           ],
           "wins_a_lt_b": 12,
+          "wilcoxon_p": 0.000244140625,
           "n": 12
         }
       }
@@ -333,33 +543,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.012216588482260704,
+          "val_mse": 0.010943790897727013,
           "chosen_reg": 1e-05,
-          "test_mse": 0.2408010769331617,
+          "test_mse": 0.2401840814665468,
           "category_mse": {
-            "single_ko_in_module": 0.178753711095411,
-            "phase_lag_shift": 0.2488113106327815,
-            "cross_module_combo": 0.29483820907129255
+            "single_ko_in_module": 0.19821268948691034,
+            "phase_lag_shift": 0.2243670298337255,
+            "cross_module_combo": 0.29797252507900457
           },
-          "attribution_rmse": 0.22400510753630934,
-          "spurious_crosstalk_rmse": 0.09778623267705339,
-          "edge_auroc": 0.9199942129629631,
-          "edge_ap": 0.8035530157064418
+          "attribution_rmse": 0.2133884717445298,
+          "spurious_crosstalk_rmse": 0.09896847001432,
+          "edge_auroc": 0.9050925925925926,
+          "edge_ap": 0.7889492450309107
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.01237375009804964,
+          "val_mse": 0.010873955674469471,
           "chosen_reg": 1e-05,
-          "test_mse": 0.24084555997634108,
+          "test_mse": 0.22789788412947554,
           "category_mse": {
-            "single_ko_in_module": 0.1676734452906884,
-            "phase_lag_shift": 0.2522894116957132,
-            "cross_module_combo": 0.30257382294262164
+            "single_ko_in_module": 0.1808375998669124,
+            "phase_lag_shift": 0.22011653186585306,
+            "cross_module_combo": 0.2827395206556613
           },
-          "attribution_rmse": 0.22875153338864154,
-          "spurious_crosstalk_rmse": 0.1072312040882148,
-          "edge_auroc": 0.9006076388888888,
-          "edge_ap": 0.7781818807017138
+          "attribution_rmse": 0.2122745602895441,
+          "spurious_crosstalk_rmse": 0.09636087277466744,
+          "edge_auroc": 0.9150752314814814,
+          "edge_ap": 0.8055988082067226
         },
         "coupled_const": {
           "n_params": 1008,
@@ -421,6 +631,51 @@
           "edge_auroc": 0.8735532407407408,
           "edge_ap": 0.7049774591517602
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.013909186236560345,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.26880476811136617,
+          "category_mse": {
+            "single_ko_in_module": 0.19599108707805257,
+            "phase_lag_shift": 0.26114389233215757,
+            "cross_module_combo": 0.3492793249238884
+          },
+          "attribution_rmse": 0.22814590617490982,
+          "spurious_crosstalk_rmse": 0.10117726624866834,
+          "edge_auroc": 0.8940972222222223,
+          "edge_ap": 0.7368085042140358
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.04595739394426346,
+          "chosen_reg": 0.001,
+          "test_mse": 0.7659936761139634,
+          "category_mse": {
+            "single_ko_in_module": 0.5357735367319767,
+            "phase_lag_shift": 0.6898320211418676,
+            "cross_module_combo": 1.072375470468046
+          },
+          "attribution_rmse": 0.3605181031158807,
+          "spurious_crosstalk_rmse": 0.19218594093445784,
+          "edge_auroc": 0.7267071759259259,
+          "edge_ap": 0.4550796292222072
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.015332815237343311,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.3288676924312393,
+          "category_mse": {
+            "single_ko_in_module": 0.23228935367600595,
+            "phase_lag_shift": 0.3030332113154752,
+            "cross_module_combo": 0.45128051230223654
+          },
+          "attribution_rmse": 0.25784607500337087,
+          "spurious_crosstalk_rmse": 0.09380818868265481,
+          "edge_auroc": 0.9010416666666665,
+          "edge_ap": 0.7423776978632136
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.026820380240678787,
@@ -459,33 +714,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.006087158340960741,
+          "val_mse": 0.005978855304419994,
           "chosen_reg": 0.0001,
-          "test_mse": 0.14579988193336915,
+          "test_mse": 0.14518288178712474,
           "category_mse": {
-            "single_ko_in_module": 0.16680336817219465,
-            "phase_lag_shift": 0.12037733662036842,
-            "cross_module_combo": 0.15021894100754432
+            "single_ko_in_module": 0.16634356784290566,
+            "phase_lag_shift": 0.11931920610801229,
+            "cross_module_combo": 0.14988587141045628
           },
-          "attribution_rmse": 0.16026112936720208,
-          "spurious_crosstalk_rmse": 0.10511111823958813,
-          "edge_auroc": 0.8657407407407406,
-          "edge_ap": 0.6664212473029724
+          "attribution_rmse": 0.1591864952866935,
+          "spurious_crosstalk_rmse": 0.1028472622158541,
+          "edge_auroc": 0.8648726851851852,
+          "edge_ap": 0.694075272521288
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.006190043408423662,
+          "val_mse": 0.006181833799928427,
           "chosen_reg": 0.0001,
-          "test_mse": 0.15041496759763492,
+          "test_mse": 0.15000223120736114,
           "category_mse": {
-            "single_ko_in_module": 0.1722144637867321,
-            "phase_lag_shift": 0.12336778226386959,
-            "cross_module_combo": 0.15566265674230315
+            "single_ko_in_module": 0.17083660761368147,
+            "phase_lag_shift": 0.12324598944464389,
+            "cross_module_combo": 0.15592409656375805
           },
-          "attribution_rmse": 0.16218168209604827,
-          "spurious_crosstalk_rmse": 0.10531966810121715,
-          "edge_auroc": 0.8580729166666666,
-          "edge_ap": 0.6581425433746309
+          "attribution_rmse": 0.1619919405880156,
+          "spurious_crosstalk_rmse": 0.10463142744364211,
+          "edge_auroc": 0.8566261574074073,
+          "edge_ap": 0.6795345424071777
         },
         "coupled_const": {
           "n_params": 1008,
@@ -547,6 +802,51 @@
           "edge_auroc": 0.810763888888889,
           "edge_ap": 0.5576835715533629
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.008601381443440914,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.1618643218830309,
+          "category_mse": {
+            "single_ko_in_module": 0.18844246907198958,
+            "phase_lag_shift": 0.13159962841936268,
+            "cross_module_combo": 0.1655508681577404
+          },
+          "attribution_rmse": 0.16812685222434792,
+          "spurious_crosstalk_rmse": 0.09751851600043646,
+          "edge_auroc": 0.8177083333333335,
+          "edge_ap": 0.6456160738354894
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.0389404296875,
+          "chosen_reg": 0.001,
+          "test_mse": 0.3016845967304064,
+          "category_mse": {
+            "single_ko_in_module": 0.3119459860824975,
+            "phase_lag_shift": 0.18737110753737296,
+            "cross_module_combo": 0.4057366965713484
+          },
+          "attribution_rmse": 0.22049387039164536,
+          "spurious_crosstalk_rmse": 0.15996370541517022,
+          "edge_auroc": 0.6432291666666666,
+          "edge_ap": 0.42666257808844515
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.00795768667012453,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.1531641776986005,
+          "category_mse": {
+            "single_ko_in_module": 0.16820472009589335,
+            "phase_lag_shift": 0.12613450469283066,
+            "cross_module_combo": 0.16515330830707756
+          },
+          "attribution_rmse": 0.16631643097995577,
+          "spurious_crosstalk_rmse": 0.09839276306265715,
+          "edge_auroc": 0.83984375,
+          "edge_ap": 0.6091786794335469
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.02142942138016224,
@@ -585,33 +885,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.016381951048970222,
+          "val_mse": 0.01701595075428486,
           "chosen_reg": 1e-05,
-          "test_mse": 0.2745575359774732,
+          "test_mse": 0.2837220080408567,
           "category_mse": {
-            "single_ko_in_module": 0.21876416864817483,
-            "phase_lag_shift": 0.28915148344896113,
-            "cross_module_combo": 0.3157569558352835
+            "single_ko_in_module": 0.2283143507628292,
+            "phase_lag_shift": 0.2994455610672786,
+            "cross_module_combo": 0.3234061122924623
           },
-          "attribution_rmse": 0.19995462596795524,
-          "spurious_crosstalk_rmse": 0.10182555071830662,
-          "edge_auroc": 0.8739872685185185,
-          "edge_ap": 0.7051335228842944
+          "attribution_rmse": 0.20313950330595074,
+          "spurious_crosstalk_rmse": 0.10338075807228016,
+          "edge_auroc": 0.8624131944444443,
+          "edge_ap": 0.6859666790839843
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.016006045043468475,
+          "val_mse": 0.017022427171468735,
           "chosen_reg": 1e-05,
-          "test_mse": 0.28164572675794136,
+          "test_mse": 0.2896448938712783,
           "category_mse": {
-            "single_ko_in_module": 0.24118156473542346,
-            "phase_lag_shift": 0.2876235492237178,
-            "cross_module_combo": 0.31613206631468277
+            "single_ko_in_module": 0.24767397561159823,
+            "phase_lag_shift": 0.2963028703535879,
+            "cross_module_combo": 0.3249578356486488
           },
-          "attribution_rmse": 0.20119018223407084,
-          "spurious_crosstalk_rmse": 0.1029729272061619,
-          "edge_auroc": 0.8742766203703703,
-          "edge_ap": 0.7046039241473535
+          "attribution_rmse": 0.2034827794392334,
+          "spurious_crosstalk_rmse": 0.1035527528756615,
+          "edge_auroc": 0.868923611111111,
+          "edge_ap": 0.6851849702562883
         },
         "coupled_const": {
           "n_params": 1008,
@@ -673,6 +973,51 @@
           "edge_auroc": 0.8787615740740741,
           "edge_ap": 0.7468828862407303
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.03320547193288803,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.3529531900630527,
+          "category_mse": {
+            "single_ko_in_module": 0.29954331683552626,
+            "phase_lag_shift": 0.37299404596959057,
+            "cross_module_combo": 0.3863222073840412
+          },
+          "attribution_rmse": 0.22165811418575435,
+          "spurious_crosstalk_rmse": 0.08385746426258897,
+          "edge_auroc": 0.8647280092592592,
+          "edge_ap": 0.6944076757742975
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.08663810789585114,
+          "chosen_reg": 0.001,
+          "test_mse": 0.6745255428629037,
+          "category_mse": {
+            "single_ko_in_module": 0.5682743999906175,
+            "phase_lag_shift": 0.5998634380476386,
+            "cross_module_combo": 0.8554387905504549
+          },
+          "attribution_rmse": 0.31137964059312123,
+          "spurious_crosstalk_rmse": 0.2305344187187413,
+          "edge_auroc": 0.6801215277777778,
+          "edge_ap": 0.3741274955353148
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.022776544094085693,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.29523979627888325,
+          "category_mse": {
+            "single_ko_in_module": 0.2245944408671058,
+            "phase_lag_shift": 0.3194039060999272,
+            "cross_module_combo": 0.3417210418696166
+          },
+          "attribution_rmse": 0.204020882467662,
+          "spurious_crosstalk_rmse": 0.09917818024739343,
+          "edge_auroc": 0.8333333333333334,
+          "edge_ap": 0.6612277156640657
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.04286431521177292,
@@ -711,33 +1056,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.014265675097703934,
+          "val_mse": 0.013978234492242336,
           "chosen_reg": 1e-05,
-          "test_mse": 0.16626768627788377,
+          "test_mse": 0.1734995382799792,
           "category_mse": {
-            "single_ko_in_module": 0.2288739205835605,
-            "phase_lag_shift": 0.11944417151246167,
-            "cross_module_combo": 0.15048496673762912
+            "single_ko_in_module": 0.2354703689143746,
+            "phase_lag_shift": 0.12300779369795034,
+            "cross_module_combo": 0.1620204522276127
           },
-          "attribution_rmse": 0.1558667419261634,
-          "spurious_crosstalk_rmse": 0.09400012771131343,
-          "edge_auroc": 0.9150752314814814,
-          "edge_ap": 0.8086793511306865
+          "attribution_rmse": 0.15934484797833423,
+          "spurious_crosstalk_rmse": 0.0930245478061622,
+          "edge_auroc": 0.9127604166666665,
+          "edge_ap": 0.8182603101331686
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.01629794016480446,
+          "val_mse": 0.016227127984166145,
           "chosen_reg": 1e-05,
-          "test_mse": 0.17964075176166847,
+          "test_mse": 0.18339376797819434,
           "category_mse": {
-            "single_ko_in_module": 0.2447012683187955,
-            "phase_lag_shift": 0.13040187326926958,
-            "cross_module_combo": 0.16381911369694035
+            "single_ko_in_module": 0.25097659002904293,
+            "phase_lag_shift": 0.1283580636568746,
+            "cross_module_combo": 0.17084665024866552
           },
-          "attribution_rmse": 0.1590925813490783,
-          "spurious_crosstalk_rmse": 0.10447496387817143,
-          "edge_auroc": 0.9039351851851851,
-          "edge_ap": 0.7904164662868141
+          "attribution_rmse": 0.15909089294423295,
+          "spurious_crosstalk_rmse": 0.10345669949658028,
+          "edge_auroc": 0.9011863425925926,
+          "edge_ap": 0.8000351113957826
         },
         "coupled_const": {
           "n_params": 1008,
@@ -799,6 +1144,51 @@
           "edge_auroc": 0.9069733796296297,
           "edge_ap": 0.7824122319763682
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.01888667792081833,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.2715446353713173,
+          "category_mse": {
+            "single_ko_in_module": 0.3487951227756716,
+            "phase_lag_shift": 0.23241248516769078,
+            "cross_module_combo": 0.2334262981705895
+          },
+          "attribution_rmse": 0.20864960507782407,
+          "spurious_crosstalk_rmse": 0.11051381903072743,
+          "edge_auroc": 0.8505497685185186,
+          "edge_ap": 0.6177533366489235
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.07359597831964493,
+          "chosen_reg": 0.001,
+          "test_mse": 0.6043053637809197,
+          "category_mse": {
+            "single_ko_in_module": 0.9266309781858182,
+            "phase_lag_shift": 0.39871380571133247,
+            "cross_module_combo": 0.487571307445609
+          },
+          "attribution_rmse": 0.29914322155508327,
+          "spurious_crosstalk_rmse": 0.1694944736573026,
+          "edge_auroc": 0.6576967592592593,
+          "edge_ap": 0.46217839740320993
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.02896937169134617,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.2307625288115634,
+          "category_mse": {
+            "single_ko_in_module": 0.2567837568900609,
+            "phase_lag_shift": 0.2300127426557675,
+            "cross_module_combo": 0.2054910868888618
+          },
+          "attribution_rmse": 0.19732417030285243,
+          "spurious_crosstalk_rmse": 0.09903049624474328,
+          "edge_auroc": 0.8705150462962963,
+          "edge_ap": 0.7264826830354592
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.05193818733096123,
@@ -837,33 +1227,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.009193732403218746,
-          "chosen_reg": 1e-05,
-          "test_mse": 0.15681937976624757,
+          "val_mse": 0.007857785560190678,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.1527612956763217,
           "category_mse": {
-            "single_ko_in_module": 0.11932085410421155,
-            "phase_lag_shift": 0.1516141897162599,
-            "cross_module_combo": 0.19952309547827124
+            "single_ko_in_module": 0.11263469658511165,
+            "phase_lag_shift": 0.14618521989547054,
+            "cross_module_combo": 0.19946397054838289
           },
-          "attribution_rmse": 0.1574257666220083,
-          "spurious_crosstalk_rmse": 0.08362535023871458,
-          "edge_auroc": 0.9276620370370371,
-          "edge_ap": 0.8056502785722484
+          "attribution_rmse": 0.15645435289249843,
+          "spurious_crosstalk_rmse": 0.08487555937785428,
+          "edge_auroc": 0.9288194444444445,
+          "edge_ap": 0.8032602178893448
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.006702473387122154,
+          "val_mse": 0.006370482500642538,
           "chosen_reg": 1e-05,
-          "test_mse": 0.17004293683176785,
+          "test_mse": 0.15727158267238112,
           "category_mse": {
-            "single_ko_in_module": 0.13688798854298678,
-            "phase_lag_shift": 0.15730463509807896,
-            "cross_module_combo": 0.21593618685423788
+            "single_ko_in_module": 0.11945732485824781,
+            "phase_lag_shift": 0.14281073865833385,
+            "cross_module_combo": 0.2095466845005617
           },
-          "attribution_rmse": 0.1618902889371172,
-          "spurious_crosstalk_rmse": 0.087685252300944,
-          "edge_auroc": 0.9185474537037037,
-          "edge_ap": 0.7781368368909445
+          "attribution_rmse": 0.1583587825504646,
+          "spurious_crosstalk_rmse": 0.08958506389496033,
+          "edge_auroc": 0.9014756944444443,
+          "edge_ap": 0.7594633046459931
         },
         "coupled_const": {
           "n_params": 1008,
@@ -925,6 +1315,51 @@
           "edge_auroc": 0.9076967592592592,
           "edge_ap": 0.7941427650409582
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.018210215494036674,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.19976336180821747,
+          "category_mse": {
+            "single_ko_in_module": 0.16331962879916403,
+            "phase_lag_shift": 0.18855620662220743,
+            "cross_module_combo": 0.24741425000328096
+          },
+          "attribution_rmse": 0.1746837538891631,
+          "spurious_crosstalk_rmse": 0.08042979919002449,
+          "edge_auroc": 0.9006076388888888,
+          "edge_ap": 0.7525001432488696
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.0482933409512043,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.4364959931511979,
+          "category_mse": {
+            "single_ko_in_module": 0.31969006127748334,
+            "phase_lag_shift": 0.374612222335445,
+            "cross_module_combo": 0.6151856958406652
+          },
+          "attribution_rmse": 0.2540247951914182,
+          "spurious_crosstalk_rmse": 0.16309626619922896,
+          "edge_auroc": 0.6333912037037036,
+          "edge_ap": 0.3952120891848295
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.01013468112796545,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.18046676406056253,
+          "category_mse": {
+            "single_ko_in_module": 0.14373539939555385,
+            "phase_lag_shift": 0.18025344018291856,
+            "cross_module_combo": 0.21741145260321515
+          },
+          "attribution_rmse": 0.16666283175008678,
+          "spurious_crosstalk_rmse": 0.07911431580849054,
+          "edge_auroc": 0.8949652777777778,
+          "edge_ap": 0.7687005195509172
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.023048626258969307,
@@ -963,33 +1398,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.009382846765220165,
+          "val_mse": 0.00871606357395649,
           "chosen_reg": 1e-05,
-          "test_mse": 0.129686548276335,
+          "test_mse": 0.12745635628042165,
           "category_mse": {
-            "single_ko_in_module": 0.0860107536857292,
-            "phase_lag_shift": 0.12168019141027268,
-            "cross_module_combo": 0.18136869973300312
+            "single_ko_in_module": 0.08735694609369685,
+            "phase_lag_shift": 0.1200396699474624,
+            "cross_module_combo": 0.17497245280010576
           },
-          "attribution_rmse": 0.14716374143171143,
-          "spurious_crosstalk_rmse": 0.08847413937728833,
-          "edge_auroc": 0.9189814814814815,
-          "edge_ap": 0.814121570872322
+          "attribution_rmse": 0.14481892775967606,
+          "spurious_crosstalk_rmse": 0.09006989062972522,
+          "edge_auroc": 0.9149305555555557,
+          "edge_ap": 0.8086757443721035
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.009195667691528797,
+          "val_mse": 0.009536956436932087,
           "chosen_reg": 1e-05,
-          "test_mse": 0.13133996605126846,
+          "test_mse": 0.13298963539129321,
           "category_mse": {
-            "single_ko_in_module": 0.08365646621405837,
-            "phase_lag_shift": 0.13330985001452222,
-            "cross_module_combo": 0.17705358192522486
+            "single_ko_in_module": 0.09134393065751864,
+            "phase_lag_shift": 0.13088222571716185,
+            "cross_module_combo": 0.17674274979919918
           },
-          "attribution_rmse": 0.14956636675385865,
-          "spurious_crosstalk_rmse": 0.09163614233734063,
-          "edge_auroc": 0.9199942129629629,
-          "edge_ap": 0.8048025933452645
+          "attribution_rmse": 0.14679402617486192,
+          "spurious_crosstalk_rmse": 0.09667788510106595,
+          "edge_auroc": 0.8955439814814814,
+          "edge_ap": 0.7707542502986708
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1051,6 +1486,51 @@
           "edge_auroc": 0.9403935185185186,
           "edge_ap": 0.8847734772416157
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.02084624394774437,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.14470826343674942,
+          "category_mse": {
+            "single_ko_in_module": 0.07299968524742435,
+            "phase_lag_shift": 0.13576058552767517,
+            "cross_module_combo": 0.22536451953514872
+          },
+          "attribution_rmse": 0.1579358985262381,
+          "spurious_crosstalk_rmse": 0.08283873759950303,
+          "edge_auroc": 0.9107349537037038,
+          "edge_ap": 0.7803145185523134
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.050312407314777374,
+          "chosen_reg": 0.001,
+          "test_mse": 0.3668507442954687,
+          "category_mse": {
+            "single_ko_in_module": 0.313229167792483,
+            "phase_lag_shift": 0.3073416136782219,
+            "cross_module_combo": 0.4799814514157012
+          },
+          "attribution_rmse": 0.22801115546534514,
+          "spurious_crosstalk_rmse": 0.16928816001523553,
+          "edge_auroc": 0.6589988425925927,
+          "edge_ap": 0.44093424541254994
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.019028710201382637,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.1204519147727133,
+          "category_mse": {
+            "single_ko_in_module": 0.07240329221115971,
+            "phase_lag_shift": 0.11279126540423404,
+            "cross_module_combo": 0.17616118670274616
+          },
+          "attribution_rmse": 0.1411232090535804,
+          "spurious_crosstalk_rmse": 0.08078416098720555,
+          "edge_auroc": 0.9309895833333334,
+          "edge_ap": 0.8267063254126752
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.026559794321656227,
@@ -1089,33 +1569,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.011637138202786446,
+          "val_mse": 0.010803135111927986,
           "chosen_reg": 0.0001,
-          "test_mse": 0.13189187009690947,
+          "test_mse": 0.13735140517171907,
           "category_mse": {
-            "single_ko_in_module": 0.09932995096294933,
-            "phase_lag_shift": 0.1471498580338044,
-            "cross_module_combo": 0.14919580129397472
+            "single_ko_in_module": 0.10342391458800654,
+            "phase_lag_shift": 0.15290641447896033,
+            "cross_module_combo": 0.15572388644819035
           },
-          "attribution_rmse": 0.15205731661486158,
-          "spurious_crosstalk_rmse": 0.089278371895761,
-          "edge_auroc": 0.9305555555555554,
-          "edge_ap": 0.8401867080696617
+          "attribution_rmse": 0.15453804283943398,
+          "spurious_crosstalk_rmse": 0.08908784644576936,
+          "edge_auroc": 0.9291087962962963,
+          "edge_ap": 0.8370117846992304
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.010433866642415524,
+          "val_mse": 0.010824895463883877,
           "chosen_reg": 1e-05,
-          "test_mse": 0.11525219576313729,
+          "test_mse": 0.12728301950297818,
           "category_mse": {
-            "single_ko_in_module": 0.08674078015656847,
-            "phase_lag_shift": 0.12267741871291389,
-            "cross_module_combo": 0.13633838841992954
+            "single_ko_in_module": 0.10237678947963398,
+            "phase_lag_shift": 0.13582492047441885,
+            "cross_module_combo": 0.14364734855488173
           },
-          "attribution_rmse": 0.1457181431320392,
-          "spurious_crosstalk_rmse": 0.09342565876450475,
-          "edge_auroc": 0.9243344907407408,
-          "edge_ap": 0.8287064179162421
+          "attribution_rmse": 0.1491997218780901,
+          "spurious_crosstalk_rmse": 0.09373890061298505,
+          "edge_auroc": 0.9202835648148149,
+          "edge_ap": 0.8162120965243503
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1177,6 +1657,51 @@
           "edge_auroc": 0.8765914351851851,
           "edge_ap": 0.7126453796216636
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.015437179245054722,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.15589868636139703,
+          "category_mse": {
+            "single_ko_in_module": 0.1322094357000997,
+            "phase_lag_shift": 0.17161227314487748,
+            "cross_module_combo": 0.16387435023921404
+          },
+          "attribution_rmse": 0.16570803895425826,
+          "spurious_crosstalk_rmse": 0.08779655402504909,
+          "edge_auroc": 0.8738425925925927,
+          "edge_ap": 0.7350577322244723
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.05277485027909279,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.3776110830255535,
+          "category_mse": {
+            "single_ko_in_module": 0.2181469173528234,
+            "phase_lag_shift": 0.4007109050951282,
+            "cross_module_combo": 0.5139754266287088
+          },
+          "attribution_rmse": 0.26778312420501355,
+          "spurious_crosstalk_rmse": 0.20265061131617035,
+          "edge_auroc": 0.7272858796296297,
+          "edge_ap": 0.49187435495779314
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.02467994950711727,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.1136327151902609,
+          "category_mse": {
+            "single_ko_in_module": 0.08448979644271815,
+            "phase_lag_shift": 0.1340766064711841,
+            "cross_module_combo": 0.1223317426568804
+          },
+          "attribution_rmse": 0.14394134159643757,
+          "spurious_crosstalk_rmse": 0.08368126509660545,
+          "edge_auroc": 0.9165219907407408,
+          "edge_ap": 0.852112120734546
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.026354102417826653,
@@ -1215,33 +1740,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.028272904455661774,
-          "chosen_reg": 1e-05,
-          "test_mse": 0.35901550526138803,
+          "val_mse": 0.02795393206179142,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.31409463675843047,
           "category_mse": {
-            "single_ko_in_module": 0.2753763119068788,
-            "phase_lag_shift": 0.22470130278962286,
-            "cross_module_combo": 0.5769689010876623
+            "single_ko_in_module": 0.25230069290781226,
+            "phase_lag_shift": 0.1995762853049285,
+            "cross_module_combo": 0.4904069320625504
           },
-          "attribution_rmse": 0.2589875784761509,
-          "spurious_crosstalk_rmse": 0.09817188349468742,
-          "edge_auroc": 0.911892361111111,
-          "edge_ap": 0.7720702027534688
+          "attribution_rmse": 0.24053771442603927,
+          "spurious_crosstalk_rmse": 0.08877227565586003,
+          "edge_auroc": 0.9195601851851851,
+          "edge_ap": 0.799005527632449
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.029318714514374733,
-          "chosen_reg": 1e-05,
-          "test_mse": 0.3320828823864518,
+          "val_mse": 0.029102060943841934,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.3327214283130957,
           "category_mse": {
-            "single_ko_in_module": 0.2679367119028981,
-            "phase_lag_shift": 0.20633450622306182,
-            "cross_module_combo": 0.5219774290333955
+            "single_ko_in_module": 0.2691879360090834,
+            "phase_lag_shift": 0.21076828745443002,
+            "cross_module_combo": 0.5182080614757736
           },
-          "attribution_rmse": 0.24678595208293855,
-          "spurious_crosstalk_rmse": 0.09238847137227883,
-          "edge_auroc": 0.9147858796296297,
-          "edge_ap": 0.7974589949319794
+          "attribution_rmse": 0.24743869062128235,
+          "spurious_crosstalk_rmse": 0.09022480292662347,
+          "edge_auroc": 0.9120370370370369,
+          "edge_ap": 0.7771287033002044
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1303,6 +1828,51 @@
           "edge_auroc": 0.8723958333333335,
           "edge_ap": 0.7256051199219503
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.02939176931977272,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.3324202855478352,
+          "category_mse": {
+            "single_ko_in_module": 0.2560112359494764,
+            "phase_lag_shift": 0.2358283593729464,
+            "cross_module_combo": 0.5054212613210828
+          },
+          "attribution_rmse": 0.24680989088409763,
+          "spurious_crosstalk_rmse": 0.08760775841754176,
+          "edge_auroc": 0.8786168981481483,
+          "edge_ap": 0.7483503574401866
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.057775240391492844,
+          "chosen_reg": 0.001,
+          "test_mse": 0.5159542159834426,
+          "category_mse": {
+            "single_ko_in_module": 0.3653024267490876,
+            "phase_lag_shift": 0.41781628280274224,
+            "cross_module_combo": 0.764743938398498
+          },
+          "attribution_rmse": 0.3151429114150328,
+          "spurious_crosstalk_rmse": 0.17035389924594863,
+          "edge_auroc": 0.6396122685185185,
+          "edge_ap": 0.43145902044243317
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.03260209411382675,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.35622223740416503,
+          "category_mse": {
+            "single_ko_in_module": 0.2972991935827874,
+            "phase_lag_shift": 0.2407573591769374,
+            "cross_module_combo": 0.5306101594527703
+          },
+          "attribution_rmse": 0.25223729606265355,
+          "spurious_crosstalk_rmse": 0.08911757171269799,
+          "edge_auroc": 0.8867187500000001,
+          "edge_ap": 0.7626692145413495
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.03852974995970726,
@@ -1341,33 +1911,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.012342222966253757,
+          "val_mse": 0.011976141482591629,
           "chosen_reg": 1e-05,
-          "test_mse": 0.14174737752999725,
+          "test_mse": 0.1330594779797236,
           "category_mse": {
-            "single_ko_in_module": 0.11877574976520752,
-            "phase_lag_shift": 0.12498239230071838,
-            "cross_module_combo": 0.1814839905240658
+            "single_ko_in_module": 0.11159727742638226,
+            "phase_lag_shift": 0.11707307569768072,
+            "cross_module_combo": 0.17050808081510782
           },
-          "attribution_rmse": 0.166714577864739,
-          "spurious_crosstalk_rmse": 0.09655472101333347,
-          "edge_auroc": 0.898292824074074,
-          "edge_ap": 0.761194568378567
+          "attribution_rmse": 0.16222499054023667,
+          "spurious_crosstalk_rmse": 0.09674087758742908,
+          "edge_auroc": 0.89453125,
+          "edge_ap": 0.7587186731438859
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.012394939549267292,
+          "val_mse": 0.012719566002488136,
           "chosen_reg": 1e-05,
-          "test_mse": 0.1391077419066452,
+          "test_mse": 0.13382832396582195,
           "category_mse": {
-            "single_ko_in_module": 0.11831549102041877,
-            "phase_lag_shift": 0.12284018703995139,
-            "cross_module_combo": 0.17616754765956544
+            "single_ko_in_module": 0.11238328925621589,
+            "phase_lag_shift": 0.11821674803019105,
+            "cross_module_combo": 0.17088493461105897
           },
-          "attribution_rmse": 0.16626424047086916,
-          "spurious_crosstalk_rmse": 0.09431592426392481,
-          "edge_auroc": 0.8990162037037037,
-          "edge_ap": 0.7564761883845469
+          "attribution_rmse": 0.16409335788582902,
+          "spurious_crosstalk_rmse": 0.09717850031186663,
+          "edge_auroc": 0.8936631944444445,
+          "edge_ap": 0.7491333158591433
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1429,6 +1999,51 @@
           "edge_auroc": 0.9133391203703703,
           "edge_ap": 0.7554601451906072
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.018613385036587715,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.21401550995355192,
+          "category_mse": {
+            "single_ko_in_module": 0.15175140417369215,
+            "phase_lag_shift": 0.19179148389394618,
+            "cross_module_combo": 0.2985036417930174
+          },
+          "attribution_rmse": 0.2171380504976616,
+          "spurious_crosstalk_rmse": 0.10418250793455804,
+          "edge_auroc": 0.8223379629629629,
+          "edge_ap": 0.6169739179174393
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.044078581035137177,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.48862663199804224,
+          "category_mse": {
+            "single_ko_in_module": 0.47706705829897733,
+            "phase_lag_shift": 0.39858371620771454,
+            "cross_module_combo": 0.5902291214874347
+          },
+          "attribution_rmse": 0.3117576676094941,
+          "spurious_crosstalk_rmse": 0.23514886864840276,
+          "edge_auroc": 0.6984953703703703,
+          "edge_ap": 0.460397078020424
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.019763158634305,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.17863658379597885,
+          "category_mse": {
+            "single_ko_in_module": 0.1517358777443935,
+            "phase_lag_shift": 0.1742373357245794,
+            "cross_module_combo": 0.2099365379189636
+          },
+          "attribution_rmse": 0.19340585760731993,
+          "spurious_crosstalk_rmse": 0.09632143950181038,
+          "edge_auroc": 0.863570601851852,
+          "edge_ap": 0.7022428781241162
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.027427298948168755,
@@ -1467,33 +2082,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.004784326534718275,
+          "val_mse": 0.0045632123947143555,
           "chosen_reg": 0.0001,
-          "test_mse": 0.16217221786336308,
+          "test_mse": 0.16042848019484385,
           "category_mse": {
-            "single_ko_in_module": 0.10742543941436763,
-            "phase_lag_shift": 0.16036952232841786,
-            "cross_module_combo": 0.2187216918473038
+            "single_ko_in_module": 0.10691418141923369,
+            "phase_lag_shift": 0.15825939697820776,
+            "cross_module_combo": 0.21611186218709014
           },
-          "attribution_rmse": 0.15495627601917505,
-          "spurious_crosstalk_rmse": 0.09770712292979208,
-          "edge_auroc": 0.9105902777777777,
-          "edge_ap": 0.748106814743927
+          "attribution_rmse": 0.154122116233779,
+          "spurious_crosstalk_rmse": 0.09657065784568754,
+          "edge_auroc": 0.9143518518518517,
+          "edge_ap": 0.7546026472291798
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.004720516037195921,
-          "chosen_reg": 1e-05,
-          "test_mse": 0.16673446609301545,
+          "val_mse": 0.004759250674396753,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.165192928079671,
           "category_mse": {
-            "single_ko_in_module": 0.11098978665579654,
-            "phase_lag_shift": 0.162138057351994,
-            "cross_module_combo": 0.2270755542712559
+            "single_ko_in_module": 0.1119033794853413,
+            "phase_lag_shift": 0.16167818591157634,
+            "cross_module_combo": 0.22199721884209542
           },
-          "attribution_rmse": 0.15552646494034858,
-          "spurious_crosstalk_rmse": 0.10162502058637382,
-          "edge_auroc": 0.8919270833333334,
-          "edge_ap": 0.7343997482969864
+          "attribution_rmse": 0.15660390974972255,
+          "spurious_crosstalk_rmse": 0.0975534768112665,
+          "edge_auroc": 0.9071180555555555,
+          "edge_ap": 0.7391339119453145
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1555,6 +2170,51 @@
           "edge_auroc": 0.8965567129629631,
           "edge_ap": 0.7221223157268105
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.006857085507363081,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.18165784913252334,
+          "category_mse": {
+            "single_ko_in_module": 0.10717351877984435,
+            "phase_lag_shift": 0.19835924738565383,
+            "cross_module_combo": 0.23944078123207188
+          },
+          "attribution_rmse": 0.170841422383309,
+          "spurious_crosstalk_rmse": 0.09631954596123096,
+          "edge_auroc": 0.8945312499999999,
+          "edge_ap": 0.6964844770423788
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.046557579189538956,
+          "chosen_reg": 0.001,
+          "test_mse": 0.3518853365117388,
+          "category_mse": {
+            "single_ko_in_module": 0.3855883879566314,
+            "phase_lag_shift": 0.2758262973678554,
+            "cross_module_combo": 0.39424132421072977
+          },
+          "attribution_rmse": 0.22729056735774283,
+          "spurious_crosstalk_rmse": 0.14868651000412586,
+          "edge_auroc": 0.6916956018518517,
+          "edge_ap": 0.4345134191445901
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.008762761950492859,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.17922228415694935,
+          "category_mse": {
+            "single_ko_in_module": 0.1145884937608101,
+            "phase_lag_shift": 0.18046317746206983,
+            "cross_module_combo": 0.242615181247968
+          },
+          "attribution_rmse": 0.16798951490733824,
+          "spurious_crosstalk_rmse": 0.09952390077754586,
+          "edge_auroc": 0.8964120370370369,
+          "edge_ap": 0.6791144342799916
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.02576756849884987,
@@ -1593,33 +2253,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.017741763964295387,
+          "val_mse": 0.018693415448069572,
           "chosen_reg": 1e-05,
-          "test_mse": 0.19593637785426665,
+          "test_mse": 0.19865007234882914,
           "category_mse": {
-            "single_ko_in_module": 0.16272600823383943,
-            "phase_lag_shift": 0.21612798343100892,
-            "cross_module_combo": 0.20895514189795159
+            "single_ko_in_module": 0.16955500313615915,
+            "phase_lag_shift": 0.2184992537743676,
+            "cross_module_combo": 0.20789596013596068
           },
-          "attribution_rmse": 0.19198786619556693,
-          "spurious_crosstalk_rmse": 0.11115308674264547,
-          "edge_auroc": 0.9108796296296297,
-          "edge_ap": 0.7371437087612426
+          "attribution_rmse": 0.19329605727927304,
+          "spurious_crosstalk_rmse": 0.10685948147320214,
+          "edge_auroc": 0.9058159722222223,
+          "edge_ap": 0.7260065880903882
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.017896857112646103,
+          "val_mse": 0.019728712737560272,
           "chosen_reg": 1e-05,
-          "test_mse": 0.22399929525909082,
+          "test_mse": 0.23565218779589753,
           "category_mse": {
-            "single_ko_in_module": 0.20131137643391994,
-            "phase_lag_shift": 0.23736743066622593,
-            "cross_module_combo": 0.23331907867712656
+            "single_ko_in_module": 0.21580308370597792,
+            "phase_lag_shift": 0.24659637537714296,
+            "cross_module_combo": 0.24455710430457187
           },
-          "attribution_rmse": 0.19818794233436496,
-          "spurious_crosstalk_rmse": 0.11946342491694306,
-          "edge_auroc": 0.8880208333333334,
-          "edge_ap": 0.698649845801986
+          "attribution_rmse": 0.20244803270695855,
+          "spurious_crosstalk_rmse": 0.12105565901624933,
+          "edge_auroc": 0.8854166666666665,
+          "edge_ap": 0.6913292995208923
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1681,6 +2341,51 @@
           "edge_auroc": 0.9040798611111112,
           "edge_ap": 0.7153081748703837
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.049407441169023514,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.30406782050423437,
+          "category_mse": {
+            "single_ko_in_module": 0.29221688300575,
+            "phase_lag_shift": 0.29992547860857827,
+            "cross_module_combo": 0.32006109989837483
+          },
+          "attribution_rmse": 0.22732417520875545,
+          "spurious_crosstalk_rmse": 0.10602430614424883,
+          "edge_auroc": 0.8628472222222223,
+          "edge_ap": 0.6051079078787266
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.09519139677286148,
+          "chosen_reg": 0.001,
+          "test_mse": 0.5749335507979032,
+          "category_mse": {
+            "single_ko_in_module": 0.6534659729163943,
+            "phase_lag_shift": 0.5204562948926226,
+            "cross_module_combo": 0.5508783845846928
+          },
+          "attribution_rmse": 0.3156428909746638,
+          "spurious_crosstalk_rmse": 0.20499814496364116,
+          "edge_auroc": 0.6834490740740741,
+          "edge_ap": 0.4442861710687797
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.034991491585969925,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.2239569685618333,
+          "category_mse": {
+            "single_ko_in_module": 0.20773230878975188,
+            "phase_lag_shift": 0.24564029291496692,
+            "cross_module_combo": 0.21849830398078118
+          },
+          "attribution_rmse": 0.20272549271432194,
+          "spurious_crosstalk_rmse": 0.12485034657657357,
+          "edge_auroc": 0.8687789351851852,
+          "edge_ap": 0.6307606459890233
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.05218029394745827,
@@ -1719,33 +2424,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.03684601932764053,
+          "val_mse": 0.03585125878453255,
           "chosen_reg": 0.0001,
-          "test_mse": 0.3597185995315502,
+          "test_mse": 0.3529889568811384,
           "category_mse": {
-            "single_ko_in_module": 0.3404400396647538,
-            "phase_lag_shift": 0.31613702359877255,
-            "cross_module_combo": 0.42257873533112433
+            "single_ko_in_module": 0.3344168312386612,
+            "phase_lag_shift": 0.3078913326835666,
+            "cross_module_combo": 0.41665870672118743
           },
-          "attribution_rmse": 0.21768740012256454,
-          "spurious_crosstalk_rmse": 0.1177495385915349,
-          "edge_auroc": 0.9237557870370371,
-          "edge_ap": 0.775335258156992
+          "attribution_rmse": 0.215004730112265,
+          "spurious_crosstalk_rmse": 0.11741394214608793,
+          "edge_auroc": 0.9273726851851851,
+          "edge_ap": 0.7869366253843836
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.03847616910934448,
-          "chosen_reg": 0.0001,
-          "test_mse": 0.38727845957746143,
+          "val_mse": 0.03772391006350517,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.4026497317496015,
           "category_mse": {
-            "single_ko_in_module": 0.3684351246958465,
-            "phase_lag_shift": 0.3420089423120252,
-            "cross_module_combo": 0.4513913117245126
+            "single_ko_in_module": 0.38125209935122345,
+            "phase_lag_shift": 0.35691105122711875,
+            "cross_module_combo": 0.4697860446704623
           },
-          "attribution_rmse": 0.22543931884181573,
-          "spurious_crosstalk_rmse": 0.11741893099930492,
-          "edge_auroc": 0.9241898148148149,
-          "edge_ap": 0.7716707461589652
+          "attribution_rmse": 0.22776335994253769,
+          "spurious_crosstalk_rmse": 0.1264116607342443,
+          "edge_auroc": 0.9282407407407408,
+          "edge_ap": 0.7820970603024758
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1807,6 +2512,51 @@
           "edge_auroc": 0.9377893518518517,
           "edge_ap": 0.804089623949863
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.038637448102235794,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.4438017344516784,
+          "category_mse": {
+            "single_ko_in_module": 0.3740684530048455,
+            "phase_lag_shift": 0.4211124121964688,
+            "cross_module_combo": 0.5362243381537211
+          },
+          "attribution_rmse": 0.2427946526004963,
+          "spurious_crosstalk_rmse": 0.10761559936065167,
+          "edge_auroc": 0.8975694444444443,
+          "edge_ap": 0.7418394667682869
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.08748602122068405,
+          "chosen_reg": 0.001,
+          "test_mse": 0.6447388065043391,
+          "category_mse": {
+            "single_ko_in_module": 0.6347747148366911,
+            "phase_lag_shift": 0.5858314336085487,
+            "cross_module_combo": 0.7136102710677774
+          },
+          "attribution_rmse": 0.2902565922092336,
+          "spurious_crosstalk_rmse": 0.17467004966735644,
+          "edge_auroc": 0.7395833333333334,
+          "edge_ap": 0.5159817403470776
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.05475188419222832,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.4287252025584394,
+          "category_mse": {
+            "single_ko_in_module": 0.37630777156594736,
+            "phase_lag_shift": 0.40755373312530113,
+            "cross_module_combo": 0.5023141029840698
+          },
+          "attribution_rmse": 0.23454787946805924,
+          "spurious_crosstalk_rmse": 0.10372226187539137,
+          "edge_auroc": 0.9181134259259259,
+          "edge_ap": 0.8096125588968665
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.074106864631176,
@@ -1845,33 +2595,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.004994884133338928,
+          "val_mse": 0.005536487326025963,
           "chosen_reg": 1e-05,
-          "test_mse": 0.14934309185002648,
+          "test_mse": 0.15671589615715875,
           "category_mse": {
-            "single_ko_in_module": 0.14040916197161749,
-            "phase_lag_shift": 0.1143707620681309,
-            "cross_module_combo": 0.19324935151033104
+            "single_ko_in_module": 0.14706783559580247,
+            "phase_lag_shift": 0.11798110861313675,
+            "cross_module_combo": 0.20509874426253705
           },
-          "attribution_rmse": 0.13930133659668853,
-          "spurious_crosstalk_rmse": 0.09643417230341567,
-          "edge_auroc": 0.8857060185185185,
-          "edge_ap": 0.7410689167707188
+          "attribution_rmse": 0.1419817103889275,
+          "spurious_crosstalk_rmse": 0.09847310384438475,
+          "edge_auroc": 0.8797743055555557,
+          "edge_ap": 0.7378810967557526
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.007054269313812256,
+          "val_mse": 0.007037935312837362,
           "chosen_reg": 0.0001,
-          "test_mse": 0.1553049660154441,
+          "test_mse": 0.15839003149157535,
           "category_mse": {
-            "single_ko_in_module": 0.14460834778768583,
-            "phase_lag_shift": 0.12080047698103676,
-            "cross_module_combo": 0.2005060732776097
+            "single_ko_in_module": 0.14924923800775566,
+            "phase_lag_shift": 0.12232463055039577,
+            "cross_module_combo": 0.20359622591657459
           },
-          "attribution_rmse": 0.14329639952211604,
-          "spurious_crosstalk_rmse": 0.10074677716604076,
-          "edge_auroc": 0.8700810185185185,
-          "edge_ap": 0.6708664866240023
+          "attribution_rmse": 0.14370895995485677,
+          "spurious_crosstalk_rmse": 0.10303905575865643,
+          "edge_auroc": 0.8671874999999999,
+          "edge_ap": 0.6659421679644474
         },
         "coupled_const": {
           "n_params": 1008,
@@ -1933,6 +2683,51 @@
           "edge_auroc": 0.8232060185185185,
           "edge_ap": 0.6338221368628826
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.005634894594550133,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.189746932515721,
+          "category_mse": {
+            "single_ko_in_module": 0.18182140743015057,
+            "phase_lag_shift": 0.1634378062792453,
+            "cross_module_combo": 0.22398158383776703
+          },
+          "attribution_rmse": 0.1604665006787737,
+          "spurious_crosstalk_rmse": 0.0940306266131755,
+          "edge_auroc": 0.7983217592592594,
+          "edge_ap": 0.5578871072118552
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.027880646288394928,
+          "chosen_reg": 0.001,
+          "test_mse": 0.4132052370398081,
+          "category_mse": {
+            "single_ko_in_module": 0.47372119953124275,
+            "phase_lag_shift": 0.2831749490985668,
+            "cross_module_combo": 0.48271956248961484
+          },
+          "attribution_rmse": 0.23554424647729943,
+          "spurious_crosstalk_rmse": 0.21100036845067358,
+          "edge_auroc": 0.6472800925925926,
+          "edge_ap": 0.37800876735579686
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.008602514863014221,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.18566156774827872,
+          "category_mse": {
+            "single_ko_in_module": 0.18292087357512982,
+            "phase_lag_shift": 0.15394634960846762,
+            "cross_module_combo": 0.22011748006123874
+          },
+          "attribution_rmse": 0.15581166665526894,
+          "spurious_crosstalk_rmse": 0.09852827554178803,
+          "edge_auroc": 0.8093171296296297,
+          "edge_ap": 0.6107637420759137
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.011678856797516346,
@@ -1971,33 +2766,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.01434724684804678,
+          "val_mse": 0.015558229759335518,
           "chosen_reg": 1e-05,
-          "test_mse": 0.11817239702658,
+          "test_mse": 0.12109210586824025,
           "category_mse": {
-            "single_ko_in_module": 0.1078226643051788,
-            "phase_lag_shift": 0.11847548419037635,
-            "cross_module_combo": 0.12821904258418482
+            "single_ko_in_module": 0.11081313562655051,
+            "phase_lag_shift": 0.12151080373918417,
+            "cross_module_combo": 0.1309523782389861
           },
-          "attribution_rmse": 0.14158070337783746,
-          "spurious_crosstalk_rmse": 0.0974678963277656,
-          "edge_auroc": 0.9027777777777778,
-          "edge_ap": 0.7155301034347694
+          "attribution_rmse": 0.14298035723749092,
+          "spurious_crosstalk_rmse": 0.09730322392616589,
+          "edge_auroc": 0.9046585648148148,
+          "edge_ap": 0.7233433829956906
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.016725191846489906,
-          "chosen_reg": 1e-05,
-          "test_mse": 0.13529960182580078,
+          "val_mse": 0.017260391265153885,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.1280275187024327,
           "category_mse": {
-            "single_ko_in_module": 0.1373263686141999,
-            "phase_lag_shift": 0.13086775077323085,
-            "cross_module_combo": 0.13770468608997158
+            "single_ko_in_module": 0.12642439231560285,
+            "phase_lag_shift": 0.12849089852470524,
+            "cross_module_combo": 0.1291672652669901
           },
-          "attribution_rmse": 0.1486725187594352,
-          "spurious_crosstalk_rmse": 0.10383580458131136,
-          "edge_auroc": 0.8839699074074074,
-          "edge_ap": 0.6973075358016666
+          "attribution_rmse": 0.14257519944425756,
+          "spurious_crosstalk_rmse": 0.08948104506153183,
+          "edge_auroc": 0.90234375,
+          "edge_ap": 0.7714114487068002
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2059,6 +2854,51 @@
           "edge_auroc": 0.8666087962962963,
           "edge_ap": 0.671065914175463
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.025776483118534088,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.14454485747642842,
+          "category_mse": {
+            "single_ko_in_module": 0.12348735463671096,
+            "phase_lag_shift": 0.1578644897837241,
+            "cross_module_combo": 0.15228272800885026
+          },
+          "attribution_rmse": 0.14997132132938412,
+          "spurious_crosstalk_rmse": 0.0796986528900657,
+          "edge_auroc": 0.8914930555555555,
+          "edge_ap": 0.7340890507731945
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.058105695992708206,
+          "chosen_reg": 0.001,
+          "test_mse": 0.4063776722249219,
+          "category_mse": {
+            "single_ko_in_module": 0.40820350489400714,
+            "phase_lag_shift": 0.3841631117159781,
+            "cross_module_combo": 0.4267664000647804
+          },
+          "attribution_rmse": 0.2635959040429915,
+          "spurious_crosstalk_rmse": 0.1827848356926331,
+          "edge_auroc": 0.6672453703703702,
+          "edge_ap": 0.40072163951395323
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.019189482554793358,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.12321596799860633,
+          "category_mse": {
+            "single_ko_in_module": 0.09007747783534488,
+            "phase_lag_shift": 0.14856135011903146,
+            "cross_module_combo": 0.13100907604144266
+          },
+          "attribution_rmse": 0.13927744505624284,
+          "spurious_crosstalk_rmse": 0.08564879715114876,
+          "edge_auroc": 0.9105902777777777,
+          "edge_ap": 0.7648838962755776
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.043495941907167435,
@@ -2097,33 +2937,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.00744975870475173,
+          "val_mse": 0.007715458516031504,
           "chosen_reg": 1e-05,
-          "test_mse": 0.133687037107215,
+          "test_mse": 0.1409833350195281,
           "category_mse": {
-            "single_ko_in_module": 0.12219823666867663,
-            "phase_lag_shift": 0.12776840289422717,
-            "cross_module_combo": 0.15109447175874113
+            "single_ko_in_module": 0.1278828720001738,
+            "phase_lag_shift": 0.13603178001162636,
+            "cross_module_combo": 0.15903535304678412
           },
-          "attribution_rmse": 0.15616553864867216,
-          "spurious_crosstalk_rmse": 0.10205860527107674,
-          "edge_auroc": 0.8803530092592592,
-          "edge_ap": 0.760803891730303
+          "attribution_rmse": 0.16075373716710503,
+          "spurious_crosstalk_rmse": 0.10533775331247612,
+          "edge_auroc": 0.871383101851852,
+          "edge_ap": 0.749289476399087
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.00836952030658722,
+          "val_mse": 0.008951336145401001,
           "chosen_reg": 1e-05,
-          "test_mse": 0.13607686313710776,
+          "test_mse": 0.14704286529530552,
           "category_mse": {
-            "single_ko_in_module": 0.13681711153672926,
-            "phase_lag_shift": 0.12825744366588887,
-            "cross_module_combo": 0.14315603420870515
+            "single_ko_in_module": 0.14605347124550574,
+            "phase_lag_shift": 0.13959959155270385,
+            "cross_module_combo": 0.15547553308770692
           },
-          "attribution_rmse": 0.16012206377367563,
-          "spurious_crosstalk_rmse": 0.11067454120759711,
-          "edge_auroc": 0.8522858796296297,
-          "edge_ap": 0.7146722811580469
+          "attribution_rmse": 0.16738128410292522,
+          "spurious_crosstalk_rmse": 0.11656028487384917,
+          "edge_auroc": 0.8376736111111112,
+          "edge_ap": 0.6888158024839032
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2185,6 +3025,51 @@
           "edge_auroc": 0.8353587962962963,
           "edge_ap": 0.6626768183630196
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.009456826373934746,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.16620348710614988,
+          "category_mse": {
+            "single_ko_in_module": 0.13238004216438848,
+            "phase_lag_shift": 0.17476981748253448,
+            "cross_module_combo": 0.1914606016715267
+          },
+          "attribution_rmse": 0.17297766792650243,
+          "spurious_crosstalk_rmse": 0.09433790855304185,
+          "edge_auroc": 0.8635706018518517,
+          "edge_ap": 0.7300790404514369
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.06361297518014908,
+          "chosen_reg": 0.001,
+          "test_mse": 0.7862010565526453,
+          "category_mse": {
+            "single_ko_in_module": 0.793401713036071,
+            "phase_lag_shift": 0.6835761828896327,
+            "cross_module_combo": 0.881625273732232
+          },
+          "attribution_rmse": 0.36164538003508245,
+          "spurious_crosstalk_rmse": 0.14701020197158896,
+          "edge_auroc": 0.701388888888889,
+          "edge_ap": 0.4659243180488913
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.01571713574230671,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.23669312587531446,
+          "category_mse": {
+            "single_ko_in_module": 0.1970001064809009,
+            "phase_lag_shift": 0.22424582835029236,
+            "cross_module_combo": 0.28883344279475026
+          },
+          "attribution_rmse": 0.20937008927395032,
+          "spurious_crosstalk_rmse": 0.0983378892611314,
+          "edge_auroc": 0.8690682870370369,
+          "edge_ap": 0.7334453082598623
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.03353606536984444,
@@ -2223,33 +3108,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.012924110516905785,
+          "val_mse": 0.01374115515500307,
           "chosen_reg": 1e-05,
-          "test_mse": 0.2190799498090362,
+          "test_mse": 0.23198152359230467,
           "category_mse": {
-            "single_ko_in_module": 0.2178697142729682,
-            "phase_lag_shift": 0.21730452399810452,
-            "cross_module_combo": 0.22206561115603587
+            "single_ko_in_module": 0.23460775775379408,
+            "phase_lag_shift": 0.22864076197043412,
+            "cross_module_combo": 0.23269605105268576
           },
-          "attribution_rmse": 0.19877455479256126,
-          "spurious_crosstalk_rmse": 0.11969039645958793,
-          "edge_auroc": 0.9117476851851851,
-          "edge_ap": 0.7342396169715819
+          "attribution_rmse": 0.20344546349657,
+          "spurious_crosstalk_rmse": 0.12349187679086694,
+          "edge_auroc": 0.8965567129629629,
+          "edge_ap": 0.7241547762295307
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.014270070940256119,
+          "val_mse": 0.013970119878649712,
           "chosen_reg": 1e-05,
-          "test_mse": 0.22393016062187318,
+          "test_mse": 0.2228841003858049,
           "category_mse": {
-            "single_ko_in_module": 0.2236652849798941,
-            "phase_lag_shift": 0.2260080925793599,
-            "cross_module_combo": 0.2221171043063656
+            "single_ko_in_module": 0.22264157536991558,
+            "phase_lag_shift": 0.2208939792522793,
+            "cross_module_combo": 0.22511674653521968
           },
-          "attribution_rmse": 0.2013928541339931,
-          "spurious_crosstalk_rmse": 0.12262457339381617,
-          "edge_auroc": 0.9088541666666666,
-          "edge_ap": 0.7161874867716027
+          "attribution_rmse": 0.20142200062073376,
+          "spurious_crosstalk_rmse": 0.11977534759158857,
+          "edge_auroc": 0.9331597222222222,
+          "edge_ap": 0.7703729525929037
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2311,6 +3196,51 @@
           "edge_auroc": 0.9334490740740741,
           "edge_ap": 0.8044310685003451
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.01687353104352951,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.23630832920085107,
+          "category_mse": {
+            "single_ko_in_module": 0.23746387462078417,
+            "phase_lag_shift": 0.23981200371049813,
+            "cross_module_combo": 0.23164910927127094
+          },
+          "attribution_rmse": 0.20938566439391512,
+          "spurious_crosstalk_rmse": 0.10670865482978867,
+          "edge_auroc": 0.902054398148148,
+          "edge_ap": 0.706435740918813
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.048997387290000916,
+          "chosen_reg": 0.001,
+          "test_mse": 0.4482890371264874,
+          "category_mse": {
+            "single_ko_in_module": 0.4080422591544568,
+            "phase_lag_shift": 0.4258143343034846,
+            "cross_module_combo": 0.5110105179215209
+          },
+          "attribution_rmse": 0.2700748190318237,
+          "spurious_crosstalk_rmse": 0.15570801229548792,
+          "edge_auroc": 0.7099247685185185,
+          "edge_ap": 0.5013641356646393
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.016956452280282974,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.2107976263429839,
+          "category_mse": {
+            "single_ko_in_module": 0.19842080431054757,
+            "phase_lag_shift": 0.23526261301912388,
+            "cross_module_combo": 0.19870946169928033
+          },
+          "attribution_rmse": 0.2025681250557738,
+          "spurious_crosstalk_rmse": 0.10077180523777374,
+          "edge_auroc": 0.9334490740740741,
+          "edge_ap": 0.8089312735666164
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.02601444348692894,
@@ -2349,33 +3279,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.005078056827187538,
+          "val_mse": 0.005421389825642109,
           "chosen_reg": 1e-05,
-          "test_mse": 0.10189478299787211,
+          "test_mse": 0.10492874168144259,
           "category_mse": {
-            "single_ko_in_module": 0.08453324127915104,
-            "phase_lag_shift": 0.10409582710396006,
-            "cross_module_combo": 0.11705528061050524
+            "single_ko_in_module": 0.08701828093325958,
+            "phase_lag_shift": 0.10784808114219403,
+            "cross_module_combo": 0.11991986296887412
           },
-          "attribution_rmse": 0.13134058837739493,
-          "spurious_crosstalk_rmse": 0.09103301953649216,
-          "edge_auroc": 0.9327256944444445,
-          "edge_ap": 0.8225781133523179
+          "attribution_rmse": 0.13215342834116175,
+          "spurious_crosstalk_rmse": 0.09078464967419735,
+          "edge_auroc": 0.9346064814814815,
+          "edge_ap": 0.827719604243197
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.006194483954459429,
+          "val_mse": 0.006412783171981573,
           "chosen_reg": 1e-05,
-          "test_mse": 0.11082904251652928,
+          "test_mse": 0.1127528642270511,
           "category_mse": {
-            "single_ko_in_module": 0.10025578598464947,
-            "phase_lag_shift": 0.10712141086513577,
-            "cross_module_combo": 0.12510993069980259
+            "single_ko_in_module": 0.10164925703119307,
+            "phase_lag_shift": 0.10967184935706695,
+            "cross_module_combo": 0.1269374862928932
           },
-          "attribution_rmse": 0.12908226567517053,
-          "spurious_crosstalk_rmse": 0.09156688304782325,
-          "edge_auroc": 0.9506655092592594,
-          "edge_ap": 0.8764224447631009
+          "attribution_rmse": 0.13007402850329375,
+          "spurious_crosstalk_rmse": 0.09313903994532279,
+          "edge_auroc": 0.947482638888889,
+          "edge_ap": 0.8621507951678602
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2437,6 +3367,51 @@
           "edge_auroc": 0.9525462962962963,
           "edge_ap": 0.8734707856910782
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.009566551074385643,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.12638855395373497,
+          "category_mse": {
+            "single_ko_in_module": 0.12032326573216921,
+            "phase_lag_shift": 0.12460170480416109,
+            "cross_module_combo": 0.13424069132487457
+          },
+          "attribution_rmse": 0.14320386922171743,
+          "spurious_crosstalk_rmse": 0.08799697251085235,
+          "edge_auroc": 0.9228877314814815,
+          "edge_ap": 0.8002953161659999
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.02993873693048954,
+          "chosen_reg": 0.001,
+          "test_mse": 0.40108281655691724,
+          "category_mse": {
+            "single_ko_in_module": 0.30586696779200845,
+            "phase_lag_shift": 0.4253102819736049,
+            "cross_module_combo": 0.47207119990513846
+          },
+          "attribution_rmse": 0.2559985173599237,
+          "spurious_crosstalk_rmse": 0.1925411473160348,
+          "edge_auroc": 0.5946180555555555,
+          "edge_ap": 0.40102165748339463
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.011320485733449459,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.12438884463917563,
+          "category_mse": {
+            "single_ko_in_module": 0.1127749077094956,
+            "phase_lag_shift": 0.1134672790850266,
+            "cross_module_combo": 0.14692434712300462
+          },
+          "attribution_rmse": 0.1388573688845664,
+          "spurious_crosstalk_rmse": 0.08651342268753649,
+          "edge_auroc": 0.9305555555555557,
+          "edge_ap": 0.8229711308277693
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.015767404809594154,
@@ -2475,33 +3450,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.013954777270555496,
+          "val_mse": 0.014242270030081272,
           "chosen_reg": 0.0001,
-          "test_mse": 0.13862806277022338,
+          "test_mse": 0.14160313196665855,
           "category_mse": {
-            "single_ko_in_module": 0.14061380845194493,
-            "phase_lag_shift": 0.12709936357753662,
-            "cross_module_combo": 0.14817101628118856
+            "single_ko_in_module": 0.14489108935262443,
+            "phase_lag_shift": 0.12759783957518098,
+            "cross_module_combo": 0.15232046697217025
           },
-          "attribution_rmse": 0.14664571426898843,
-          "spurious_crosstalk_rmse": 0.10055998248286714,
-          "edge_auroc": 0.8865740740740743,
-          "edge_ap": 0.7452748243902771
+          "attribution_rmse": 0.14800188455573254,
+          "spurious_crosstalk_rmse": 0.10181099595478105,
+          "edge_auroc": 0.8815104166666665,
+          "edge_ap": 0.7334141537048843
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.01428708154708147,
+          "val_mse": 0.015154934488236904,
           "chosen_reg": 1e-05,
-          "test_mse": 0.1519881176490638,
+          "test_mse": 0.14835730113554232,
           "category_mse": {
-            "single_ko_in_module": 0.15351470248050847,
-            "phase_lag_shift": 0.14008380850442884,
-            "cross_module_combo": 0.1623658419622541
+            "single_ko_in_module": 0.15063128422749758,
+            "phase_lag_shift": 0.13709592628725817,
+            "cross_module_combo": 0.15734469289187125
           },
-          "attribution_rmse": 0.1536694016686792,
-          "spurious_crosstalk_rmse": 0.11220881038614976,
-          "edge_auroc": 0.8794849537037037,
-          "edge_ap": 0.7142262236535187
+          "attribution_rmse": 0.1527360084009617,
+          "spurious_crosstalk_rmse": 0.11120701768054146,
+          "edge_auroc": 0.8810763888888888,
+          "edge_ap": 0.6989123417809706
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2563,6 +3538,51 @@
           "edge_auroc": 0.8933738425925926,
           "edge_ap": 0.7016168010918761
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.014210749417543411,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.1531144963103404,
+          "category_mse": {
+            "single_ko_in_module": 0.15605289263150263,
+            "phase_lag_shift": 0.1458837917819496,
+            "cross_module_combo": 0.15740680451756903
+          },
+          "attribution_rmse": 0.15162710845281785,
+          "spurious_crosstalk_rmse": 0.08468965518331292,
+          "edge_auroc": 0.871527777777778,
+          "edge_ap": 0.7433640880624915
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.047416526824235916,
+          "chosen_reg": 0.001,
+          "test_mse": 0.26827143912365825,
+          "category_mse": {
+            "single_ko_in_module": 0.2617786959339566,
+            "phase_lag_shift": 0.26904126149309016,
+            "cross_module_combo": 0.2739943599439279
+          },
+          "attribution_rmse": 0.2087739193072227,
+          "spurious_crosstalk_rmse": 0.17734052275333442,
+          "edge_auroc": 0.627170138888889,
+          "edge_ap": 0.4042959927480358
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.019385095685720444,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.13623945877189547,
+          "category_mse": {
+            "single_ko_in_module": 0.12107949321208124,
+            "phase_lag_shift": 0.13907582220835824,
+            "cross_module_combo": 0.14856306089524685
+          },
+          "attribution_rmse": 0.1497950966781456,
+          "spurious_crosstalk_rmse": 0.09457454439179719,
+          "edge_auroc": 0.8600983796296297,
+          "edge_ap": 0.692347977674635
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.03204788640141487,
@@ -2601,33 +3621,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.014650528319180012,
+          "val_mse": 0.014699880965054035,
           "chosen_reg": 1e-05,
-          "test_mse": 0.226601221186551,
+          "test_mse": 0.22875121733368525,
           "category_mse": {
-            "single_ko_in_module": 0.2637299286751238,
-            "phase_lag_shift": 0.19891482096708038,
-            "cross_module_combo": 0.2171589139174488
+            "single_ko_in_module": 0.27500026823809726,
+            "phase_lag_shift": 0.19700622398125436,
+            "cross_module_combo": 0.21424715978170408
           },
-          "attribution_rmse": 0.18216527143452851,
-          "spurious_crosstalk_rmse": 0.12023022657447842,
-          "edge_auroc": 0.9199942129629629,
-          "edge_ap": 0.8272543005789107
+          "attribution_rmse": 0.1808733416314226,
+          "spurious_crosstalk_rmse": 0.1177897166913475,
+          "edge_auroc": 0.919704861111111,
+          "edge_ap": 0.8302339472520232
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.013897895812988281,
+          "val_mse": 0.014440995641052723,
           "chosen_reg": 1e-05,
-          "test_mse": 0.23449464435696554,
+          "test_mse": 0.2293475863215744,
           "category_mse": {
-            "single_ko_in_module": 0.27434113417280076,
-            "phase_lag_shift": 0.20481823767486243,
-            "cross_module_combo": 0.2243245612232334
+            "single_ko_in_module": 0.26981540969489404,
+            "phase_lag_shift": 0.19963703086104528,
+            "cross_module_combo": 0.2185903184087839
           },
-          "attribution_rmse": 0.1886831565972656,
-          "spurious_crosstalk_rmse": 0.13259249477717824,
-          "edge_auroc": 0.9105902777777778,
-          "edge_ap": 0.7812209830667052
+          "attribution_rmse": 0.18661947484824262,
+          "spurious_crosstalk_rmse": 0.13089460967698824,
+          "edge_auroc": 0.904513888888889,
+          "edge_ap": 0.7998570458567708
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2689,6 +3709,51 @@
           "edge_auroc": 0.9042245370370371,
           "edge_ap": 0.777048267679134
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.018155938014388084,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.32722845658138966,
+          "category_mse": {
+            "single_ko_in_module": 0.3851826746065616,
+            "phase_lag_shift": 0.27637559839900994,
+            "cross_module_combo": 0.32012709673859746
+          },
+          "attribution_rmse": 0.2168821470326604,
+          "spurious_crosstalk_rmse": 0.12440642354245908,
+          "edge_auroc": 0.8564814814814814,
+          "edge_ap": 0.7265499495052262
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.050342757254838943,
+          "chosen_reg": 0.001,
+          "test_mse": 0.535517445608864,
+          "category_mse": {
+            "single_ko_in_module": 0.5696628858259475,
+            "phase_lag_shift": 0.43093482602558514,
+            "cross_module_combo": 0.6059546249750594
+          },
+          "attribution_rmse": 0.28875791758176284,
+          "spurious_crosstalk_rmse": 0.20117453830843027,
+          "edge_auroc": 0.734664351851852,
+          "edge_ap": 0.5041520729445907
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.024211520329117775,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.38015105671880745,
+          "category_mse": {
+            "single_ko_in_module": 0.4643586338633606,
+            "phase_lag_shift": 0.30207501889038313,
+            "cross_module_combo": 0.3740195174026786
+          },
+          "attribution_rmse": 0.23096721636466047,
+          "spurious_crosstalk_rmse": 0.12109655977070691,
+          "edge_auroc": 0.8773148148148148,
+          "edge_ap": 0.7505960006325844
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.03607862815260887,
@@ -2727,33 +3792,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.013190038502216339,
+          "val_mse": 0.01340279821306467,
           "chosen_reg": 1e-05,
-          "test_mse": 0.09992526621073035,
+          "test_mse": 0.100358776313531,
           "category_mse": {
-            "single_ko_in_module": 0.07964191858236219,
-            "phase_lag_shift": 0.08706648921708955,
-            "cross_module_combo": 0.13306739083273925
+            "single_ko_in_module": 0.08069459776048978,
+            "phase_lag_shift": 0.08758752289182618,
+            "cross_module_combo": 0.13279420828827704
           },
-          "attribution_rmse": 0.139483577051218,
-          "spurious_crosstalk_rmse": 0.10394022406967651,
-          "edge_auroc": 0.8417245370370369,
-          "edge_ap": 0.6859344994938983
+          "attribution_rmse": 0.13876355884246733,
+          "spurious_crosstalk_rmse": 0.10230151315658015,
+          "edge_auroc": 0.8441840277777778,
+          "edge_ap": 0.6926846844682552
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.01625620387494564,
+          "val_mse": 0.017085986211895943,
           "chosen_reg": 1e-05,
-          "test_mse": 0.11294120112981763,
+          "test_mse": 0.11581837419410468,
           "category_mse": {
-            "single_ko_in_module": 0.09377257025897007,
-            "phase_lag_shift": 0.09672762087085461,
-            "cross_module_combo": 0.1483234122596282
+            "single_ko_in_module": 0.09623654854879679,
+            "phase_lag_shift": 0.10236550696640052,
+            "cross_module_combo": 0.1488530670671167
           },
-          "attribution_rmse": 0.14419439547374782,
-          "spurious_crosstalk_rmse": 0.10145416164625193,
-          "edge_auroc": 0.8373842592592591,
-          "edge_ap": 0.6746118500612385
+          "attribution_rmse": 0.1472061517669751,
+          "spurious_crosstalk_rmse": 0.10562572561097296,
+          "edge_auroc": 0.8356481481481483,
+          "edge_ap": 0.647864019950359
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2815,6 +3880,51 @@
           "edge_auroc": 0.8577835648148149,
           "edge_ap": 0.6537783826445593
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.016956651583313942,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.1286882970216978,
+          "category_mse": {
+            "single_ko_in_module": 0.12096950885579265,
+            "phase_lag_shift": 0.11023653457167208,
+            "cross_module_combo": 0.15485884763762867
+          },
+          "attribution_rmse": 0.14888188812625494,
+          "spurious_crosstalk_rmse": 0.09215542057182671,
+          "edge_auroc": 0.8369502314814815,
+          "edge_ap": 0.6034569601351376
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.052645374089479446,
+          "chosen_reg": 0.001,
+          "test_mse": 0.3336097809261073,
+          "category_mse": {
+            "single_ko_in_module": 0.345474985458903,
+            "phase_lag_shift": 0.26362823807787583,
+            "cross_module_combo": 0.3917261192415431
+          },
+          "attribution_rmse": 0.23321974530310197,
+          "spurious_crosstalk_rmse": 0.20999281772270947,
+          "edge_auroc": 0.5840567129629629,
+          "edge_ap": 0.31648981974339296
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.02131502330303192,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.11456204059280013,
+          "category_mse": {
+            "single_ko_in_module": 0.09968711384371237,
+            "phase_lag_shift": 0.10370543745821191,
+            "cross_module_combo": 0.1402935704764761
+          },
+          "attribution_rmse": 0.14313206632433284,
+          "spurious_crosstalk_rmse": 0.09151171370836515,
+          "edge_auroc": 0.8485243055555555,
+          "edge_ap": 0.6578464500763151
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.03249737620353699,
@@ -2853,33 +3963,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.010476353578269482,
+          "val_mse": 0.01048665214329958,
           "chosen_reg": 1e-05,
-          "test_mse": 0.14106581961357414,
+          "test_mse": 0.13795678751079338,
           "category_mse": {
-            "single_ko_in_module": 0.15491818235615443,
-            "phase_lag_shift": 0.10743376682504241,
-            "cross_module_combo": 0.16084550965952552
+            "single_ko_in_module": 0.15094958000831132,
+            "phase_lag_shift": 0.10559939200788071,
+            "cross_module_combo": 0.15732139051618807
           },
-          "attribution_rmse": 0.1614955866653364,
-          "spurious_crosstalk_rmse": 0.09153025485808203,
-          "edge_auroc": 0.880642361111111,
-          "edge_ap": 0.7432050320165836
+          "attribution_rmse": 0.1603294408848831,
+          "spurious_crosstalk_rmse": 0.09222476571498406,
+          "edge_auroc": 0.8953993055555555,
+          "edge_ap": 0.7527991698845363
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.01166479755192995,
-          "chosen_reg": 0.0001,
-          "test_mse": 0.14301012541311608,
+          "val_mse": 0.011588970199227333,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.14165250663178577,
           "category_mse": {
-            "single_ko_in_module": 0.164129905028719,
-            "phase_lag_shift": 0.10812190549310881,
-            "cross_module_combo": 0.1567785657175204
+            "single_ko_in_module": 0.15506867008699796,
+            "phase_lag_shift": 0.109068893493774,
+            "cross_module_combo": 0.1608199563145854
           },
-          "attribution_rmse": 0.1576038047913546,
-          "spurious_crosstalk_rmse": 0.08390797250329886,
-          "edge_auroc": 0.9069733796296297,
-          "edge_ap": 0.7946367119610941
+          "attribution_rmse": 0.16086096680910578,
+          "spurious_crosstalk_rmse": 0.0947280510035372,
+          "edge_auroc": 0.89453125,
+          "edge_ap": 0.756899441404974
         },
         "coupled_const": {
           "n_params": 1008,
@@ -2941,6 +4051,51 @@
           "edge_auroc": 0.923611111111111,
           "edge_ap": 0.8276861866471418
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.013441135175526142,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.18604305591042022,
+          "category_mse": {
+            "single_ko_in_module": 0.19796477421316194,
+            "phase_lag_shift": 0.15755580361309632,
+            "cross_module_combo": 0.2026085899050024
+          },
+          "attribution_rmse": 0.17904867066412564,
+          "spurious_crosstalk_rmse": 0.07292862173113189,
+          "edge_auroc": 0.898726851851852,
+          "edge_ap": 0.746706105100586
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.03772808238863945,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.2751300827168592,
+          "category_mse": {
+            "single_ko_in_module": 0.2517141044361181,
+            "phase_lag_shift": 0.24682993515813617,
+            "cross_module_combo": 0.3268462085563233
+          },
+          "attribution_rmse": 0.2268157075773872,
+          "spurious_crosstalk_rmse": 0.16464804371320163,
+          "edge_auroc": 0.7854456018518517,
+          "edge_ap": 0.5811991853605004
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.014174090698361397,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.11655362861296535,
+          "category_mse": {
+            "single_ko_in_module": 0.11347907262364743,
+            "phase_lag_shift": 0.11150226326537559,
+            "cross_module_combo": 0.12467954994987301
+          },
+          "attribution_rmse": 0.1444697178064023,
+          "spurious_crosstalk_rmse": 0.08229386740462352,
+          "edge_auroc": 0.9075520833333331,
+          "edge_ap": 0.808551133830851
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.028950950130820274,
@@ -2979,33 +4134,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.0075025432743132114,
+          "val_mse": 0.007686606142669916,
           "chosen_reg": 1e-05,
-          "test_mse": 0.1208403033280784,
+          "test_mse": 0.12357385484673948,
           "category_mse": {
-            "single_ko_in_module": 0.08766458889911147,
-            "phase_lag_shift": 0.11868554365536532,
-            "cross_module_combo": 0.15617077742975838
+            "single_ko_in_module": 0.09069396866585383,
+            "phase_lag_shift": 0.12041786831245756,
+            "cross_module_combo": 0.15960972756190708
           },
-          "attribution_rmse": 0.14977531306507222,
-          "spurious_crosstalk_rmse": 0.10527646943750277,
-          "edge_auroc": 0.8846932870370372,
-          "edge_ap": 0.7262819267467623
+          "attribution_rmse": 0.15155323585433264,
+          "spurious_crosstalk_rmse": 0.11064814103783485,
+          "edge_auroc": 0.8786168981481483,
+          "edge_ap": 0.7058107990527304
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.006880206521600485,
+          "val_mse": 0.0074406573548913,
           "chosen_reg": 1e-05,
-          "test_mse": 0.13114232945100482,
+          "test_mse": 0.12926138327373782,
           "category_mse": {
-            "single_ko_in_module": 0.09077537916310158,
-            "phase_lag_shift": 0.13087857903348804,
-            "cross_module_combo": 0.1717730301564248
+            "single_ko_in_module": 0.09074986329071355,
+            "phase_lag_shift": 0.12670979987502315,
+            "cross_module_combo": 0.1703244866554768
           },
-          "attribution_rmse": 0.1565411672664956,
-          "spurious_crosstalk_rmse": 0.11412360431658851,
-          "edge_auroc": 0.8778935185185185,
-          "edge_ap": 0.7273475058617439
+          "attribution_rmse": 0.15645009736945886,
+          "spurious_crosstalk_rmse": 0.11913501910713484,
+          "edge_auroc": 0.8796296296296297,
+          "edge_ap": 0.7143111505952727
         },
         "coupled_const": {
           "n_params": 1008,
@@ -3067,6 +4222,51 @@
           "edge_auroc": 0.8466435185185186,
           "edge_ap": 0.6369032364612061
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.0235323216766119,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.16218287553538963,
+          "category_mse": {
+            "single_ko_in_module": 0.12076197378190717,
+            "phase_lag_shift": 0.14850781908721944,
+            "cross_module_combo": 0.21727883373704232
+          },
+          "attribution_rmse": 0.16881035096325198,
+          "spurious_crosstalk_rmse": 0.10465129921148368,
+          "edge_auroc": 0.8738425925925926,
+          "edge_ap": 0.6786441964096545
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.0703129991889,
+          "chosen_reg": 0.001,
+          "test_mse": 0.5418610460172842,
+          "category_mse": {
+            "single_ko_in_module": 0.4314462325105113,
+            "phase_lag_shift": 0.39811241274822756,
+            "cross_module_combo": 0.7960244927931139
+          },
+          "attribution_rmse": 0.3165640651337566,
+          "spurious_crosstalk_rmse": 0.21640073693249356,
+          "edge_auroc": 0.6238425925925926,
+          "edge_ap": 0.3488796993812886
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.016975978389382362,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.14963203034827793,
+          "category_mse": {
+            "single_ko_in_module": 0.10541764999214163,
+            "phase_lag_shift": 0.1259946315119883,
+            "cross_module_combo": 0.21748380954070393
+          },
+          "attribution_rmse": 0.16620613576564985,
+          "spurious_crosstalk_rmse": 0.10413924625236444,
+          "edge_auroc": 0.8982928240740741,
+          "edge_ap": 0.7171079584231693
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.03484410420060158,
@@ -3105,33 +4305,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.026416286826133728,
+          "val_mse": 0.026002300903201103,
           "chosen_reg": 1e-05,
-          "test_mse": 0.14521556202873634,
+          "test_mse": 0.14681390964642435,
           "category_mse": {
-            "single_ko_in_module": 0.1527084647249741,
-            "phase_lag_shift": 0.11545962450956575,
-            "cross_module_combo": 0.16747859685166913
+            "single_ko_in_module": 0.15331948830642744,
+            "phase_lag_shift": 0.11577073728685436,
+            "cross_module_combo": 0.17135150334599125
           },
-          "attribution_rmse": 0.16702528105422776,
-          "spurious_crosstalk_rmse": 0.10549347619007342,
-          "edge_auroc": 0.9144965277777778,
-          "edge_ap": 0.8049653851088546
+          "attribution_rmse": 0.16894321012255445,
+          "spurious_crosstalk_rmse": 0.1030972411112264,
+          "edge_auroc": 0.9179687500000001,
+          "edge_ap": 0.8117174531734772
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.024587489664554596,
+          "val_mse": 0.026795687153935432,
           "chosen_reg": 1e-05,
-          "test_mse": 0.15430576556523182,
+          "test_mse": 0.15320979434318854,
           "category_mse": {
-            "single_ko_in_module": 0.16178643581266744,
-            "phase_lag_shift": 0.12642190328226116,
-            "cross_module_combo": 0.17470895760076685
+            "single_ko_in_module": 0.14919693904448528,
+            "phase_lag_shift": 0.12991894332779091,
+            "cross_module_combo": 0.18051350065728944
           },
-          "attribution_rmse": 0.1684392431544443,
-          "spurious_crosstalk_rmse": 0.11384492054715001,
-          "edge_auroc": 0.9107349537037037,
-          "edge_ap": 0.7893591371458336
+          "attribution_rmse": 0.1716057797674716,
+          "spurious_crosstalk_rmse": 0.11374632436677229,
+          "edge_auroc": 0.9100115740740741,
+          "edge_ap": 0.781012094596421
         },
         "coupled_const": {
           "n_params": 1008,
@@ -3193,6 +4393,51 @@
           "edge_auroc": 0.906105324074074,
           "edge_ap": 0.8158656718546858
         },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.05325451120734215,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.1951172692265573,
+          "category_mse": {
+            "single_ko_in_module": 0.1977540783791219,
+            "phase_lag_shift": 0.18898255863292515,
+            "cross_module_combo": 0.198615170667625
+          },
+          "attribution_rmse": 0.19002944438744515,
+          "spurious_crosstalk_rmse": 0.1136727440585593,
+          "edge_auroc": 0.8538773148148149,
+          "edge_ap": 0.6694652302623907
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.09460222721099854,
+          "chosen_reg": 0.001,
+          "test_mse": 0.44767521550688616,
+          "category_mse": {
+            "single_ko_in_module": 0.47818528291817813,
+            "phase_lag_shift": 0.36190710021149686,
+            "cross_module_combo": 0.5029332633909834
+          },
+          "attribution_rmse": 0.29047552997195636,
+          "spurious_crosstalk_rmse": 0.1837993728489871,
+          "edge_auroc": 0.5837673611111112,
+          "edge_ap": 0.33818138687409566
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.0523548498749733,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.1922541004179632,
+          "category_mse": {
+            "single_ko_in_module": 0.2303076637517254,
+            "phase_lag_shift": 0.16351481554924138,
+            "cross_module_combo": 0.1829398219529227
+          },
+          "attribution_rmse": 0.17364983565311357,
+          "spurious_crosstalk_rmse": 0.10831211194041661,
+          "edge_auroc": 0.8754340277777778,
+          "edge_ap": 0.7292046341844073
+        },
         "perturb_ode": {
           "n_params": 902,
           "val_mse": 0.07338985800743103,
@@ -3231,33 +4476,33 @@
         },
         "memgrn": {
           "n_params": 1824,
-          "val_mse": 0.007146821357309818,
-          "chosen_reg": 1e-05,
-          "test_mse": 0.2014545259852346,
+          "val_mse": 0.007532742340117693,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.21566323143826083,
           "category_mse": {
-            "single_ko_in_module": 0.11558589420496289,
-            "phase_lag_shift": 0.2042406490559115,
-            "cross_module_combo": 0.2845370346948295
+            "single_ko_in_module": 0.15083934888733205,
+            "phase_lag_shift": 0.1938892038846899,
+            "cross_module_combo": 0.3022611415427605
           },
-          "attribution_rmse": 0.17925604353232186,
-          "spurious_crosstalk_rmse": 0.10784593917443443,
-          "edge_auroc": 0.9301215277777778,
-          "edge_ap": 0.8317912772195045
+          "attribution_rmse": 0.17656020859786428,
+          "spurious_crosstalk_rmse": 0.10242905094043682,
+          "edge_auroc": 0.9356192129629631,
+          "edge_ap": 0.8145737017764435
         },
         "memgrn_additive": {
           "n_params": 1152,
-          "val_mse": 0.007654406130313873,
+          "val_mse": 0.008120302110910416,
           "chosen_reg": 0.0001,
-          "test_mse": 0.2399337081326031,
+          "test_mse": 0.26766793847927955,
           "category_mse": {
-            "single_ko_in_module": 0.17276150226549897,
-            "phase_lag_shift": 0.21410704136212194,
-            "cross_module_combo": 0.33293258077018834
+            "single_ko_in_module": 0.19309854303122276,
+            "phase_lag_shift": 0.2372276423839263,
+            "cross_module_combo": 0.37267763002268967
           },
-          "attribution_rmse": 0.18367602208056433,
-          "spurious_crosstalk_rmse": 0.10568778653099085,
-          "edge_auroc": 0.9260706018518517,
-          "edge_ap": 0.7964643911595194
+          "attribution_rmse": 0.19406181973744513,
+          "spurious_crosstalk_rmse": 0.10956535818099755,
+          "edge_auroc": 0.9236111111111112,
+          "edge_ap": 0.7938029044482852
         },
         "coupled_const": {
           "n_params": 1008,
@@ -3318,6 +4563,51 @@
           "spurious_crosstalk_rmse": 0.12254547866977814,
           "edge_auroc": 0.9227430555555555,
           "edge_ap": 0.7811049010863713
+        },
+        "selective_ssm": {
+          "n_params": 1440,
+          "val_mse": 0.010449529625475407,
+          "chosen_reg": 1e-05,
+          "test_mse": 0.20516226792713374,
+          "category_mse": {
+            "single_ko_in_module": 0.13357280482410186,
+            "phase_lag_shift": 0.21145979872278434,
+            "cross_module_combo": 0.2704542002345151
+          },
+          "attribution_rmse": 0.1769378172342775,
+          "spurious_crosstalk_rmse": 0.09475239541488137,
+          "edge_auroc": 0.9218750000000001,
+          "edge_ap": 0.7878429672513403
+        },
+        "cfc": {
+          "n_params": 3168,
+          "val_mse": 0.05102105438709259,
+          "chosen_reg": 0.001,
+          "test_mse": 0.46063727251176834,
+          "category_mse": {
+            "single_ko_in_module": 0.31145120956876815,
+            "phase_lag_shift": 0.4548707217744065,
+            "cross_module_combo": 0.6155898861921302
+          },
+          "attribution_rmse": 0.28285001575446694,
+          "spurious_crosstalk_rmse": 0.19576622635412347,
+          "edge_auroc": 0.6413483796296297,
+          "edge_ap": 0.4100304423030164
+        },
+        "neural_cde": {
+          "n_params": 3064,
+          "val_mse": 0.018014147877693176,
+          "chosen_reg": 0.0001,
+          "test_mse": 0.1547600550209263,
+          "category_mse": {
+            "single_ko_in_module": 0.08885644927488107,
+            "phase_lag_shift": 0.16075231115777722,
+            "cross_module_combo": 0.2146714046301207
+          },
+          "attribution_rmse": 0.16421673420605626,
+          "spurious_crosstalk_rmse": 0.09426379057544881,
+          "edge_auroc": 0.9089988425925926,
+          "edge_ap": 0.7863381606649642
         },
         "perturb_ode": {
           "n_params": 902,
