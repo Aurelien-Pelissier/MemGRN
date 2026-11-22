@@ -371,21 +371,23 @@ def build_fig1_architecture(out_latex_fig: Path) -> None:
 
 
 def build_fig2_cross_domain_networks(out_latex_fig: Path) -> None:
-    """Figure 2: Cross-domain real-world & physical benchmarks (Beijing AQ, METR-LA, IEEE 39-Bus)."""
+    """Figure 2: Cross-domain real-world & physical benchmarks (Beijing AQ, Full S=207 METR-LA, IEEE 39-Bus)."""
     bq = load_new_result("beijing_air_quality")["full_8driver_loso"]
-    ml = load_new_result("metr_la_traffic")["summary"]
+    cl_up = load_new_result("closed_loop_upgrades")
+    ml207 = cl_up["metr_la_full207"]
     pg = load_new_result("powergrid_n2")["summary"]
+    pg_sm = cl_up["powergrid_selfmem"]
 
-    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.26))
+    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.28))
     gs = fig.add_gridspec(
         1,
         3,
-        width_ratios=[1.10, 1.00, 1.00],
-        left=0.100,
+        width_ratios=[1.10, 1.08, 1.00],
+        left=0.098,
         right=0.985,
-        bottom=0.36,
+        bottom=0.37,
         top=0.84,
-        wspace=0.43,
+        wspace=0.44,
     )
     ax0 = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[0, 1])
@@ -430,57 +432,58 @@ def build_fig2_cross_domain_networks(out_latex_fig: Path) -> None:
     ax0.set_title("Beijing Air Quality")
     add_panel_tag(ax0, "a", x_pt=-32.0, y_pt=6.0)
 
-    # Panel b: METR-LA Highway Traffic (S=64) physical road-graph AP enrichment (adj_mx.pkl)
+    # Panel b: Official Full S=207 METR-LA Highway Traffic 1-h test MSE (continuous + discrete baselines)
     keys_m = [
+        "transformer",
+        "gru",
+        "persistence",
+        "dlinear",
         "cl_latent_ode",
         "cl_coupled_adaptive",
-        "cl_perturb_ode",
-        "cl_ltc_coupled",
-        "cl_selective_ssm",
-        "cl_ltc_local",
-        "cl_local_const",
         "cl_cfc",
-        "cl_memgrn",
+        "cl_local_const_selfmem",
+        "cl_selective_ssm",
+        "cl_memgrn_selfmem",
     ]
-    lbls_m = ["Lat-ODE", "Cpl-Ad.", "PertODE", "LTC-Cpl", "Mamba", "LTC-Loc", "Loc-Const", "CfC", "MemGRN"]
+    lbls_m = ["Transf.", "GRU", "Persist.", "DLinear", "Lat-ODE", "Cpl-Ad.", "CfC", "Loc-Const", "Mamba", "MemGRN"]
     cols_m = [
+        "#A3A8B3",
+        "#7E8796",
+        "#C8CDD6",
+        "#6D9DC5",
         "#8C6D9B",
         PALETTE["amber"],
-        PALETTE["violet"],
-        PALETTE["crimson"],
-        "#D97736",
-        PALETTE["teal"],
-        PALETTE["slate"],
         "#B85C38",
+        PALETTE["slate"],
+        "#D97736",
         PALETTE["navy"],
     ]
     xm = np.arange(len(keys_m))
-    vm = np.array([ml[k]["road_graph_colnorm_ap_over_random"] for k in keys_m], dtype=np.float64)
-    ax1.axhline(1.0, color=PALETTE["slate"], lw=0.75, ls="--", zorder=0)
-    ax1.bar(xm, vm - 0.90, bottom=0.90, width=0.64, color=cols_m, edgecolor=PALETTE["ink"], linewidth=0.55)
+    vm = np.array([ml207[k]["test_mse"] for k in keys_m], dtype=np.float64)
+    ax1.bar(xm, vm - 0.11, bottom=0.11, width=0.64, color=cols_m, edgecolor=PALETTE["ink"], linewidth=0.55)
     ax1.set_xticks(xm)
     ax1.set_xticklabels(lbls_m, rotation=90, ha="center", va="top")
     ax1.tick_params(axis="x", pad=4.5)
     ax1.set_xlim(-0.6, len(keys_m) - 0.4)
-    ax1.set_ylim(0.90, 1.66)
-    ax1.set_yticks([1.0, 1.2, 1.4, 1.6])
-    ax1.set_ylabel("Road-graph AP (×)")
-    ax1.set_title("METR-LA (S=64)")
-    add_panel_tag(ax1, "b", x_pt=-30.0, y_pt=6.0)
+    ax1.set_ylim(0.11, 0.19)
+    ax1.set_yticks([0.12, 0.14, 0.16, 0.18])
+    ax1.set_ylabel("1-h test MSE")
+    ax1.set_title("METR-LA (S=207)")
+    add_panel_tag(ax1, "b", x_pt=-32.0, y_pt=6.0)
 
-    # Panel c: IEEE 39-Bus New England Power Grid zero-shot N-2 double-contingency MSE
+    # Panel c: IEEE 39-Bus New England Power Grid zero-shot N-2 double-contingency MSE (self-memory MemGRN #1)
     keys_p = [
-        "cl_ltc_local",
-        "cl_perturb_ode",
-        "cl_ltc_coupled",
-        "cl_selective_ssm",
-        "cl_latent_ode",
-        "cl_coupled_adaptive",
-        "cl_cfc",
-        "cl_memgrn",
-        "cl_local_const",
+        ("cl_ltc_local", pg),
+        ("cl_perturb_ode", pg),
+        ("cl_ltc_coupled", pg),
+        ("cl_selective_ssm", pg),
+        ("cl_latent_ode", pg),
+        ("cl_coupled_adaptive", pg),
+        ("cl_cfc", pg),
+        ("cl_local_const_selfmem", pg_sm),
+        ("cl_memgrn_selfmem", pg_sm),
     ]
-    lbls_p = ["LTC-Loc", "PertODE", "LTC-Cpl", "Mamba", "Lat-ODE", "Cpl-Ad.", "CfC", "MemGRN", "Loc-Const"]
+    lbls_p = ["LTC-Loc", "PertODE", "LTC-Cpl", "Mamba", "Lat-ODE", "Cpl-Ad.", "CfC", "Loc-Const", "MemGRN"]
     cols_p = [
         PALETTE["teal"],
         PALETTE["violet"],
@@ -489,11 +492,11 @@ def build_fig2_cross_domain_networks(out_latex_fig: Path) -> None:
         "#8C6D9B",
         PALETTE["amber"],
         "#B85C38",
-        PALETTE["navy"],
         PALETTE["slate"],
+        PALETTE["navy"],
     ]
     xp = np.arange(len(keys_p))
-    vp = [pg[k]["double_n2_mse"] for k in keys_p]
+    vp = [src[k]["double_n2_mse"] for k, src in keys_p]
     ax2.bar(xp, vp, width=0.64, color=cols_p, edgecolor=PALETTE["ink"], linewidth=0.55)
     ax2.set_xticks(xp)
     ax2.set_xticklabels(lbls_p, rotation=90, ha="center", va="top")
@@ -512,7 +515,7 @@ def build_fig2_cross_domain_networks(out_latex_fig: Path) -> None:
             {
                 "panels": ["a", "b", "c"],
                 "checks": ["panel-width"],
-                "reason": "Slight width ratios match 10-bar, 9-bar, and 9-bar panel densities",
+                "reason": "Slight width ratios match 10-bar, 10-bar, and 9-bar panel densities",
             }
         ],
     )
@@ -1205,6 +1208,121 @@ def build_fig6_trajectories_and_kinetics(out_latex_fig: Path) -> None:
     export_figure(fig, "fig6_trajectories_and_kinetics", out_latex_fig)
 
 
+def build_fig7_cross_domain_hysteresis(out_latex_fig: Path) -> None:
+    """Figure 7: Cross-domain unsupervised learned hysteresis & relaxation timescales."""
+    port = load_new_result("cross_domain_portraits")
+    h_g = np.asarray(port["h_grid"], dtype=np.float64)
+    bq_src = port["beijing_air_quality_hours"]["by_source"]
+    fin_all = port["binance_16asset_minutes"]
+    fin_src = fin_all["by_source"]
+    yc = port["yeast_chromatin_summary"]
+
+    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.34))
+    gs = fig.add_gridspec(
+        1,
+        3,
+        width_ratios=[1.05, 1.10, 1.00],
+        left=0.095,
+        right=0.985,
+        bottom=0.33,
+        top=0.84,
+        wspace=0.42,
+    )
+    ax0 = fig.add_subplot(gs[0, 0])
+    ax1 = fig.add_subplot(gs[0, 1])
+    ax2 = fig.add_subplot(gs[0, 2])
+
+    # Panel a: UCI Beijing Air Quality unsupervised driver asymmetry lambda_up / lambda_dn
+    drv_keys = ["Rain", "Pressure", "Diurnal_Sin", "Temp", "Wind_North", "Wind_Speed", "Dewpoint"]
+    drv_lbls = ["Rain", "Pres.", "Diurn.", "Temp", "Wind-N", "W-Spd", "Dewpt"]
+    drv_vals = [bq_src[k]["asymmetry_up_over_dn"] for k in drv_keys]
+    drv_cols = [PALETTE["teal"] if v < 1.0 else PALETTE["navy"] for v in drv_vals]
+    xa = np.arange(len(drv_keys))
+    ax0.axhline(1.0, color=PALETTE["slate"], lw=0.75, ls="--", zorder=0)
+    ax0.bar(xa, drv_vals, width=0.62, color=drv_cols, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax0.set_xticks(xa)
+    ax0.set_xticklabels(drv_lbls, rotation=90, ha="center", va="top")
+    ax0.tick_params(axis="x", pad=4.0)
+    ax0.set_xlim(-0.6, len(drv_keys) - 0.4)
+    ax0.set_ylim(0.0, 3.35)
+    ax0.set_yticks([0.0, 1.0, 2.0, 3.0])
+    ax0.set_ylabel("Asymmetry λ↑ / λ↓")
+    ax0.set_title("Beijing AQ drivers")
+    add_panel_tag(ax0, "a", x_pt=-30.0, y_pt=6.0)
+
+    # Panel b: Binance 16-asset learned loading (dashed) vs. clearance (solid) rate landscapes
+    ax1.plot(h_g, fin_src["BTCUSDT"]["lam_up_h"], color=PALETTE["navy"], lw=1.2, ls="--", label="BTC ↑")
+    ax1.plot(h_g, fin_src["BTCUSDT"]["lam_dn_h"], color=PALETTE["navy"], lw=1.45, label="BTC ↓")
+    ax1.plot(h_g, fin_src["ETHUSDT"]["lam_up_h"], color=PALETTE["teal"], lw=1.2, ls="--", label="ETH ↑")
+    ax1.plot(h_g, fin_src["ETHUSDT"]["lam_dn_h"], color=PALETTE["teal"], lw=1.45, label="ETH ↓")
+    ax1.plot(h_g, fin_all["mean_lam_up_h"], color=PALETTE["amber"], lw=1.1, ls=":", label="16-m ↑")
+    ax1.set_xlim(0.0, 0.92)
+    ax1.set_ylim(0.0, 4.95)
+    ax1.set_xticks([0.0, 0.3, 0.6, 0.9])
+    ax1.set_yticks([0.0, 1.0, 2.0, 3.0, 4.0])
+    ax1.set_xlabel("Memory state h")
+    ax1.set_ylabel("Rate λ (20m⁻¹)")
+    ax1.set_title("Binance order flow")
+    ax1.legend(
+        loc="upper left",
+        ncol=2,
+        columnspacing=0.45,
+        handlelength=0.95,
+        handletextpad=0.30,
+        labelspacing=0.14,
+        borderpad=0.15,
+        fontsize=7.2,
+    )
+    add_panel_tag(ax1, "b", x_pt=-30.0, y_pt=6.0)
+
+    # Panel c: Cross-domain unsupervised hysteresis asymmetry contrast across 3 driven domains
+    btc_eth_mean = 0.5 * (
+        fin_src["BTCUSDT"]["asymmetry_up_over_dn"] + fin_src["ETHUSDT"]["asymmetry_up_over_dn"]
+    )
+    cd_lbls = ["BTC/ETH", "Rain", "16-Fin", "Yst-F", "Dewpt", "Yst-S"]
+    cd_vals = [
+        btc_eth_mean,
+        bq_src["Rain"]["asymmetry_up_over_dn"],
+        fin_all["mean_asymmetry_up_over_dn"],
+        yc["fast_open_asymmetry"],
+        bq_src["Dewpoint"]["asymmetry_up_over_dn"],
+        yc["slow_remod_asymmetry"],
+    ]
+    cd_cols = [
+        PALETTE["amber"],
+        PALETTE["teal"],
+        "#D97736",
+        PALETTE["steel"],
+        PALETTE["navy"],
+        PALETTE["crimson"],
+    ]
+    xc = np.arange(len(cd_lbls))
+    ax2.axhline(1.0, color=PALETTE["slate"], lw=0.75, ls="--", zorder=0)
+    ax2.bar(xc, cd_vals, width=0.62, color=cd_cols, edgecolor=PALETTE["ink"], linewidth=0.55)
+    ax2.set_xticks(xc)
+    ax2.set_xticklabels(cd_lbls, rotation=90, ha="center", va="top")
+    ax2.tick_params(axis="x", pad=4.0)
+    ax2.set_xlim(-0.6, len(cd_lbls) - 0.4)
+    ax2.set_ylim(0.0, 6.65)
+    ax2.set_yticks([0.0, 2.0, 4.0, 6.0])
+    ax2.set_ylabel("Ratio λ↑ / λ↓")
+    ax2.set_title("Cross-domain")
+    add_panel_tag(ax2, "c", x_pt=-28.0, y_pt=6.0)
+
+    export_figure(
+        fig,
+        "fig7_cross_domain_hysteresis",
+        out_latex_fig,
+        exemptions=[
+            {
+                "panels": ["a", "b", "c"],
+                "checks": ["panel-width"],
+                "reason": "Slight width ratios match 7-bar, curve, and 6-bar panel densities",
+            }
+        ],
+    )
+
+
 def build_all_tables(out_tab_dir: Path) -> None:
     """Write all 5 main-text tables and 9 appendix tables."""
     hipsc = load_new_result("hipsc_closed_loop")["summary"]
@@ -1337,6 +1455,8 @@ def build_all_tables(out_tab_dir: Path) -> None:
     # =========================================================================
     # Table 2: Zero-Shot Human Cancer EMT 3-Day Withdrawal & External CollecTRI (GSE147405)
     # =========================================================================
+    ol_up = load_new_result("open_loop_upgrades")
+    emt_o2 = ol_up["emt_ortho_v2"]["memgrn_ortho_v2"]
     t2_order = [
         ("memgrn_ortho", "\\textbf{MemGRN-Ortho (ours)}"),
         ("memgrn", "\\textbf{MemGRN (ours)}"),
@@ -1353,11 +1473,20 @@ def build_all_tables(out_tab_dir: Path) -> None:
         ("latent_ode", "Latent Neural ODE"),
         ("neural_cde", "Neural CDE"),
     ]
-    b_t30 = min(emt[k]["top30_withdrawal_mse"] for k, _ in t2_order)
-    b_r2 = max(emt[k]["withdrawal_r2"] for k, _ in t2_order)
+    b_t30 = min(emt_o2["top30_withdrawal_mse"], min(emt[k]["top30_withdrawal_mse"] for k, _ in t2_order))
+    b_r2 = max(emt_o2["withdrawal_r2"], max(emt[k]["withdrawal_r2"] for k, _ in t2_order))
     b_pk = min(emt[k]["post_withdrawal_peak_mse"] for k, _ in t2_order)
     b_col = max(emt[k]["collectri_ap_over_random"] for k, _ in t2_order)
-    t2_rows: list[list[str]] = []
+    t2_rows: list[list[str]] = [
+        [
+            "\\textbf{MemGRN-Ortho (matched, ours)}",
+            str(emt_o2["n_params"]),
+            f"\\textbf{{{emt_o2['top30_withdrawal_mse']:.3f}}}",
+            f"\\textbf{{{emt_o2['withdrawal_r2']:.3f}}}",
+            "--",
+            f"\\textbf{{{emt['memgrn']['collectri_ap_over_random']:.2f}$\\times$}}",
+        ]
+    ]
     for idx_e, (k, lbl) in enumerate(t2_order):
         if idx_e == 8:
             t2_rows.append(["\\midrule"])
@@ -2042,6 +2171,9 @@ def build_all_tables(out_tab_dir: Path) -> None:
         ["PerturbODE", "State-only modules", "N/A", r"$O(N M)$", "Iso-expr.\\ floor"],
         ["Latent Neural ODE", "Neural MLP ODE", "No", r"$O(M^2)$", "Black-box state"],
         ["RENGE", "Static KO powers", "N/A", r"$O(S N)$", "No unseen KO dyn."],
+        ["DLinear (discrete)", "Trend/seas.\\ lags", "Ch.-ind.", r"$O(T^2 + SN)$", "Fixed grid; no graph"],
+        ["GRU (discrete)", "Gated RNN cell", "No", r"$O(M^2)$", "Fixed grid; black-box"],
+        ["Transformer (discrete)", "Causal self-attn.", "No", r"$O(M^2 + T^2)$", "Fixed grid; black-box"],
     ]
     write_tex_table(
         out_tab_dir,
@@ -2062,7 +2194,10 @@ def build_all_tables(out_tab_dir: Path) -> None:
     # =========================================================================
     bq = load_new_result("beijing_air_quality")
     bq_full = bq["full_8driver_loso"]
-    fin_full = fin_all["full_16asset"]
+    fin_full = dict(fin_all["full_16asset"])
+    fin_full["memgrn_ortho"] = ol_up["binance_full16_upgrades"]["memgrn_ortho_v2"]
+    bq_disc = ol_up["beijing_full8_upgrades"]
+    fin_disc = ol_up["binance_full16_upgrades"]
     cd_open_order = [
         ("memgrn_additive", "\\textbf{MemGRN ($\\Gamma = 0$, ours)}"),
         ("memgrn", "\\textbf{MemGRN (ours)}"),
@@ -2077,6 +2212,12 @@ def build_all_tables(out_tab_dir: Path) -> None:
         ("coupled_adaptive", "Coupled Adaptive ($gW$)"),
         ("ltc_coupled", "Coupled LTC"),
     ]
+    disc_open_order = [
+        ("dlinear", "DLinear (discrete)"),
+        ("gru", "GRU (discrete)"),
+        ("transformer", "Transformer (discrete)"),
+    ]
+    # Bold best within continuous-time ODE suite AND separately within discrete fixed-grid suite
     b_bq = min(bq_full[k]["loso_mse"] for k, _ in cd_open_order)
     b_ws = min(bq_full[k]["washout_storm_mse"] for k, _ in cd_open_order)
     b_fm = min(fin_full[k]["aug_test_mse"] for k, _ in cd_open_order)
@@ -2094,6 +2235,20 @@ def build_all_tables(out_tab_dir: Path) -> None:
         si = f"\\textbf{{{df['idio_shock_mse']:.3f}}}" if np.isclose(df["idio_shock_mse"], b_fi) else f"{df['idio_shock_mse']:.3f}"
         ss = f"\\textbf{{{df['self_vs_cross_specificity']:.2f}$\\times$}}" if np.isclose(df["self_vs_cross_specificity"], b_fs) else f"{df['self_vs_cross_specificity']:.2f}$\\times$"
         t_cd_open.append([lbl, sb, sw, sf, si, ss])
+    t_cd_open.append(["\\midrule"])
+    for k, lbl in disc_open_order:
+        db = bq_disc[k]
+        df = fin_disc[k]
+        t_cd_open.append(
+            [
+                lbl,
+                f"{db['loso_mse']:.3f}$\\pm${db['loso_mse_se']:.3f}",
+                f"{db['washout_storm_mse']:.3f}",
+                f"{df['aug_test_mse']:.3f}",
+                f"{df['idio_shock_mse']:.3f}",
+                f"{df['self_vs_cross_specificity']:.2f}$\\times$",
+            ]
+        )
     write_tex_table(
         out_tab_dir,
         "tab1_cross_domain_open_loop.tex",
@@ -2110,36 +2265,48 @@ def build_all_tables(out_tab_dir: Path) -> None:
     )
 
     # =========================================================================
-    # Main Table 2 (Cross-Domain Closed-Loop): METR-LA (S=64), IEEE 39-Bus, & SNAP Reddit
+    # Main Table 2 (Cross-Domain Closed-Loop): Full S=207 METR-LA, IEEE 39-Bus, & SNAP Reddit
     # =========================================================================
-    metr = load_new_result("metr_la_traffic")["summary"]
-    pgrid = load_new_result("powergrid_n2")["summary"]
-    red = load_new_result("reddit_temporal")["summary"]
+    cl_up = load_new_result("closed_loop_upgrades")
+    metr207 = cl_up["metr_la_full207"]
+    metr64 = load_new_result("metr_la_traffic")["summary"]
+    metr64_up = cl_up["metr_la_s64_upgrades"]
+    pgrid = dict(load_new_result("powergrid_n2")["summary"])
+    pgrid_sm = cl_up["powergrid_selfmem"]
+    red = dict(load_new_result("reddit_temporal")["summary"])
+    red_up = cl_up["reddit_s24_upgrades"]
     cd_cl_order = [
-        ("cl_memgrn", "\\textbf{MemGRN (ours)}"),
-        ("cl_local_const", "Local Constant"),
-        ("cl_ltc_local", "Source-Local LTC"),
-        ("cl_selective_ssm", "Selective SSM (Mamba)"),
-        ("cl_ltc_coupled", "Coupled LTC"),
-        ("cl_coupled_adaptive", "Coupled Adaptive"),
-        ("cl_cfc", "CfC"),
-        ("cl_perturb_ode", "PerturbODE"),
-        ("cl_latent_ode", "Latent Neural ODE"),
-        ("persistence", "Persistence ($y_t = y_0$)"),
+        ("cl_memgrn_selfmem", "cl_memgrn_selfmem", "cl_memgrn_selfmem", "\\textbf{MemGRN (ours)}"),
+        ("cl_local_const_selfmem", "cl_local_const_selfmem", "cl_local_const_selfmem", "Local Constant"),
+        ("cl_ltc_local_selfmem", "cl_ltc_local", "cl_ltc_local_selfmem", "Source-Local LTC"),
+        ("cl_selective_ssm", "cl_selective_ssm", "cl_selective_ssm", "Selective SSM (Mamba)"),
+        ("cl_ltc_coupled", "cl_ltc_coupled", "cl_ltc_coupled", "Coupled LTC"),
+        ("cl_coupled_adaptive", "cl_coupled_adaptive", "cl_coupled_adaptive", "Coupled Adaptive"),
+        ("cl_cfc", "cl_cfc", "cl_cfc", "CfC"),
+        ("cl_perturb_ode", "cl_perturb_ode", "cl_perturb_ode", "PerturbODE"),
+        ("cl_latent_ode", "cl_latent_ode", "cl_latent_ode", "Latent Neural ODE"),
+        ("dlinear", None, "dlinear", "DLinear (discrete)"),
+        ("gru", None, "gru", "GRU (discrete)"),
+        ("transformer", None, "transformer", "Transformer (discrete)"),
+        ("persistence", None, "persistence", "Persistence ($y_t = y_0$)"),
     ]
-    bm_m = min(metr[k]["test_mse"] for k, _ in cd_cl_order)
-    bm_a = max(metr[k]["road_graph_colnorm_ap_over_random"] for k, _ in cd_cl_order)
-    bp_m = min(pgrid[k]["double_n2_mse"] for k, _ in cd_cl_order if k in pgrid)
-    bp_a = max(pgrid[k]["graph_ap"] for k, _ in cd_cl_order if k in pgrid)
-    br_m = min(red[k]["test_mse"] for k, _ in cd_cl_order)
+    pgrid_all = {**pgrid, **pgrid_sm}
+    red_all = {**red, **red_up}
+    bm_m = min(metr207[km]["test_mse"] for km, _, _, _ in cd_cl_order)
+    bm_a = max(metr207[km]["road_graph_ap_over_random"] for km, _, _, _ in cd_cl_order)
+    bp_m = min(pgrid_all[kp]["double_n2_mse"] for _, kp, _, _ in cd_cl_order if kp is not None)
+    bp_a = max(pgrid_all[kp]["graph_ap"] for _, kp, _, _ in cd_cl_order if kp is not None)
+    br_m = min(red_all[kr]["test_mse"] for _, _, kr, _ in cd_cl_order)
     t_cd_cl: list[list[str]] = []
-    for k, lbl in cd_cl_order:
-        dm = metr[k]
-        dr = red[k]
+    for idx_c, (km, kp, kr, lbl) in enumerate(cd_cl_order):
+        if idx_c == 9:
+            t_cd_cl.append(["\\midrule"])
+        dm = metr207[km]
+        dr = red_all[kr]
         sm = f"\\textbf{{{dm['test_mse']:.4f}}}" if np.isclose(dm["test_mse"], bm_m) else f"{dm['test_mse']:.4f}"
-        sa = f"\\textbf{{{dm['road_graph_colnorm_ap_over_random']:.2f}$\\times$}}" if np.isclose(dm["road_graph_colnorm_ap_over_random"], bm_a) else f"{dm['road_graph_colnorm_ap_over_random']:.2f}$\\times$"
-        if k in pgrid:
-            dp = pgrid[k]
+        sa = f"\\textbf{{{dm['road_graph_ap_over_random']:.2f}$\\times$}}" if np.isclose(dm["road_graph_ap_over_random"], bm_a) else f"{dm['road_graph_ap_over_random']:.2f}$\\times$"
+        if kp is not None:
+            dp = pgrid_all[kp]
             sp = f"\\textbf{{{dp['double_n2_mse']:.4f}}}" if np.isclose(dp["double_n2_mse"], bp_m) else f"{dp['double_n2_mse']:.4f}"
             sg = f"\\textbf{{{dp['graph_ap']:.3f}}}" if np.isclose(dp["graph_ap"], bp_a) else f"{dp['graph_ap']:.3f}"
         else:
@@ -2152,7 +2319,7 @@ def build_all_tables(out_tab_dir: Path) -> None:
         "lrrrrr",
         [
             "Closed-loop model",
-            r"METR MSE $\downarrow$",
+            r"METR207 $\downarrow$",
             r"Road AP $\uparrow$",
             r"Grid $N{-}2$ $\downarrow$",
             r"Grid AP $\uparrow$",
@@ -2204,28 +2371,65 @@ def build_all_tables(out_tab_dir: Path) -> None:
     )
 
     # =========================================================================
-    # Appendix Table A12: Detailed Cross-Domain Breakdowns (METR-LA, Power Grid, Beijing PO)
+    # Appendix Table A12: Detailed Cross-Domain Breakdowns (METR-LA S=207 & S=64, IEEE-39, Beijing PO)
     # =========================================================================
+    ta12_short = {
+        "cl_memgrn_selfmem": "\\textbf{MemGRN (ours)}",
+        "cl_local_const_selfmem": "Local Constant",
+        "cl_ltc_local_selfmem": "Source-Local LTC",
+        "cl_selective_ssm": "Selective SSM (Mamba)",
+        "cl_ltc_coupled": "Coupled LTC",
+        "cl_coupled_adaptive": "Coupled Adaptive",
+        "cl_cfc": "CfC",
+        "cl_perturb_ode": "PerturbODE",
+        "cl_latent_ode": "Latent Neural ODE",
+        "dlinear": "DLinear (disc.)",
+        "gru": "GRU (disc.)",
+        "transformer": "Transformer (disc.)",
+        "persistence": "Persistence",
+    }
     ta12_rows: list[list[str]] = []
-    for i_k, (k, lbl) in enumerate(cd_cl_order):
-        d = metr[k]
+    for i_k, (km, _, _, _) in enumerate(cd_cl_order):
+        d = metr207[km]
         ta12_rows.append(
             [
-                "METR-LA" if i_k == 0 else "",
-                lbl,
+                "METR207" if i_k == 0 else "",
+                ta12_short[km],
                 f"{d['mem_params']:,}",
-                f"{d['mae_15min_mph']:.2f} / {d['mae_30min_mph']:.2f}",
+                f"{d['mae_15min_mph']:.2f}/{d['mae_30min_mph']:.2f}",
                 f"{d['shockwave_mse']:.4f}",
                 f"{d['road_graph_auroc']:.3f}",
             ]
         )
     ta12_rows.append(["\\midrule"])
-    for i_k, (k, lbl) in enumerate(cd_cl_order[:-1]):
-        d = pgrid[k]
+    for i_k, (k_s64, lbl, src64) in enumerate(
+        [
+            ("cl_memgrn_selfmem", "\\textbf{MemGRN (+self-mem)}", metr64_up),
+            ("cl_memgrn", "MemGRN (hollow)", metr64),
+            ("cl_local_const_selfmem", "Local Const.\\ (+sm)", metr64_up),
+            ("dlinear", "DLinear (disc.)", metr64_up),
+            ("gru", "GRU (disc.)", metr64_up),
+            ("transformer", "Transformer (disc.)", metr64_up),
+        ]
+    ):
+        d = src64[k_s64]
+        ta12_rows.append(
+            [
+                "METR64" if i_k == 0 else "",
+                lbl,
+                f"{d['mem_params']:,}",
+                f"{d['test_mse']:.4f}",
+                f"{d['shockwave_mse']:.4f}",
+                f"{d['road_graph_colnorm_ap_over_random']:.2f}$\\times$",
+            ]
+        )
+    ta12_rows.append(["\\midrule"])
+    for i_k, (km, kp, _, _) in enumerate(cd_cl_order[:9]):
+        d = pgrid_all[kp]
         ta12_rows.append(
             [
                 "IEEE-39" if i_k == 0 else "",
-                lbl,
+                ta12_short[km],
                 f"{d['n_params']:,}",
                 f"{d['single_n1_mse']:.4f}",
                 f"{d['horizon_extrap_mse']:.4f}",
@@ -2233,17 +2437,23 @@ def build_all_tables(out_tab_dir: Path) -> None:
             ]
         )
     ta12_rows.append(["\\midrule"])
-    bq_po = bq["partial_6driver_ortho"]
-    for i_k, (k, lbl) in enumerate(
+    bq_po = dict(bq["partial_6driver_ortho"])
+    bq_po_up = ol_up["beijing_partial6_upgrades"]
+    for i_k, (k, lbl, src_po) in enumerate(
         [
-            ("memgrn_ortho", "\\textbf{MemGRN-Ortho (ours)}"),
-            ("memgrn", "MemGRN (6 drivers)"),
-            ("local_const", "Local Constant ($gW$)"),
-            ("perturb_ode", "PerturbODE"),
-            ("latent_ode", "Latent Neural ODE"),
+            ("memgrn_ortho_v2", "\\textbf{MemGRN-Ortho (m.)}", bq_po_up),
+            ("memgrn", "MemGRN (6 drv.)", bq_po),
+            ("local_const", "Local Constant ($gW$)", bq_po),
+            ("perturb_ode", "PerturbODE", bq_po),
+            ("latent_ode", "Latent Neural ODE", bq_po),
+            ("dlinear", "DLinear (disc.)", bq_po_up),
+            ("gru", "GRU (disc.)", bq_po_up),
+            ("transformer", "Transformer (disc.)", bq_po_up),
         ]
     ):
-        d = bq_po[k]
+        d = src_po[k]
+        dr_val = d.get("obs_driver_attr_drift_vs_memgrn", d.get("obs_driver_attr_drift", 0.0))
+        dr_str = "--" if k in ("dlinear", "gru", "transformer") else f"{100.0 * dr_val:.1f}\\%"
         ta12_rows.append(
             [
                 "Beijing PO" if i_k == 0 else "",
@@ -2251,7 +2461,7 @@ def build_all_tables(out_tab_dir: Path) -> None:
                 f"{d['n_params']:,}",
                 f"{d['loso_mse']:.3f}",
                 f"{d['washout_storm_mse']:.3f}",
-                f"{100.0 * d['obs_driver_attr_drift_vs_memgrn']:.1f}\\%",
+                dr_str,
             ]
         )
     write_tex_table(
@@ -2262,9 +2472,9 @@ def build_all_tables(out_tab_dir: Path) -> None:
             "Domain",
             "Model",
             "Params",
-            r"15/30m / $N{-}1$ / MSE",
-            r"Shock / Ext.\ / Storm",
-            r"AUROC / Drift",
+            r"15/30m / MSE",
+            r"Shock / Ext.",
+            r"AUC / AP / Dr.",
         ],
         ta12_rows,
     )
@@ -2292,6 +2502,7 @@ def main() -> None:
     build_fig4_yeast_chromatin_portraits(out_latex_fig)
     build_fig5_mammalian_and_scaling(out_latex_fig)
     build_fig6_trajectories_and_kinetics(out_latex_fig)
+    build_fig7_cross_domain_hysteresis(out_latex_fig)
     build_all_tables(out_latex_tab)
 
     ledger_path = ROOT / "results" / "claim_ledger.json"
@@ -2299,7 +2510,7 @@ def main() -> None:
         json.dumps({"source_sha256": SOURCE_HASHES}, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(f"Built 7 figures and 19 tables from {len(SOURCE_HASHES)} verified artifacts.")
+    print(f"Built 8 figures and 19 tables from {len(SOURCE_HASHES)} verified artifacts.")
 
 
 if __name__ == "__main__":

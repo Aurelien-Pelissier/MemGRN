@@ -239,3 +239,149 @@ def test_factorized_coop_and_hysteresis_extraction() -> None:
     u_zero = np.zeros((8, 2, 6, 3), dtype=np.float32)
     y0 = np.zeros((2, 10), dtype=np.float32)
     np.testing.assert_allclose(np.asarray(fwd(th0, u_zero, y0)), 0.0, atol=1e-6)
+
+
+def test_closed_loop_diagonal_self_memory_and_hollow_graph() -> None:
+    from memgrn.baselines import fit_closed_loop_network
+
+    rng = np.random.default_rng(17)
+    b, n_g = 4, 5
+    y = rng.normal(0.0, 0.5, (b, 13, n_g))
+    w = np.ones_like(y)
+    w[:, :7, :] = 0.0
+    ko = np.zeros((b, n_g))
+    y_cl = np.zeros((12, b, n_g))
+    y_cl[:6] = y[:, :6, :].transpose(1, 0, 2)
+    spec = ClosedLoopSpec(
+        family=ClosedLoopModelFamily.MEMGRN,
+        n_genes=n_g,
+        regulator_indices=tuple(range(n_g)),
+        hollow=True,
+        use_self_memory=True,
+        n_channels=2,
+        hidden_width=4,
+    )
+    fwd, _, th0 = build_closed_loop_jax_rollout(
+        spec, basal_levels=np.ones(n_g, dtype=np.float32), dt=0.25, n_steps=12, obs_step_indices=tuple(range(13))
+    )
+    out_wt = np.asarray(fwd(th0, np.zeros((2, n_g), dtype=np.float32), np.zeros((2, n_g), dtype=np.float32)))
+    np.testing.assert_allclose(out_wt, 0.0, atol=1e-6)
+
+    fitted = fit_closed_loop_network(
+        spec=spec,
+        basal_levels=np.ones(n_g),
+        train_ko=ko,
+        train_y=y,
+        train_weights=w,
+        train_y_clamp=y_cl,
+        val_ko=ko,
+        val_y=y,
+        val_weights=w,
+        val_y_clamp=y_cl,
+        dt=0.25,
+        n_steps=12,
+        obs_step_indices=tuple(range(13)),
+        clamp_steps=6,
+        seeds=(0,),
+        reg_grid=(1e-3,),
+        total_updates=5,
+    )
+    assert np.isfinite(fitted.best_val_loss)
+    assert float(np.max(np.abs(np.diag(fitted.interaction_matrix)))) == 0.0
+
+
+def test_per_target_memgrn_ortho_zero_drift_and_discrete_baselines() -> None:
+    from memgrn.baselines import fit_dynamical_model, fit_two_stage_memgrn_ortho
+    from memgrn.discrete_baselines import (
+        DiscreteModelFamily,
+        discrete_counterfactual_attribution,
+        fit_discrete_closed_loop,
+        fit_discrete_open_loop,
+    )
+
+    rng = np.random.default_rng(23)
+    u = rng.normal(0.0, 0.7, (6, 12, 3))
+    y = rng.normal(0.0, 0.7, (6, 12, 4))
+    m = np.ones_like(y)
+    m[:, 0, :] = 0.0
+    u_stage = np.zeros((11, 6, 3, 3))
+    for k in range(3):
+        u_stage[:, :, :, k] = u[:, :-1, :].transpose(1, 0, 2)
+
+    base_spec = ModelSpec(
+        family=DynamicalModelFamily.MEMGRN,
+        n_sources=3,
+        n_targets=4,
+        n_channels=2,
+        hidden_width=4,
+        coop_rank=3,
+        use_cooperativity=True,
+    )
+    base_fit = fit_dynamical_model(
+        spec=base_spec,
+        train_stage_u=u_stage[:, :4],
+        train_y=y[:4],
+        train_mask=m[:4],
+        val_stage_u=u_stage[:, 4:],
+        val_y=y[4:],
+        val_mask=m[4:],
+        dt=0.5,
+        obs_stride=1,
+        seeds=(0,),
+        reg_grid=(1e-3,),
+        total_updates=5,
+    )
+    ortho_fit = fit_two_stage_memgrn_ortho(
+        base_memgrn=base_fit,
+        train_stage_u=u_stage[:, :4],
+        train_y=y[:4],
+        train_mask=m[:4],
+        val_stage_u=u_stage[:, 4:],
+        val_y=y[4:],
+        val_mask=m[4:],
+        dt=0.5,
+        obs_stride=1,
+        latent_dim=10,
+        seeds=(0,),
+        reg_grid=(1e-4, 1e-3),
+        total_updates=5,
+        residual_families=(DynamicalModelFamily.LATENT_ODE, DynamicalModelFamily.CFC),
+        per_target_blend=True,
+    )
+    a0 = counterfactual_source_attribution(base_fit.predict_fn, u_stage[:, 4:])
+    a1 = counterfactual_source_attribution(ortho_fit.predict_observed_only_fn, u_stage[:, 4:])
+    np.testing.assert_allclose(a0, a1, atol=1e-12)
+
+    for fam in (DiscreteModelFamily.DLINEAR, DiscreteModelFamily.GRU, DiscreteModelFamily.TRANSFORMER):
+        ol = fit_discrete_open_loop(
+            family=fam,
+            train_u=u[:4],
+            train_y=y[:4],
+            train_mask=m[:4],
+            val_u=u[4:],
+            val_y=y[4:],
+            val_mask=m[4:],
+            hidden_dim=12,
+            seeds=(0,),
+            reg_grid=(1e-3,),
+            total_updates=4,
+        )
+        assert np.isfinite(ol.best_val_loss)
+        attr = discrete_counterfactual_attribution(ol.predict_fn, u[4:])
+        assert attr.shape == (3, 2, 12, 4)
+        cl = fit_discrete_closed_loop(
+            family=fam,
+            train_hist=y[:4, :6, :],
+            train_fut=y[:4, 6:, :],
+            train_fut_mask=np.ones((4, 6, 4)),
+            val_hist=y[4:, :6, :],
+            val_fut=y[4:, 6:, :],
+            val_fut_mask=np.ones((2, 6, 4)),
+            hidden_dim=12,
+            seeds=(0,),
+            reg_grid=(1e-3,),
+            total_updates=4,
+        )
+        assert np.isfinite(cl.best_val_loss)
+        assert cl.interaction_matrix.shape == (4, 4)
+        assert float(np.max(np.abs(np.diag(cl.interaction_matrix)))) == 0.0

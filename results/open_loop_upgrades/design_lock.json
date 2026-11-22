@@ -1,0 +1,16 @@
+{
+  "benchmark": "open_loop_memgrn_ortho_v2_and_discrete_baselines",
+  "models": [
+    "memgrn_ortho_v2",
+    "dlinear",
+    "gru",
+    "transformer"
+  ],
+  "domains": [
+    "binance_16asset",
+    "binance_14alt_hidden_btc_eth",
+    "beijing_8drv",
+    "beijing_6drv_po",
+    "emt_gse147405"
+  ]
+}

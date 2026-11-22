@@ -16,7 +16,8 @@ Clean, standalone, and reproducible reference implementation for **MemGRN** (inc
 MemGRN/
 ├── src/memgrn/
 │   ├── dynamics.py               # Unified asymmetric MemGRN, closed-loop network RK4, & orthogonal cofactor projection
-│   ├── baselines.py              # Open-loop & closed-loop JAX suites: MemGRN, MemGRN-Ortho, LTC, Selective SSM, CfC, Neural CDE, PerturbODE, Latent ODE
+│   ├── baselines.py              # Open-loop & closed-loop JAX suites: MemGRN (+self-mem), MemGRN-Ortho, LTC, Mamba, CfC, CDE, PerturbODE, Latent ODE
+│   ├── discrete_baselines.py     # Pure-JAX discrete-time deep learning comparators: DLinear, GRU, and causal Temporal Transformer
 │   ├── theory.py                 # General-S covariance, Selective-SSM corollary, closed-loop ID, vs. Local LTC, iso-state, & Ortho OOD audits
 │   ├── identification.py         # 4:1 strength-swap algebra, Theorem 2 closed form, margin & AR(1) DP bounds
 │   ├── multitf_benchmark.py      # Out-of-class 8-source, 24-target additive & cooperative correlation-shift generator
@@ -32,6 +33,9 @@ MemGRN/
 │   ├── run_powergrid_n2.py               # IEEE 39-Bus Power Grid N-1 -> N-2 zero-shot combinatorial contingencies (12 worlds)
 │   ├── run_financial_contagion.py        # Binance 16-asset 5m order-flow -> volatility contagion & hidden BTC/ETH Ortho
 │   ├── run_reddit_temporal.py            # SNAP Reddit temporal community cascades (571,927 links, S=24 communities)
+│   ├── run_self_memory_and_discrete_closed_loop.py # Full S=207 METR-LA (13 models), self-memory & DLinear/GRU/Transformer closed-loop
+│   ├── run_open_loop_upgrades.py         # Matched per-target MemGRN-Ortho v2 & DLinear/GRU/Transformer open-loop benchmarks
+│   ├── run_cross_domain_portraits.py     # Cross-domain unsupervised learned hysteresis portraits (Beijing, Binance, METR-LA, Yeast)
 │   ├── run_cd4t_closed_loop.py           # Primary human CD4+ T-cell Perturb-seq (GSE314342, S=128 TFs, 221,398 cells)
 │   ├── run_hipsc_closed_loop.py          # Closed-loop longitudinal hiPSC CRISPR Perturb-seq (GSE213069, 14,945 cells)
 │   ├── run_cyclic_double_ko.py           # Cyclic closed-loop feedback & zero-shot combinatorial double-KO benchmark (12 worlds)
@@ -68,6 +72,9 @@ python scripts/run_metr_la_traffic.py
 python scripts/run_powergrid_n2.py
 python scripts/run_financial_contagion.py
 python scripts/run_reddit_temporal.py
+python scripts/run_self_memory_and_discrete_closed_loop.py
+python scripts/run_open_loop_upgrades.py
+python scripts/run_cross_domain_portraits.py
 python scripts/run_cd4t_closed_loop.py
 python scripts/run_hipsc_closed_loop.py
 python scripts/run_cyclic_double_ko.py

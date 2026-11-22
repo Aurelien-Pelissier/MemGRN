@@ -230,6 +230,9 @@ def main() -> None:
     pgrid = json.loads((ROOT / "results" / "powergrid_n2" / "scores.json").read_text())
     fin = json.loads((ROOT / "results" / "financial_contagion" / "scores.json").read_text())
     red = json.loads((ROOT / "results" / "reddit_temporal" / "scores.json").read_text())
+    cl_up = json.loads((ROOT / "results" / "closed_loop_upgrades" / "scores.json").read_text())
+    ol_up = json.loads((ROOT / "results" / "open_loop_upgrades" / "scores.json").read_text())
+    port = json.loads((ROOT / "results" / "cross_domain_portraits" / "scores.json").read_text())
 
     six_means = {
         m: float(
@@ -319,6 +322,13 @@ def main() -> None:
             "memgrn_ortho"
         ]["idio_shock_mse"],
         "reddit_s24_memgrn_mse": red["summary"]["cl_memgrn"]["test_mse"],
+        "metr_la_full207_memgrn_selfmem_mse": cl_up["metr_la_full207"]["cl_memgrn_selfmem"]["test_mse"],
+        "metr_la_full207_memgrn_road_ap_x": cl_up["metr_la_full207"]["cl_memgrn_selfmem"]["road_graph_ap_over_random"],
+        "ieee39_powergrid_n2_memgrn_selfmem_mse": cl_up["powergrid_selfmem"]["cl_memgrn_selfmem"]["double_n2_mse"],
+        "ieee39_powergrid_memgrn_selfmem_ap": cl_up["powergrid_selfmem"]["cl_memgrn_selfmem"]["graph_ap"],
+        "emt_ortho_v2_top30_mse": ol_up["emt_ortho_v2"]["memgrn_ortho_v2"]["top30_withdrawal_mse"],
+        "beijing_dewpoint_hysteresis_asym": port["beijing_air_quality_hours"]["by_source"]["Dewpoint"]["asymmetry_up_over_dn"],
+        "binance_btc_hysteresis_asym": port["binance_16asset_minutes"]["by_source"]["BTCUSDT"]["asymmetry_up_over_dn"],
     }
     print(json.dumps(report, indent=2))
 

@@ -174,3 +174,41 @@ def test_archived_msn2_and_synthetic_numbers() -> None:
     assert red["design_sha256"] in sha256_variants(red_dir / "design_lock.json")
     assert red["summary"]["cl_memgrn"]["test_mse"] < red["summary"]["cl_local_const"]["test_mse"]
     assert red["summary"]["cl_memgrn"]["test_mse"] < red["summary"]["cl_cfc"]["test_mse"]
+
+    # Verify all 4 upgrades: Full S=207 METR-LA, Self-Memory, Discrete Baselines, Ortho v2, Portraits
+    cl_up_dir = ROOT / "results" / "closed_loop_upgrades"
+    cl_up = json.loads((cl_up_dir / "scores.json").read_text())
+    assert cl_up["design_sha256"] in sha256_variants(cl_up_dir / "design_lock.json")
+    m207 = cl_up["metr_la_full207"]
+    for rival in (
+        "cl_local_const_selfmem",
+        "cl_ltc_local_selfmem",
+        "cl_selective_ssm",
+        "cl_cfc",
+        "cl_ltc_coupled",
+        "cl_coupled_adaptive",
+        "cl_perturb_ode",
+        "cl_latent_ode",
+        "dlinear",
+        "gru",
+        "transformer",
+        "persistence",
+    ):
+        assert m207["cl_memgrn_selfmem"]["test_mse"] < m207[rival]["test_mse"]
+    assert m207["cl_memgrn_selfmem"]["mem_params"] < 0.06 * m207["cl_coupled_adaptive"]["mem_params"]
+    assert cl_up["powergrid_selfmem"]["cl_memgrn_selfmem"]["double_n2_mse"] < 0.026
+    assert cl_up["powergrid_selfmem"]["cl_memgrn_selfmem"]["graph_auroc"] > 0.86
+
+    ol_up_dir = ROOT / "results" / "open_loop_upgrades"
+    ol_up = json.loads((ol_up_dir / "scores.json").read_text())
+    assert ol_up["design_sha256"] in sha256_variants(ol_up_dir / "design_lock.json")
+    assert ol_up["emt_ortho_v2"]["memgrn_ortho_v2"]["obs_tf_attr_drift"] == 0.0
+    assert ol_up["emt_ortho_v2"]["memgrn_ortho_v2"]["top30_withdrawal_mse"] < 0.28
+    assert ol_up["binance_partial14_upgrades"]["memgrn_ortho_v2"]["obs_asset_attr_drift_vs_memgrn"] == 0.0
+    assert ol_up["beijing_partial6_upgrades"]["memgrn_ortho_v2"]["obs_driver_attr_drift"] == 0.0
+
+    port_dir = ROOT / "results" / "cross_domain_portraits"
+    port = json.loads((port_dir / "scores.json").read_text())
+    assert port["design_sha256"] in sha256_variants(port_dir / "design_lock.json")
+    assert port["beijing_air_quality_hours"]["by_source"]["Dewpoint"]["asymmetry_up_over_dn"] > 2.5
+    assert port["binance_16asset_minutes"]["by_source"]["BTCUSDT"]["asymmetry_up_over_dn"] < 0.5

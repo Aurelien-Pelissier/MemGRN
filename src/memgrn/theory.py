@@ -518,6 +518,33 @@ def verify_closed_loop_stability_and_identifiability_theorem(
         rec_total[i_src] = (relaxation * y_inf) / 0.5
         rec_total[i_src, i_src] = 0.0
 
+        # Also verify Theorem 1(ii) with nonzero diagonal self-memory b_self_{ir} != 0:
+        # Since a_{k!=i} == 0 => h_{k!=i, r} == 0 by source isolation, off-diagonal recovery
+        # of D_{ij} and W^tot_{ij} (j != i) is strictly invariant to diagonal self-memory!
+        self_mem_w = np.array([[0.45, -0.25], [0.35, 0.20], [-0.30, 0.40], [0.50, -0.15], [0.25, 0.30]])
+
+        def _clamp_self_rhs(_t: float, s: np.ndarray) -> np.ndarray:
+            z_s = s[:n_zh].reshape(n_nodes, 2)
+            h_s = s[n_zh : 2 * n_zh].reshape(n_nodes, 2)
+            y_s = s[2 * n_zh :]
+            dz, dh, dy = memgrn_vector_field(clamp_g, z_s, h_s, y_s, params, cfg)
+            dy = dy + np.sum(h_s * self_mem_w, axis=1)
+            return np.concatenate([dz.ravel(), dh.ravel(), dy.ravel()])
+
+        sol_cs = solve_ivp(
+            _clamp_self_rhs,
+            [0.0, 90.0],
+            np.zeros(2 * n_zh + n_nodes),
+            method="DOP853",
+            rtol=1e-12,
+            atol=1e-14,
+        )
+        y_inf_self = sol_cs.y[2 * n_zh :, -1]
+        rec_self_row = (relaxation * y_inf_self) / 0.5
+        rec_self_row[i_src] = 0.0
+        if float(np.max(np.abs(rec_self_row - rec_total[i_src]))) > 1e-11:
+            raise AssertionError("Diagonal self-memory altered off-diagonal Theorem 1(ii) recovery")
+
     d_err = float(np.max(np.abs(rec_direct - direct_w)))
     tot_err = float(np.max(np.abs(rec_total - true_total)))
 

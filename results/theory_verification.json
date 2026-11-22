@@ -6,7 +6,7 @@
   "general_s12_coupled_ko_error": 0.08486196435788207,
   "general_s12_local_ko_error": 1.533467270448787e-13,
   "finite_sample_s24_coupled_vs_local_risk": [
-    0.4128781917280239,
+    0.41287819172802404,
     0.007871891662579822
   ],
   "closed_loop_within_absorbing_ball": true,
@@ -34,7 +34,7 @@
     0.0024071120110432803
   ],
   "ortho_ood_counterfactual_drift": 0.0,
-  "ortho_ood_unproj_drift": 0.47425146655303835,
+  "ortho_ood_unproj_drift": 0.47425146655303824,
   "ortho_ood_risk_identity_diff": 8.881784197001252e-16,
   "ortho_ood_mse_obs_ortho_unproj": [
     2.654827371659385,

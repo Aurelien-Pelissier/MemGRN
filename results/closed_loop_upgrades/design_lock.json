@@ -1,0 +1,48 @@
+{
+  "benchmark": "closed_loop_selfmem_discrete_and_full207_metr_la",
+  "metr_la_full207_models": [
+    "cl_memgrn",
+    "cl_local_const",
+    "cl_ltc_local",
+    "cl_selective_ssm",
+    "cl_cfc",
+    "cl_ltc_coupled",
+    "cl_coupled_adaptive",
+    "cl_perturb_ode",
+    "cl_latent_ode",
+    "dlinear",
+    "gru",
+    "transformer",
+    "persistence"
+  ],
+  "metr_la_s64_upgrades": [
+    "cl_memgrn",
+    "cl_local_const",
+    "cl_ltc_local",
+    "dlinear",
+    "gru",
+    "transformer"
+  ],
+  "reddit_s24_upgrades": [
+    "cl_memgrn",
+    "cl_local_const",
+    "cl_ltc_local",
+    "dlinear",
+    "gru",
+    "transformer"
+  ],
+  "powergrid_selfmem_seeds": [
+    700,
+    701,
+    702,
+    703,
+    704,
+    705,
+    706,
+    707,
+    708,
+    709,
+    710,
+    711
+  ]
+}

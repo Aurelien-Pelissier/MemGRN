@@ -91,6 +91,7 @@ class ClosedLoopSpec:
     regulator_indices: tuple[int, ...] | None = None
     n_ext_inputs: int = 0
     hollow: bool = True
+    use_self_memory: bool = False
     use_cooperativity: bool = False
     coop_rank: int = 8
     readout_rank: int | None = None
@@ -1120,13 +1121,16 @@ def fit_two_stage_memgrn_ortho(
     reg_grid: tuple[float, ...] = (1e-4, 1e-3, 1e-2, 5e-2),
     total_updates: int = 1200,
     lr_max: float = 0.007,
+    residual_families: tuple[DynamicalModelFamily, ...] = (DynamicalModelFamily.LATENT_ODE,),
+    per_target_blend: bool = True,
 ) -> TrainedModel:
     """Fit Proposition 1(iii) two-stage orthogonalized cofactor residual atop frozen MemGRN.
 
-    Stage 1 holds the fitted source-isolated MemGRN observed-TF predictor y_obs(t; g) strictly
-    fixed (guaranteeing exact zero observed-TF attribution drift). Stage 2 fits a low-rank
-    latent cofactor ODE psi(t) to the orthogonalized residual r = y - y_obs, projecting out
-    collinear components along y_obs on the source training split.
+    Stage 1 holds the fitted source-isolated MemGRN observed-source predictor y_obs(t; g) strictly
+    fixed (guaranteeing exact zero observed-source attribution drift). Stage 2 fits a matched
+    latent cofactor ODE psi(t) to the residual r = y - y_obs, projects out collinear components
+    along y_obs per target on the source training split, and applies validation-selected per-target
+    (or global) shrinkage beta_j in [0, 1].
     """
     tr_obs = base_memgrn.predict_fn(train_stage_u, None)
     va_obs = base_memgrn.predict_fn(val_stage_u, None)
@@ -1136,46 +1140,88 @@ def fit_two_stage_memgrn_ortho(
     tr_resid[:, 0, :] = 0.0
     va_resid[:, 0, :] = 0.0
 
-    resid_spec = ModelSpec(
-        family=DynamicalModelFamily.LATENT_ODE,
-        n_sources=base_memgrn.spec.n_sources,
-        n_targets=base_memgrn.spec.n_targets,
-        latent_dim=latent_dim,
-    )
-    resid_fit = fit_dynamical_model(
-        spec=resid_spec,
-        train_stage_u=train_stage_u,
-        train_y=tr_resid,
-        train_mask=train_mask,
-        val_stage_u=val_stage_u,
-        val_y=va_resid,
-        val_mask=val_mask,
-        dt=dt,
-        obs_stride=obs_stride,
-        seeds=seeds,
-        reg_grid=reg_grid,
-        total_updates=total_updates,
-        lr_max=lr_max,
+    best_resid_fit: TrainedModel | None = None
+    best_alpha: np.ndarray | None = None
+    best_blend: np.ndarray | float = 0.0
+    best_va_mse = float(
+        np.sum(((va_obs - val_y) ** 2) * val_mask) / np.maximum(1.0, np.sum(val_mask))
     )
 
-    # Compute per-gene scalar orthogonal projection alpha_g = <y_obs_g, r_hat_g>_train / (||y_obs_g||^2 + eps)
-    r_tr_hat = resid_fit.predict_fn(train_stage_u, None)
     w_tr = train_mask
-    num = np.sum(w_tr * tr_obs * r_tr_hat, axis=(0, 1))
-    den = np.sum(w_tr * (tr_obs**2), axis=(0, 1)) + 1.0
-    alpha_proj = num / den  # (n_targets,)
+    obs_norm_tr = np.sum(w_tr * (tr_obs**2), axis=(0, 1)) + 1.0
 
-    # Validation guard: shrink residual weight lambda_blend in [0, 1] on source validation split
-    r_va_perp = resid_fit.predict_fn(val_stage_u, None) - alpha_proj[None, None, :] * va_obs
-    blend_num = float(np.sum(val_mask * va_resid * r_va_perp))
-    blend_den = float(np.sum(val_mask * (r_va_perp**2))) + 1e-8
-    blend = float(np.clip(blend_num / blend_den, 0.0, 1.0))
+    for r_fam in residual_families:
+        resid_spec = ModelSpec(
+            family=r_fam,
+            n_sources=base_memgrn.spec.n_sources,
+            n_targets=base_memgrn.spec.n_targets,
+            latent_dim=latent_dim,
+            base_rates=base_memgrn.spec.base_rates,
+            rate_min=base_memgrn.spec.rate_min,
+            rate_max=base_memgrn.spec.rate_max,
+        )
+        cand_fit = fit_dynamical_model(
+            spec=resid_spec,
+            train_stage_u=train_stage_u,
+            train_y=tr_resid,
+            train_mask=train_mask,
+            val_stage_u=val_stage_u,
+            val_y=va_resid,
+            val_mask=val_mask,
+            dt=dt,
+            obs_stride=obs_stride,
+            seeds=seeds,
+            reg_grid=reg_grid,
+            total_updates=total_updates,
+            lr_max=lr_max,
+        )
+        # Per-target L2(P_train) orthogonal projection alpha_j = <y_obs_j, r_hat_j> / (||y_obs_j||^2 + eps)
+        r_tr_hat = cand_fit.predict_fn(train_stage_u, None)
+        alpha_cand = np.sum(w_tr * tr_obs * r_tr_hat, axis=(0, 1)) / obs_norm_tr
+
+        r_va_perp = cand_fit.predict_fn(val_stage_u, None) - alpha_cand[None, None, :] * va_obs
+        if per_target_blend:
+            # Per-target validation-shrunk blend beta_j in [0, 1] with empirical Bayes ridge guard
+            g_num = np.sum(val_mask * va_resid * r_va_perp, axis=(0, 1))
+            g_den = np.sum(val_mask * (r_va_perp**2), axis=(0, 1))
+            # Mild shrinkage toward global scalar blend prevents single-target val overfitting
+            glob_b = float(
+                np.clip(
+                    float(np.sum(g_num)) / (float(np.sum(g_den)) + 1e-8),
+                    0.0,
+                    1.0,
+                )
+            )
+            tau_b = 0.15 * float(np.median(g_den) + 1e-6)
+            blend_cand = np.clip((g_num + tau_b * glob_b) / (g_den + tau_b + 1e-8), 0.0, 1.0)
+            va_pred = va_obs + blend_cand[None, None, :] * r_va_perp
+        else:
+            blend_num = float(np.sum(val_mask * va_resid * r_va_perp))
+            blend_den = float(np.sum(val_mask * (r_va_perp**2))) + 1e-8
+            blend_cand = float(np.clip(blend_num / blend_den, 0.0, 1.0))
+            va_pred = va_obs + blend_cand * r_va_perp
+
+        cand_mse = float(
+            np.sum(((va_pred - val_y) ** 2) * val_mask) / np.maximum(1.0, np.sum(val_mask))
+        )
+        if best_resid_fit is None or cand_mse < best_va_mse:
+            best_va_mse = cand_mse
+            best_resid_fit = cand_fit
+            best_alpha = alpha_cand
+            best_blend = blend_cand
+
+    assert best_resid_fit is not None and best_alpha is not None
+    alpha_proj = best_alpha
+    blend_w = best_blend
+    resid_fit = best_resid_fit
 
     def predict_total(stage_u_np: np.ndarray, y0_np: np.ndarray | None = None) -> np.ndarray:
         y_o = base_memgrn.predict_fn(stage_u_np, y0_np)
         r_raw = resid_fit.predict_fn(stage_u_np, None)
         r_perp = r_raw - alpha_proj[None, None, :] * y_o
-        return y_o + blend * r_perp
+        if isinstance(blend_w, np.ndarray):
+            return y_o + blend_w[None, None, :] * r_perp
+        return y_o + blend_w * r_perp
 
     ortho_spec = ModelSpec(
         family=DynamicalModelFamily.MEMGRN_ORTHO,
@@ -1229,6 +1275,8 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
             "in_gain": np.zeros((s_reg,), dtype=np.float32),
             "rate": np.broadcast_to(base_logits, (s_reg, r_dim)).copy(),
         }
+        if spec.use_self_memory:
+            tree["self_mem"] = np.zeros((s_reg, r_dim), dtype=np.float32)
         if spec.readout_rank is not None:
             k_r = spec.readout_rank
             tree["delayed_u"] = rng.normal(
@@ -1299,19 +1347,20 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
         )
 
     if fam == ClosedLoopModelFamily.LTC_LOCAL:
-        return _with_ext(
-            {
-                "tau_log": np.broadcast_to(base_logits, (s_reg, r_dim)).copy(),
-                "w_x": rng.normal(0.0, 0.3, size=(s_reg, r_dim, r_dim)).astype(np.float32),
-                "w_a": rng.normal(0.0, 0.6, size=(s_reg, r_dim)).astype(np.float32),
-                "b_gate": rng.normal(0.0, 0.15, size=(s_reg, r_dim)).astype(np.float32),
-                "e_rev": np.ones((s_reg, r_dim), dtype=np.float32),
-                "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
-                "delayed": rng.normal(0.0, 0.015, size=(s_reg, r_dim, n_g)).astype(np.float32),
-                "decay": np.zeros((n_g,), dtype=np.float32),
-                "in_gain": np.zeros((s_reg,), dtype=np.float32),
-            }
-        )
+        ltc_tree = {
+            "tau_log": np.broadcast_to(base_logits, (s_reg, r_dim)).copy(),
+            "w_x": rng.normal(0.0, 0.3, size=(s_reg, r_dim, r_dim)).astype(np.float32),
+            "w_a": rng.normal(0.0, 0.6, size=(s_reg, r_dim)).astype(np.float32),
+            "b_gate": rng.normal(0.0, 0.15, size=(s_reg, r_dim)).astype(np.float32),
+            "e_rev": np.ones((s_reg, r_dim), dtype=np.float32),
+            "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
+            "delayed": rng.normal(0.0, 0.015, size=(s_reg, r_dim, n_g)).astype(np.float32),
+            "decay": np.zeros((n_g,), dtype=np.float32),
+            "in_gain": np.zeros((s_reg,), dtype=np.float32),
+        }
+        if spec.use_self_memory:
+            ltc_tree["self_mem"] = np.zeros((s_reg, r_dim), dtype=np.float32)
+        return _with_ext(ltc_tree)
 
     if fam == ClosedLoopModelFamily.SELECTIVE_SSM:
         m_dim = spec.latent_dim
@@ -1506,6 +1555,11 @@ def build_closed_loop_jax_rollout(
                 prod = act @ d_hol + h.reshape(batch, s_reg * r_dim) @ b_hol.reshape(
                     s_reg * r_dim, n_g
                 )
+                if spec.use_self_memory:
+                    # Private diagonal self-memory sum_r b_self_{ir} h_{ir} on each source node;
+                    # preserves strict off-diagonal hollow identifiability (Theorem 1(ii))
+                    self_prod = jnp.sum(h * p["self_mem"][None], axis=-1)
+                    prod = prod.at[:, reg_idx_j].add(self_prod)
                 if fam == ClosedLoopModelFamily.MEMGRN and spec.use_cooperativity:
                     h_bar = jnp.mean(h, axis=-1)  # (batch, s_reg)
                     coop_feat = (h_bar @ p["coop_u"]) * (h_bar @ p["coop_v"])
@@ -1574,6 +1628,9 @@ def build_closed_loop_jax_rollout(
                 prod = act @ d_hol + x.reshape(batch, s_reg * r_dim) @ b_hol.reshape(
                     s_reg * r_dim, n_g
                 )
+                if spec.use_self_memory:
+                    self_prod = jnp.sum(x * p["self_mem"][None], axis=-1)
+                    prod = prod.at[:, reg_idx_j].add(self_prod)
                 return dx, prod - decay[None] * y
 
         elif fam == ClosedLoopModelFamily.SELECTIVE_SSM:
