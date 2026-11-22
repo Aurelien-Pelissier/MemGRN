@@ -853,3 +853,66 @@ def fetch_and_prepare_emt_withdrawal(raw_dir: Path) -> EMTWithdrawalData:
         total_singlet_cells=int(np.sum(counts_arr)),
         file_sha256=hashes,
     )
+
+
+def fetch_emt_collectri_and_chip_masks(
+    raw_dir: Path,
+    tfs: tuple[str, ...],
+    targets: tuple[str, ...],
+) -> tuple[np.ndarray, np.ndarray, dict[str, str]]:
+    """Fetch SHA-256 cached human CollecTRI regulon and ChIP-Atlas hg38 binding masks for EMT.
+
+    Returns ``(collectri_mask, chip_mask, sha256_map)`` of shape ``(len(tfs), len(targets))``:
+      - ``collectri_mask``: curated human TF->target interactions from CollecTRI via OmniPath
+        (Muller-Dott et al., Nucleic Acids Research 2023).
+      - ``chip_mask``: stringent hg38 ChIP-Atlas 1 kb promoter binding (max MACS2 >= 500,
+        q < 10^-50; Zou et al., 2024).
+    """
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    chip_dir = raw_dir / "chip_atlas"
+    chip_dir.mkdir(parents=True, exist_ok=True)
+    hashes: dict[str, str] = {}
+
+    tf_to_i = {g: i for i, g in enumerate(tfs)}
+    tgt_to_j = {g: j for j, g in enumerate(targets)}
+
+    col_path = raw_dir / "collectri_emt_tfs.tsv"
+    if not col_path.exists():
+        url = (
+            "https://omnipathdb.org/interactions?datasets=collectri&genesymbols=yes&sources="
+            + ",".join(tfs)
+        )
+        r = requests.get(url, timeout=60)
+        r.raise_for_status()
+        col_path.write_bytes(r.content)
+    hashes["collectri_emt_tfs.tsv"] = sha256_file(col_path)
+
+    collectri_mask = np.zeros((len(tfs), len(targets)), dtype=bool)
+    c_lines = col_path.read_text(encoding="utf-8").splitlines()
+    c_hdr = c_lines[0].split("\t")
+    i_src = c_hdr.index("source_genesymbol")
+    i_tgt = c_hdr.index("target_genesymbol")
+    for ln in c_lines[1:]:
+        parts = ln.split("\t")
+        if len(parts) > max(i_src, i_tgt):
+            s_g, t_g = parts[i_src], parts[i_tgt]
+            if s_g in tf_to_i and t_g in tgt_to_j:
+                collectri_mask[tf_to_i[s_g], tgt_to_j[t_g]] = True
+
+    chip_mask = np.zeros((len(tfs), len(targets)), dtype=bool)
+    for tf in tfs:
+        tsv_path = chip_dir / f"{tf}.1.tsv"
+        if not tsv_path.exists():
+            r = requests.get(f"https://chip-atlas.dbcls.jp/data/hg38/target/{tf}.1.tsv", timeout=60)
+            r.raise_for_status()
+            tsv_path.write_bytes(r.content)
+        hashes[f"chip_atlas/{tf}.1.tsv"] = sha256_file(tsv_path)
+        for ln in tsv_path.read_text(encoding="utf-8").splitlines()[1:]:
+            parts = ln.split("\t")
+            if parts[0] not in tgt_to_j:
+                continue
+            vals = [float(x) for x in parts[2:] if x]
+            if vals and max(vals) >= 500.0:
+                chip_mask[tf_to_i[tf], tgt_to_j[parts[0]]] = True
+
+    return collectri_mask, chip_mask, hashes

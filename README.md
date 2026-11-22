@@ -35,6 +35,7 @@ MemGRN/
 │   ├── run_interpretability_and_scaling.py # Yeast chromatin-memory phase portraits & S=8..512 (2,048-gene) scaling
 │   ├── run_macrophage_multitf.py         # 4-TF mammalian macrophage 14-stimulus, 477-gene benchmark
 │   ├── run_nfkb_ortho.py                 # MemGRN-Ortho unmeasured-cofactor benchmark on 177-gene fibroblast washout
+│   ├── export_trajectory_examples.py     # Deterministic continuous-time trajectory export for mechanism figures
 │   ├── reproduce_all.py                  # SHA-256 receipt audit + live double-precision ODE trajectory replay
 │   └── build_paper_assets.py             # Rebuilds all vector figures (PDF/SVG/PNG) and LaTeX tables
 ├── results/                  # Pre-locked SHA-256 design manifests and score archives
@@ -55,13 +56,16 @@ To re-run the experimental suites from scratch:
 
 ```bash
 python scripts/run_hipsc_closed_loop.py
-python scripts/run_emt_ligand_shift.py
+python scripts/run_cyclic_double_ko.py
+python scripts/run_emt_withdrawal_forecast.py
 python scripts/run_multitf_factorial.py
 python scripts/run_partial_obs_ortho.py
+python scripts/run_sensitivity_ablations.py
 python scripts/run_msn2_joint_and_transfer.py
 python scripts/run_interpretability_and_scaling.py
 python scripts/run_macrophage_multitf.py
 python scripts/run_nfkb_ortho.py
+python scripts/export_trajectory_examples.py
 ```
 
 ## License

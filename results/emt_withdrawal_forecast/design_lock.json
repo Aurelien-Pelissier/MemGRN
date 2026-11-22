@@ -1,7 +1,9 @@
 {
-  "benchmark": "emt_zero_shot_human_cancer_withdrawal_gse147405",
+  "benchmark": "emt_zero_shot_human_cancer_withdrawal_gse147405_latin_cv_collectri",
   "accession": "GSE147405",
   "reference": "Cook & Vanderhyden, Nature Communications 11, 2142 (2020)",
+  "external_regulon_ground_truth": "CollecTRI (Muller-Dott et al., NAR 2023) + hg38 ChIP-Atlas (MACS2>=500)",
+  "validation_split": "latin_square_stratified_3_source_cell_lines_x_3_ligands",
   "total_singlet_cells": 53290,
   "cell_lines": [
     "A549",
@@ -14,8 +16,23 @@
     "EGF",
     "TNF"
   ],
-  "n_selected_tfs": 12,
+  "selected_tfs": [
+    "JUN",
+    "JUNB",
+    "FOS",
+    "FOSL1",
+    "RELB",
+    "KLF6",
+    "SOX4",
+    "ID1",
+    "ID2",
+    "ID3",
+    "CEBPB",
+    "BHLHE40"
+  ],
   "n_targets": 76,
+  "n_collectri_edges": 167,
+  "n_chip_edges": 203,
   "models": [
     "memgrn_ortho",
     "memgrn",
@@ -56,6 +73,19 @@
     "GSE147405_OVCA420_TGFB1_TimeCourse_UMI_matrix.csv.gz": "51c22a51691b618110c80c51e039171f34e9464fdef7a0d3c3e44c58cfb0511e",
     "GSE147405_OVCA420_TGFB1_TimeCourse_metadata.csv.gz": "9026a5d52d5a6ec92de98a9c80d234daa7ccf74b62d702fa4f4e7f2e0f6ae5a5",
     "GSE147405_OVCA420_TNF_TimeCourse_UMI_matrix.csv.gz": "48ab105e8d53b7d52622161507e28a4c2cf5aac155269b1f9f26d3f041b20330",
-    "GSE147405_OVCA420_TNF_TimeCourse_metadata.csv.gz": "0595779b67a285f76300680723fc88498b17accc99cc6044e346452e1a85a57c"
+    "GSE147405_OVCA420_TNF_TimeCourse_metadata.csv.gz": "0595779b67a285f76300680723fc88498b17accc99cc6044e346452e1a85a57c",
+    "collectri_emt_tfs.tsv": "36776b4c7ef6b310d806840290a97aadcd6c529ee52cc254dd89729150270f01",
+    "chip_atlas/JUN.1.tsv": "7b827aa49c79894f3cddacaa316226a644d6915043ab46e5753d35a3c1f58782",
+    "chip_atlas/JUNB.1.tsv": "54195451891b26cb740901a1858a7f0e8e9ff58134e9b0749d844f60992d03fe",
+    "chip_atlas/FOS.1.tsv": "944be0664602ee12c7c35c024850b28dc64e82494e3c8791a6a7f94f354e5b9a",
+    "chip_atlas/FOSL1.1.tsv": "03cf6f632712b0bd906836bb29a546e3d7fb9565c31e54ee829fcb83ccea08c4",
+    "chip_atlas/RELB.1.tsv": "61cbed1b6ec36cb3734ebd7a633e80bbc97fdf0b6e131cb0d71b3044b0bc3b06",
+    "chip_atlas/KLF6.1.tsv": "455b31ba16904f4da4dabf070c041787d365d27a9a2f62edf58c9448e5e2ce12",
+    "chip_atlas/SOX4.1.tsv": "925d43c446f68b9c2583ab1686664110e8913c407f398e6aed92f2487df05051",
+    "chip_atlas/ID1.1.tsv": "33bec0ad35b90af8b51b44043bc08b7c8a03ab68e8bb2d583f05cb93774a2f62",
+    "chip_atlas/ID2.1.tsv": "e0d30c8733de77a8e27cf471f1884f0a5a37a1c280228417f987188f2ca7ec6f",
+    "chip_atlas/ID3.1.tsv": "922a99b15be6b7c986d00919eb03b04b40c22f959710c7ba860cb19f44e9b3a9",
+    "chip_atlas/CEBPB.1.tsv": "08408be07cf75804d9376d7b50f9e7342a7830a443b4343120a8bd868eb83fbc",
+    "chip_atlas/BHLHE40.1.tsv": "60f814d2a66f66950beed60eb721f154bd5a6eaafc1c08ad80b1809b1bb20b86"
   }
 }

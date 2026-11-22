@@ -461,34 +461,35 @@ def build_fig2_human_longitudinal(out_latex_fig: Path) -> None:
     ax1.set_title("Cyclic 0-shot 2-KO")
     add_panel_tag(ax1, "b", x_pt=-30.0, y_pt=6.0)
 
-    # Panel c: Human EMT zero-shot 3-day withdrawal top-30 MSE (explicit/causal & modern models)
+    # Panel c: Human EMT zero-shot 3-day withdrawal top-30 MSE (honest full comparison across families)
     keys_e = [
-        "ltc_local_coop",
-        "memgrn_additive",
-        "perturb_ode",
-        "ltc_local",
-        "cfc",
-        "coupled_adaptive",
+        "latent_ode",
+        "ltc_coupled",
         "local_const",
+        "ltc_local",
+        "perturb_ode",
+        "coupled_adaptive",
+        "cfc",
         "memgrn",
+        "neural_cde",
     ]
-    lbls_e = ["LTC-L+Γ", "Mem(Γ=0)", "PertODE", "LTC-Loc", "CfC", "Cpl-Ad.", "Loc-Const", "MemGRN"]
+    lbls_e = ["Lat-ODE", "LTC-Cpl", "Loc-Const", "LTC-Loc", "PertODE", "Cpl-Ad.", "CfC", "MemGRN", "N-CDE"]
     cols_e = [
-        "#3A8C8C",
-        PALETTE["steel"],
-        PALETTE["violet"],
-        PALETTE["teal"],
-        "#B85C38",
-        PALETTE["amber"],
+        "#8C6D9B",
+        PALETTE["crimson"],
         PALETTE["slate"],
+        PALETTE["teal"],
+        PALETTE["violet"],
+        PALETTE["amber"],
+        "#B85C38",
         PALETTE["navy"],
+        PALETTE["steel"],
     ]
     e_vals = np.array([emt[k]["top30_withdrawal_mse"] for k in keys_e], dtype=np.float64)
     x_e = np.arange(len(keys_e))
     ax2.bar(
         x_e,
-        e_vals - 0.35,
-        bottom=0.35,
+        e_vals,
         width=0.64,
         color=cols_e,
         edgecolor=PALETTE["ink"],
@@ -498,7 +499,7 @@ def build_fig2_human_longitudinal(out_latex_fig: Path) -> None:
     ax2.set_xticklabels(lbls_e, rotation=90, ha="center", va="top")
     ax2.tick_params(axis="x", pad=4.5)
     ax2.set_xlim(-0.6, len(keys_e) - 0.4)
-    ax2.set_ylim(0.35, float(max(e_vals) * 1.06))
+    ax2.set_ylim(0.0, float(max(e_vals) * 1.15))
     ax2.set_ylabel("Top-30 wdr. MSE")
     ax2.set_title("Human EMT wdr.")
     add_panel_tag(ax2, "c", x_pt=-30.0, y_pt=6.0)
@@ -928,6 +929,119 @@ def build_fig5_mammalian_and_scaling(out_latex_fig: Path) -> None:
     )
 
 
+def build_fig6_trajectories_and_kinetics(out_latex_fig: Path) -> None:
+    """Figure 6: Real continuous-time trajectories & learned chromatin-memory rate landscapes."""
+    z = np.load(ROOT / "results" / "trajectory_examples.npz")
+    interp = load_new_result("interpretability_and_scaling")["yeast_portraits"]
+
+    fig = plt.figure(figsize=(TEXTWIDTH_IN, 2.30))
+    gs = fig.add_gridspec(
+        1,
+        3,
+        width_ratios=[1.05, 1.05, 1.05],
+        left=0.092,
+        right=0.985,
+        bottom=0.22,
+        top=0.84,
+        wspace=0.40,
+    )
+    ax0 = fig.add_subplot(gs[0, 0])
+    ax1 = fig.add_subplot(gs[0, 1])
+    ax2 = fig.add_subplot(gs[0, 2])
+
+    # Panel a: Cyclic zero-shot double-KO trajectory ([0, 9] h with [5, 9] h extrapolation shading)
+    t_d = z["cyc_t_dense"]
+    t_o = z["cyc_t_obs"]
+    ax0.fill_between([5.0, 9.0], -0.12, 1.98, color=PALETTE["light_gray"], zorder=0, lw=0)
+    ax0.plot([5.0, 5.0], [-0.12, 1.98], color=PALETTE["slate"], lw=0.7, ls=":", zorder=1)
+    ax0.plot(t_d, z["cyc_cl_selective_ssm"], color="#D97736", lw=1.05, ls=":", label="Mamba")
+    ax0.plot(t_d, z["cyc_cl_latent_ode"], color="#8C6D9B", lw=1.05, ls="-.", label="Lat-ODE")
+    ax0.plot(t_d, z["cyc_cl_coupled_adaptive"], color=PALETTE["amber"], lw=1.15, ls="--", label="Cpl-Ad.")
+    ax0.plot(t_d, z["cyc_cl_memgrn"], color=PALETTE["navy"], lw=1.45, label="MemGRN")
+    ax0.scatter(t_o, z["cyc_truth_obs"], s=11, color=PALETTE["ink"], zorder=5, label="Truth")
+    ax0.set_xlim(0.0, 9.2)
+    ax0.set_ylim(-0.12, 2.95)
+    ax0.set_xticks([0, 3, 6, 9])
+    ax0.set_yticks([0.0, 0.8, 1.6, 2.4])
+    ax0.set_xlabel("Time (h)")
+    ax0.set_ylabel("Gene state y(t)")
+    ax0.set_title("Cyclic 0-shot 2-KO")
+    ax0.legend(
+        loc="upper left",
+        ncol=2,
+        columnspacing=0.55,
+        handlelength=1.0,
+        handletextpad=0.35,
+        labelspacing=0.14,
+        borderpad=0.15,
+        fontsize=7.3,
+    )
+    add_panel_tag(ax0, "a", x_pt=-30.0, y_pt=6.0)
+
+    # Panel b: Live-cell yeast SIP18 6-pulse chromatin hysteresis (experimental microscopy vs fits)
+    t_m = z["yeast_obs_min"]
+    # Shade the 6 x 5 min pulses in the lower trajectory band so legend sits in open whitespace
+    for k_p in range(6):
+        ax1.fill_between(
+            [10.0 * k_p, 10.0 * k_p + 5.0],
+            -0.06,
+            1.18,
+            color=PALETTE["light_blue"],
+            alpha=0.85,
+            zorder=0,
+            lw=0,
+        )
+    ax1.plot(t_m, z["yeast_SIP18_constant"], color=PALETTE["crimson"], lw=1.2, ls="--", label="Const gW")
+    ax1.plot(t_m, z["yeast_SIP18_memory"], color=PALETTE["navy"], lw=1.45, label="MemGRN")
+    ax1.scatter(t_m, z["yeast_SIP18_obs"], s=11, color=PALETTE["ink"], zorder=5, label="Data")
+    ax1.set_xlim(0.0, 122.0)
+    ax1.set_ylim(-0.06, 2.15)
+    ax1.set_xticks([0, 40, 80, 120])
+    ax1.set_yticks([0.0, 0.5, 1.0, 1.5, 2.0])
+    ax1.set_xlabel("Time (min)")
+    ax1.set_ylabel("SIP18 YFP (norm.)")
+    ax1.set_title("Yeast 6-pulse train")
+    ax1.legend(
+        loc="upper left",
+        ncol=2,
+        columnspacing=0.45,
+        handlelength=0.95,
+        handletextpad=0.3,
+        labelspacing=0.14,
+        borderpad=0.15,
+        fontsize=7.3,
+    )
+    add_panel_tag(ax1, "b", x_pt=-30.0, y_pt=6.0)
+
+    # Panel c: Learned asymmetric chromatin-memory rate landscapes lambda_up(h) & lambda_down(h)
+    h_g = np.asarray(interp["HXK1"]["h_grid"], dtype=np.float64)
+    ax2.plot(h_g, interp["HXK1"]["lam_up_on_h"], color=PALETTE["teal"], lw=1.2, ls="--", label="HXK1 ↑")
+    ax2.plot(h_g, interp["HXK1"]["lam_dn_off_h"], color=PALETTE["teal"], lw=1.45, label="HXK1 ↓")
+    ax2.plot(h_g, interp["SIP18"]["lam_up_on_h"], color=PALETTE["navy"], lw=1.2, ls="--", label="SIP18 ↑")
+    ax2.plot(h_g, interp["SIP18"]["lam_dn_off_h"], color=PALETTE["navy"], lw=1.45, label="SIP18 ↓")
+    ax2.plot(h_g, interp["ALD3"]["lam_dn_off_h"], color=PALETTE["amber"], lw=1.25, ls=":", label="ALD3 ↓")
+    ax2.set_xlim(0.0, 0.92)
+    ax2.set_ylim(0.0, 16.8)
+    ax2.set_xticks([0.0, 0.3, 0.6, 0.9])
+    ax2.set_yticks([0, 4, 8, 12, 16])
+    ax2.set_xlabel("Memory state h")
+    ax2.set_ylabel("Rate λ (h⁻¹)")
+    ax2.set_title("Learned kinetics")
+    ax2.legend(
+        loc="upper right",
+        ncol=2,
+        columnspacing=0.45,
+        handlelength=0.9,
+        handletextpad=0.3,
+        labelspacing=0.14,
+        borderpad=0.15,
+        fontsize=7.3,
+    )
+    add_panel_tag(ax2, "c", x_pt=-30.0, y_pt=6.0)
+
+    export_figure(fig, "fig6_trajectories_and_kinetics", out_latex_fig)
+
+
 def build_all_tables(out_tab_dir: Path) -> None:
     """Write all 5 main-text tables and 9 appendix tables."""
     hipsc = load_new_result("hipsc_closed_loop")["summary"]
@@ -1023,15 +1137,16 @@ def build_all_tables(out_tab_dir: Path) -> None:
     )
 
     # =========================================================================
-    # Table 2: Zero-Shot Human Cancer EMT 3-Day Withdrawal (GSE147405, 53,290 cells)
+    # Table 2: Zero-Shot Human Cancer EMT 3-Day Withdrawal & External CollecTRI (GSE147405)
     # =========================================================================
     t2_order = [
+        ("memgrn_ortho", "\\textbf{MemGRN-Ortho (ours)}"),
         ("memgrn", "\\textbf{MemGRN (ours)}"),
+        ("memgrn_additive", "MemGRN ($\\Gamma = 0$)"),
         ("local_const_coop", "Local Const.\\ ($+\\Gamma$)"),
         ("local_const", "Local Constant ($gW$)"),
-        ("ltc_local", "Source-Local LTC"),
         ("ltc_local_coop", "Source-Local LTC ($+\\Gamma$)"),
-        ("memgrn_additive", "MemGRN ($\\Gamma = 0$)"),
+        ("ltc_local", "Source-Local LTC"),
         ("perturb_ode", "PerturbODE"),
         ("coupled_adaptive", "Coupled Adaptive ($gW$)"),
         ("cfc", "CfC"),
@@ -1043,18 +1158,33 @@ def build_all_tables(out_tab_dir: Path) -> None:
     b_t30 = min(emt[k]["top30_withdrawal_mse"] for k, _ in t2_order)
     b_r2 = max(emt[k]["withdrawal_r2"] for k, _ in t2_order)
     b_pk = min(emt[k]["post_withdrawal_peak_mse"] for k, _ in t2_order)
+    b_col = max(emt[k]["collectri_ap_over_random"] for k, _ in t2_order)
     t2_rows: list[list[str]] = []
     for idx_e, (k, lbl) in enumerate(t2_order):
-        if idx_e == 7:
+        if idx_e == 8:
             t2_rows.append(["\\midrule"])
         d = emt[k]
-        st = f"\\textbf{{{d['top30_withdrawal_mse']:.3f}}}" if np.isclose(d["top30_withdrawal_mse"], b_t30) else f"{d['top30_withdrawal_mse']:.3f}"
-        sr = f"\\textbf{{{d['withdrawal_r2']:.3f}}}" if np.isclose(d["withdrawal_r2"], b_r2) else f"{d['withdrawal_r2']:.3f}"
-        sp = f"\\textbf{{{d['post_withdrawal_peak_mse']:.3f}}}" if np.isclose(d["post_withdrawal_peak_mse"], b_pk) else f"{d['post_withdrawal_peak_mse']:.3f}"
-        dr = f"{100.0 * d['obs_tf_attr_drift']:.1f}\\%"
-        if k == "memgrn":
-            dr = "\\textbf{0.0\\%}"
-        t2_rows.append([lbl, str(d["n_params"]), st, sr, sp, dr])
+        st = (
+            f"\\textbf{{{d['top30_withdrawal_mse']:.3f}}}$\\pm${d['top30_withdrawal_mse_se']:.3f}"
+            if np.isclose(d["top30_withdrawal_mse"], b_t30)
+            else f"{d['top30_withdrawal_mse']:.3f}$\\pm${d['top30_withdrawal_mse_se']:.3f}"
+        )
+        sr = (
+            f"\\textbf{{{d['withdrawal_r2']:.3f}}}"
+            if np.isclose(d["withdrawal_r2"], b_r2)
+            else f"{d['withdrawal_r2']:.3f}"
+        )
+        sp = (
+            f"\\textbf{{{d['post_withdrawal_peak_mse']:.3f}}}"
+            if np.isclose(d["post_withdrawal_peak_mse"], b_pk)
+            else f"{d['post_withdrawal_peak_mse']:.3f}"
+        )
+        sc = (
+            f"\\textbf{{{d['collectri_ap_over_random']:.2f}$\\times$}}"
+            if np.isclose(d["collectri_ap_over_random"], b_col)
+            else f"{d['collectri_ap_over_random']:.2f}$\\times$"
+        )
+        t2_rows.append([lbl, str(d["n_params"]), st, sr, sp, sc])
     write_tex_table(
         out_tab_dir,
         "tab2_emt_ligand_shift.tex",
@@ -1062,10 +1192,10 @@ def build_all_tables(out_tab_dir: Path) -> None:
         [
             "Model (76 EMT targets)",
             "Params",
-            r"Top-30 $\downarrow$",
+            r"Top-30 MSE $\downarrow$",
             r"Wdr.\ $R^2$ $\uparrow$",
             r"Peak $\downarrow$",
-            r"Drift $\downarrow$",
+            r"CollecTRI $\uparrow$",
         ],
         t2_rows,
     )
@@ -1675,6 +1805,38 @@ def build_all_tables(out_tab_dir: Path) -> None:
         ta8_rows,
     )
 
+    # =========================================================================
+    # Appendix Table A10: Complete Architectural Specifications & Complexity Summary
+    # =========================================================================
+    ta10_rows = [
+        [r"\textbf{MemGRN (ours)}", "2-stage base+hyst.", "Yes", r"$O(SR)$", "Unit DC; 2nd-order"],
+        [r"\textbf{MemGRN-Ortho}", "MemGRN + $\\Psi_\\perp$", "Yes", r"$O(SR + K^2)$", "Zero OOD TF drift"],
+        ["Local Constant ($gW$)", "2-stage fixed $\\lambda$", "Yes", r"$O(SR)$", "No rate adaptation"],
+        ["Source-Local LTC", "1-stage LTC cell", "Yes", r"$O(SR^2)$", "1st-order; scale-ent."],
+        ["Coupled Constant (SSM)", "Linear mixed $(z,h)$", "No", r"$O(S^2 R)$", "Cross-TF leakage"],
+        ["Coupled Adaptive ($gW$)", "Mixed rates + mix", "No", r"$O(S^2 R^2)$", "Cross-TF leakage"],
+        ["Coupled LTC", "Dense LTC network", "No", r"$O(M^2)$", "Cross-TF; $GL(M)$"],
+        ["Selective SSM (Mamba)", "Diag.\\ $A$, $\\Delta(a)$", "No ($\\Delta$)", r"$O(SM)$", "Gate cross-talk"],
+        ["CfC", "Closed-form liquid", "No", r"$O(M^2)$", "Cross-TF; $GL(M)$"],
+        ["Neural CDE", "Controlled $da/dt$", "No", r"$O(S M^2)$", "Black-box state"],
+        ["PerturbODE", "State-only modules", "N/A", r"$O(N M)$", "Iso-expr.\\ floor"],
+        ["Latent Neural ODE", "Neural MLP ODE", "No", r"$O(M^2)$", "Black-box state"],
+        ["RENGE", "Static KO powers", "N/A", r"$O(S N)$", "No unseen KO dyn."],
+    ]
+    write_tex_table(
+        out_tab_dir,
+        "tab_a10_baselines_spec.tex",
+        "lllll",
+        [
+            "Architecture",
+            "Memory mechanism",
+            "Source-isol.",
+            "Mem.\\ scaling",
+            "Key property / limit",
+        ],
+        ta10_rows,
+    )
+
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -1696,6 +1858,7 @@ def main() -> None:
     build_fig3_multitf_ltc_ortho(out_latex_fig)
     build_fig4_yeast_chromatin_portraits(out_latex_fig)
     build_fig5_mammalian_and_scaling(out_latex_fig)
+    build_fig6_trajectories_and_kinetics(out_latex_fig)
     build_all_tables(out_latex_tab)
 
     ledger_path = ROOT / "results" / "claim_ledger.json"
@@ -1703,7 +1866,7 @@ def main() -> None:
         json.dumps({"source_sha256": SOURCE_HASHES}, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(f"Built 5 figures and 14 tables from {len(SOURCE_HASHES)} verified artifacts.")
+    print(f"Built 6 figures and 15 tables from {len(SOURCE_HASHES)} verified artifacts.")
 
 
 if __name__ == "__main__":

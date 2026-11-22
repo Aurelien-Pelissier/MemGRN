@@ -1,20 +1,23 @@
-"""Zero-Shot Human Cancer EMT Withdrawal Forecasting Benchmark (GSE147405, 53,290 cells).
+"""Zero-Shot Human Cancer EMT Withdrawal Forecasting & Regulon Benchmark (GSE147405, 53,290 cells).
 
-Evaluates real human 3-day ligand-withdrawal hysteresis and post-withdrawal peaking on
-Cook & Vanderhyden (2020, Nature Communications, GSE147405: 53,290 QC-passed human single
-cells across 4 cancer cell lines [A549, DU145, MCF7, OVCA420], 3 EMT-inducing ligands
-[TGFB1, EGF, TNF], and 8 timepoints spanning 7-day induction [0d, 8h, 1d, 3d, 7d] and
+Evaluates real human 3-day ligand-withdrawal hysteresis, post-withdrawal peaking, and external
+human TF->target regulon discovery on Cook & Vanderhyden (2020, Nature Communications, GSE147405:
+53,290 QC-passed human single cells across 4 cancer cell lines [A549, DU145, MCF7, OVCA420],
+3 EMT-inducing ligands [TGFB1, EGF, TNF], and 8 timepoints spanning 7-day induction [0d..7d] and
 3-day ligand withdrawal [8h_rm, 1d_rm, 3d_rm]).
 
 Protocol (4-fold Leave-One-Cell-Line-Withdrawal-Out, zero leakage of held-out withdrawal):
   - For each held-out human cancer cell line c in {A549, DU145, MCF7, OVCA420}:
-      * Training: 7-day induction (8h..7d) of all 12 (cell_line, ligand) trajectories PLUS
-        full 3-day withdrawal (8h_rm..3d_rm) of 2 training cell lines (6 withdrawal curves).
-      * Validation: full 3-day withdrawal of the 3rd cell line (3 withdrawal curves).
-      * Zero-shot test: NEVER-SEEN 3-day withdrawal (8h_rm, 1d_rm, 3d_rm) of held-out
-        cell line c across all 3 ligands (TGFB1, EGF, TNF) across all 76 hallmark EMT targets,
-        top-30 source-dynamic EMT targets, and delayed post-withdrawal peaking gene-condition
-        pairs, plus counterfactual observed-TF attribution drift vs. standalone MemGRN.
+      * Source cell lines: the other 3 cell lines (9 full induction + withdrawal curves).
+      * Latin-square stratified source validation: 3 withdrawal curves (1 from EVERY source cell
+        line and 1 from EVERY ligand), preventing single-cell-line validation collapse while keeping
+        the held-out cell line's 3-day withdrawal 100% unseen.
+      * Training: 7-day induction (8h..7d) of all 12 trajectories PLUS the remaining 6 source
+        withdrawal curves (2 per source cell line, 2 per ligand).
+      * Zero-shot test: NEVER-SEEN 3-day withdrawal (8h_rm, 1d_rm, 3d_rm) of held-out cell line c
+        across all 3 ligands (TGFB1, EGF, TNF), scored on all 76 EMT targets, top-30 source-dynamic
+        targets, delayed post-withdrawal peaking gene-condition pairs, and independent external human
+        CollecTRI regulons (167 curated TF->target edges) + hg38 ChIP-Atlas binding (203 edges).
 """
 
 from concurrent.futures import ProcessPoolExecutor
@@ -45,7 +48,10 @@ from memgrn.baselines import (  # noqa: E402
     fit_dynamical_model,
     fit_two_stage_memgrn_ortho,
 )
-from memgrn.datasets import fetch_and_prepare_emt_withdrawal  # noqa: E402
+from memgrn.datasets import (  # noqa: E402
+    fetch_and_prepare_emt_withdrawal,
+    fetch_emt_collectri_and_chip_masks,
+)
 
 OUT_DIR = ROOT / "results" / "emt_withdrawal_forecast"
 RAW_DIR = ROOT / "data" / "raw" / "emt_gse147405"
@@ -72,6 +78,20 @@ MODEL_CONFIGS: tuple[tuple[str, DynamicalModelFamily, int | None, bool | None], 
 )
 
 
+def _auroc_and_ap(scores: np.ndarray, labels: np.ndarray) -> tuple[float, float]:
+    order = np.argsort(-scores)
+    y_true = labels[order].astype(np.float64)
+    n_pos = float(np.sum(y_true))
+    n_neg = float(len(y_true) - n_pos)
+    if n_pos == 0.0 or n_neg == 0.0:
+        return 0.5, 0.0
+    cum_pos = np.cumsum(y_true)
+    ranks = np.arange(1, len(y_true) + 1, dtype=np.float64)
+    ap = float(np.sum((cum_pos / ranks) * y_true) / n_pos)
+    auroc = float(np.sum((1.0 - (ranks - cum_pos) / n_neg) * y_true) / n_pos)
+    return auroc, ap
+
+
 def _interp_tf_stage_grid(tf_obs: np.ndarray) -> np.ndarray:
     batch, _, n_s = tf_obs.shape
     obs_t = np.asarray(OBS_STEP_INDICES, dtype=np.float64)
@@ -89,12 +109,13 @@ def _interp_tf_stage_grid(tf_obs: np.ndarray) -> np.ndarray:
 def _run_cellline_fold(job: tuple[int, str, str, int | None, bool | None]) -> tuple[str, str, dict]:
     cl_i, model_key, fam_val, coop_rank, use_coop = job
     data = fetch_and_prepare_emt_withdrawal(RAW_DIR)
-    n_cl = len(data.cell_lines)
     held_cl = data.cell_lines[cl_i]
-    val_cl = data.cell_lines[(cl_i + 1) % n_cl]
+    src_cls = [c for c in data.cell_lines if c != held_cl]
 
     test_rows = [i for i, (cl, _l) in enumerate(data.conditions) if cl == held_cl]
-    val_rows = [i for i, (cl, _l) in enumerate(data.conditions) if cl == val_cl]
+    # Latin-square stratified source validation: 1 withdrawal curve per source cell line & per ligand
+    val_pairs = {(src_cls[k], data.ligands[(k + cl_i) % len(data.ligands)]) for k in range(3)}
+    val_rows = [i for i, pair in enumerate(data.conditions) if pair in val_pairs]
     train_wdr_rows = [i for i in range(len(data.conditions)) if i not in test_rows and i not in val_rows]
 
     y_all_raw = data.delta_trajectories  # (12, 8, 112)
@@ -103,12 +124,13 @@ def _run_cellline_fold(job: tuple[int, str, str, int | None, bool | None]) -> tu
 
     tr_mask_ct = np.zeros((12, 8), dtype=bool)
     tr_mask_ct[:, 1:5] = True  # induction frames observed across all 12 conditions
-    tr_mask_ct[train_wdr_rows, 5:] = True  # withdrawal observed strictly on 2 train cell lines
+    tr_mask_ct[train_wdr_rows, 5:] = True  # 6 source withdrawal curves (2/cell line, 2/ligand)
     va_mask_ct = np.zeros((12, 8), dtype=bool)
-    va_mask_ct[val_rows, 5:] = True  # withdrawal observed strictly on validation cell line
+    va_mask_ct[val_rows, 5:] = True  # 3 stratified source withdrawal curves (1/cell line, 1/ligand)
 
-    # Zero-leakage TF selection & RMS scaling from observed training frames ONLY
-    tf_rms = np.sqrt(np.mean(y_all_raw[:, :, data.tf_indices][tr_mask_ct] ** 2, axis=0))
+    # Zero-leakage TF selection & RMS scaling from observed source frames ONLY
+    src_obs_mask = tr_mask_ct | va_mask_ct
+    tf_rms = np.sqrt(np.mean(y_all_raw[:, :, data.tf_indices][src_obs_mask] ** 2, axis=0))
     sel_tf = np.sort(data.tf_indices[np.argsort(-tf_rms)[:12]])
     tf_sc = np.maximum(0.10, np.sqrt(np.mean(y_all_raw[:, :, sel_tf][tr_mask_ct] ** 2, axis=0)))
     tg_sc = np.maximum(0.10, np.sqrt(np.mean(y_all_raw[:, :, tgt_idx][tr_mask_ct] ** 2, axis=0)))
@@ -212,7 +234,8 @@ def _run_cellline_fold(job: tuple[int, str, str, int | None, bool | None]) -> tu
         )
 
     obs_k31 = [s // 2 for s in OBS_STEP_INDICES]
-    pred_8 = fitted.predict_fn(u_all, None)[test_rows][:, obs_k31, :]  # (3, 8, 76)
+    pred_full31 = fitted.predict_fn(u_all, None)[test_rows]  # (3, 31, 76)
+    pred_8 = pred_full31[:, obs_k31, :]  # (3, 8, 76)
     te_y8 = y8_all[test_rows]
 
     wdr_pred = pred_8[:, 5:, :]
@@ -235,49 +258,70 @@ def _run_cellline_fold(job: tuple[int, str, str, int | None, bool | None]) -> tu
     else:
         wdr_peak = wdr_mse
 
-    # Per-ligand withdrawal MSE (3 conditions per fold -> 12 conditions across 4 folds!)
     per_cond_wdr = [float(np.mean((wdr_pred[k] - wdr_true[k]) ** 2)) for k in range(3)]
+    per_cond_t30 = [
+        float(np.mean((wdr_pred[k, :, top30_mask] - wdr_true[k, :, top30_mask]) ** 2))
+        for k in range(3)
+    ]
 
-    # Counterfactual attribution vector on held-out cell line withdrawal (for drift audit)
+    # Counterfactual TF->target attribution across all 12 conditions (for external CollecTRI/ChIP scoring)
     attr_fn = (
         fitted.predict_observed_only_fn
         if fitted.predict_observed_only_fn is not None
         else fitted.predict_fn
     )
-    eff = counterfactual_source_attribution(attr_fn, u_all[:, test_rows, :, :], None)[:, :, obs_k31, :][:, :, 5:, :]
-    attr_vec = eff.ravel()
+    eff_all = counterfactual_source_attribution(attr_fn, u_all, None)  # (12_tf, 12_cond, 31, 76)
+    # Causal edge score matrix (12_tf, 76_target): mean |Delta_{i->j}(t)| across observed timepoints
+    edge_mat = np.mean(np.abs(eff_all[:, :, obs_k31, :][:, :, 1:, :]), axis=(1, 2))
+    attr_vec_test = eff_all[:, test_rows, :, :][:, :, obs_k31, :][:, :, 5:, :].ravel()
 
-    return (
-        held_cl,
-        model_key,
-        {
-            "n_params": fitted.n_params,
-            "withdrawal_mse": wdr_mse,
-            "withdrawal_r2": wdr_r2,
-            "withdrawal_r": wdr_r,
-            "top30_withdrawal_mse": wdr_top30,
-            "post_withdrawal_peak_mse": wdr_peak,
-            "per_ligand_wdr_mse": per_cond_wdr,
-            "attr_vec": attr_vec.tolist(),
-        },
-    )
+    out_d = {
+        "n_params": fitted.n_params,
+        "withdrawal_mse": wdr_mse,
+        "withdrawal_r2": wdr_r2,
+        "withdrawal_r": wdr_r,
+        "top30_withdrawal_mse": wdr_top30,
+        "post_withdrawal_peak_mse": wdr_peak,
+        "per_ligand_wdr_mse": per_cond_wdr,
+        "per_ligand_top30_mse": per_cond_t30,
+        "edge_mat": edge_mat.tolist(),
+        "attr_vec": attr_vec_test.tolist(),
+        "selected_tfs": [data.genes[int(i)] for i in sel_tf],
+    }
+    if held_cl == "A549" and model_key in ("memgrn", "memgrn_ortho", "ltc_local", "neural_cde", "local_const"):
+        out_d["a549_pred31"] = pred_full31.tolist()
+        out_d["a549_true8"] = te_y8.tolist()
+    return held_cl, model_key, out_d
 
 
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     data = fetch_and_prepare_emt_withdrawal(RAW_DIR)
 
+    # Confirm the 12 source-dynamic EMT TFs & fetch SHA-256 cached external CollecTRI + ChIP-Atlas masks
+    n_tf_all = len(data.tf_indices)
+    tgt_names = tuple(data.genes[n_tf_all:])
+    tf_rms = np.sqrt(np.mean(data.delta_trajectories[:, :, data.tf_indices] ** 2, axis=(0, 1)))
+    sel_tf_names = tuple(data.genes[int(i)] for i in np.sort(data.tf_indices[np.argsort(-tf_rms)[:12]]))
+    collectri_mask, chip_mask, ext_hashes = fetch_emt_collectri_and_chip_masks(
+        RAW_DIR, sel_tf_names, tgt_names
+    )
+
     design = {
-        "benchmark": "emt_zero_shot_human_cancer_withdrawal_gse147405",
+        "benchmark": "emt_zero_shot_human_cancer_withdrawal_gse147405_latin_cv_collectri",
         "accession": "GSE147405",
         "reference": "Cook & Vanderhyden, Nature Communications 11, 2142 (2020)",
+        "external_regulon_ground_truth": "CollecTRI (Muller-Dott et al., NAR 2023) + hg38 ChIP-Atlas (MACS2>=500)",
+        "validation_split": "latin_square_stratified_3_source_cell_lines_x_3_ligands",
         "total_singlet_cells": data.total_singlet_cells,
         "cell_lines": list(data.cell_lines),
         "ligands": list(data.ligands),
-        "n_selected_tfs": 12,
-        "n_targets": len(data.genes) - len(data.tf_indices),
+        "selected_tfs": list(sel_tf_names),
+        "n_targets": len(tgt_names),
+        "n_collectri_edges": int(np.sum(collectri_mask)),
+        "n_chip_edges": int(np.sum(chip_mask)),
         "models": [cfg[0] for cfg in MODEL_CONFIGS],
-        "file_sha256": data.file_sha256,
+        "file_sha256": {**data.file_sha256, **ext_hashes},
     }
     design_bytes = (json.dumps(design, indent=2) + "\n").encode("utf-8")
     design_sha = hashlib.sha256(design_bytes).hexdigest()
@@ -296,21 +340,47 @@ def main() -> None:
 
     by_model: dict[str, dict[str, dict]] = {mk: {} for mk, _, _, _ in MODEL_CONFIGS}
     attr_by_model: dict[str, dict[str, np.ndarray]] = {mk: {} for mk, _, _, _ in MODEL_CONFIGS}
+    edge_by_model: dict[str, list[np.ndarray]] = {mk: [] for mk, _, _, _ in MODEL_CONFIGS}
+    traj_export: dict[str, np.ndarray] = {
+        "obs_days": np.asarray(data.obs_days, dtype=np.float64),
+        "t31_days": np.arange(31, dtype=np.float64) * (2.0 * DT_DAYS),
+        "targets": np.asarray(tgt_names),
+        "ligands": np.asarray(data.ligands),
+    }
     for cl, mk, res in raw_out:
         attr_by_model[mk][cl] = np.asarray(res.pop("attr_vec"), dtype=np.float64)
+        edge_by_model[mk].append(np.asarray(res.pop("edge_mat"), dtype=np.float64))
+        res.pop("selected_tfs", None)
+        if "a549_pred31" in res:
+            traj_export[f"a549_pred31_{mk}"] = np.asarray(res.pop("a549_pred31"), dtype=np.float64)
+            traj_export["a549_true8"] = np.asarray(res.pop("a549_true8"), dtype=np.float64)
         by_model[mk][cl] = res
+    np.savez(OUT_DIR / "example_trajectories.npz", **traj_export)
 
-    # Compute observed-TF attribution drift relative to standalone MemGRN across all 4 folds
+    col_base_rate = float(np.mean(collectri_mask))
+    chip_base_rate = float(np.mean(chip_mask))
+
     summary: dict[str, dict] = {}
     for mk, _, _, _ in MODEL_CONFIGS:
         vals = [by_model[mk][cl] for cl in data.cell_lines]
         cond_12 = np.array([x for v in vals for x in v["per_ligand_wdr_mse"]], dtype=np.float64)
+        t30_12 = np.array([x for v in vals for x in v["per_ligand_top30_mse"]], dtype=np.float64)
+
+        # Average counterfactual edge attribution across all 4 folds -> (12, 76)
+        mean_edge = np.mean(np.stack(edge_by_model[mk], axis=0), axis=0)
+        # Column-normalized per target (standard regulon ranking across candidate TFs)
+        col_norm = mean_edge / np.maximum(1e-8, np.max(mean_edge, axis=0, keepdims=True))
+        col_auroc_raw, col_ap_raw = _auroc_and_ap(mean_edge.ravel(), collectri_mask.ravel())
+        col_auroc, col_ap = _auroc_and_ap(col_norm.ravel(), collectri_mask.ravel())
+        chip_auroc, chip_ap = _auroc_and_ap(col_norm.ravel(), chip_mask.ravel())
+
+        # Exact attribution drift relative to standalone MemGRN (primarily to audit MemGRN-Ortho invariance)
         drifts = []
         for cl in data.cell_lines:
             ref = attr_by_model["memgrn"][cl]
             cur = attr_by_model[mk][cl]
-            denom = float(np.linalg.norm(ref)) + 1e-12
-            drifts.append(float(np.linalg.norm(cur - ref) / denom))
+            drifts.append(float(np.linalg.norm(cur - ref) / (float(np.linalg.norm(ref)) + 1e-12)))
+
         summary[mk] = {
             "n_params": vals[0]["n_params"],
             "withdrawal_mse": float(np.mean([v["withdrawal_mse"] for v in vals])),
@@ -318,11 +388,19 @@ def main() -> None:
             "withdrawal_r2": float(np.mean([v["withdrawal_r2"] for v in vals])),
             "withdrawal_r": float(np.mean([v["withdrawal_r"] for v in vals])),
             "top30_withdrawal_mse": float(np.mean([v["top30_withdrawal_mse"] for v in vals])),
+            "top30_withdrawal_mse_se": float(np.std(t30_12, ddof=1) / np.sqrt(len(t30_12))),
             "post_withdrawal_peak_mse": float(np.mean([v["post_withdrawal_peak_mse"] for v in vals])),
-            "obs_tf_attr_drift": float(np.mean(drifts)),
+            "collectri_auroc": col_auroc,
+            "collectri_ap": col_ap,
+            "collectri_ap_over_random": float(col_ap / max(1e-8, col_base_rate)),
+            "collectri_raw_auroc": col_auroc_raw,
+            "collectri_raw_ap_over_random": float(col_ap_raw / max(1e-8, col_base_rate)),
+            "chip_auroc": chip_auroc,
+            "chip_ap_over_random": float(chip_ap / max(1e-8, chip_base_rate)),
+            "obs_tf_attr_drift_vs_memgrn": float(np.mean(drifts)),
         }
 
-    # Paired Wilcoxon across the 12 (cell_line, ligand) held-out withdrawal curves vs memgrn_ortho & memgrn
+    # Paired Wilcoxon across the 12 (cell_line, ligand) held-out withdrawal curves
     ref_ortho = np.array(
         [x for cl in data.cell_lines for x in by_model["memgrn_ortho"][cl]["per_ligand_wdr_mse"]]
     )

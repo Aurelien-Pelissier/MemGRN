@@ -89,8 +89,14 @@ def test_archived_msn2_and_synthetic_numbers() -> None:
     )
     assert (
         emt["summary"]["memgrn"]["top30_withdrawal_mse"]
-        < emt["summary"]["ltc_local_coop"]["top30_withdrawal_mse"]
+        < emt["summary"]["coupled_adaptive"]["top30_withdrawal_mse"]
     )
+    assert (
+        emt["summary"]["memgrn"]["top30_withdrawal_mse"]
+        < emt["summary"]["latent_ode"]["top30_withdrawal_mse"]
+    )
+    assert emt["summary"]["memgrn_ortho"]["obs_tf_attr_drift_vs_memgrn"] == 0.0
+    assert emt["summary"]["memgrn"]["collectri_ap_over_random"] > 1.2
 
     cyc_dir = ROOT / "results" / "cyclic_double_ko"
     cyc = json.loads((cyc_dir / "scores.json").read_text())
