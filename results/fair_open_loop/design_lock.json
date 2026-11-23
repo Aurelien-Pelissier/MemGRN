@@ -1,0 +1,14 @@
+{
+  "benchmark": "fair_equal_budget_open_loop_suite",
+  "equal_validation_budgets": true,
+  "gate_shrinkage_grid_all_models": [
+    1.0
+  ],
+  "hysteresis_shrinkage_grid_all_models": [
+    1.0
+  ],
+  "diagonal_free_cooperativity": true,
+  "memgrn_ortho_spec": "single_backbone_latent_ode_global_scalar_beta",
+  "emt_tf_selection": "strict_source_cell_lines_only",
+  "stats_test": "two_sided_wilcoxon_holm_bonferroni"
+}

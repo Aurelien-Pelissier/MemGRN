@@ -1,19 +1,13 @@
 {
   "source_sha256": {
-    "beijing_air_quality/scores.json": "7f7ab7a309c0edbe00c432f7b27f7d0b72768152d72c7a5592f3a8f7d6df1ca1",
-    "closed_loop_upgrades/scores.json": "96746c526f3d0272a48735c3cfd5306f3727a38a6e66a7d67ffb7e08da893275",
-    "powergrid_n2/scores.json": "9b75f68dd1a11a171e7fc7dbfbd17cf779a7d57333a01b96cd747ea07223f067",
+    "fair_open_loop/scores.json": "9e3b984cbad0c02536dba370585cca920f62742e77b53602f26adf32cf6e7f35",
+    "fair_closed_loop/scores.json": "7630e29459694a0e1b7556db6f07bcb94cdde8f64ef544f4ecd27518a3b07681",
     "hipsc_closed_loop/scores.json": "6fc6193776bc7e16eab02320990b2a54ea1eacf1844e3703836309445c35938e",
     "cyclic_double_ko/scores.json": "6d2bab11d1a25ff1dc13fc58b6353062b068e2bcb59cc5a2ec07c49fd989e0c8",
-    "emt_withdrawal_forecast/scores.json": "a81097f50c4db289c190834e8898635735cdae86a5e0533707f245e153a7b59b",
-    "multitf_factorial/scores.json": "41fe1cf85e51047b18d2546c45bba3af9592e1b0ccfd1b620c4f20f0ed100bc9",
-    "partial_obs_and_ltc_sep/scores.json": "0e1cc1595eaf7771203ff80988047f84d329ebc176121e4ad8b1e5b00b3271b2",
     "msn2_joint_and_cross_readout/scores.json": "f8b0c449f755f415f7fedd7b59fd29206d3de9bdc44b420df4c01f10a0df147c",
-    "interpretability_and_scaling/scores.json": "d991f844515298554a6b7035670976fa682c7f33506a197fcf2d3bf26747489e",
+    "cross_domain_portraits/scores.json": "c31ec4a5a21b8277d80e35b6ef145e5a17cbec85be5f42ceb7bda4e8af48de9e",
     "macrophage_multitf/scores.json": "53d61c25e4f992c68924073c05192eadb3c5984b3f122de3b2cf5c378b32e627",
     "nfkb_ortho/scores.json": "871a28512ea51ccffaf5fc5f44e0f5842f2320037cdb0b2e63bf314dffb5b663",
-    "financial_contagion/scores.json": "babb3244ee1c56ac89126252e415c7ea038633c99929dfc4198ad3b0b1b50dd9",
-    "cross_domain_portraits/scores.json": "66bbddde39951a95ec52323c9a39a24c8448903098d03451e5dc41d25f9afc88",
     "sensitivity_ablations/scores.json": "01dcf2c39aa1cd3d3b623fd471d8d38a6ba1a0024ceb9b8e45dcc481e31cfc3a",
     "stage3/neural_rate_pulse/test_scores.json": "cd327da5ad64b89f471b9b4917f9b347ef0ccbc18ffd543b1fa33ab9754f2382",
     "stage3/neural_rate_buffer/test_scores.json": "d985808065db994c558780f18a79a1e1a0e695d51f2ac208704c71f41b361c3c",
@@ -21,13 +15,9 @@
     "stage3/strength_swap_replication/scores.json": "93c962b64de44d1b2890387dc44f02b10e9cab3803d0091d459fc645000cc3c6",
     "stage3/paired_time_certificate/test_scores.json": "15f4700eb4fdf837307537f8db70d96a9962ec6fe3f5757e0712c9f33da8f7dd",
     "stage3/paired_time_certificate/certificate.json": "70dbcddc1ca3e76ecf8bbfb501ff33d4d4178bfbe6b6b4e3615237ac5a869d06",
-    "open_loop_upgrades/scores.json": "55e0e16ef8c293bba61a17d2743aac0bd81f707ef10e9228f00b7dc17f9835c9",
     "stage3/multiscale_gw/scores.json": "2190459bb321728af4d550c710efd0f577ab412751ee9da6c109eed41d7b33eb",
     "stage3/mixed_directed_memory/scores.json": "cf7a826ddff746fcb6ce5dd7448697bfd94b7ba5d047a4bfa920fff2770ae161",
     "stage3/msn2_rtn2_switch_neural/scores.json": "62dc3bdf8eb7c37dc4960396b7bf4174b339aa40a26207b6afd28f90167f560b",
-    "stage3/msn2_memory_reset/scores.json": "5720a049e694d9b4b3e4fb37355bf1ebbf0e5b0203cacb72ec13193fdfbdcbdb",
-    "metr_la_traffic/scores.json": "e4651d660b28b61830fbcaff194c51140291e343b02387c1eb668dfb8829b423",
-    "reddit_temporal/scores.json": "24dd6bddeec0b5a65827fbd041771043118c2e289ffda4600f34a1b7fc6a5226",
-    "cd4t_closed_loop/scores.json": "ecd4da06700cd5d462c9624bf1c987fb2eedb0912f34749db883385639766288"
+    "stage3/msn2_memory_reset/scores.json": "5720a049e694d9b4b3e4fb37355bf1ebbf0e5b0203cacb72ec13193fdfbdcbdb"
   }
 }

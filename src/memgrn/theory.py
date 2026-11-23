@@ -35,10 +35,14 @@ class GeneralSCovarianceAuditResult:
     k_active: int
     cov_condition_number: float
     analytical_vs_solve_max_diff: float
+    equicorrelated_closed_form_max_diff: float
+    equicorrelated_rho1_limit_error: float
     coupled_nonparent_weight_l2: float
     local_nonparent_weight_l2: float
     coupled_single_ko_l2_error: float
     local_single_ko_l2_error: float
+    coupled_false_nonparent_attr_l2: float
+    local_false_nonparent_attr_l2: float
     finite_sample_coupled_risk_s4: float
     finite_sample_coupled_risk_s24: float
     finite_sample_local_l1_risk_s4: float
@@ -56,8 +60,10 @@ class ClosedLoopIdentifiabilityAuditResult:
     within_absorbing_ball: bool
     coupled_gauge_trajectory_max_diff: float
     coupled_gauge_attribution_disagreement: float
+    memgrn_relaxation_recovery_max_error: float
     memgrn_direct_weight_recovery_max_error: float
     memgrn_total_weight_recovery_max_error: float
+    factorized_coop_single_clamp_max_error: float
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -257,7 +263,15 @@ def verify_general_s_covariance_crosstalk_theorem(
     rho_module: float = 0.92,
     l2_penalty: float = 0.08,
 ) -> GeneralSCovarianceAuditResult:
-    """Verify Theorem 1(a): general S-regulator correlated covariance & O(S) vs O(k log S) risk."""
+    """Verify Theorem 1(a): single-parent (k=1) linearized gate cross-talk & sparse readout risk.
+
+    Separates:
+      1. Rate-gate cross-talk (linearized quadratic surrogate with k=1 single-parent ground truth
+         and matched ridge penalty mu=l2_penalty for BOTH coupled and source-isolated gates),
+         verifying the exact equicorrelated leakage formula
+           mu * rho / ((1 - rho + mu) * (1 + (b - 1) * rho + mu)) * |w_i*| -> |w_i*| / (b + mu).
+      2. Sparse linear readout finite-sample intervention risk (k_active-sparse Lasso vs dense OLS).
+    """
     # Construct strictly positive-definite equicorrelated pathway-module covariance Sigma_a > 0
     block_size = 4
     sigma_a = np.eye(n_sources, dtype=np.float64) * (1.0 - rho_module)
@@ -266,9 +280,9 @@ def verify_general_s_covariance_crosstalk_theorem(
         sigma_a[b_start:b_end, b_start:b_end] += rho_module
     cond_num = float(np.linalg.cond(sigma_a))
 
+    # Single-parent (k = 1) rate-gate ground truth: realizable by source-isolated MemGRN!
     w_star_vec = np.zeros(n_sources, dtype=np.float64)
     w_star_vec[0] = 2.2
-    w_star_vec[block_size] = -1.8
     active_mask = np.abs(w_star_vec) > 0.0
 
     # Closed-form spectral formula vs direct linear solve
@@ -277,21 +291,44 @@ def verify_general_s_covariance_crosstalk_theorem(
     direct_w = general_s_coupled_ridge_weights(sigma_a, w_star_vec, l2_penalty=l2_penalty)
     spec_diff = float(np.max(np.abs(spectral_w - direct_w)))
 
+    # Verify exact closed-form equicorrelated block leakage and rho -> 1^- limit |w_0*| / (b + mu)
+    exact_leak = (
+        (l2_penalty * rho_module)
+        / ((1.0 - rho_module + l2_penalty) * (1.0 + (block_size - 1) * rho_module + l2_penalty))
+        * abs(w_star_vec[0])
+    )
+    equicorr_diff = float(np.max(np.abs(np.abs(direct_w[1:block_size]) - exact_leak)))
+    rho_near1 = 1.0 - 1e-8
+    sigma_near1 = np.eye(block_size, dtype=np.float64) * (1.0 - rho_near1) + rho_near1
+    w_near1 = general_s_coupled_ridge_weights(
+        sigma_near1, np.array([w_star_vec[0]] + [0.0] * (block_size - 1)), l2_penalty=l2_penalty
+    )
+    rho1_limit_target = abs(w_star_vec[0]) / (block_size + l2_penalty)
+    rho1_limit_err = float(abs(abs(w_near1[1]) - rho1_limit_target))
+
     cpl_nonparent_l2 = float(np.linalg.norm(direct_w[~active_mask]))
     loc_nonparent_l2 = 0.0
 
-    # Simulate nonlinear ODE rollout under single-regulator activation of parent 0 (all others = 0)
+    # Matched ridge penalty mu = l2_penalty on source-isolated gate weight w_loc[0]
+    w_loc = np.zeros(n_sources, dtype=np.float64)
+    w_loc[0] = float((sigma_a[0, 0] / (sigma_a[0, 0] + l2_penalty)) * w_star_vec[0])
+
+    # Simulate nonlinear ODE rollout under (a) single-parent activation (non-parents knocked out)
+    # and (b) co-activated equicorrelated module (a_{1..b-1} = rho * a_0) to measure false attribution.
     t_grid = np.linspace(0.0, 5.0, 251)
     dt = float(t_grid[1] - t_grid[0])
 
-    def _sim_s_gate(w_gate: np.ndarray) -> np.ndarray:
+    def _sim_s_gate(w_gate: np.ndarray, coactivate_module: bool) -> np.ndarray:
         def _rhs(t: float, s: np.ndarray) -> list[float]:
             a_vec = np.zeros(n_sources, dtype=np.float64)
-            a_vec[0] = float(0.85 / (1.0 + np.exp((t - 1.5) / 0.06)))
+            a0 = float(0.85 / (1.0 + np.exp((t - 1.5) / 0.06)))
+            a_vec[0] = a0
+            if coactivate_module:
+                a_vec[1:block_size] = rho_module * a0
             z, h, y = float(s[0]), float(s[1]), float(s[2])
             logit = -0.6 + float(w_gate @ a_vec) - 1.0 * h
             lam = 0.1 + 7.9 / (1.0 + np.exp(-logit))
-            return [lam * (a_vec[0] - z), lam * (z - h), 1.3 * h - 0.5 * y]
+            return [lam * (a0 - z), lam * (z - h), 1.3 * h - 0.5 * y]
 
         sol = solve_ivp(
             _rhs,
@@ -304,26 +341,28 @@ def verify_general_s_covariance_crosstalk_theorem(
         )
         return sol.y[2]
 
-    y_star = _sim_s_gate(w_star_vec)
-    y_cpl = _sim_s_gate(direct_w)
-    w_loc = np.zeros(n_sources, dtype=np.float64)
-    w_loc[0] = float((sigma_a[0, 0] / (sigma_a[0, 0] + 1e-12)) * w_star_vec[0])
-    y_loc = _sim_s_gate(w_loc)
+    y_star_ko = _sim_s_gate(w_star_vec, coactivate_module=False)
+    y_cpl_ko = _sim_s_gate(direct_w, coactivate_module=False)
+    y_cpl_co = _sim_s_gate(direct_w, coactivate_module=True)
+    y_loc_ko = _sim_s_gate(w_loc, coactivate_module=False)
+    y_loc_co = _sim_s_gate(w_loc, coactivate_module=True)
 
-    cpl_ko_err = float(np.sqrt(trapezoid((y_cpl - y_star) ** 2, dx=dt)))
-    loc_ko_err = float(np.sqrt(trapezoid((y_loc - y_star) ** 2, dx=dt)))
+    cpl_ko_err = float(np.sqrt(trapezoid((y_cpl_ko - y_star_ko) ** 2, dx=dt)))
+    loc_ko_err = float(np.sqrt(trapezoid((y_loc_ko - y_star_ko) ** 2, dx=dt)))
+    cpl_false_attr = float(np.sqrt(trapezoid((y_cpl_co - y_cpl_ko) ** 2, dx=dt)))
+    loc_false_attr = float(np.sqrt(trapezoid((y_loc_co - y_loc_ko) ** 2, dx=dt)))
 
-    # Finite-sample intervention transfer separation: O(S / n) coupled vs O(k log S / n) sparse local
+    # Finite-sample linear readout intervention risk: Omega(S / n) dense OLS vs O(k log S / n) Lasso
     rng = np.random.default_rng(20261121)
     n_samples = 64
     noise_sd = 0.35
 
     def _mc_readout_risk(s_dim: int) -> tuple[float, float]:
-        # Correlated training design X (n_samples, s_dim), sparse k=2 ground truth beta_star
+        # Correlated training design X (n_samples, s_dim), sparse k_active ground truth beta_star
         cov_s = 0.70 * np.ones((s_dim, s_dim), dtype=np.float64) + 0.30 * np.eye(s_dim)
         chol = np.linalg.cholesky(cov_s)
         beta_star = np.zeros(s_dim, dtype=np.float64)
-        beta_star[:k_active] = [1.8, -1.5]
+        beta_star[:k_active] = [1.8, -1.5][:k_active]
         lam_l1 = 1.15 * noise_sd * np.sqrt(2.0 * np.log(s_dim) / n_samples)
 
         cpl_errs = []
@@ -361,10 +400,14 @@ def verify_general_s_covariance_crosstalk_theorem(
         k_active=k_active,
         cov_condition_number=cond_num,
         analytical_vs_solve_max_diff=spec_diff,
+        equicorrelated_closed_form_max_diff=equicorr_diff,
+        equicorrelated_rho1_limit_error=rho1_limit_err,
         coupled_nonparent_weight_l2=cpl_nonparent_l2,
         local_nonparent_weight_l2=loc_nonparent_l2,
         coupled_single_ko_l2_error=cpl_ko_err,
         local_single_ko_l2_error=loc_ko_err,
+        coupled_false_nonparent_attr_l2=cpl_false_attr,
+        local_false_nonparent_attr_l2=loc_false_attr,
         finite_sample_coupled_risk_s4=cpl_s4,
         finite_sample_coupled_risk_s24=cpl_s24,
         finite_sample_local_l1_risk_s4=loc_s4,
@@ -475,12 +518,46 @@ def verify_closed_loop_stability_and_identifiability_theorem(
     # Naive channel readout attribution ||c_m[i, :]|| differs sharply under rotation T!
     gauge_attr_disagree = float(np.max(np.abs(c_x - c_x_tilde)))
 
-    # Part (ii-b): Exact structural recovery of D_{ij} and total steady-state weight W^tot_{ij}
-    # in Closed-Loop MemGRN via single-node clamp interventions do(g_i = alpha), do(g_{k!=i} = 0)
+    # Part (ii-b): Exact structural recovery of delta_j, D_{ij}, and total steady-state weight
+    # W^tot_{ij} = D_{ij} + sum_r B_{irj} via open-loop clamp probes (without plugging in ground truth!):
+    # Step 1: Zero-memory initial-state relaxation probe (z(0)=h(0)=0, a(t)=0, y(0)=1) -> dy/dt = -delta * y
+    def _zero_mem_relax_rhs(_t: float, s: np.ndarray) -> np.ndarray:
+        z_s = s[:n_zh].reshape(n_nodes, 2)
+        h_s = s[n_zh : 2 * n_zh].reshape(n_nodes, 2)
+        y_s = s[2 * n_zh :]
+        dz, dh, dy = memgrn_vector_field(np.zeros(n_nodes), z_s, h_s, y_s, params, cfg)
+        return np.concatenate([dz.ravel(), dh.ravel(), dy.ravel()])
+
+    t_rel = 1.0
+    sol_rel = solve_ivp(
+        _zero_mem_relax_rhs,
+        [0.0, t_rel],
+        np.concatenate([np.zeros(2 * n_zh), np.ones(n_nodes)]),
+        method="DOP853",
+        rtol=1e-13,
+        atol=1e-15,
+    )
+    rec_relaxation = -np.log(sol_rel.y[2 * n_zh :, -1]) / t_rel
+    relax_err = float(np.max(np.abs(rec_relaxation - relaxation)))
+
+    # Step 2: Single-node clamp probes do(g_i = alpha), do(g_{k!=i} = 0) opening the feedback loop
     alpha_probe = np.arctanh(0.5)  # so a_i = tanh(alpha_probe) = 0.5 exactly
     rec_direct = np.zeros_like(direct_w)
     rec_total = np.zeros_like(direct_w)
     true_total = direct_w + np.sum(delayed_w, axis=1)
+
+    # Also verify diagonal-free factorized cooperativity produces identically zero single-clamp distortion
+    coop_u = rng.normal(0.0, 0.5, size=(n_nodes, 4))
+    coop_v = rng.normal(0.0, 0.5, size=(n_nodes, 4))
+    coop_w = rng.normal(0.0, 0.4, size=(4, n_nodes))
+    coop_single_errs = []
+
+    def _diag_free_coop(h_s: np.ndarray) -> np.ndarray:
+        hb = np.mean(h_s, axis=-1)
+        su = hb @ coop_u
+        sv = hb @ coop_v
+        feat = su * sv - (hb**2) @ (coop_u * coop_v)
+        return feat @ coop_w
 
     for i_src in range(n_nodes):
         clamp_g = np.zeros(n_nodes, dtype=np.float64)
@@ -498,12 +575,13 @@ def verify_closed_loop_stability_and_identifiability_theorem(
         rec_direct[i_src, i_src] = 0.0
 
         # Under sustained clamp do(g = clamp_g), z_{ir}(t), h_{ir}(t) -> a_i = 0.5 exponentially
-        # by Proposition 1(ii), so delta_j * y_j(infty) / 0.5 -> D_{ij} + sum_r B_{irj}!
+        # by Proposition 1(ii), so rec_relaxation_j * y_j(infty) / 0.5 -> D_{ij} + sum_r B_{irj}!
         def _clamp_rhs(_t: float, s: np.ndarray) -> np.ndarray:
             z_s = s[:n_zh].reshape(n_nodes, 2)
             h_s = s[n_zh : 2 * n_zh].reshape(n_nodes, 2)
             y_s = s[2 * n_zh :]
             dz, dh, dy = memgrn_vector_field(clamp_g, z_s, h_s, y_s, params, cfg)
+            dy = dy + _diag_free_coop(h_s)
             return np.concatenate([dz.ravel(), dh.ravel(), dy.ravel()])
 
         sol_c = solve_ivp(
@@ -514,8 +592,10 @@ def verify_closed_loop_stability_and_identifiability_theorem(
             rtol=1e-12,
             atol=1e-14,
         )
+        h_inf = sol_c.y[n_zh : 2 * n_zh, -1].reshape(n_nodes, 2)
+        coop_single_errs.append(float(np.max(np.abs(_diag_free_coop(h_inf)))))
         y_inf = sol_c.y[2 * n_zh :, -1]
-        rec_total[i_src] = (relaxation * y_inf) / 0.5
+        rec_total[i_src] = (rec_relaxation * y_inf) / 0.5
         rec_total[i_src, i_src] = 0.0
 
         # Also verify Theorem 1(ii) with nonzero diagonal self-memory b_self_{ir} != 0:
@@ -528,7 +608,7 @@ def verify_closed_loop_stability_and_identifiability_theorem(
             h_s = s[n_zh : 2 * n_zh].reshape(n_nodes, 2)
             y_s = s[2 * n_zh :]
             dz, dh, dy = memgrn_vector_field(clamp_g, z_s, h_s, y_s, params, cfg)
-            dy = dy + np.sum(h_s * self_mem_w, axis=1)
+            dy = dy + np.sum(h_s * self_mem_w, axis=1) + _diag_free_coop(h_s)
             return np.concatenate([dz.ravel(), dh.ravel(), dy.ravel()])
 
         sol_cs = solve_ivp(
@@ -540,7 +620,7 @@ def verify_closed_loop_stability_and_identifiability_theorem(
             atol=1e-14,
         )
         y_inf_self = sol_cs.y[2 * n_zh :, -1]
-        rec_self_row = (relaxation * y_inf_self) / 0.5
+        rec_self_row = (rec_relaxation * y_inf_self) / 0.5
         rec_self_row[i_src] = 0.0
         if float(np.max(np.abs(rec_self_row - rec_total[i_src]))) > 1e-11:
             raise AssertionError("Diagonal self-memory altered off-diagonal Theorem 1(ii) recovery")
@@ -556,8 +636,10 @@ def verify_closed_loop_stability_and_identifiability_theorem(
         within_absorbing_ball=within_ball,
         coupled_gauge_trajectory_max_diff=gauge_traj_diff,
         coupled_gauge_attribution_disagreement=gauge_attr_disagree,
+        memgrn_relaxation_recovery_max_error=relax_err,
         memgrn_direct_weight_recovery_max_error=d_err,
         memgrn_total_weight_recovery_max_error=tot_err,
+        factorized_coop_single_clamp_max_error=float(max(coop_single_errs)),
     )
 
 
@@ -712,10 +794,12 @@ def verify_orthogonal_cofactor_invariance_proposition() -> OrthogonalCofactorAud
 def verify_unit_dc_gain_and_second_order_vs_local_ltc() -> UnitDCGainAndSecondOrderAuditResult:
     """Verify Theorem 1(iii): unit-DC-gain identifiability & 2nd-order delay vs. Source-Local LTC."""
     # -------------------------------------------------------------------------
-    # Part (a): Kinetic-readout scale & saturation entanglement in Source-Local LTC
+    # Part (a): Kinetic-readout scale & saturation entanglement in state-dependent
+    # Source-Local LTC (with simultaneous gate rescaling f_ir(./c, a_i))
     # vs. exact rate-invariant unit-DC-gain graph identifiability in MemGRN.
     # -------------------------------------------------------------------------
     tau_inv = 0.95
+    w_x = 1.15
     w_a = 2.6
     b_g = -1.6
     e_rev = 1.4
@@ -724,11 +808,13 @@ def verify_unit_dc_gain_and_second_order_vs_local_ltc() -> UnitDCGainAndSecondOr
     delta = 0.6
     gauge_c = 2.5
 
-    def _ltc_rollout(a_fn, e_scale: float, b_scale: float, t_eval: np.ndarray) -> np.ndarray:
+    def _ltc_rollout(
+        a_fn, e_scale: float, b_scale: float, wx_scale: float, t_eval: np.ndarray
+    ) -> np.ndarray:
         def _rhs(t: float, s: np.ndarray) -> list[float]:
             a_val = float(a_fn(t))
             x_v, y_v = float(s[0]), float(s[1])
-            gate = 3.5 / (1.0 + np.exp(-(w_a * a_val + b_g)))
+            gate = 3.5 / (1.0 + np.exp(-(wx_scale * x_v + w_a * a_val + b_g)))
             dx = -(tau_inv + gate) * x_v + gate * (a_val * e_scale)
             dy = d_read * a_val + b_scale * x_v - delta * y_v
             return [dx, dy]
@@ -746,18 +832,18 @@ def verify_unit_dc_gain_and_second_order_vs_local_ltc() -> UnitDCGainAndSecondOr
 
     t_probe = np.linspace(0.0, 12.0, 241)
     pulse_probe = lambda t: float(0.75 * np.exp(-0.25 * (t - 1.5) ** 2))
-    y_ltc_1 = _ltc_rollout(pulse_probe, e_rev, b_read, t_probe)
-    y_ltc_2 = _ltc_rollout(pulse_probe, gauge_c * e_rev, b_read / gauge_c, t_probe)
+    # Exact scale-gauge equivalence: (A, B, w_x) -> (c*A, B/c, w_x/c) leaves y(t) strictly invariant
+    y_ltc_1 = _ltc_rollout(pulse_probe, e_rev, b_read, w_x, t_probe)
+    y_ltc_2 = _ltc_rollout(pulse_probe, gauge_c * e_rev, b_read / gauge_c, w_x / gauge_c, t_probe)
     ltc_gauge_traj_diff = float(np.max(np.abs(y_ltc_1 - y_ltc_2)))
     ltc_gauge_w_diff = abs(b_read - b_read / gauge_c)
 
-    # Even fixing e_rev = 1.0, Source-Local LTC steady-state effective gain W_eff(alpha)
-    # = (delta * y_inf(alpha)) / alpha varies nonlinearly across probe amplitudes alpha!
+    # Even fixing e_rev = 1.0, state-dependent Source-Local LTC steady-state effective gain
+    # W_eff(alpha) = (delta * y_inf(alpha)) / alpha varies nonlinearly across probe amplitudes alpha!
     eff_ltc = []
     for alpha in (0.15, 0.85):
-        g_a = 3.5 / (1.0 + np.exp(-(w_a * alpha + b_g)))
-        kappa_a = g_a / (tau_inv + g_a)
-        eff_ltc.append(d_read + b_read * kappa_a)
+        y_ss = float(_ltc_rollout(lambda _t, a=alpha: a, 1.0, b_read, w_x, np.array([0.0, 90.0]))[-1])
+        eff_ltc.append(delta * y_ss / alpha)
     ltc_amp_ratio = float(eff_ltc[1] / eff_ltc[0])
 
     # Contrast with MemGRN two-stage unit-DC-gain steady-state recovery across two distinct
@@ -859,9 +945,20 @@ def verify_unit_dc_gain_and_second_order_vs_local_ltc() -> UnitDCGainAndSecondOr
 
 
 def verify_ortho_ood_generalization_theorem() -> OrthoOODGeneralizationAuditResult:
-    """Verify upgraded Proposition 1(iii): exact OOD risk decomposition & zero counterfactual drift."""
+    """Verify Proposition 1(iii) under oracle exogenous test-time cofactors and matched ridge.
+
+    Audits two exact algebraic identities under matched regularization (reg_o = reg_u = 10.0):
+      (1) Block decoupling: solving the joint orthogonalized system [Phi_O, U_perp] recovers
+          W_O^ortho === W_O^obs identically (preserving the standalone observed-source estimator
+          without weight theft), whereas unprojected joint ridge on [Phi_O, U] shifts W_O^unproj
+          away from W_O^obs. (Note: preserving W_O^obs preserves the observed-only total-effect
+          estimator rather than deconfounding omitted-variable bias B_tr W_U*.)
+      (2) Exact analytical OOD MSE reduction identity holds to machine precision when test-time
+          cofactor basis U_te spans the exogenous unmeasured factor Phi_U^te.
+    """
     rng = np.random.default_rng(202705)
     n_tr, n_te, p_obs, k_u, n_genes = 2000, 1200, 6, 2, 16
+    reg_match = 10.0
 
     w_obs_true = rng.normal(0.0, 0.9, size=(p_obs, n_genes))
     w_u_true = rng.normal(0.0, 1.0, size=(k_u, n_genes))
@@ -881,29 +978,34 @@ def verify_ortho_ood_generalization_theorem() -> OrthoOODGeneralizationAuditResu
     phi_u_te = phi_o_te @ b_te + e_u_te
     y_te = phi_o_te @ w_obs_true + phi_u_te @ w_u_true
 
-    # 1. Observed-only OLS estimator on training distribution
-    w_o_obs, _, _, _ = np.linalg.lstsq(phi_o_tr, y_tr, rcond=None)
+    # 1. Observed-only ridge estimator with matched penalty reg_match
+    w_o_obs = np.linalg.solve(
+        phi_o_tr.T @ phi_o_tr + reg_match * np.eye(p_obs),
+        phi_o_tr.T @ y_tr,
+    )
     pred_te_obs = phi_o_te @ w_o_obs
     mse_te_obs = float(np.mean((y_te - pred_te_obs) ** 2))
 
     # 2. MemGRN-Ortho: project cofactor basis U onto col(O)^perp using P_tr = (O^T O)^-1 O^T U
+    # Solve the ACTUAL joint block system [O, U_perp] with matched penalty reg_match on BOTH blocks
     p_tr = np.linalg.solve(phi_o_tr.T @ phi_o_tr, phi_o_tr.T @ phi_u_tr)
     u_perp_tr = phi_u_tr - phi_o_tr @ p_tr
-    # Fit W_perp on orthogonalized residual (exact OLS -> W_o_ortho === W_o_obs identically!)
-    w_perp, _, _, _ = np.linalg.lstsq(u_perp_tr, y_tr - phi_o_tr @ w_o_obs, rcond=None)
-    # At OOD test time, apply training projection P_tr to exogenous cofactor phi_u_te:
-    # y_ortho(O, U) = O W_o_obs + (U - O P_tr) W_perp = O (W_o_obs - P_tr W_perp) + U W_perp
-    # Note: for counterfactual observed-TF intervention do(O_i = 0) with exogenous cofactor
-    # residual held at its detached branch (or evaluated via W_o_obs), attribution is strictly
-    # O_i * W_o_obs[i] with zero drift vs standalone observed-only MemGRN!
+    joint_ortho_tr = np.concatenate([phi_o_tr, u_perp_tr], axis=1)
+    w_joint_ortho = np.linalg.solve(
+        joint_ortho_tr.T @ joint_ortho_tr + reg_match * np.eye(p_obs + k_u),
+        joint_ortho_tr.T @ y_tr,
+    )
+    w_o_ortho = w_joint_ortho[:p_obs]
+    w_perp = w_joint_ortho[p_obs:]
+
+    # At OOD test time, evaluate with oracle exogenous test-time cofactor basis phi_u_te
     u_perp_te = phi_u_te - phi_o_te @ p_tr
-    pred_te_ortho = pred_te_obs + u_perp_te @ w_perp
+    pred_te_ortho = phi_o_te @ w_o_ortho + u_perp_te @ w_perp
     mse_te_ortho = float(np.mean((y_te - pred_te_ortho) ** 2))
 
     # Exact analytical OOD MSE reduction identity:
     # ||Y_te - Y_obs||^2 - ||Y_te - Y_ortho||^2 =
     #   2 <Y_te - Y_obs, U_perp_te W_perp> - ||U_perp_te W_perp||^2
-    # In exact noiseless span (W_perp = W_u_true), Y_te - Y_obs = U_perp_te W_u_true exactly!
     res_obs_te = y_te - pred_te_obs
     ortho_add_te = u_perp_te @ w_perp
     analytical_red = float(
@@ -912,12 +1014,10 @@ def verify_ortho_ood_generalization_theorem() -> OrthoOODGeneralizationAuditResu
     empirical_red = mse_te_obs - mse_te_ortho
     risk_identity_diff = abs(analytical_red - empirical_red)
 
-    # 3. Unprojected joint ridge estimator (suffers attribution theft under single-TF ablation)
+    # 3. Unprojected joint ridge estimator with IDENTICAL penalty reg_match
     joint_tr = np.concatenate([phi_o_tr, phi_u_tr], axis=1)
-    # Use strong ridge on observed+latent jointly as in unconstrained neural baselines
-    reg_u = 350.0
     w_joint_u = np.linalg.solve(
-        joint_tr.T @ joint_tr + reg_u * np.eye(p_obs + k_u),
+        joint_tr.T @ joint_tr + reg_match * np.eye(p_obs + k_u),
         joint_tr.T @ y_tr,
     )
     w_o_unproj = w_joint_u[:p_obs]
@@ -925,8 +1025,7 @@ def verify_ortho_ood_generalization_theorem() -> OrthoOODGeneralizationAuditResu
     pred_te_unproj = phi_o_te @ w_o_unproj + phi_u_te @ w_u_unproj
     mse_te_unproj = float(np.mean((y_te - pred_te_unproj) ** 2))
 
-    # Counterfactual single-TF knockout attribution across all OOD samples (i = 0..p_obs-1)
-    # True direct observed-TF counterfactual effect: phi_o_te[:, i:i+1] @ w_obs_true[i:i+1]
+    # Measure weight preservation relative to standalone observed-only W_o_obs (solving joint system!)
     drift_ortho_list = []
     drift_unproj_list = []
     rmse_ortho_list = []
@@ -934,8 +1033,7 @@ def verify_ortho_ood_generalization_theorem() -> OrthoOODGeneralizationAuditResu
     for i_src in range(p_obs):
         eff_true = phi_o_te[:, i_src : i_src + 1] @ w_obs_true[i_src : i_src + 1]
         eff_obs_only = phi_o_te[:, i_src : i_src + 1] @ w_o_obs[i_src : i_src + 1]
-        # Under MemGRN-Ortho observed branch, counterfactual effect on O_i is identical to eff_obs_only
-        eff_ortho = phi_o_te[:, i_src : i_src + 1] @ w_o_obs[i_src : i_src + 1]
+        eff_ortho = phi_o_te[:, i_src : i_src + 1] @ w_o_ortho[i_src : i_src + 1]
         eff_unproj = phi_o_te[:, i_src : i_src + 1] @ w_o_unproj[i_src : i_src + 1]
         drift_ortho_list.append(float(np.max(np.abs(eff_ortho - eff_obs_only))))
         drift_unproj_list.append(

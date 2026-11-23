@@ -201,10 +201,44 @@ def verify_single_pulse_midpoint_replay(stage3: Path) -> float:
     return err
 
 
+def verify_all_design_locks_and_ledger(results_root: Path) -> dict[str, int]:
+    """Verify SHA-256 integrity of EVERY design_lock.json and claim_ledger.json entry."""
+    n_locks = 0
+    for scores_path in sorted(results_root.glob("*/scores.json")):
+        lock_path = scores_path.parent / "design_lock.json"
+        if not lock_path.exists():
+            continue
+        data = json.loads(scores_path.read_text(encoding="utf-8"))
+        expected = data.get("design_sha256")
+        if expected is None:
+            raise AssertionError(f"Missing design_sha256 in {scores_path}")
+        if expected not in sha256_variants(lock_path):
+            raise AssertionError(
+                f"SHA-256 mismatch for {lock_path} vs {scores_path} (expected {expected})"
+            )
+        n_locks += 1
+
+    n_ledger = 0
+    ledger_path = results_root / "claim_ledger.json"
+    if ledger_path.exists():
+        ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        for rel_path, expected_sha in ledger.get("source_sha256", {}).items():
+            target = results_root / rel_path
+            if not target.exists():
+                raise AssertionError(f"Missing ledger artifact: {target}")
+            if expected_sha not in sha256_variants(target):
+                raise AssertionError(
+                    f"Claim ledger SHA-256 mismatch for {target} (expected {expected_sha})"
+                )
+            n_ledger += 1
+    return {"verified_design_locks": n_locks, "verified_claim_ledger_files": n_ledger}
+
+
 def main() -> None:
     stage3 = ROOT / "results" / "stage3"
     rk4_diff = verify_msn2_frozen_readout_replay(stage3)
     mid_diff = verify_single_pulse_midpoint_replay(stage3)
+    integrity = verify_all_design_locks_and_ledger(ROOT / "results")
 
     six = load_archived_json(stage3, "msn2_six_promoter_rates/scores.json")
     buf = load_archived_json(stage3, "neural_rate_buffer/test_scores.json")
@@ -233,6 +267,8 @@ def main() -> None:
     cl_up = json.loads((ROOT / "results" / "closed_loop_upgrades" / "scores.json").read_text())
     ol_up = json.loads((ROOT / "results" / "open_loop_upgrades" / "scores.json").read_text())
     port = json.loads((ROOT / "results" / "cross_domain_portraits" / "scores.json").read_text())
+    fair_ol = json.loads((ROOT / "results" / "fair_open_loop" / "scores.json").read_text())
+    fair_cl = json.loads((ROOT / "results" / "fair_closed_loop" / "scores.json").read_text())
 
     six_means = {
         m: float(
@@ -241,6 +277,8 @@ def main() -> None:
         for m in six["models"]
     }
     report = {
+        "verified_design_locks": integrity["verified_design_locks"],
+        "verified_claim_ledger_files": integrity["verified_claim_ledger_files"],
         "msn2_frozen_readout_rk4_max_replay_diff": rk4_diff,
         "msn2_single_pulse_midpoint_max_replay_diff": mid_diff,
         "six_promoter_pooled_mse": six_means,
@@ -327,8 +365,15 @@ def main() -> None:
         "ieee39_powergrid_n2_memgrn_selfmem_mse": cl_up["powergrid_selfmem"]["cl_memgrn_selfmem"]["double_n2_mse"],
         "ieee39_powergrid_memgrn_selfmem_ap": cl_up["powergrid_selfmem"]["cl_memgrn_selfmem"]["graph_ap"],
         "emt_ortho_v2_top30_mse": ol_up["emt_ortho_v2"]["memgrn_ortho_v2"]["top30_withdrawal_mse"],
-        "beijing_dewpoint_hysteresis_asym": port["beijing_air_quality_hours"]["by_source"]["Dewpoint"]["asymmetry_up_over_dn"],
-        "binance_btc_hysteresis_asym": port["binance_16asset_minutes"]["by_source"]["BTCUSDT"]["asymmetry_up_over_dn"],
+        "fair_beijing_raw_u_memgrn_add_mse": fair_ol["beijing_air_quality"]["raw_u_4season"]["summary"]["memgrn_additive"]["loso_mse"],
+        "fair_beijing_delta_u_memgrn_add_mse": fair_ol["beijing_air_quality"]["delta_u_4season"]["summary"]["memgrn_additive"]["loso_mse"],
+        "fair_metr_la_s207_memgrn_selfmem_mse": fair_cl["metr_la_s207"]["summary"]["cl_memgrn_selfmem"]["test_mse"],
+        "fair_ieee39_n2_memgrn_selfmem_mse": fair_cl["powergrid_ieee39"]["summary"]["cl_memgrn_selfmem"]["double_n2_mse"],
+        "fair_po6of8_memgrn_ortho_2stage_full_attr_rmse": fair_ol["partial_obs_6of8"]["summary"]["memgrn_ortho_2stage"]["full_model_gt_attr_rmse"],
+        "fair_cd4t_memgrn_collectri_colnorm_ap_x": fair_cl["cd4t_gse314342"]["summary"]["cl_memgrn"]["collectri_colnorm_ap_over_random"],
+        "portraits_gauge_invariance_error": port["linear_two_stage_gauge_invariance_error"],
+        "portraits_metr_la_ctrl_hysteresis": port["metr_la_s64_minutes"]["mean_hysteresis_ratio"],
+        "portraits_yeast_slow_over_fast_tau_off": port["yeast_msn2_minutes"]["slow_over_fast_tau_off_ratio"],
     }
     print(json.dumps(report, indent=2))
 

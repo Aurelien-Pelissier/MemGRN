@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-11-22T19:17:48.418394</dc:date>
+    <dc:date>2026-11-23T04:14:04.357706</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -40,7 +40,7 @@ Q 4.752 52.721808 4.752 56.125044
 L 4.752 86.754174 
 Q 4.752 90.157411 8.2656 90.157411 
 z
-" clip-path="url(#pd2fa87967b)" style="fill: #ebf2fa; stroke: #1d4e89; stroke-linejoin: miter"/>
+" clip-path="url(#p92e3a9a931)" style="fill: #ebf2fa; stroke: #1d4e89; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
     <path d="M 79.94304 90.157411 
@@ -53,7 +53,7 @@ Q 76.42944 52.721808 76.42944 56.125044
 L 76.42944 86.754174 
 Q 76.42944 90.157411 79.94304 90.157411 
 z
-" clip-path="url(#pd2fa87967b)" style="fill: #e6f5f1; stroke: #008b72; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p92e3a9a931)" style="fill: #e6f5f1; stroke: #008b72; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
     <path d="M 153.72864 90.157411 
@@ -66,7 +66,7 @@ Q 150.21504 52.721808 150.21504 56.125044
 L 150.21504 86.754174 
 Q 150.21504 90.157411 153.72864 90.157411 
 z
-" clip-path="url(#pd2fa87967b)" style="fill: #e6f5f1; stroke: #008b72; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p92e3a9a931)" style="fill: #e6f5f1; stroke: #008b72; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
     <path d="M 227.51424 90.157411 
@@ -79,7 +79,7 @@ Q 224.00064 52.721808 224.00064 56.125044
 L 224.00064 86.754174 
 Q 224.00064 90.157411 227.51424 90.157411 
 z
-" clip-path="url(#pd2fa87967b)" style="fill: #f2eef8; stroke: #6d4c94; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p92e3a9a931)" style="fill: #f2eef8; stroke: #6d4c94; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_6">
     <path d="M 328.0032 90.157411 
@@ -92,33 +92,33 @@ Q 324.4896 52.721808 324.4896 56.125044
 L 324.4896 86.754174 
 Q 324.4896 90.157411 328.0032 90.157411 
 z
-" clip-path="url(#pd2fa87967b)" style="fill: #f4f6f8; stroke: #334155; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p92e3a9a931)" style="fill: #f4f6f8; stroke: #334155; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_7">
-    <path d="M 46.9152 130.315603 
-L 246.48768 130.315603 
-Q 250.00128 130.315603 250.00128 126.912366 
-L 250.00128 105.812299 
-Q 250.00128 102.409063 246.48768 102.409063 
-L 46.9152 102.409063 
-Q 43.4016 102.409063 43.4016 105.812299 
-L 43.4016 126.912366 
-Q 43.4016 130.315603 46.9152 130.315603 
+    <path d="M 46.9152 131.676898 
+L 247.89312 131.676898 
+Q 251.40672 131.676898 251.40672 128.273661 
+L 251.40672 104.451005 
+Q 251.40672 101.047768 247.89312 101.047768 
+L 46.9152 101.047768 
+Q 43.4016 101.047768 43.4016 104.451005 
+L 43.4016 128.273661 
+Q 43.4016 131.676898 46.9152 131.676898 
 z
-" clip-path="url(#pd2fa87967b)" style="fill: #fef3e2; stroke: #d97706; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p92e3a9a931)" style="fill: #fef3e2; stroke: #d97706; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_8">
-    <path d="M 259.83936 130.315603 
-L 387.7344 130.315603 
-Q 391.248 130.315603 391.248 126.912366 
-L 391.248 105.812299 
-Q 391.248 102.409063 387.7344 102.409063 
-L 259.83936 102.409063 
-Q 256.32576 102.409063 256.32576 105.812299 
-L 256.32576 126.912366 
-Q 256.32576 130.315603 259.83936 130.315603 
+    <path d="M 261.2448 131.676898 
+L 387.7344 131.676898 
+Q 391.248 131.676898 391.248 128.273661 
+L 391.248 104.451005 
+Q 391.248 101.047768 387.7344 101.047768 
+L 261.2448 101.047768 
+Q 257.7312 101.047768 257.7312 104.451005 
+L 257.7312 128.273661 
+Q 257.7312 131.676898 261.2448 131.676898 
 z
-" clip-path="url(#pd2fa87967b)" style="fill: #f2eef8; stroke: #6d4c94; stroke-width: 0.85; stroke-linejoin: miter"/>
+" clip-path="url(#p92e3a9a931)" style="fill: #f2eef8; stroke: #6d4c94; stroke-width: 0.85; stroke-linejoin: miter"/>
    </g>
    <g id="patch_9">
     <path d="M 8.2656 180.683505 
@@ -131,7 +131,7 @@ Q 4.752 149.373728 4.752 152.776965
 L 4.752 177.280269 
 Q 4.752 180.683505 8.2656 180.683505 
 z
-" clip-path="url(#pd2fa87967b)" style="fill: #e6f5f1; stroke: #008b72; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p92e3a9a931)" style="fill: #e6f5f1; stroke: #008b72; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_10">
     <path d="M 139.67424 180.683505 
@@ -144,7 +144,7 @@ Q 136.16064 149.373728 136.16064 152.776965
 L 136.16064 177.280269 
 Q 136.16064 180.683505 139.67424 180.683505 
 z
-" clip-path="url(#pd2fa87967b)" style="fill: #f2eef8; stroke: #6d4c94; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p92e3a9a931)" style="fill: #f2eef8; stroke: #6d4c94; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_11">
     <path d="M 271.08288 180.683505 
@@ -157,19 +157,25 @@ Q 267.56928 149.373728 267.56928 152.776965
 L 267.56928 177.280269 
 Q 267.56928 180.683505 271.08288 180.683505 
 z
-" clip-path="url(#pd2fa87967b)" style="fill: #ebf2fa; stroke: #1d4e89; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p92e3a9a931)" style="fill: #ebf2fa; stroke: #1d4e89; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="line2d_1">
-    <path d="M 357.8688 52.04116 
-L 357.8688 35.705624 
-L 38.48256 35.705624 
-" clip-path="url(#pd2fa87967b)" style="fill: none; stroke: #1d4e89; stroke-width: 0.95; stroke-linecap: square"/>
+    <path d="M 55.6992 52.04116 
+L 55.6992 43.192745 
+L 271.7856 43.192745 
+" clip-path="url(#p92e3a9a931)" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #6d4c94; stroke-width: 0.9"/>
    </g>
    <g id="line2d_2">
+    <path d="M 357.8688 52.04116 
+L 357.8688 27.537856 
+L 30.04992 27.537856 
+" clip-path="url(#p92e3a9a931)" style="fill: none; stroke: #1d4e89; stroke-width: 0.95; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
     <path d="M 38.48256 90.838058 
 L 38.48256 116.362333 
 L 43.05024 116.362333 
-" clip-path="url(#pd2fa87967b)" style="fill: none; stroke-dasharray: 3.145,1.36; stroke-dashoffset: 0; stroke: #d97706; stroke-width: 0.85"/>
+" clip-path="url(#p92e3a9a931)" style="fill: none; stroke-dasharray: 3.145,1.36; stroke-dashoffset: 0; stroke: #d97706; stroke-width: 0.85"/>
    </g>
    <g id="text_1">
     <text style="font-weight: 700; font-size: 8.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #1e293b" x="6.5088" y="14.195234" transform="rotate(-0 6.5088 14.195234)">a   Closed- and open-loop source-isolated memory &amp; interaction readout</text>
@@ -179,12 +185,12 @@ L 43.05024 116.362333
     <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(14.263505 77.982624)">aᵢ = tanh(gᵢ)</text>
    </g>
    <g id="text_3">
-    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(90.572244 69.256407)">Loading zᵢᵣ</text>
-    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(80.895978 77.982624)">żᵢᵣ = λ↑ᵢᵣ(aᵢ−zᵢᵣ)</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(90.804307 69.256407)">Stage-1 zᵢᵣ</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(80.681814 77.982624)">żᵢᵣ = λ⁽¹⁾ᵢᵣ(aᵢ−zᵢᵣ)</text>
    </g>
    <g id="text_4">
-    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(159.65611 68.86532)">Clearance hᵢᵣ</text>
-    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(153.146633 78.373711)">ḣᵢᵣ = λ↓ᵢᵣ(zᵢᵣ−hᵢᵣ)</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(164.159727 68.86532)">Stage-2 hᵢᵣ</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(152.932469 78.373711)">ḣᵢᵣ = λ⁽²⁾ᵢᵣ(zᵢᵣ−hᵢᵣ)</text>
    </g>
    <g id="text_5">
     <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(234.089202 69.256407)">Interaction readout</text>
@@ -235,47 +241,98 @@ z
 " style="fill: #1e293b; stroke: #1e293b; stroke-linecap: round"/>
    </g>
    <g id="patch_16">
-    <path d="M 38.48256 35.705624 
-Q 38.48256 43.873392 38.48256 51.067443 
+    <path d="M 271.7856 43.192745 
+Q 271.7856 47.616953 271.7856 51.118691 
+" style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #6d4c94; stroke-width: 0.9; stroke-linecap: round"/>
+    <path d="M 273.3436 48.330691 
+L 271.7856 51.118691 
+L 270.2276 48.330691 
+z
+" style="fill: #6d4c94; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #6d4c94; stroke-width: 0.9; stroke-linecap: round"/>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 7.3px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #6d4c94" x="163.56672" y="40.653602" transform="rotate(-0 163.56672 40.653602)">Direct path  Dᵢⱼaᵢ</text>
+   </g>
+   <g id="patch_17">
+    <path d="M 30.04992 27.537856 
+Q 30.04992 39.789508 30.04992 51.067443 
 " style="fill: none; stroke: #1d4e89; stroke-width: 0.95; stroke-linecap: round"/>
-    <path d="M 40.04056 48.279443 
-L 38.48256 51.067443 
-L 36.92456 48.279443 
+    <path d="M 31.60792 48.279443 
+L 30.04992 51.067443 
+L 28.49192 48.279443 
 z
 " style="fill: #1d4e89; stroke: #1d4e89; stroke-width: 0.95; stroke-linecap: round"/>
    </g>
-   <g id="text_7">
-    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #1d4e89" x="198" y="30.659435" transform="rotate(-0 198 30.659435)">Closed-loop feedback  gᵢ = (1−koᵢ)γᵢyᵢ − koᵢγᵢyᵢ,₀   +   Direct path  Dᵢⱼaᵢ</text>
-   </g>
    <g id="text_8">
-    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #1e293b" x="146.70144" y="118.542239" transform="rotate(-0 146.70144 118.542239)">Isolated rates  (λ↑ᵢᵣ, λ↓ᵢᵣ) : ∂(zᵢᵣ, hᵢᵣ)/∂gₖ ≡ 0  (k ≠ i)</text>
-   </g>
-   <g id="patch_17">
-    <path d="M 111.21408 101.728415 
-Q 111.21408 96.283237 111.21408 91.863023 
-" style="fill: none; stroke: #d97706; stroke-linecap: round"/>
-    <path d="M 109.65608 94.651023 
-L 111.21408 91.863023 
-L 112.77208 94.651023 
-z
-" style="fill: #d97706; stroke: #d97706; stroke-linecap: round"/>
-   </g>
-   <g id="patch_18">
-    <path d="M 184.99968 101.728415 
-Q 184.99968 96.283237 184.99968 91.863023 
-" style="fill: none; stroke: #d97706; stroke-linecap: round"/>
-    <path d="M 183.44168 94.651023 
-L 184.99968 91.863023 
-L 186.55768 94.651023 
-z
-" style="fill: #d97706; stroke: #d97706; stroke-linecap: round"/>
+    <text style="font-size: 7.6px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #1d4e89" x="198" y="24.595999" transform="rotate(-0 198 24.595999)">Closed-loop feedback  gᵢ = (1−koᵢ)γᵢyᵢ − koᵢγᵢyᵢ,basal + uᵢ</text>
    </g>
    <g id="text_9">
-    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: middle; fill: #1e293b" x="323.78688" y="118.542239" transform="rotate(-0 323.78688 118.542239)">Ortho cofactor  Ψ⊥ ⊥ span(A, H)</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(77.876137 114.179131)">Isolated rates  (λ⁽¹⁾ᵢᵣ, λ⁽²⁾ᵢᵣ)(aᵢ, zᵢᵣ, hᵢᵣ)</text>
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(101.041652 122.905347)">∂(zᵢᵣ, hᵢᵣ)/∂gₖ ≡ 0  (k ≠ i)</text>
+   </g>
+   <g id="patch_18">
+    <path d="M 103.83552 100.367121 
+Q 103.83552 95.602589 103.83552 91.863023 
+" style="fill: none; stroke: #d97706; stroke-linecap: round"/>
+    <path d="M 102.27752 94.651023 
+L 103.83552 91.863023 
+L 105.39352 94.651023 
+z
+" style="fill: #d97706; stroke: #d97706; stroke-linecap: round"/>
    </g>
    <g id="patch_19">
-    <path d="M 298.1376 101.728415 
-Q 298.1376 96.283237 298.1376 91.709279 
+    <path d="M 118.59264 90.838058 
+Q 118.59264 95.602589 118.59264 99.547148 
+" style="fill: none; stroke-dasharray: 0.8,1.32; stroke-dashoffset: 0; stroke: #d97706; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 120.15064 96.759148 
+L 118.59264 99.547148 
+L 117.03464 96.759148 
+z
+" style="fill: #d97706; stroke-dasharray: 0.8,1.32; stroke-dashoffset: 0; stroke: #d97706; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 177.62112 100.367121 
+Q 177.62112 95.602589 177.62112 91.863023 
+" style="fill: none; stroke: #d97706; stroke-linecap: round"/>
+    <path d="M 176.06312 94.651023 
+L 177.62112 91.863023 
+L 179.17912 94.651023 
+z
+" style="fill: #d97706; stroke: #d97706; stroke-linecap: round"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 192.37824 90.838058 
+Q 192.37824 95.602589 192.37824 99.547148 
+" style="fill: none; stroke-dasharray: 0.8,1.32; stroke-dashoffset: 0; stroke: #d97706; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 193.93624 96.759148 
+L 192.37824 99.547148 
+L 190.82024 96.759148 
+z
+" style="fill: #d97706; stroke-dasharray: 0.8,1.32; stroke-dashoffset: 0; stroke: #d97706; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(295.871233 114.179131)">Ortho cofactor</text>
+    <!-- $\Psi_\perp \perp \mathrm{col}(\Phi_{\mathrm{obs}})$ -->
+    <g style="fill: #1e293b" transform="translate(297.0371 122.905347)">
+     <text>
+      <tspan x="0" y="-0.921875" style="font-size: 7.9px; font-family: 'DejaVu Sans'; fill: #1e293b">Ψ</tspan>
+      <tspan x="20.987741" y="-0.921875" style="font-size: 7.9px; font-family: 'DejaVu Sans'; fill: #1e293b">c</tspan>
+      <tspan x="25.317453" y="-0.921875" style="font-size: 7.9px; font-family: 'DejaVu Sans'; fill: #1e293b">o</tspan>
+      <tspan x="30.135507" y="-0.921875" style="font-size: 7.9px; font-family: 'DejaVu Sans'; fill: #1e293b">l</tspan>
+      <tspan x="32.323434" y="-0.921875" style="font-size: 7.9px; font-family: 'DejaVu Sans'; fill: #1e293b">(</tspan>
+      <tspan x="35.395761" y="-0.921875" style="font-size: 7.9px; font-family: 'DejaVu Sans'; fill: #1e293b">Φ</tspan>
+      <tspan x="51.633334" y="-0.921875" style="font-size: 7.9px; font-family: 'DejaVu Sans'; fill: #1e293b">)</tspan>
+      <tspan x="7.349017" y="0.390625" style="font-size: 5.53px; font-family: 'STIXGeneral'; fill: #1e293b">⟂</tspan>
+      <tspan x="13.996133" y="-0.921875" style="font-size: 7.9px; font-family: 'STIXGeneral'; fill: #1e293b">⟂</tspan>
+      <tspan x="41.67081" y="0.390625" style="font-size: 5.53px; font-family: 'DejaVu Sans'; fill: #1e293b">o</tspan>
+      <tspan x="45.043448" y="0.390625" style="font-size: 5.53px; font-family: 'DejaVu Sans'; fill: #1e293b">b</tspan>
+      <tspan x="48.542593" y="0.390625" style="font-size: 5.53px; font-family: 'DejaVu Sans'; fill: #1e293b">s</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_22">
+    <path d="M 298.1376 100.367121 
+Q 298.1376 95.602589 298.1376 91.709279 
 " style="fill: none; stroke-dasharray: 3.145,1.36; stroke-dashoffset: 0; stroke: #6d4c94; stroke-width: 0.85; stroke-linecap: round"/>
     <path d="M 296.5796 94.497279 
 L 298.1376 91.709279 
@@ -283,25 +340,25 @@ L 299.6956 94.497279
 z
 " style="fill: #6d4c94; stroke-dasharray: 3.145,1.36; stroke-dashoffset: 0; stroke: #6d4c94; stroke-width: 0.85; stroke-linecap: round"/>
    </g>
-   <g id="text_10">
+   <g id="text_11">
     <text style="font-weight: 700; font-size: 8.5px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; text-anchor: start; fill: #1e293b" x="6.5088" y="144.198873" transform="rotate(-0 6.5088 144.198873)">b   Three structural guarantees across closed- and open-loop benchmarks</text>
    </g>
-   <g id="text_11">
+   <g id="text_12">
     <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(14.177329 162.845415)">1. S-node &amp; closed-loop ID</text>
     <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(17.944641 171.571631)">Zero cross-node leakage</text>
    </g>
-   <g id="text_12">
+   <g id="text_13">
     <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(153.338461 162.845415)">2. Unit DC gain vs. LTC</text>
     <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(153.434742 171.571631)">2nd-order delay peaks</text>
    </g>
-   <g id="text_13">
+   <g id="text_14">
     <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(290.446828 162.845415)">3. Iso-state &amp; Ortho</text>
     <text style="font-size: 7.9px; font-family: 'DejaVu Sans', 'Arial', 'Helvetica', sans-serif; fill: #1e293b" transform="translate(285.557468 171.571631)">O(SR) network scaling</text>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="pd2fa87967b">
+  <clipPath id="p92e3a9a931">
    <rect x="4.752" y="3.7152" width="386.496" height="178.3296"/>
   </clipPath>
  </defs>

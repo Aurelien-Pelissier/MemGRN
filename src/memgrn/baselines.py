@@ -8,11 +8,13 @@ optimization, validation selection, and counterfactual attribution across both o
   - memgrn_additive:  Additive-readout ablation of unified MemGRN (Gamma = 0)
   - memgrn_sym:       Symmetric-rate ablation of MemGRN (lambda_up == lambda_down)
   - memgrn_ortho:     MemGRN + L2(P_train)-orthogonalized low-rank latent cofactor module
+  - memgrn_unproj:    MemGRN + jointly trained unprojected low-rank latent cofactor module
   - coupled_const:    Source-coupled constant-rate filter cascade + explicit readout
   - coupled_adaptive: Source-coupled adaptive-rate filter cascade + explicit readout
   - ltc_coupled:      Liquid Time-Constant Network (Hasani et al., 2021), coupled state
   - ltc_local:        Source-isolated Liquid Time-Constant Network ablation
   - selective_ssm:    Mamba/S6-style input-selective diagonal SSM with coupled Delta(a) gate
+  - depthwise_ssm:    Source-isolated (depthwise) input-selective diagonal SSM ablation
   - cfc:              Closed-form Continuous-time Network (Hasani et al., 2022)
   - neural_cde:       Neural Controlled Differential Equation (Kidger et al., 2020)
   - perturb_ode:      PerturbODE (Lin et al., 2025) module-structured state-only ODE
@@ -37,11 +39,13 @@ class DynamicalModelFamily(StrEnum):
     MEMGRN_ADDITIVE = "memgrn_additive"
     MEMGRN_SYM = "memgrn_sym"
     MEMGRN_ORTHO = "memgrn_ortho"
+    MEMGRN_UNPROJ = "memgrn_unproj"
     COUPLED_CONST = "coupled_const"
     COUPLED_ADAPTIVE = "coupled_adaptive"
     LTC_COUPLED = "ltc_coupled"
     LTC_LOCAL = "ltc_local"
     SELECTIVE_SSM = "selective_ssm"
+    DEPTHWISE_SSM = "depthwise_ssm"
     CFC = "cfc"
     NEURAL_CDE = "neural_cde"
     PERTURB_ODE = "perturb_ode"
@@ -57,6 +61,7 @@ class ClosedLoopModelFamily(StrEnum):
     LTC_COUPLED = "cl_ltc_coupled"
     LTC_LOCAL = "cl_ltc_local"
     SELECTIVE_SSM = "cl_selective_ssm"
+    DEPTHWISE_SSM = "cl_depthwise_ssm"
     CFC = "cl_cfc"
     PERTURB_ODE = "cl_perturb_ode"
     LATENT_ODE = "cl_latent_ode"
@@ -197,13 +202,17 @@ def _init_tree(spec: ModelSpec, seed: int) -> dict[str, np.ndarray]:
         DynamicalModelFamily.MEMGRN_ADDITIVE,
         DynamicalModelFamily.MEMGRN_SYM,
         DynamicalModelFamily.MEMGRN_ORTHO,
+        DynamicalModelFamily.MEMGRN_UNPROJ,
     ):
         tree: dict[str, np.ndarray] = {
             "direct": rng.normal(0.0, 0.02, size=(s_dim, g_dim)).astype(np.float32),
             "decay": np.zeros((g_dim,), dtype=np.float32),
             "rate": np.broadcast_to(base_logits, (s_dim, r_dim)).copy(),
         }
-        if spec.readout_rank is not None and fam != DynamicalModelFamily.MEMGRN_ORTHO:
+        if spec.readout_rank is not None and fam not in (
+            DynamicalModelFamily.MEMGRN_ORTHO,
+            DynamicalModelFamily.MEMGRN_UNPROJ,
+        ):
             k_r = spec.readout_rank
             tree["delayed_u"] = rng.normal(
                 0.0, 0.15 / np.sqrt(s_dim * r_dim), size=(s_dim, r_dim, k_r)
@@ -218,13 +227,13 @@ def _init_tree(spec: ModelSpec, seed: int) -> dict[str, np.ndarray]:
             tree["bias"] = rng.normal(0.0, 0.25, size=(h_dim,)).astype(np.float32)
             tree["out_proj"] = np.zeros((s_dim, r_dim, h_dim), dtype=np.float32)
             if fam != DynamicalModelFamily.MEMGRN_SYM:
-                # Symmetric-base + zero-initialized hysteresis-residual decomposition:
-                # lambda_up uses (rate + rate_asym, out_proj + out_proj_asym);
-                # lambda_dn uses (rate - rate_asym, out_proj - out_proj_asym).
+                # Symmetric-base + zero-initialized stage-asymmetry residual:
+                # Stage-1 rate uses (rate + rate_asym, out_proj + out_proj_asym);
+                # Stage-2 rate uses (rate - rate_asym, out_proj - out_proj_asym).
                 tree["rate_asym"] = np.zeros((s_dim, r_dim), dtype=np.float32)
                 tree["out_proj_asym"] = np.zeros((s_dim, r_dim, h_dim), dtype=np.float32)
         _add_coop_params(tree, spec, rng)
-        if fam == DynamicalModelFamily.MEMGRN_ORTHO:
+        if fam in (DynamicalModelFamily.MEMGRN_ORTHO, DynamicalModelFamily.MEMGRN_UNPROJ):
             k_dim = spec.ortho_dim
             # Pulse-clock + weak input driven latent cofactor ODE
             tree["c_rate"] = np.linspace(-0.8, 0.8, k_dim).astype(np.float32)
@@ -284,9 +293,45 @@ def _init_tree(spec: ModelSpec, seed: int) -> dict[str, np.ndarray]:
             "b_gate": rng.normal(0.0, 0.2, size=(s_dim, r_dim)).astype(np.float32),
             "e_rev": np.ones((s_dim, r_dim), dtype=np.float32),
             "direct": rng.normal(0.0, 0.02, size=(s_dim, g_dim)).astype(np.float32),
-            "delayed": rng.normal(0.0, 0.02, size=(s_dim, r_dim, g_dim)).astype(np.float32),
             "decay": np.zeros((g_dim,), dtype=np.float32),
         }
+        if spec.readout_rank is not None:
+            k_r = spec.readout_rank
+            tree["delayed_u"] = rng.normal(
+                0.0, 0.15 / np.sqrt(s_dim * r_dim), size=(s_dim, r_dim, k_r)
+            ).astype(np.float32)
+            tree["delayed_v"] = rng.normal(
+                0.0, 0.15 / np.sqrt(k_r), size=(k_r, g_dim)
+            ).astype(np.float32)
+        else:
+            tree["delayed"] = rng.normal(0.0, 0.02, size=(s_dim, r_dim, g_dim)).astype(np.float32)
+        _add_coop_params(tree, spec, rng)
+        return tree
+
+    if fam == DynamicalModelFamily.DEPTHWISE_SSM:
+        # Source-isolated (depthwise) input-selective diagonal SSM ablation:
+        # isolates source isolation from MemGRN's two-stage bounded-rate cascade.
+        tree = {
+            "alpha_log": np.broadcast_to(base_logits, (s_dim, r_dim)).copy(),
+            "w_dt": rng.normal(0.0, 0.45, size=(s_dim, r_dim)).astype(np.float32),
+            "b_dt": np.zeros((s_dim, r_dim), dtype=np.float32),
+            "w_b": np.ones((s_dim, r_dim), dtype=np.float32)
+            + rng.normal(0.0, 0.1, size=(s_dim, r_dim)).astype(np.float32),
+            "w_gate": rng.normal(0.0, 0.35, size=(s_dim, r_dim)).astype(np.float32),
+            "b_gate": np.zeros((s_dim, r_dim), dtype=np.float32),
+            "direct": rng.normal(0.0, 0.02, size=(s_dim, g_dim)).astype(np.float32),
+            "decay": np.zeros((g_dim,), dtype=np.float32),
+        }
+        if spec.readout_rank is not None:
+            k_r = spec.readout_rank
+            tree["delayed_u"] = rng.normal(
+                0.0, 0.15 / np.sqrt(s_dim * r_dim), size=(s_dim, r_dim, k_r)
+            ).astype(np.float32)
+            tree["delayed_v"] = rng.normal(
+                0.0, 0.15 / np.sqrt(k_r), size=(k_r, g_dim)
+            ).astype(np.float32)
+        else:
+            tree["delayed"] = rng.normal(0.0, 0.02, size=(s_dim, r_dim, g_dim)).astype(np.float32)
         _add_coop_params(tree, spec, rng)
         return tree
 
@@ -566,11 +611,101 @@ def build_jax_rollout(
     def _coop_term(h_state: jnp.ndarray, p: dict[str, jnp.ndarray]) -> jnp.ndarray:
         if "coop_w" in p:
             h_bar = jnp.mean(h_state, axis=-1)
-            return ((h_bar @ p["coop_u"]) * (h_bar @ p["coop_v"])) @ p["coop_w"]
+            # Exact diagonal subtraction removes all i == k (h_bar_i^2) self-squares in O(S K_c),
+            # enforcing strict pairwise (i != k) cooperativity and Theorem 1(ii)-(iii) single-clamp invariance.
+            coop_feat = (h_bar @ p["coop_u"]) * (h_bar @ p["coop_v"]) - (h_bar**2) @ (
+                p["coop_u"] * p["coop_v"]
+            )
+            return coop_feat @ p["coop_w"]
         if "interact" in p:
             h_bar = jnp.mean(h_state, axis=-1)
             return (h_bar[:, idx_i] * h_bar[:, idx_k]) @ p["interact"]
         return jnp.asarray(0.0, dtype=h_state.dtype)
+
+    if fam == DynamicalModelFamily.MEMGRN_UNPROJ:
+        k_dim = spec.ortho_dim
+
+        def forward_unproj(theta: jnp.ndarray, stage_u: jnp.ndarray, y0: jnp.ndarray) -> jnp.ndarray:
+            """Jointly trained MemGRN + unprojected latent cofactor ODE (no orthogonalization)."""
+            p = unpack(theta)
+            decay = 0.1 + jnp.logaddexp(0.0, p["decay"])
+            c_decay = 0.12 + jnp.logaddexp(0.0, p["c_rate"])
+            rest_c = jnp.tanh(p["c_bias"])
+            batch = stage_u.shape[1]
+            n_steps = stage_u.shape[0]
+            win_steps = (
+                stimulus_window_steps if stimulus_window_steps is not None else max(1, n_steps // 16)
+            )
+            step_idx = jnp.arange(n_steps, dtype=theta.dtype)
+            stim_amp = jnp.tanh(5.0 * jnp.max(jnp.abs(stage_u), axis=(0, 2, 3)))[None, :, None]
+            pulse_clock_b = (step_idx < win_steps).astype(theta.dtype)[:, None, None] * stim_amp
+
+            init_state = (
+                jnp.zeros((batch, s_dim, r_dim), dtype=theta.dtype),
+                jnp.zeros((batch, s_dim, r_dim), dtype=theta.dtype),
+                jnp.zeros((batch, k_dim), dtype=theta.dtype),
+                y0,
+            )
+
+            def rhs(state, inputs):
+                z, h, psi, y = state
+                raw_u, clk = inputs
+                act = jnp.tanh(raw_u)
+                feat_a = jnp.broadcast_to(act[:, :, None], z.shape)
+                hid = (
+                    p["bias"]
+                    + feat_a[..., None] * p["in_proj"][0]
+                    + z[..., None] * p["in_proj"][1]
+                    + h[..., None] * p["in_proj"][2]
+                )
+                th_hid = jnp.tanh(hid)
+                r_up = p["rate"] + p["rate_asym"]
+                r_dn = p["rate"] - p["rate_asym"]
+                v_up = p["out_proj"] + p["out_proj_asym"]
+                v_dn = p["out_proj"] - p["out_proj_asym"]
+                lam_up = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
+                    r_up[None] + jnp.sum(th_hid * v_up[None], axis=-1)
+                )
+                lam_dn = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
+                    r_dn[None] + jnp.sum(th_hid * v_dn[None], axis=-1)
+                )
+                dz = lam_up * (act[:, :, None] - z)
+                dh = lam_dn * (z - h)
+                c_in = jnp.concatenate([clk, act], axis=-1)
+                dpsi = -c_decay[None] * psi + (
+                    jnp.tanh(psi @ p["c_ws"] + c_in @ p["c_wu"] + p["c_bias"]) - rest_c
+                )
+                prod_obs = (
+                    act @ p["direct"]
+                    + h.reshape(batch, s_dim * r_dim) @ p["delayed"].reshape(s_dim * r_dim, g_dim)
+                    + _coop_term(h, p)
+                )
+                dy = prod_obs + psi @ p["c_readout"] - decay[None] * y
+                return dz, dh, dpsi, dy
+
+            def step_fn(carry, step_pack):
+                u_step, clk_step = step_pack
+                u0, um, u1 = u_step[..., 0], u_step[..., 1], u_step[..., 2]
+                k1 = rhs(carry, (u0, clk_step))
+                k2 = rhs(jax.tree.map(lambda c, d: c + 0.5 * dt * d, carry, k1), (um, clk_step))
+                k3 = rhs(jax.tree.map(lambda c, d: c + 0.5 * dt * d, carry, k2), (um, clk_step))
+                k4 = rhs(jax.tree.map(lambda c, d: c + dt * d, carry, k3), (u1, clk_step))
+                nxt = jax.tree.map(
+                    lambda c, d1, d2, d3, d4: c + (dt / 6.0) * (d1 + 2 * d2 + 2 * d3 + d4),
+                    carry,
+                    k1,
+                    k2,
+                    k3,
+                    k4,
+                )
+                return nxt, nxt[-1]
+
+            _, ys = jax.lax.scan(step_fn, init_state, (stage_u, pulse_clock_b))
+            sampled = ys[obs_stride - 1 :: obs_stride]
+            with_init = jnp.concatenate([y0[None, :, :], sampled], axis=0)
+            return jnp.transpose(with_init, (1, 0, 2))
+
+        return jax.jit(forward_unproj), unpack, np.asarray(flat0, dtype=np.float32)
 
     def forward(theta: jnp.ndarray, stage_u: jnp.ndarray, y0: jnp.ndarray) -> jnp.ndarray:
         p = unpack(theta)
@@ -579,10 +714,10 @@ def build_jax_rollout(
 
         if fam == DynamicalModelFamily.CFC:
             # Closed-form Continuous-time cell (Hasani et al., Nature Machine Intelligence 2022)
-            # Zero-equilibrium centered so a == 0 => x == 0.
+            # Exact zero-equilibrium centering so a == 0, x == 0 => x_nxt == 0 for all b_f, dt.
             m_dim = s_dim * r_dim
             init_state = (jnp.zeros((batch, m_dim), dtype=theta.dtype), y0)
-            sig_rest = jax.nn.sigmoid(-p["b_f"])
+            sig_rest = jax.nn.sigmoid(-(jax.nn.softplus(p["b_f"]) * dt + p["b_f"]))
             rest_x = sig_rest * jnp.tanh(p["b_g"]) + (1.0 - sig_rest) * jnp.tanh(p["b_h"])
 
             def cfc_step(carry, u_step):
@@ -772,11 +907,37 @@ def build_jax_rollout(
                 dx = -(base_tau_inv[None] + gate) * x + gate * (
                     act[:, :, None] * p["e_rev"][None]
                 )
-                prod = (
-                    act @ p["direct"]
-                    + x.reshape(batch, s_dim * r_dim) @ p["delayed"].reshape(s_dim * r_dim, g_dim)
-                    + _coop_term(x, p)
+                x_flat = x.reshape(batch, s_dim * r_dim)
+                if "delayed_u" in p:
+                    del_prod = (x_flat @ p["delayed_u"].reshape(s_dim * r_dim, -1)) @ p["delayed_v"]
+                else:
+                    del_prod = x_flat @ p["delayed"].reshape(s_dim * r_dim, g_dim)
+                prod = act @ p["direct"] + del_prod + _coop_term(x, p)
+                return dx, prod - decay * y
+
+        elif fam == DynamicalModelFamily.DEPTHWISE_SSM:
+            # Source-isolated (depthwise) selective diagonal SSM:
+            # dx_{ir}/dt = Delta_{ir}(a_i) * alpha_{ir} * (sigma(w_g a_i + b_g) * w_b a_i - x_{ir})
+            init_state = (jnp.zeros((batch, s_dim, r_dim), dtype=theta.dtype), y0)
+
+            def rhs(state, raw_u):
+                x, y = state
+                act = jnp.tanh(raw_u)
+                alpha = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
+                    p["alpha_log"]
                 )
+                delta_t = 0.25 + jax.nn.softplus(
+                    act[:, :, None] * p["w_dt"][None] + p["b_dt"][None]
+                )
+                sel_gate = jax.nn.sigmoid(act[:, :, None] * p["w_gate"][None] + p["b_gate"][None])
+                drive = sel_gate * (act[:, :, None] * p["w_b"][None])
+                dx = delta_t * (alpha[None] * (drive - x))
+                x_flat = x.reshape(batch, s_dim * r_dim)
+                if "delayed_u" in p:
+                    del_prod = (x_flat @ p["delayed_u"].reshape(s_dim * r_dim, -1)) @ p["delayed_v"]
+                else:
+                    del_prod = x_flat @ p["delayed"].reshape(s_dim * r_dim, g_dim)
+                prod = act @ p["direct"] + del_prod + _coop_term(x, p)
                 return dx, prod - decay * y
 
         elif fam == DynamicalModelFamily.SELECTIVE_SSM:
@@ -994,6 +1155,7 @@ def fit_dynamical_model(
             DynamicalModelFamily.MEMGRN_ADDITIVE,
             DynamicalModelFamily.MEMGRN_SYM,
             DynamicalModelFamily.MEMGRN_ORTHO,
+            DynamicalModelFamily.MEMGRN_UNPROJ,
         )
         else (1.0,)
     )
@@ -1005,6 +1167,7 @@ def fit_dynamical_model(
             DynamicalModelFamily.MEMGRN,
             DynamicalModelFamily.MEMGRN_ADDITIVE,
             DynamicalModelFamily.MEMGRN_ORTHO,
+            DynamicalModelFamily.MEMGRN_UNPROJ,
         )
         else (1.0,)
     )
@@ -1122,18 +1285,21 @@ def fit_two_stage_memgrn_ortho(
     total_updates: int = 1200,
     lr_max: float = 0.007,
     residual_families: tuple[DynamicalModelFamily, ...] = (DynamicalModelFamily.LATENT_ODE,),
-    per_target_blend: bool = True,
+    per_target_blend: bool = False,
 ) -> TrainedModel:
-    """Fit Proposition 1(iii) two-stage orthogonalized cofactor residual atop frozen MemGRN.
+    """Fit two-stage residual orthogonalized cofactor atop frozen Stage-1 MemGRN.
 
     Stage 1 holds the fitted source-isolated MemGRN observed-source predictor y_obs(t; g) strictly
-    fixed (guaranteeing exact zero observed-source attribution drift). Stage 2 fits a matched
-    latent cofactor ODE psi(t) to the residual r = y - y_obs, projects out collinear components
-    along y_obs per target on the source training split, and applies validation-selected per-target
-    (or global) shrinkage beta_j in [0, 1].
+    fixed (an architectural invariant preserving the standalone observed-source estimator). Stage 2
+    fits a single pre-specified latent cofactor ODE (default: LATENT_ODE) to the residual
+    r = y - y_obs, applies a per-target 1D ridge-stabilized projection along y_obs on the training
+    split, and applies a validation-selected global scalar shrinkage beta in [0, 1] (default
+    `per_target_blend=False`).
     """
-    tr_obs = base_memgrn.predict_fn(train_stage_u, None)
-    va_obs = base_memgrn.predict_fn(val_stage_u, None)
+    tr_y0 = train_y[:, 0, :]
+    va_y0 = val_y[:, 0, :]
+    tr_obs = base_memgrn.predict_fn(train_stage_u, tr_y0)
+    va_obs = base_memgrn.predict_fn(val_stage_u, va_y0)
 
     tr_resid = train_y - tr_obs
     va_resid = val_y - va_obs
@@ -1231,7 +1397,7 @@ def fit_two_stage_memgrn_ortho(
         hidden_width=base_memgrn.spec.hidden_width,
         ortho_dim=latent_dim,
     )
-    va_tot = predict_total(val_stage_u, None)
+    va_tot = predict_total(val_stage_u, va_y0)
     va_mse = float(np.sum(((va_tot - val_y) ** 2) * val_mask) / np.maximum(1.0, np.sum(val_mask)))
 
     return TrainedModel(
@@ -1268,13 +1434,7 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
             ).astype(np.float32)
         return tree
 
-    if fam in (ClosedLoopModelFamily.LOCAL_CONST, ClosedLoopModelFamily.MEMGRN):
-        tree: dict[str, np.ndarray] = {
-            "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
-            "decay": np.zeros((n_g,), dtype=np.float32),
-            "in_gain": np.zeros((s_reg,), dtype=np.float32),
-            "rate": np.broadcast_to(base_logits, (s_reg, r_dim)).copy(),
-        }
+    def _add_cl_readout_and_coop(tree: dict[str, np.ndarray]) -> None:
         if spec.use_self_memory:
             tree["self_mem"] = np.zeros((s_reg, r_dim), dtype=np.float32)
         if spec.readout_rank is not None:
@@ -1287,21 +1447,30 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
             ).astype(np.float32)
         else:
             tree["delayed"] = rng.normal(0.0, 0.015, size=(s_reg, r_dim, n_g)).astype(np.float32)
+        if spec.use_cooperativity and s_reg >= 2:
+            k_c = spec.coop_rank
+            tree["coop_u"] = rng.normal(0.0, 0.25 / np.sqrt(s_reg), size=(s_reg, k_c)).astype(
+                np.float32
+            )
+            tree["coop_v"] = rng.normal(0.0, 0.25 / np.sqrt(s_reg), size=(s_reg, k_c)).astype(
+                np.float32
+            )
+            tree["coop_w"] = np.zeros((k_c, n_g), dtype=np.float32)
+
+    if fam in (ClosedLoopModelFamily.LOCAL_CONST, ClosedLoopModelFamily.MEMGRN):
+        tree: dict[str, np.ndarray] = {
+            "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
+            "decay": np.zeros((n_g,), dtype=np.float32),
+            "in_gain": np.zeros((s_reg,), dtype=np.float32),
+            "rate": np.broadcast_to(base_logits, (s_reg, r_dim)).copy(),
+        }
+        _add_cl_readout_and_coop(tree)
         if fam == ClosedLoopModelFamily.MEMGRN:
             tree["rate_asym"] = np.zeros((s_reg, r_dim), dtype=np.float32)
             tree["in_proj"] = rng.normal(0.0, 0.6, size=(3, h_dim)).astype(np.float32)
             tree["bias"] = rng.normal(0.0, 0.2, size=(h_dim,)).astype(np.float32)
             tree["out_proj"] = np.zeros((s_reg, r_dim, h_dim), dtype=np.float32)
             tree["out_proj_asym"] = np.zeros((s_reg, r_dim, h_dim), dtype=np.float32)
-            if spec.use_cooperativity:
-                k_c = spec.coop_rank
-                tree["coop_u"] = rng.normal(0.0, 0.25 / np.sqrt(s_reg), size=(s_reg, k_c)).astype(
-                    np.float32
-                )
-                tree["coop_v"] = rng.normal(0.0, 0.25 / np.sqrt(s_reg), size=(s_reg, k_c)).astype(
-                    np.float32
-                )
-                tree["coop_w"] = np.zeros((k_c, n_g), dtype=np.float32)
         return _with_ext(tree)
 
     if fam == ClosedLoopModelFamily.COUPLED_ADAPTIVE:
@@ -1354,13 +1523,27 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
             "b_gate": rng.normal(0.0, 0.15, size=(s_reg, r_dim)).astype(np.float32),
             "e_rev": np.ones((s_reg, r_dim), dtype=np.float32),
             "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
-            "delayed": rng.normal(0.0, 0.015, size=(s_reg, r_dim, n_g)).astype(np.float32),
             "decay": np.zeros((n_g,), dtype=np.float32),
             "in_gain": np.zeros((s_reg,), dtype=np.float32),
         }
-        if spec.use_self_memory:
-            ltc_tree["self_mem"] = np.zeros((s_reg, r_dim), dtype=np.float32)
+        _add_cl_readout_and_coop(ltc_tree)
         return _with_ext(ltc_tree)
+
+    if fam == ClosedLoopModelFamily.DEPTHWISE_SSM:
+        dssm_tree = {
+            "alpha_log": np.broadcast_to(base_logits, (s_reg, r_dim)).copy(),
+            "w_dt": rng.normal(0.0, 0.4, size=(s_reg, r_dim)).astype(np.float32),
+            "b_dt": np.zeros((s_reg, r_dim), dtype=np.float32),
+            "w_b": np.ones((s_reg, r_dim), dtype=np.float32)
+            + rng.normal(0.0, 0.1, size=(s_reg, r_dim)).astype(np.float32),
+            "w_gate": rng.normal(0.0, 0.35, size=(s_reg, r_dim)).astype(np.float32),
+            "b_gate": np.zeros((s_reg, r_dim), dtype=np.float32),
+            "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
+            "decay": np.zeros((n_g,), dtype=np.float32),
+            "in_gain": np.zeros((s_reg,), dtype=np.float32),
+        }
+        _add_cl_readout_and_coop(dssm_tree)
+        return _with_ext(dssm_tree)
 
     if fam == ClosedLoopModelFamily.SELECTIVE_SSM:
         m_dim = spec.latent_dim
@@ -1389,6 +1572,7 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
         m_dim = spec.latent_dim
         return _with_ext(
             {
+                "cfc_rate": np.zeros((m_dim,), dtype=np.float32),
                 "w_f_x": rng.normal(0.0, 0.25 / np.sqrt(m_dim), size=(m_dim, m_dim)).astype(
                     np.float32
                 ),
@@ -1440,6 +1624,7 @@ def _init_closed_loop_tree(spec: ClosedLoopSpec, seed: int) -> dict[str, np.ndar
             "w_a": rng.normal(0.0, 0.4 / np.sqrt(s_reg), size=(s_reg, lat_d)).astype(np.float32),
             "bias": rng.normal(0.0, 0.15, size=(lat_d,)).astype(np.float32),
             "w_dyn": rng.normal(0.0, 0.15 / np.sqrt(lat_d), size=(lat_d, lat_d)).astype(np.float32),
+            "direct": rng.normal(0.0, 0.015, size=(s_reg, n_g)).astype(np.float32),
             "readout": rng.normal(0.0, 0.03, size=(lat_d, n_g)).astype(np.float32),
             "decay": np.zeros((n_g,), dtype=np.float32),
             "in_gain": np.zeros((s_reg,), dtype=np.float32),
@@ -1510,13 +1695,70 @@ def build_closed_loop_jax_rollout(
 
         y_start = jnp.zeros_like(y0) if clamp_steps > 0 else y0
 
-        if fam in (ClosedLoopModelFamily.LOCAL_CONST, ClosedLoopModelFamily.MEMGRN):
+        def _cl_coop_term(h_state: jnp.ndarray) -> jnp.ndarray:
+            """Diagonal-free, hollow-masked O((S+N) K_c) factorized pairwise cooperativity."""
+            if "coop_w" not in p:
+                return jnp.zeros((batch, n_g), dtype=theta.dtype)
+            h_bar = jnp.mean(h_state, axis=-1)  # (batch, s_reg)
+            su = h_bar @ p["coop_u"]  # (batch, k_c)
+            sv = h_bar @ p["coop_v"]  # (batch, k_c)
+            # Remove all i == k (h_bar_i^2) self-squares identically
+            coop_feat = su * sv - (h_bar**2) @ (p["coop_u"] * p["coop_v"])
+            out = coop_feat @ p["coop_w"]  # (batch, n_g)
+            if spec.hollow:
+                # For each target j = reg_idx[r], exclude every pair involving source r itself
+                # (i == r, k != r) and (k == r, i != r) so cooperativity is strictly hollow!
+                hu = h_bar[:, :, None] * p["coop_u"][None]  # (batch, s_reg, k_c)
+                hv = h_bar[:, :, None] * p["coop_v"][None]  # (batch, s_reg, k_c)
+                self_excl = hu * (sv[:, None, :] - hv) + hv * (su[:, None, :] - hu)
+                self_corr = jnp.einsum("bsk,sk->bs", self_excl, p["coop_w"][:, reg_idx_j].T)
+                out = out.at[:, reg_idx_j].add(-self_corr)
+            return out
+
+        def _prepare_cl_delayed():
             d_hol = p["direct"] * off_diag
             if "delayed_u" in p:
-                b_full = jnp.einsum("srk,kg->srg", p["delayed_u"], p["delayed_v"])
+                u_flat = p["delayed_u"].reshape(s_reg * r_dim, -1)
+                v_mat = p["delayed_v"]
+                diag_b = (
+                    jnp.einsum("srk,sk->sr", p["delayed_u"], v_mat[:, reg_idx_j].T)
+                    if spec.hollow
+                    else None
+                )
+                return d_hol, None, u_flat, v_mat, diag_b
+            b_hol_flat = (p["delayed"] * off_diag[:, None, :]).reshape(s_reg * r_dim, n_g)
+            return d_hol, b_hol_flat, None, None, None
+
+        def _cl_source_isolated_prod(
+            act: jnp.ndarray,
+            mem_state: jnp.ndarray,
+            d_hol: jnp.ndarray,
+            b_hol_flat: jnp.ndarray | None,
+            u_flat: jnp.ndarray | None,
+            v_mat: jnp.ndarray | None,
+            diag_b: jnp.ndarray | None,
+        ) -> jnp.ndarray:
+            mem_flat = mem_state.reshape(batch, s_reg * r_dim)
+            if u_flat is not None and v_mat is not None:
+                del_prod = (mem_flat @ u_flat) @ v_mat
+                if diag_b is not None:
+                    del_prod = del_prod.at[:, reg_idx_j].add(
+                        -jnp.sum(mem_state * diag_b[None], axis=-1)
+                    )
             else:
-                b_full = p["delayed"]
-            b_hol = b_full * off_diag[:, None, :]
+                del_prod = mem_flat @ b_hol_flat
+            prod = act @ d_hol + del_prod
+            if spec.use_self_memory:
+                # Private diagonal self-memory sum_r b_self_{ir} mem_{ir} on each source node;
+                # preserves strict off-diagonal hollow identifiability (Theorem 1(ii))
+                self_prod = jnp.sum(mem_state * p["self_mem"][None], axis=-1)
+                prod = prod.at[:, reg_idx_j].add(self_prod)
+            if "coop_w" in p:
+                prod = prod + _cl_coop_term(mem_state)
+            return prod
+
+        if fam in (ClosedLoopModelFamily.LOCAL_CONST, ClosedLoopModelFamily.MEMGRN):
+            d_hol, b_hol_flat, u_flat, v_mat, diag_b = _prepare_cl_delayed()
             init_state = (
                 jnp.zeros((batch, s_reg, r_dim), dtype=theta.dtype),
                 jnp.zeros((batch, s_reg, r_dim), dtype=theta.dtype),
@@ -1552,18 +1794,7 @@ def build_closed_loop_jax_rollout(
                     )
                 dz = lam_up * (act[:, :, None] - z)
                 dh = lam_dn * (z - h)
-                prod = act @ d_hol + h.reshape(batch, s_reg * r_dim) @ b_hol.reshape(
-                    s_reg * r_dim, n_g
-                )
-                if spec.use_self_memory:
-                    # Private diagonal self-memory sum_r b_self_{ir} h_{ir} on each source node;
-                    # preserves strict off-diagonal hollow identifiability (Theorem 1(ii))
-                    self_prod = jnp.sum(h * p["self_mem"][None], axis=-1)
-                    prod = prod.at[:, reg_idx_j].add(self_prod)
-                if fam == ClosedLoopModelFamily.MEMGRN and spec.use_cooperativity:
-                    h_bar = jnp.mean(h, axis=-1)  # (batch, s_reg)
-                    coop_feat = (h_bar @ p["coop_u"]) * (h_bar @ p["coop_v"])
-                    prod = prod + coop_feat @ p["coop_w"]
+                prod = _cl_source_isolated_prod(act, h, d_hol, b_hol_flat, u_flat, v_mat, diag_b)
                 return dz, dh, prod - decay[None] * y
 
         elif fam == ClosedLoopModelFamily.COUPLED_ADAPTIVE:
@@ -1608,8 +1839,7 @@ def build_closed_loop_jax_rollout(
                 return dx, act @ d_hol + x @ p["readout"] - decay[None] * y
 
         elif fam == ClosedLoopModelFamily.LTC_LOCAL:
-            d_hol = p["direct"] * off_diag
-            b_hol = p["delayed"] * off_diag[:, None, :]
+            d_hol, b_hol_flat, u_flat, v_mat, diag_b = _prepare_cl_delayed()
             init_state = (jnp.zeros((batch, s_reg, r_dim), dtype=theta.dtype), y_start)
 
             def rhs(state, u_step):
@@ -1625,12 +1855,26 @@ def build_closed_loop_jax_rollout(
                 dx = -(base_tau[None] + gate) * x + gate * (
                     act[:, :, None] * p["e_rev"][None]
                 )
-                prod = act @ d_hol + x.reshape(batch, s_reg * r_dim) @ b_hol.reshape(
-                    s_reg * r_dim, n_g
+                prod = _cl_source_isolated_prod(act, x, d_hol, b_hol_flat, u_flat, v_mat, diag_b)
+                return dx, prod - decay[None] * y
+
+        elif fam == ClosedLoopModelFamily.DEPTHWISE_SSM:
+            d_hol, b_hol_flat, u_flat, v_mat, diag_b = _prepare_cl_delayed()
+            init_state = (jnp.zeros((batch, s_reg, r_dim), dtype=theta.dtype), y_start)
+
+            def rhs(state, u_step):
+                x, y = state
+                act = _gene_activity(y, u_step)
+                alpha = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
+                    p["alpha_log"]
                 )
-                if spec.use_self_memory:
-                    self_prod = jnp.sum(x * p["self_mem"][None], axis=-1)
-                    prod = prod.at[:, reg_idx_j].add(self_prod)
+                delta_t = 0.25 + jax.nn.softplus(
+                    act[:, :, None] * p["w_dt"][None] + p["b_dt"][None]
+                )
+                sel_gate = jax.nn.sigmoid(act[:, :, None] * p["w_gate"][None] + p["b_gate"][None])
+                drive = sel_gate * (act[:, :, None] * p["w_b"][None])
+                dx = delta_t * (alpha[None] * (drive - x))
+                prod = _cl_source_isolated_prod(act, x, d_hol, b_hol_flat, u_flat, v_mat, diag_b)
                 return dx, prod - decay[None] * y
 
         elif fam == ClosedLoopModelFamily.SELECTIVE_SSM:
@@ -1651,22 +1895,25 @@ def build_closed_loop_jax_rollout(
                 return dx, act @ d_hol + x @ p["readout"] - decay[None] * y
 
         elif fam == ClosedLoopModelFamily.CFC:
+            # dt-independent continuous-time CfC relaxation ODE with exact zero-equilibrium centering
             m_dim = spec.latent_dim
             d_hol = p["direct"] * off_diag
             init_state = (jnp.zeros((batch, m_dim), dtype=theta.dtype), y_start)
-            sig_rest = jax.nn.sigmoid(-p["b_f"])
+            sig_rest = jax.nn.sigmoid(-(jax.nn.softplus(p["b_f"]) + p["b_f"]))
             rest_x = sig_rest * jnp.tanh(p["b_g"]) + (1.0 - sig_rest) * jnp.tanh(p["b_h"])
 
             def rhs(state, u_step):
                 x, y = state
                 act = _gene_activity(y, u_step)
+                cfc_rate = spec.rate_min + (spec.rate_max - spec.rate_min) * jax.nn.sigmoid(
+                    p["cfc_rate"]
+                )
                 f_gate = jax.nn.softplus(x @ p["w_f_x"] + act @ p["w_f_a"] + p["b_f"])
-                t_interp = jax.nn.sigmoid(-(f_gate * dt + p["b_f"]))
+                t_interp = jax.nn.sigmoid(-(f_gate + p["b_f"]))
                 g_val = jnp.tanh(x @ p["w_g_x"] + act @ p["w_g_a"] + p["b_g"])
                 h_val = jnp.tanh(x @ p["w_h_x"] + act @ p["w_h_a"] + p["b_h"])
                 x_target = t_interp * g_val + (1.0 - t_interp) * h_val - rest_x[None]
-                # Continuous relaxation rate matching CfC step interpolation over dt
-                dx = (x_target - x) / dt
+                dx = cfc_rate[None] * (x_target - x)
                 return dx, act @ d_hol + x @ p["readout"] - decay[None] * y
 
         elif fam == ClosedLoopModelFamily.PERTURB_ODE:
@@ -1683,6 +1930,7 @@ def build_closed_loop_jax_rollout(
 
         else:  # LATENT_ODE
             lat_d = spec.latent_dim
+            d_hol = p["direct"] * off_diag
             init_state = (jnp.zeros((batch, lat_d), dtype=theta.dtype), y_start)
             rest_hid = jnp.tanh(p["bias"])
 
@@ -1692,7 +1940,7 @@ def build_closed_loop_jax_rollout(
                 lat_dec = 0.15 + jnp.logaddexp(0.0, p["rate"])
                 hid = jnp.tanh(z @ p["w_s"] + act @ p["w_a"] + p["bias"]) - rest_hid
                 dz = -lat_dec[None] * z + hid @ p["w_dyn"]
-                return dz, z @ p["readout"] - decay[None] * y
+                return dz, act @ d_hol + z @ p["readout"] - decay[None] * y
 
         scan_xs = (
             jnp.arange(n_steps),
@@ -1802,7 +2050,7 @@ def fit_closed_loop_network(
 
     def reg_penalty(theta):
         p = unpack(theta)
-        skip = {"decay", "rate", "tau_log", "alpha_log", "in_gain"}
+        skip = {"decay", "rate", "tau_log", "alpha_log", "cfc_rate", "in_gain"}
         l2 = sum(jnp.sum(v**2) for k, v in p.items() if k not in skip)
         l1 = jnp.asarray(0.0, dtype=theta.dtype)
         if "direct" in p:

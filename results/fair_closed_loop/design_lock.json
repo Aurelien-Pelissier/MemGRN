@@ -1,0 +1,15 @@
+{
+  "benchmark": "fair_matched_closed_loop_suite",
+  "matched_source_isolated_features": [
+    "readout_rank",
+    "use_cooperativity",
+    "group_l21_scale",
+    "use_self_memory"
+  ],
+  "diagonal_free_hollow_cooperativity": true,
+  "fixed_dt_independent_cfc": true,
+  "fixed_latent_ode_direct_path": true,
+  "reddit_test_protocol": "strictly_nonoverlapping_stride24_12_episodes",
+  "cd4t_renge_protocol": "graph_recovery_only_not_unseen_ko_forecasting",
+  "stats_test": "two_sided_wilcoxon_holm_bonferroni"
+}

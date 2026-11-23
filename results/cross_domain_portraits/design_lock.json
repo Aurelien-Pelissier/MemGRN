@@ -1,30 +1,24 @@
 {
-  "benchmark": "cross_domain_learned_hysteresis_portraits",
+  "benchmark": "cross_domain_dynamical_step_response_portraits",
+  "method": "gauge_invariant_rk4_step_on_off_half_times_B_l2_weighted",
   "domains": [
     "beijing_air_quality",
     "binance_16asset",
     "metr_la_s64",
     "yeast_msn2"
   ],
-  "h_grid": [
-    0.0,
-    0.05,
-    0.1,
-    0.15000000000000002,
-    0.2,
-    0.25,
-    0.30000000000000004,
-    0.35000000000000003,
-    0.4,
-    0.45,
-    0.5,
-    0.55,
-    0.6000000000000001,
-    0.65,
-    0.7000000000000001,
-    0.75,
-    0.8,
-    0.8500000000000001,
-    0.9
-  ]
+  "time_unit_scales": {
+    "beijing_hours": 1.0,
+    "binance_minutes": 10.0,
+    "metr_la_minutes": 20.0,
+    "yeast_minutes": 60.0
+  },
+  "replicates": {
+    "beijing": "4_loso_folds",
+    "binance": "3_seeds_101_202_303",
+    "metr_la": "3_seeds_101_202_303",
+    "yeast": "3_seeds_101_202_303"
+  },
+  "validation_shrinkage": "default_standard_no_zero_override",
+  "linear_two_stage_gauge_invariance_error": 4.440892098500626e-16
 }

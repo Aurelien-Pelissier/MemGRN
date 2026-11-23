@@ -227,8 +227,14 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
     gen_s = verify_general_s_covariance_crosstalk_theorem(n_sources=12, k_active=2)
     if gen_s.analytical_vs_solve_max_diff >= 1e-12:
         raise AssertionError("Spectral ridge identity failed")
+    if gen_s.equicorrelated_closed_form_max_diff >= 1e-12:
+        raise AssertionError("Equicorrelated block leakage formula mismatch")
+    if gen_s.equicorrelated_rho1_limit_error >= 1e-6:
+        raise AssertionError("Equicorrelated rho->1^- limit |w*|/(b+mu) mismatch")
     if gen_s.coupled_nonparent_weight_l2 <= 0.1 or gen_s.local_nonparent_weight_l2 != 0.0:
         raise AssertionError("General-S cross-talk check failed")
+    if gen_s.local_false_nonparent_attr_l2 >= 1e-13 or gen_s.coupled_false_nonparent_attr_l2 <= 0.01:
+        raise AssertionError("General-S matched-ridge false non-parent attribution check failed")
     if gen_s.finite_sample_coupled_risk_s24 <= 3.0 * gen_s.finite_sample_local_l1_risk_s24:
         raise AssertionError("Expected S=24 sparse local risk << coupled dense risk")
 
@@ -241,8 +247,10 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
     if cl_res.coupled_gauge_attribution_disagreement <= 0.2:
         raise AssertionError("Expected large coupled gauge attribution ambiguity")
     if (
-        cl_res.memgrn_direct_weight_recovery_max_error >= 1e-11
+        cl_res.memgrn_relaxation_recovery_max_error >= 1e-11
+        or cl_res.memgrn_direct_weight_recovery_max_error >= 1e-11
         or cl_res.memgrn_total_weight_recovery_max_error >= 1e-8
+        or cl_res.factorized_coop_single_clamp_max_error >= 1e-13
     ):
         raise AssertionError("Closed-loop MemGRN graph weight identifiability failed")
 
@@ -304,8 +312,11 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
         "crosstalk_coupled_false_attr_l2": ct_res.coupled_false_source2_attribution_l2,
         "crosstalk_local_ko_l2_error": ct_res.local_ko_trajectory_l2_error,
         "general_s12_coupled_nonparent_l2": gen_s.coupled_nonparent_weight_l2,
+        "general_s12_equicorr_limit_err": gen_s.equicorrelated_rho1_limit_error,
         "general_s12_coupled_ko_error": gen_s.coupled_single_ko_l2_error,
         "general_s12_local_ko_error": gen_s.local_single_ko_l2_error,
+        "general_s12_coupled_false_nonparent_attr": gen_s.coupled_false_nonparent_attr_l2,
+        "general_s12_local_false_nonparent_attr": gen_s.local_false_nonparent_attr_l2,
         "finite_sample_s24_coupled_vs_local_risk": [
             gen_s.finite_sample_coupled_risk_s24,
             gen_s.finite_sample_local_l1_risk_s24,
@@ -314,8 +325,10 @@ def verify_all_theory(output_json: Path | None = None) -> dict:
         "closed_loop_trapping_radius": cl_res.theoretical_y_trapping_radius,
         "closed_loop_coupled_gauge_traj_diff": cl_res.coupled_gauge_trajectory_max_diff,
         "closed_loop_coupled_gauge_attr_disagreement": cl_res.coupled_gauge_attribution_disagreement,
+        "closed_loop_memgrn_relax_id_error": cl_res.memgrn_relaxation_recovery_max_error,
         "closed_loop_memgrn_direct_id_error": cl_res.memgrn_direct_weight_recovery_max_error,
         "closed_loop_memgrn_total_id_error": cl_res.memgrn_total_weight_recovery_max_error,
+        "closed_loop_factorized_coop_single_clamp_err": cl_res.factorized_coop_single_clamp_max_error,
         "vs_local_ltc_scale_gauge_traj_diff": ltc_sep.ltc_scale_gauge_trajectory_max_diff,
         "vs_local_ltc_scale_gauge_weight_disagreement": ltc_sep.ltc_scale_gauge_weight_disagreement,
         "vs_local_ltc_amp_gain_distortion_ratio": ltc_sep.ltc_amplitude_gain_distortion_ratio,

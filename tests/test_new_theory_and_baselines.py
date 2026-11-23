@@ -222,6 +222,8 @@ def test_ortho_ood_generalization_and_selective_ssm_corollary() -> None:
 
 def test_factorized_coop_and_hysteresis_extraction() -> None:
     from memgrn.baselines import extract_memgrn_up_down
+    from jax.flatten_util import ravel_pytree
+    import jax.numpy as jnp
 
     spec = ModelSpec(
         family=DynamicalModelFamily.MEMGRN,
@@ -239,6 +241,124 @@ def test_factorized_coop_and_hysteresis_extraction() -> None:
     u_zero = np.zeros((8, 2, 6, 3), dtype=np.float32)
     y0 = np.zeros((2, 10), dtype=np.float32)
     np.testing.assert_allclose(np.asarray(fwd(th0, u_zero, y0)), 0.0, atol=1e-6)
+
+    # Verify diagonal-free factorized cooperativity produces identically zero single-source distortion
+    rng = np.random.default_rng(99)
+    p_nz = {k: jnp.asarray(v) for k, v in p.items()}
+    p_nz["coop_u"] = jnp.asarray(rng.normal(0.0, 0.8, size=p["coop_u"].shape), dtype=jnp.float32)
+    p_nz["coop_v"] = jnp.asarray(rng.normal(0.0, 0.8, size=p["coop_v"].shape), dtype=jnp.float32)
+    p_nz["coop_w"] = jnp.asarray(rng.normal(0.0, 0.8, size=p["coop_w"].shape), dtype=jnp.float32)
+    th_with_coop = ravel_pytree(p_nz)[0]
+    p_zero_coop = dict(p_nz)
+    p_zero_coop["coop_w"] = jnp.zeros_like(p_nz["coop_w"])
+    th_no_coop = ravel_pytree(p_zero_coop)[0]
+    u_single = np.zeros((10, 1, 6, 3), dtype=np.float32)
+    u_single[:, :, 2, :] = 0.85
+    y_with = np.asarray(fwd(th_with_coop, u_single, np.zeros((1, 10), dtype=np.float32)))
+    y_no = np.asarray(fwd(th_no_coop, u_single, np.zeros((1, 10), dtype=np.float32)))
+    np.testing.assert_allclose(y_with, y_no, atol=1e-6)
+
+
+def test_cfc_exact_rest_equilibrium_and_dt_independence() -> None:
+    """Verify fixed CfC rest-centering for nonzero b_f/b_g/b_h and closed-loop dt convergence."""
+    from jax.flatten_util import ravel_pytree
+    import jax.numpy as jnp
+
+    # Open-loop CfC exact zero equilibrium with nonzero biases
+    ol_spec = ModelSpec(family=DynamicalModelFamily.CFC, n_sources=3, n_targets=2, n_channels=2)
+    ol_fwd, ol_unpack, ol_th0 = build_jax_rollout(ol_spec, dt=0.25, obs_stride=2)
+    p_ol = {k: jnp.asarray(v) for k, v in ol_unpack(ol_th0).items()}
+    p_ol["b_f"] = jnp.full_like(p_ol["b_f"], 1.3)
+    p_ol["b_g"] = jnp.full_like(p_ol["b_g"], -0.9)
+    p_ol["b_h"] = jnp.full_like(p_ol["b_h"], 0.7)
+    th_ol_nz = ravel_pytree(p_ol)[0]
+    out_ol = np.asarray(ol_fwd(th_ol_nz, np.zeros((8, 2, 3, 3), dtype=np.float32), np.zeros((2, 2), dtype=np.float32)))
+    np.testing.assert_allclose(out_ol, 0.0, atol=1e-6)
+
+    # Closed-loop CfC exact zero equilibrium with nonzero biases AND dt-independence
+    cl_spec = ClosedLoopSpec(family=ClosedLoopModelFamily.CFC, n_genes=4, n_channels=2, latent_dim=6)
+    cl_fwd1, cl_unpack, cl_th0 = build_closed_loop_jax_rollout(
+        cl_spec, basal_levels=np.ones(4, dtype=np.float32), dt=0.1, n_steps=10, obs_step_indices=(0, 10)
+    )
+    cl_fwd2, _, _ = build_closed_loop_jax_rollout(
+        cl_spec, basal_levels=np.ones(4, dtype=np.float32), dt=0.05, n_steps=20, obs_step_indices=(0, 20)
+    )
+    p_cl = {k: jnp.asarray(v) for k, v in cl_unpack(cl_th0).items()}
+    p_cl["b_f"] = jnp.full_like(p_cl["b_f"], 1.1)
+    p_cl["b_g"] = jnp.full_like(p_cl["b_g"], -0.8)
+    p_cl["b_h"] = jnp.full_like(p_cl["b_h"], 0.6)
+    th_cl_nz = ravel_pytree(p_cl)[0]
+    wt = np.zeros((1, 4), dtype=np.float32)
+    np.testing.assert_allclose(np.asarray(cl_fwd1(th_cl_nz, wt, wt)), 0.0, atol=1e-6)
+    ko = np.array([[1.0, 0.0, 0.0, 0.0]], dtype=np.float32)
+    y_dt1 = np.asarray(cl_fwd1(th_cl_nz, ko, wt))
+    y_dt2 = np.asarray(cl_fwd2(th_cl_nz, ko, wt))
+    np.testing.assert_allclose(y_dt1, y_dt2, atol=1e-4)
+
+
+def test_closed_loop_hollow_coop_and_matched_source_isolated_features() -> None:
+    """Verify diagonal-free hollow cooperativity and readout_rank parity across all source-isolated CL models."""
+    from jax.flatten_util import ravel_pytree
+    import jax.numpy as jnp
+
+    for fam in (
+        ClosedLoopModelFamily.MEMGRN,
+        ClosedLoopModelFamily.LOCAL_CONST,
+        ClosedLoopModelFamily.LTC_LOCAL,
+        ClosedLoopModelFamily.DEPTHWISE_SSM,
+    ):
+        spec = ClosedLoopSpec(
+            family=fam,
+            n_genes=5,
+            regulator_indices=tuple(range(5)),
+            hollow=True,
+            use_self_memory=True,
+            use_cooperativity=True,
+            coop_rank=3,
+            readout_rank=4,
+            n_channels=2,
+            hidden_width=4,
+        )
+        fwd, unpack, th0 = build_closed_loop_jax_rollout(
+            spec, basal_levels=np.ones(5, dtype=np.float32), dt=0.2, n_steps=8, obs_step_indices=(0, 4, 8)
+        )
+        p = {k: jnp.asarray(v) for k, v in unpack(th0).items()}
+        assert "delayed_u" in p and "delayed_v" in p and "coop_w" in p and "self_mem" in p
+        wt = np.zeros((2, 5), dtype=np.float32)
+        np.testing.assert_allclose(np.asarray(fwd(th0, wt, wt)), 0.0, atol=1e-6)
+
+        # Verify exact equivalence of O(B(SR+N)K_r) rank-factorized hollow readout vs dense b_hol
+        dense_spec = ClosedLoopSpec(
+            family=fam,
+            n_genes=5,
+            regulator_indices=tuple(range(5)),
+            hollow=True,
+            use_self_memory=True,
+            use_cooperativity=True,
+            coop_rank=3,
+            readout_rank=None,
+            n_channels=2,
+            hidden_width=4,
+        )
+        fwd_d, unpack_d, th0_d = build_closed_loop_jax_rollout(
+            dense_spec,
+            basal_levels=np.ones(5, dtype=np.float32),
+            dt=0.2,
+            n_steps=8,
+            obs_step_indices=(0, 4, 8),
+        )
+        p_d = {k: jnp.asarray(v) for k, v in unpack_d(th0_d).items()}
+        for k in p_d:
+            if k in p:
+                p_d[k] = p[k]
+        p_d["delayed"] = jnp.einsum("srk,kg->srg", p["delayed_u"], p["delayed_v"])
+        th_d_match = ravel_pytree(p_d)[0]
+        ko = np.array([[1.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 1.0, 0.0, 1.0]], dtype=np.float32)
+        np.testing.assert_allclose(
+            np.asarray(fwd(th0, ko, wt)),
+            np.asarray(fwd_d(th_d_match, ko, wt)),
+            atol=1e-6,
+        )
 
 
 def test_closed_loop_diagonal_self_memory_and_hollow_graph() -> None:

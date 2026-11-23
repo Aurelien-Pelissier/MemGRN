@@ -210,5 +210,39 @@ def test_archived_msn2_and_synthetic_numbers() -> None:
     port_dir = ROOT / "results" / "cross_domain_portraits"
     port = json.loads((port_dir / "scores.json").read_text())
     assert port["design_sha256"] in sha256_variants(port_dir / "design_lock.json")
-    assert port["beijing_air_quality_hours"]["by_source"]["Dewpoint"]["asymmetry_up_over_dn"] > 2.5
-    assert port["binance_16asset_minutes"]["by_source"]["BTCUSDT"]["asymmetry_up_over_dn"] < 0.5
+    assert port["linear_two_stage_gauge_invariance_error"] < 1e-14
+    assert abs(port["metr_la_s64_minutes"]["mean_hysteresis_ratio"] - 1.0) < 1e-3
+    assert port["yeast_msn2_minutes"]["slow_over_fast_tau_off_ratio"] > 1.5
+    assert port["beijing_air_quality_hours"]["mean_hysteresis_ratio"] > 1.5
+
+    # Verify equal-budget fair open-loop and matched closed-loop suites
+    fol_dir = ROOT / "results" / "fair_open_loop"
+    fol = json.loads((fol_dir / "scores.json").read_text())
+    assert fol["design_sha256"] in sha256_variants(fol_dir / "design_lock.json")
+    assert (
+        fol["beijing_air_quality"]["delta_u_4season"]["summary"]["memgrn_additive"]["loso_mse"]
+        < fol["beijing_air_quality"]["delta_u_4season"]["summary"]["dlinear"]["loso_mse"]
+    )
+    assert (
+        fol["partial_obs_6of8"]["summary"]["memgrn_ortho_2stage"]["full_model_gt_attr_rmse"]
+        < fol["partial_obs_6of8"]["summary"]["memgrn_unproj"]["full_model_gt_attr_rmse"]
+    )
+    assert (
+        fol["ltc_and_dssm_separation"]["memgrn_matched"]["delayed_peak_post_mse"]
+        < 0.5 * fol["ltc_and_dssm_separation"]["ltc_local_matched"]["delayed_peak_post_mse"]
+    )
+    assert (
+        fol["binance_contagion"]["partial_14alt"]["memgrn_ortho"]["aug_test_mse"]
+        < fol["binance_contagion"]["partial_14alt"]["latent_ode"]["aug_test_mse"]
+    )
+
+    fcl_dir = ROOT / "results" / "fair_closed_loop"
+    fcl = json.loads((fcl_dir / "scores.json").read_text())
+    assert fcl["design_sha256"] in sha256_variants(fcl_dir / "design_lock.json")
+    m207_fair = fcl["metr_la_s207"]["summary"]
+    assert m207_fair["cl_memgrn_selfmem"]["test_mse"] == min(v["test_mse"] for v in m207_fair.values())
+    assert m207_fair["cl_memgrn_selfmem"]["mem_params"] < 0.06 * m207_fair["cl_coupled_adaptive"]["mem_params"]
+    assert fcl["powergrid_ieee39"]["summary"]["cl_memgrn_selfmem"]["double_n2_mse"] < 0.027
+    assert fcl["powergrid_ieee39"]["summary"]["cl_memgrn_selfmem"]["graph_auroc"] > 0.89
+    assert not fcl["cd4t_gse314342"]["summary"]["renge_graph_only"]["forecast_supported"]
+    assert fcl["cd4t_gse314342"]["summary"]["cl_memgrn"]["collectri_colnorm_ap_over_random"] > 1.2
