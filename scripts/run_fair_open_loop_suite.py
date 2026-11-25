@@ -1014,9 +1014,15 @@ def _run_complete_scaling() -> list[dict]:
         n_g = 4 * s_tf
         reg_idx = tuple(range(s_tf))
         basal = np.ones(n_g, dtype=np.float32)
-        ko = jnp.zeros((batch, n_g), dtype=jnp.float32)
-        y0 = jnp.zeros((batch, n_g), dtype=jnp.float32)
-        target = jnp.zeros((batch, len(obs_idx), n_g), dtype=jnp.float32)
+        rng_sc = np.random.default_rng(1000 + s_tf)
+        ko_np = np.zeros((batch, n_g), dtype=np.float32)
+        for b_i in range(batch):
+            ko_np[b_i, b_i % s_tf] = 1.0
+        ko = jnp.asarray(ko_np)
+        y0 = jnp.asarray(rng_sc.normal(0.0, 0.25, size=(batch, n_g)).astype(np.float32))
+        target = jnp.asarray(
+            rng_sc.normal(0.0, 0.25, size=(batch, len(obs_idx), n_g)).astype(np.float32)
+        )
         row = {"n_tfs": s_tf, "n_genes": n_g}
         configs = [
             ("memgrn_dense", ClosedLoopSpec(family=ClosedLoopModelFamily.MEMGRN, n_genes=n_g, regulator_indices=reg_idx, use_cooperativity=True, coop_rank=8, n_channels=3, hidden_width=4)),
@@ -1038,6 +1044,8 @@ def _run_complete_scaling() -> list[dict]:
 
             _, g = _lg(th)
             g.block_until_ready()
+            if not bool(jnp.all(jnp.isfinite(g))) or float(jnp.linalg.norm(g)) <= 0.0:
+                raise RuntimeError(f"Degenerate scaling gradient for {label} at S={s_tf}")
             n_reps = 5 if s_tf >= 256 else 10
             ts = time.perf_counter()
             for _ in range(n_reps):

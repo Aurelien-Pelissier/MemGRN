@@ -80,7 +80,8 @@ def _cosine_adam_train(
             return (th, m, v, best_th, best_val), v_l
 
         init_v = val_fn(th_init)
-        carry0 = (th_init, jnp.zeros_like(th_init), jnp.zeros_like(th_init), th_init, init_v)
+        init_v_safe = jnp.where(jnp.isfinite(init_v), init_v, jnp.inf)
+        carry0 = (th_init, jnp.zeros_like(th_init), jnp.zeros_like(th_init), th_init, init_v_safe)
         (_, _, _, best_th, best_val), _ = jax.lax.scan(chunk_step, carry0, jnp.arange(n_chunks))
         return best_th, best_val
 
@@ -168,6 +169,8 @@ def fit_discrete_open_loop(
     lr_max: float = 0.005,
 ) -> TrainedDiscreteModel:
     """Fit a causal discrete-time open-loop baseline (DLinear, GRU, or Transformer)."""
+    if family == DiscreteModelFamily.TRANSFORMER and hidden_dim % 4 != 0:
+        raise ValueError(f"Transformer hidden_dim must be divisible by 4 heads, got {hidden_dim}")
     _, seq_len, n_sources = train_u.shape
     n_targets = train_y.shape[2]
 
@@ -208,9 +211,9 @@ def fit_discrete_open_loop(
 
         # Causal Temporal Transformer (4 heads)
         x = u @ p["w_in"] + p["b_in"] + p["pos"][None, :, :]
-        # Pre-LayerNorm
-        x_n = (x - jnp.mean(x, axis=-1, keepdims=True)) / (
-            jnp.std(x, axis=-1, keepdims=True) + 1e-5
+        # Smooth Pre-LayerNorm (sqrt(var + eps) avoids NaN gradients on constant/zero vectors)
+        x_n = (x - jnp.mean(x, axis=-1, keepdims=True)) / jnp.sqrt(
+            jnp.var(x, axis=-1, keepdims=True) + 1e-5
         )
         n_heads = 4
         d_h = hidden_dim // n_heads
@@ -224,8 +227,8 @@ def fit_discrete_open_loop(
             b_sz, seq_len, hidden_dim
         )
         x = x + ctx @ p["w_o"]
-        x_n2 = (x - jnp.mean(x, axis=-1, keepdims=True)) / (
-            jnp.std(x, axis=-1, keepdims=True) + 1e-5
+        x_n2 = (x - jnp.mean(x, axis=-1, keepdims=True)) / jnp.sqrt(
+            jnp.var(x, axis=-1, keepdims=True) + 1e-5
         )
         x = x + jax.nn.gelu(x_n2 @ p["ff1"] + p["bf1"]) @ p["ff2"] + p["bf2"]
         out = x @ p["w_out"] + p["b_out"]
@@ -372,6 +375,8 @@ def fit_discrete_closed_loop(
     lr_max: float = 0.005,
 ) -> TrainedDiscreteModel:
     """Fit discrete-time multi-step closed-loop network predictor (DLinear, GRU, Transformer)."""
+    if family == DiscreteModelFamily.TRANSFORMER and hidden_dim % 4 != 0:
+        raise ValueError(f"Transformer hidden_dim must be divisible by 4 heads, got {hidden_dim}")
     _, hist_len, n_nodes = train_hist.shape
     fut_len = train_fut.shape[1]
 
@@ -419,8 +424,8 @@ def fit_discrete_closed_loop(
 
         # Temporal Transformer encoder -> multi-step horizon readout
         x = hist @ p["w_in"] + p["b_in"] + p["pos"][None, :, :]
-        x_n = (x - jnp.mean(x, axis=-1, keepdims=True)) / (
-            jnp.std(x, axis=-1, keepdims=True) + 1e-5
+        x_n = (x - jnp.mean(x, axis=-1, keepdims=True)) / jnp.sqrt(
+            jnp.var(x, axis=-1, keepdims=True) + 1e-5
         )
         n_heads = 4
         d_h = hidden_dim // n_heads
@@ -433,8 +438,8 @@ def fit_discrete_closed_loop(
             b_sz, hist_len, hidden_dim
         )
         x = x + ctx @ p["w_o"]
-        x_n2 = (x - jnp.mean(x, axis=-1, keepdims=True)) / (
-            jnp.std(x, axis=-1, keepdims=True) + 1e-5
+        x_n2 = (x - jnp.mean(x, axis=-1, keepdims=True)) / jnp.sqrt(
+            jnp.var(x, axis=-1, keepdims=True) + 1e-5
         )
         x = x + jax.nn.gelu(x_n2 @ p["ff1"] + p["bf1"]) @ p["ff2"] + p["bf2"]
         # Temporal projection (hist -> fut) then node readout

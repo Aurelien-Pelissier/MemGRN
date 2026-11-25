@@ -459,6 +459,20 @@ def build_jax_rollout(
     )
     fam = spec.family
 
+    def _coop_term(h_state: jnp.ndarray, p: dict[str, jnp.ndarray]) -> jnp.ndarray:
+        if "coop_w" in p:
+            h_bar = jnp.mean(h_state, axis=-1)
+            # Exact diagonal subtraction removes all i == k (h_bar_i^2) self-squares in O(S K_c),
+            # enforcing strict pairwise (i != k) cooperativity and Theorem 1(ii)-(iii) single-clamp invariance.
+            coop_feat = (h_bar @ p["coop_u"]) * (h_bar @ p["coop_v"]) - (h_bar**2) @ (
+                p["coop_u"] * p["coop_v"]
+            )
+            return coop_feat @ p["coop_w"]
+        if "interact" in p:
+            h_bar = jnp.mean(h_state, axis=-1)
+            return (h_bar[:, idx_i] * h_bar[:, idx_k]) @ p["interact"]
+        return jnp.asarray(0.0, dtype=h_state.dtype)
+
     if fam == DynamicalModelFamily.MEMGRN_ORTHO:
         k_dim = spec.ortho_dim
         obs_feat_dim = s_dim * (1 + r_dim)
@@ -514,9 +528,11 @@ def build_jax_rollout(
                 )
 
                 obs_vec = jnp.concatenate([act, h.reshape(batch, s_dim * r_dim)], axis=-1)
-                prod_obs = act @ p["direct"] + h.reshape(batch, s_dim * r_dim) @ p[
-                    "delayed"
-                ].reshape(s_dim * r_dim, g_dim)
+                prod_obs = (
+                    act @ p["direct"]
+                    + h.reshape(batch, s_dim * r_dim) @ p["delayed"].reshape(s_dim * r_dim, g_dim)
+                    + _coop_term(h, p)
+                )
                 dy_obs = prod_obs - decay[None] * y_obs
                 # Filtered leaky basis integrals for exact decay-matched orthogonal projection
                 dphi_int = obs_vec[:, :, None] - decay[None, None, :] * phi_int
@@ -607,20 +623,6 @@ def build_jax_rollout(
                 jax.jit(forward_with_proj),
             )
         return jax.jit(forward), unpack, np.asarray(flat0, dtype=np.float32)
-
-    def _coop_term(h_state: jnp.ndarray, p: dict[str, jnp.ndarray]) -> jnp.ndarray:
-        if "coop_w" in p:
-            h_bar = jnp.mean(h_state, axis=-1)
-            # Exact diagonal subtraction removes all i == k (h_bar_i^2) self-squares in O(S K_c),
-            # enforcing strict pairwise (i != k) cooperativity and Theorem 1(ii)-(iii) single-clamp invariance.
-            coop_feat = (h_bar @ p["coop_u"]) * (h_bar @ p["coop_v"]) - (h_bar**2) @ (
-                p["coop_u"] * p["coop_v"]
-            )
-            return coop_feat @ p["coop_w"]
-        if "interact" in p:
-            h_bar = jnp.mean(h_state, axis=-1)
-            return (h_bar[:, idx_i] * h_bar[:, idx_k]) @ p["interact"]
-        return jnp.asarray(0.0, dtype=h_state.dtype)
 
     if fam == DynamicalModelFamily.MEMGRN_UNPROJ:
         k_dim = spec.ortho_dim
@@ -1124,18 +1126,19 @@ def fit_dynamical_model(
 
             th, m, v = jax.lax.fori_loop(0, val_every, inner_body, (th, m, v))
             v_loss = val_mse(th)
-            better = v_loss < best_val
+            better = jnp.isfinite(v_loss) & (v_loss < best_val)
             best_th = jnp.where(better, th, best_th)
             best_val = jnp.where(better, v_loss, best_val)
             return (th, m, v, best_th, best_val), v_loss
 
         init_val = val_mse(theta0)
+        init_val_safe = jnp.where(jnp.isfinite(init_val), init_val, jnp.inf)
         init_carry = (
             theta0,
             jnp.zeros_like(theta0),
             jnp.zeros_like(theta0),
             theta0,
-            init_val,
+            init_val_safe,
         )
         (_, _, _, best_th, best_val), _ = jax.lax.scan(
             chunk_step, init_carry, jnp.arange(n_chunks)
@@ -1186,11 +1189,16 @@ def fit_dynamical_model(
                     )
                     v_float = float(val_l)
                     th_np = np.asarray(th_opt, dtype=np.float32)
-                    if np.all(np.isfinite(th_np)) and v_float < best_overall_val:
+                    if np.all(np.isfinite(th_np)) and np.isfinite(v_float) and v_float < best_overall_val:
                         best_overall_val = v_float
                         best_theta_np = th_np
                         best_reg = reg
                         best_seed = seed
+
+    if not np.isfinite(best_overall_val):
+        raise RuntimeError(
+            f"All optimization trials produced non-finite validation losses for {spec.family}"
+        )
 
     th_j = jnp.asarray(best_theta_np, dtype=jnp.float32)
 
@@ -2106,7 +2114,7 @@ def fit_closed_loop_network(
 
             th, m, v = jax.lax.fori_loop(0, val_every, inner, (th, m, v))
             v_l = data_loss(th, va_ko, va_y, va_y0, va_u_ext, va_ycl, va_w, va_den)
-            better = v_l < best_val
+            better = jnp.isfinite(v_l) & (v_l < best_val)
             return (
                 th,
                 m,
@@ -2116,9 +2124,10 @@ def fit_closed_loop_network(
             ), v_l
 
         init_v = data_loss(theta0, va_ko, va_y, va_y0, va_u_ext, va_ycl, va_w, va_den)
+        init_v_safe = jnp.where(jnp.isfinite(init_v), init_v, jnp.inf)
         (_, _, _, best_th, best_val), _ = jax.lax.scan(
             chunk_step,
-            (theta0, jnp.zeros_like(theta0), jnp.zeros_like(theta0), theta0, init_v),
+            (theta0, jnp.zeros_like(theta0), jnp.zeros_like(theta0), theta0, init_v_safe),
             jnp.arange(n_chunks),
         )
         return best_th, best_val
@@ -2134,11 +2143,16 @@ def fit_closed_loop_network(
             th_opt, v_l = run_single(th0, jnp.asarray(reg, dtype=jnp.float32))
             vf = float(v_l)
             th_arr = np.asarray(th_opt, dtype=np.float32)
-            if np.all(np.isfinite(th_arr)) and vf < best_overall:
+            if np.all(np.isfinite(th_arr)) and np.isfinite(vf) and vf < best_overall:
                 best_overall = vf
                 best_th_np = th_arr
                 best_reg = reg
                 best_seed = seed
+
+    if not np.isfinite(best_overall):
+        raise RuntimeError(
+            f"All closed-loop optimization trials produced non-finite validation losses for {spec.family}"
+        )
 
     th_j = jnp.asarray(best_th_np, dtype=jnp.float32)
 
@@ -2172,9 +2186,11 @@ def fit_closed_loop_network(
         else np.asarray(spec.regulator_indices, dtype=np.int64)
     )
     early_steps = max(4, n_steps // 4)
+    # Guard against all-zero basal_levels so single-node counterfactual probes remain non-degenerate
+    probe_basal = np.where(np.abs(basal_levels) > 1e-6, basal_levels, 1.0)
     early_fwd, _, _ = build_closed_loop_jax_rollout(
         spec,
-        basal_levels=basal_levels,
+        basal_levels=probe_basal,
         dt=dt,
         n_steps=early_steps,
         obs_step_indices=(1, 2, 4),

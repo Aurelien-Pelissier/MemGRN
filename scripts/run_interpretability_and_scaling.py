@@ -223,9 +223,15 @@ def run_genome_scale_benchmark() -> list[dict]:
         n_genes = 4 * s_tf  # up to 2,048 genes at S=512 TFs!
         reg_idx = tuple(range(s_tf))
         basal = np.ones(n_genes, dtype=np.float32)
-        ko = jnp.zeros((batch, n_genes), dtype=jnp.float32)
-        y0 = jnp.zeros((batch, n_genes), dtype=jnp.float32)
-        target = jnp.zeros((batch, len(obs_idx), n_genes), dtype=jnp.float32)
+        rng_sc = np.random.default_rng(1000 + s_tf)
+        ko_np = np.zeros((batch, n_genes), dtype=np.float32)
+        for b_i in range(batch):
+            ko_np[b_i, b_i % s_tf] = 1.0
+        ko = jnp.asarray(ko_np)
+        y0 = jnp.asarray(rng_sc.normal(0.0, 0.25, size=(batch, n_genes)).astype(np.float32))
+        target = jnp.asarray(
+            rng_sc.normal(0.0, 0.25, size=(batch, len(obs_idx), n_genes)).astype(np.float32)
+        )
 
         row = {"n_tfs": s_tf, "n_genes": n_genes}
 

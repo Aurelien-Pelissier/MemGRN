@@ -505,3 +505,135 @@ def test_per_target_memgrn_ortho_zero_drift_and_discrete_baselines() -> None:
         assert np.isfinite(cl.best_val_loss)
         assert cl.interaction_matrix.shape == (4, 4)
         assert float(np.max(np.abs(np.diag(cl.interaction_matrix)))) == 0.0
+
+
+def test_gradient_flow_zero_dead_params_and_transformer_layernorm_safety() -> None:
+    """Verify every parameter receives finite non-zero gradients (including MEMGRN_ORTHO+coop,
+    closed-loop zero-basal graph extraction, and Transformer zero-input LayerNorm safety)."""
+    import jax
+    import jax.numpy as jnp
+    from jax.flatten_util import ravel_pytree
+
+    from memgrn.baselines import (
+        _init_closed_loop_tree,
+        _init_tree,
+        build_closed_loop_jax_rollout,
+        build_jax_rollout,
+        fit_closed_loop_network,
+    )
+    from memgrn.discrete_baselines import (
+        DiscreteModelFamily,
+        fit_discrete_closed_loop,
+        fit_discrete_open_loop,
+    )
+
+    rng = np.random.default_rng(77)
+    batch, n_steps, s_dim, g_dim = 4, 12, 4, 3
+    stage_u = rng.normal(0.0, 0.8, size=(n_steps, batch, s_dim, 3)).astype(np.float32)
+    y_true = rng.normal(0.0, 0.5, size=(batch, n_steps // 2 + 1, g_dim)).astype(np.float32)
+    mask = np.ones_like(y_true)
+    mask[:, 0, :] = 0.0
+
+    # 1. MEMGRN_ORTHO with use_cooperativity=True must have non-zero gradients on coop_u/v/w
+    sp_ortho_coop = ModelSpec(
+        family=DynamicalModelFamily.MEMGRN_ORTHO,
+        n_sources=s_dim,
+        n_targets=g_dim,
+        n_channels=2,
+        hidden_width=4,
+        ortho_dim=4,
+        use_cooperativity=True,
+        coop_rank=2,
+    )
+    fwd, unpack, _ = build_jax_rollout(sp_ortho_coop, dt=0.1, obs_stride=2)
+    th = ravel_pytree({k: jnp.asarray(v) for k, v in _init_tree(sp_ortho_coop, seed=3).items()})[0]
+    su_j, yt_j, m_j = jnp.asarray(stage_u), jnp.asarray(y_true), jnp.asarray(mask)
+
+    def _loss(t):
+        pred = fwd(t, su_j, yt_j[:, 0, :])
+        return jnp.sum(((pred - yt_j) ** 2) * m_j) / jnp.sum(m_j)
+
+    vg = jax.jit(jax.value_and_grad(_loss))
+    seen_nonzero: set[str] = set()
+    for _ in range(3):
+        val, g = vg(th)
+        assert bool(jnp.isfinite(val)) and bool(jnp.all(jnp.isfinite(g)))
+        for k, gv in unpack(g).items():
+            if float(jnp.linalg.norm(gv)) > 0.0:
+                seen_nonzero.add(k)
+        th = th - 0.02 * g
+    assert seen_nonzero == set(unpack(th).keys()), f"Dead params: {set(unpack(th).keys()) - seen_nonzero}"
+
+    # 2. Transformer zero/constant input LayerNorm safety & hidden_dim divisibility validation
+    u_zeros = np.zeros((4, 8, 3), dtype=np.float32)
+    y_t = rng.normal(0.0, 0.5, size=(4, 8, 2)).astype(np.float32)
+    m_t = np.ones_like(y_t)
+    tr_fit = fit_discrete_open_loop(
+        family=DiscreteModelFamily.TRANSFORMER,
+        train_u=u_zeros,
+        train_y=y_t,
+        train_mask=m_t,
+        val_u=u_zeros,
+        val_y=y_t,
+        val_mask=m_t,
+        hidden_dim=12,
+        seeds=(0,),
+        reg_grid=(1e-3,),
+        total_updates=10,
+    )
+    assert np.isfinite(tr_fit.best_val_loss)
+    try:
+        fit_discrete_open_loop(
+            family=DiscreteModelFamily.TRANSFORMER,
+            train_u=u_zeros,
+            train_y=y_t,
+            train_mask=m_t,
+            val_u=u_zeros,
+            val_y=y_t,
+            val_mask=m_t,
+            hidden_dim=10,
+            seeds=(0,),
+            reg_grid=(1e-3,),
+            total_updates=2,
+        )
+        raise AssertionError("Expected ValueError for non-multiple-of-4 hidden_dim")
+    except ValueError:
+        pass
+
+    # 3. Closed-loop zero-basal graph-extraction guard stays non-degenerate
+    n_g = 4
+    ko_b = np.eye(n_g, dtype=np.float32)
+    y_cl = rng.normal(0.0, 0.4, size=(n_g, 5, n_g)).astype(np.float32)
+    w_cl = np.ones_like(y_cl)
+    w_cl[:, 0, :] = 0.0
+    cl_spec = ClosedLoopSpec(
+        family=ClosedLoopModelFamily.MEMGRN,
+        n_genes=n_g,
+        hollow=True,
+        use_self_memory=True,
+        use_cooperativity=True,
+        coop_rank=2,
+        n_channels=2,
+        hidden_width=4,
+    )
+    cl_fit = fit_closed_loop_network(
+        spec=cl_spec,
+        basal_levels=np.zeros(n_g, dtype=np.float32),
+        train_ko=ko_b,
+        train_y=y_cl,
+        train_weights=w_cl,
+        val_ko=ko_b,
+        val_y=y_cl,
+        val_weights=w_cl,
+        dt=0.2,
+        n_steps=8,
+        obs_step_indices=(0, 2, 4, 6, 8),
+        train_y0=y_cl[:, 0, :],
+        val_y0=y_cl[:, 0, :],
+        seeds=(0,),
+        reg_grid=(1e-3,),
+        total_updates=12,
+    )
+    assert np.all(np.isfinite(cl_fit.interaction_matrix))
+    assert float(np.linalg.norm(cl_fit.interaction_matrix)) > 1e-5
+    assert float(np.max(np.abs(np.diag(cl_fit.interaction_matrix)))) == 0.0
